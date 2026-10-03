@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>White Papers — LedgerLearning</title>
+  <meta name="description" content="White papers by Kip Twitchell on financial systems — Minimum Cost Curve, Pre-Hierarchy Event Repositories, and other research on ledger architecture and data supply chains.">
+  <link rel="canonical" href="https://ledgerlearning.com/whitepapers/">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="vlog.html">Episodes</a></li>
+          <li><a href="books.html">Books</a></li>
+          <li><a href="whitepapers.html" class="active">White Papers</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="container">
+      <div class="hero-badge" style="margin-bottom: 12px;">Research &amp; Analysis</div>
+      <h1 class="page-title">White Papers</h1>
+      <p class="page-subtitle">Original research on financial system architecture, minimum cost curves, and event-based data models.</p>
+    </div>
+  </header>
+
+  <main class="content-body">
+    <div class="container" style="max-width: 800px;">
+
+      <!-- Minimum Costs paper -->
+      <section>
+        <h2 class="section-heading">A Proposed Approach to Minimum Costs for Financial System Data Maintenance</h2>
+        <p class="prose">
+          This paper establishes a conceptual model for the minimum theoretical cost of maintaining
+          financial system data — arguing that current systems operate far above the minimum cost curve
+          due to architectural decisions made when storage and compute were expensive.
+        </p>
+        <p class="prose">
+          The paper introduces the concept of the <strong>minimum cost curve</strong>: the floor of
+          what financial data maintenance should cost given modern compute and storage. It demonstrates
+          that reconciliation, batch posting, and subledger fragmentation are not engineering necessities
+          but artifacts of a cost constraint that no longer exists.
+        </p>
+        <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+          <a href="whitepapers/minimum-costs-for-financial-system-data-maintenance/" class="btn btn-brown">Read Online &rarr;</a>
+          <span style="align-self: center; font-size: 0.85rem; color: var(--text-muted);">
+            🔒 Full PDF available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" style="font-weight: 600;">Sharealedger Members</a>
+          </span>
+        </div>
+      </section>
+
+      <!-- Pre-Hierarchy Event Repositories -->
+      <section style="margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--ll-border);">
+        <h2 class="section-heading">Pre-Hierarchy Event Repositories</h2>
+        <p class="prose">
+          A research monograph examining the architecture of event repositories that maintain
+          pre-summarized balances across all possible hierarchy combinations — eliminating the
+          need for on-demand aggregation during reporting.
+        </p>
+        <p class="prose">
+          This work explains why traditional "star schema" data warehouses still require significant
+          computation at report time, while a metric engine pre-commits to all summaries at posting
+          time — trading write cost for read performance. The paper covers step-ups, temporal events,
+          and the implications for regulatory reporting.
+        </p>
+        <div style="margin-top: 16px;">
+          <span style="font-size: 0.85rem; color: var(--text-muted);">
+            🔒 Full PDF monograph available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" style="font-weight: 600;">Sharealedger Members</a>
+          </span>
+        </div>
+      </section>
+
+      <!-- Shared Ledgers paper (2024 BYU Symposium) -->
+      <section style="margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--ll-border);">
+        <h2 class="section-heading">Shared Ledgers, Trust, Fast Offerings, and Social Commerce</h2>
+        <p class="prose">
+          Presented at the 2024 BYU Accounting Research Symposium (September 20, 2024). This paper
+          examines how shared ledger architectures — where multiple parties post to a single canonical
+          event store — could simultaneously reduce costs, increase trust, and enable new classes of
+          financial products impossible with today's fragmented, reconciliation-dependent systems.
+        </p>
+        <div style="margin-top: 16px;">
+          <a href="/2024/09/18/shared-ledgers-trust-fast-offerings-and-social-commerce/" class="btn btn-brown">Read Paper &rarr;</a>
+        </div>
+      </section>
+
+      <!-- Member CTA -->
+      <div class="callout mt-48" style="border-left-color: var(--ll-brown);">
+        <h4>Member Research Library</h4>
+        <p>
+          Full PDF editions of all white papers and monographs, plus progression slide decks and
+          multi-year accounting test fixture data, are available in the private
+          <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" style="font-weight: 600;">Sharealedger member repository</a>.
+          Membership is 100% free.
+        </p>
+        <div style="margin-top: 10px;">
+          <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="btn btn-brown btn-sm">Join Sharealedger (Free) &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Content</h5>
+          <ul>
+            <li><a href="vlog.html">All Episodes</a></li>
+            <li><a href="books.html">Books</a></li>
+            <li><a href="whitepapers.html">White Papers</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.youtube.com/kiptwitchellvlog" target="_blank" rel="noopener">YouTube Channel</a></li>
+            <li><a href="about.html">About Kip</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div>
+          <a href="about.html" style="margin-right: 12px;">About</a>
+          <a href="https://sharealedger.org/governance.html#privacy" target="_blank" rel="noopener">Privacy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
