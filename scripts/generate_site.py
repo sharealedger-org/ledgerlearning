@@ -165,10 +165,7 @@ BOOK_ORDER = [
     # front matter
     'on-line-balancing-act-text-book',   # TOC (index)
     'dedication',
-    'acknowledgements',
     'preface',
-    'about-the-author',
-    'about-the-mentors',
     # part 1
     'part-1-the-pearl',
     'introduction',
@@ -256,7 +253,10 @@ BOOK_ORDER = [
     'appendix-1-accounting-model',
     'appendix-2-event-driven-business-modeling',
     # back matter
+    'acknowledgements',
     'selected-bibliography',
+    'about-the-mentors',
+    'about-the-author',
 ]
 
 TOC_BASE = 'books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book'
