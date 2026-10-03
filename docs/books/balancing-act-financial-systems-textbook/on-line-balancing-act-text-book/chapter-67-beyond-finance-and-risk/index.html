@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 67. Beyond Finance and Risk — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-67-beyond-finance-and-risk/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 67. Beyond Finance and Risk</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">In 2001 I helped a reporting system strategy project for a regional bank. One day, the project manager and business expert, Lyn San got up to the white board and said, "Kip, why don't we suggest a system that looks like this?" She then began to draw boxes, each one representing a system component to perform some function in a fairly standard reporting or analytical system architecture.</p>
+<p class="p">As she finished, I asked, "Lyn, why would we suggest so many boxes?" She was a bit stumped and said, "Well, isn't that the way these systems are built?" I said, "Yes, typically, but why?"</p>
+<p class="p">I have since concluded that the simplest explanation is that we don't have unlimited computing capacity, and we can't manage unlimited complexity. Those two reasons are why we don't perform all processing in one big box - that big box being the operational systems.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Arrangement Ledger Performance</h2>
+<p class="p">Yet the entire premise of this book is that if we discover the underlying fundamental computing patterns, and automate those efficiently, we can achieve much greater scale in analytical applications than we do today.</p>
+
+<div class="p">
+
+As an example of the most recent performance statistics for a large global bank's implementation of the platform, in one process SAFR was configured to read four files:
+<ul class="ul">
+ 	<li class="li">80 million SAL records</li>
+ 	<li class="li">33.5 million AL key records (attributes which describe the balances below)</li>
+ 	<li class="li">82.5 million AL daily balances</li>
+ 	<li class="li">165.5 million AL monthly balances</li>
+</ul>
+</div>
+<p class="p">For a total of 361.3 million total records. It then produced nine different outputs, ranging in size from 125,000 records to 248.3 million records<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a> each of which summarized all of the input balances, writing in total 311.9 million output records. Using SAFR piping processes, it was possible to only perform one look-up from each daily and monthly record to the key and from the key to the SAL record. Thus the process performed a limited number of SAFR joins, 281.3 million joins.</p>
+<p class="p">This process was done in 120 CPU minutes. Thus if we take 361.3 million inputs, and 311.9 million outputs, for a total records processed of 673.2 million, SAFR processed on average 5.6 million records a minute combined input and output<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a>.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+In a separate analysis, David Heap, a well-respected IBM System Z engineer, performed a detailed analysis of a SAFR process reading 11.186 billion input records, representing 1.551 terabytes of data. The process performed 19.709 billion lookups or in memory joins. It output 412 million output records for five different views. This required 4 hours and 45 minutes of elapsed time, and 20 hours 45 minutes of CPU time. After calculating total instructions available on this specific machine, David commented: "This is ...2,533 instructions per record - a VERY short instruction path-length!!"<sup><a href="#fntarg_3" name="fnsrc_3">3</a></sup>
+
+</div>
+<p class="p">In other words, substantially more processing is possible than we typically think can be done.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Search Engines and Scale</h2>
+<p class="p">The problem, in a nutshell, is one of accumulation of history. As noted in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-1-the-pearl/the-problem/">The Problem</a>, Internet search giants have solved the problem of finding a needle in a haystack. Search technology allows us to do that very efficiently. But finding a needle in a haystack is not the same as updating yesterday's balance with today's activity, and then combining that updated balance with a host of other balances to create a picture of accumulated results. There is no substantial accumulation process in an Internet search.</p>
+<p class="p">The Internet search process is certainly applicable at the front end of the analytic supply chain to find customers or balances or other information. It is also critical at the far back end of the supply chain, to find the appropriate accumulated balance. But it has precious little to do with the process in the middle of turning business events into accumulated balances. This is a very different problem, but is performed in business computing systems all over the place. This process requires as much attention as the intense focus on the needle in-a-haystack search technology investments of the last 15 years.</p>
+<p class="p">I have recently been surprised by the number of companies beginning serious initiatives to overhaul the entire flow of data through their systems, from operational systems to reporting. Some are attempting to go so far as to completely eliminate any other data stores for any details except in one primary environment. Realizing what it takes to gain consistency of views of the data across a large enterprise, I find these efforts amazing.</p>
+<p class="p">Yet, as I analyze the direction of IT in this regard, such efforts seem to be consistent with where we must go. While some companies are working to make technology smaller and smaller and more and more distributed, the other end of the spectrum must also be progressing equally, driving down the per unit cost in consolidated environments through economies of scale and increasing the insights provided through that data. And as a company establishes the data backbone with the scale capable of tracking daily balances for individual customer-contracts, there is one further step we may be able to take to make the system cost effective.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Source System Integration</h2>
+<p class="p">In a 30 minute conversation with Rick and Dave Willis in July 2010, Dave observed that the platform we had constructed was effectively reprocessing the entire bank's balances every day. I asked him if he thought it possible to remove the need for the balances to be maintained in the source systems altogether and simply have those systems refer to the finance system for balances throughout the day. He said that he thought that was possible, and it would dramatically simplify the source systems.</p>
+<p class="p">I think this may be possible particularly for financial services firms. As we noted in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/chapter-57-the-general-ledger/">The General Ledger</a>, financial services firms systems by their nature are much more similar to a general ledger than others are. Some of the products keep track of amounts people have paid and what they have loaned, insured, or underwritten - these are simply forms of accounts. As money is digitized, the business is a digital business. So thinking about their source systems in that manner makes sense.</p>
+<p class="p">But it seems to me the problem has to be approached recognizing the difference in some of the traditional "boxes" we have placed on financial services data flow supply chain diagrams, as outline in the following chart.</p>
+
+<div class="p">
+<div class="tablenoborder">
+<table class="table" border="1" summary="" rules="all" cellspacing="0" cellpadding="4">
+<thead class="thead" align="left">
+<tr class="row" valign="middle">
+<th id="d1995e124" class="entry thcenter thmid" align="center" valign="middle">Processing Characteristics</th>
+<th id="d1995e126" class="entry thcenter thmid" align="center" valign="middle">Transaction Processing</th>
+<th id="d1995e128" class="entry thcenter thmid" align="center" valign="middle">Operational Ledgers</th>
+<th id="d1995e130" class="entry thcenter thmid" align="center" valign="middle">Integrated Finance Detailed Ledger</th>
+<th id="d1995e132" class="entry thcenter thmid" align="center" valign="middle">Thin General Ledger</th>
+</tr>
+</thead>
+<tbody class="tbody">
+<tr class="row">
+<td class="entry tdmid" headers="d1995e124 " valign="middle"><strong class="ph b">Frequency</strong></td>
+<td class="entry" headers="d1995e126 " valign="top">Real time (Market Hours or 24x7)</td>
+<td class="entry" headers="d1995e128 " valign="top">Intraday</td>
+<td class="entry" headers="d1995e130 " valign="top">Period Close (3x/day, daily, monthly, quarterly, yearly)</td>
+<td class="entry" headers="d1995e132 " valign="top">Period Close (3x/day, daily, monthly, quarterly, yearly)</td>
+</tr>
+<tr class="row">
+<td class="entry tdmid" headers="d1995e124 " valign="middle"><strong class="ph b">Level of Detail</strong></td>
+<td class="entry" headers="d1995e126 " valign="top">Trade, Deal or Transaction Level</td>
+<td class="entry" headers="d1995e128 " valign="top">Product, "Leg," Lot, Policy or Customer Account Level</td>
+<td class="entry" headers="d1995e130 " valign="top">Product, "Leg," Lot, Policy or Customer Account Level</td>
+<td class="entry" headers="d1995e132 " valign="top">Aggregated Product/COA Level</td>
+</tr>
+<tr class="row">
+<td class="entry tdmid" headers="d1995e124 " valign="middle"><strong class="ph b">Aggregation/ Integration</strong></td>
+<td class="entry" headers="d1995e126 " valign="top">None</td>
+<td class="entry" headers="d1995e128 " valign="top">Settlement, Lot, Policy or Customer Account</td>
+<td class="entry" headers="d1995e130 " valign="top">Financial reporting level</td>
+<td class="entry" headers="d1995e132 " valign="top">Financial Accounting reporting level</td>
+</tr>
+<tr class="row">
+<td class="entry tdmid" headers="d1995e124 " valign="middle"><strong class="ph b">History Required</strong></td>
+<td class="entry" headers="d1995e126 " valign="top">1 Day History</td>
+<td class="entry" headers="d1995e128 " valign="top">Multiple Days, Weeks or perhaps a Few Months</td>
+<td class="entry" headers="d1995e130 " valign="top">Multiple Years</td>
+<td class="entry" headers="d1995e132 " valign="top">Multiple Years</td>
+</tr>
+<tr class="row">
+<td class="entry tdmid" headers="d1995e124 " valign="middle"><strong class="ph b">Perspective</strong></td>
+<td class="entry" headers="d1995e126 " valign="top">Quantity &amp; Amount for Customer/Agent/Acct. Rep/Trader Focus or View</td>
+<td class="entry" headers="d1995e128 " valign="top">Quantity &amp; Amount for Settlement/ Customer/Cash/ Statement Focus, Operational Efficiency</td>
+<td class="entry" headers="d1995e130 " valign="top">Primarily amount for Internal &amp; External View of Financial Performance</td>
+<td class="entry" headers="d1995e132 " valign="top">Nearly exclusively Amount, Internal &amp; External View of Financial Performance</td>
+</tr>
+</tbody>
+</table>
+</div>
+<em class="ph i">Processing Characteristics of Typical Financial Services System Layers</em>
+
+</div>
+<p class="p">These various categories show a daunting array of requirements if everything were to be done in one system. Yet if this is the goal, perhaps a more practical approach, I submit, is to analyze the entire life cycle of business event generation through to report processes as a supply chain, and execute the appropriate layer of consolidated functions at higher scales.</p>
+<p class="p">Taking Dave's example, the periodic posting process is now in multiple systems; we post the transaction detail in the operational systems, we post in the finance system, we "post" (in a sense) in the risk system, we post in reporting applications. All these posting processes could be consolidated into one posting engine (measured in minutes) working with the last master file and new transactions to produce a new master file. Interim transactions during the post process would need to be logged for the next cycle. When the new master file is available, all functions would cut over to use it</p>
+<p class="p">So if we are to undertake a consolidated operational and reporting environment, we must (1) consolidate the existing supply chain functional processes into single layers, (2) design the processes and data structures to preserve all business events, both customer facing events and journal and other reporting events, (3) optimize the indexed access required at both ends of the supply chain: transaction capture and report analysis, (4) perform each function at the appropriate time and with great efficiency. For the posting and aggregating functions, this would be done periodically, as close to analysis as possible, using many of the features of the SAFR architecture. In this way the data may be shared but complexity and capacity might be managed.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">I am not sure what the results of this system would be. Does it turn McCarthy's idea on its head: Instead of dismantling the finance systems all together, does it make the finance system the center of all needs for balances in the organization? Or does it do exactly what he envisioned, and nearly eliminate the finance system master files altogether? It will be interesting to see where we go from here.</p>
+
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part7-the-plan/chapter-68-partnership/">Chapter 68. Partnership</a></strong></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part7-the-plan/chapter-66-expand-to-risk/">Chapter 66. Expand to Risk</a></div>
+<div></div>
+</div>
+<strong>Parent Topic:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part7-the-plan/">Part 7. The Plan</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+
+<hr />
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> One extract reformatted each daily and monthly record with key values, thus the output for one extract equaled the two balance files combined.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> Results spreadsheet in author's possession, unpublished.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> David's full calculation was as follows: "This run ...started at 09:09 am on 5 May 2010. Elapsed clock time was 4 hours 45 minutes. CPU hour consumption was 20 hours 45 minutes. This was the equivalent of 4.37 fully loaded CPUs on the z9 EC 730. (The 30 CPU z9 can deliver approx 11,376 MIPS . If running at 100% capacity, so 4.37 CPUs = (4.37/30)*11,376 = 1,657 MIPS consumed. This gives a TOTAL MIPS burn of 1,657 MIPS * 4.75 hours = 7,871 MIPS-Hours for this  job step.... In this case, I get {7,871 MIP-hours * 3,600 seconds = 28.335 Million Mip-seconds} / {Total input records of 11.186 Billion records}. This is 28.335 Million instructions per 11,186 records, or 2,533 instructions per record." E-mail from David Heap to Randall Ness, May 30, 2010, in author's possession.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-66-expand-to-risk/" class="prev"><span class="label">&larr; Previous</span>Chapter 66. Expand to Risk</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-68-partnership/" class="next"><span class="label">Next &rarr;</span>Chapter 68. Partnership</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

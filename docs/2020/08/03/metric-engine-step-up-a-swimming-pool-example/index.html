@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metric Engine Step-Up: A Swimming Pool Example — LedgerLearning</title>
+  <meta name="description" content="A couple of years ago a friend was continuing to try to help Risk and Finance effectively coordinate their use of data, and asked me how would I get started on ">
+  <link rel="canonical" href="https://ledgerlearning.com/2020/08/03/metric-engine-step-up-a-swimming-pool-example/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Metric Engine Step-Up: A Swimming Pool Example</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">August 3, 2020</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:paragraph -->
+<p>A couple of years ago a friend was continuing to try to help Risk and Finance effectively coordinate their use of data, and asked me how would I get started on helping them.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I noted that the fundamental problem in some instances is the imprecision of our language.  We use a single term which actually refers to different things to different people.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Solving this problem can take a couple of different paths.  The easier part of this is when we really are talking about something completely different, find a way to use a different term.  This is often done in data modeling by using a term like "arrangement" for many different kinds of contracts or "involved party" when talking about customers or vendors or employees or participants.  Simply using a different word can help.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Metrics</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>In other cases though, the problem is not that simple.  In these cases we are speaking about the same thing, but only a part of it in one case, and another part in another case.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If we take the above approach when talking about financial measures, it can lead us down the long-traveled road of simply duplicating data, which then allows each party to accumulate the transactional amounts independently, and call them something different, because they aren't the same thing.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But this approach increases reconciliation, because the basic building blocks of data came from the same place.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>A different approach can be helpful in these instances.  It isn't a new concept, having been used for years, but perhaps is not as well known as it should be.  The concept is called step ups.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2016/06/20/new-video-metric-engine-and-step-ups/">Metric Engine and Step-ups</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Balances</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Almost all analytical processes start with a balance.  A balance accumulates business events over time, giving a perspective of what has happened, and how it stands at a particular point in time.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If we used a swimming pool analogy,  the total volume of water in the pool has been broken down into measurable pieces, each of which we have given a name.  The metric of our swimming pools analysis might be called a gallon.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Now, the Risk team might accumulate individual gallons one way, and the Finance team another way, yet they might both use the "pool" to describe the resulting "balance," the amount of gallons they have accumulated.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Often though, in our analysis of these "gallons" one asks why the finance "pool" and the risk "pool" amounts are so different.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2016/06/27/new-video-the-power-of-step-ups/">The Power of Step-ups</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>An Example</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"align":"right","id":3007,"width":340,"height":254,"sizeSlug":"large"} -->
+<div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="/wp-content/uploads/2020/08/slide4.jpeg?w=1024" class="wp-image-3007" width="340" height="254" /><figcaption>50 Meter Pool and Diving Well Configuration</figcaption></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>A step-up allows us to give a name to a portion of something that might be shared with others.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Imagine in our swimming pool analogy, there are actually multiple parts to a pool.  A modern world-class competitive pool may in fact be one pool.  But it can be configured into multiple smaller pools for different purposes.  When we speak of pool, what exactly are we talking about?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"left","id":3006,"width":341,"height":310,"sizeSlug":"large"} -->
+<div class="wp-block-image"><figure class="alignleft size-large is-resized"><img src="/wp-content/uploads/2020/08/slide5.jpeg?w=1024" class="wp-image-3006" width="341" height="310" /><figcaption>Diving Well, and Two 25 Yard Pools</figcaption></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>A divider might be placed at one end next to the diving board which creates the diving well.  Another two dividers might break the remaining 50 meter pool into two 25 yard pools. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Thus at it smallest practical configuration, it might be composed of:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>A diving well</li><li>One 25 yard pool</li><li>Another 25 yard pool</li><li>A left over amount to get to a 50 meter pool</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading -->
+<h2>Reconciliation</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>If one says pool, what specifically are they referring to?  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"right","id":3008,"width":477,"height":185} -->
+<div class="wp-block-image"><figure class="alignright is-resized"><img src="/wp-content/uploads/2020/08/individual-pools-e1596492954695.jpg" alt="" class="wp-image-3008" width="477" height="185" /><figcaption>Metrics Duplicated In Each Measure</figcaption></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The gallons in one of the 25 yard pools "balance" could be copied into the larger total pool "balance."  If one finds that the measurement of the 25 yard gallon balances were wrong, then the total pool balances might also be affected.  This would require two different adjustments.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>And reconciliation of the individual parts to the total pool gallons would also be another needed step if the components and all combinations are all maintained individually.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This problem is endemic to our measurement systems.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2016/11/28/new-video-step-ups-in-a-data-supply-chain/">Step-ups in a Data Supply Chain</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Step-up</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"align":"right","id":3005,"width":456,"height":256,"sizeSlug":"large"} -->
+<div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="/wp-content/uploads/2020/08/slide6.jpeg?w=1024" class="wp-image-3005" width="456" height="256" /></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>An alternative is creating the individual pieces in such a way that (1) they can receive a unique name and (2) be accumulated to create balances which reflect the larger parts of which they are sub-components.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If the individual pieces above are the foundational building blocks of our swim pool metric, then we don't have to maintain individual balances for: </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>The total pool</li><li>The 50 meter pool</li><li>Or some other combination</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading -->
+<h2>Results</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>This sort of approach works for all kinds of metric analysis.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"left","id":3004,"width":428,"height":240,"sizeSlug":"large"} -->
+<div class="wp-block-image"><figure class="alignleft size-large is-resized"><img src="/wp-content/uploads/2020/08/slide7.jpeg?w=1024" class="wp-image-3004" width="428" height="240" /><figcaption>Use of Step-ups in Query 1</figcaption></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>For example, loss reserves, which is something Risk has a distinct interest in and often calculates for finance, can be broken down into its individual components.  Those that require booking in the finance system can be named distinctly from those that are not required disclosures.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"right","id":3003,"width":358,"height":201,"sizeSlug":"large"} -->
+<div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="/wp-content/uploads/2020/08/slide8.jpeg?w=1024" class="wp-image-3003" width="358" height="201" /><figcaption>Use of Step-ups in Query 2</figcaption></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The metrics being maintained are not duplicated; there is no reconciliation required between balances.  Adjustments and updates are applied to individual units.  Clarity is gained about the constituent parts to our analysis are.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The world becomes more orderly.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is  <a href="https://youtu.be/6UnX6bDDQ8o">Episode 222 of Conversations with Kip</a>, the best financial system vlog there is.Literally learn more about ledgers and financial systems at  <a href="http://www.LedgerLearning.com/">LedgerLearning.com</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/6UnX6bDDQ8o","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/6UnX6bDDQ8o
+</div></figure>
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:paragraph -->
+<p>Click here to see blog posts and videos <a href="/tag/step-ups/">related to Step-ups</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Watch all episodes in order at the  <a href="https://www.youtube.com/playlist?list=PL2UrMfZzcfvFB_tskAKbyMTeSPNklOa7N">Conversations with Kip Playlist</a></p>
+<!-- /wp:paragraph -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

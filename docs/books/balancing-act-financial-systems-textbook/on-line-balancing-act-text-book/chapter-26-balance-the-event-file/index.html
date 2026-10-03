@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 26. Balance the Event File — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-26-balance-the-event-file/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 26. Balance the Event File</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<div id="biblebalancetheeventfile__projectUSInsurerFinancialWarehouse" class="section">
+<p class="p">Two years or so later, in 1997 I was working at a very large US insurer. They had determined to replace their legacy general ledgers, and had independently come to the idea of an event-based architecture simply by considering how accounting works. I worked with Lloyd Jackson, an IT employee at the insurance company, for three or four months determining how might be the best way to go about the financial data warehouse project.</p>
+<p class="p">I remember being surprised when I learned I was to participate in the formal oral proposal from Price Waterhouse to implement an ERP GL there; I had never before seen the ERP software. In our discussions, we were open about that. Rather, I was to be part of the reporting team, and discussed the approach Rick had written in the white paper about offloading the heavy lifting to another reporting tool.</p>
+<p class="p">PW didn't win the proposal; another consulting company did. But our previous work at the insurer proved we could find the data needed for reporting. The custom GL team was struggling with how to begin. I suggested the best approach was to find the event file within the legacy general ledger. We named the effort after a line in a recently released movie and called it: "Show me the money!".</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Preliminary Analysis</h2>
+<p class="p">Show me the money means balancing the event file to a known report or source. Transaction files sometimes are not complete; special processes may generate certain partial information, or additional transaction files may be processed periodically.</p>
+<p class="p">This insurance company had a ledger system that was imbedded as part of what might be called a home grown thirty-year old ERP system. The system flowed policy and loss level data from policy administration systems into the legacy ledger in a series of files and a network of programs. The system was so integrated, and had required so few changes that real in-depth knowledge of how the system worked was mostly lost. The best system diagrams were large printed paper copies.</p>
+<p class="p">Trying to recreate the system knowledge could have required hundreds of hours of tracing through listings of programs. The event based approach, and having a tool capable of some level of ETL like functions, meant this wasn't needed.</p>
+<p class="p">The business users still knew the key reports to look at, and the IT team could trace those reports to the program that generated them. Those reports showed, on a daily basis, the dollars processed in summary by a few key attributes. The IT team identified from the scripting (JCL in this case) what files were read by the program. They then saved one day's worth of files to use as the event files.</p>
+<p class="p">Jim Hladyshewsky, a new project team member, was drafted to define the files to SAFR without having much more than a ten minute introduction to the tool. His willingness to dive into the deep end with only a part-time lifeguard around was remarkable. He created the metadata, and then tested it to make sure it was accurate.</p>
+<p class="p">The next step in the process was to create a view that summarized the file. Working with the legacy system program, he looked over the names of the fields on the file and tried to guess which ones were on the report. In a few cases, he had to search the program to confirm if a field ended up on the report.</p>
+
+<div class="p">
+
+Using the steps to create views, Jim:
+<ul class="ul">
+	<li class="li"><strong class="ph b">Specified view format and level:</strong> Summary hardcopy (printable) report to recreate the data on the control report.</li>
+	<li class="li"><strong class="ph b">Selected the event logical record:</strong> Fire System journal entry.</li>
+	<li class="li"><strong class="ph b">Specified logical file:</strong> All the files collected because we assumed they all went into the legacy process that created the report.</li>
+	<li class="li"><strong class="ph b">Selected output fields:</strong> Fields he thought showed up on the report, or at least some portion of them, starting with the highest level summary field and the dollar value.</li>
+	<li class="li"><strong class="ph b">Specified sort order:</strong> He selected the highest level field he thought corresponded to the first field on the report, and specified the view should summarize the dollar value by that field.</li>
+	<li class="li"><strong class="ph b">Filtered business event</strong> to include or exclude. Jim didn't specify any filter criteria, thinking perhaps all the records were included in the report.</li>
+</ul>
+</div>
+<p class="p">Jim then ran the Scan Engine and looked at the output. We had taken our first sample of the data.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Refining the Sample</h2>
+<p class="p">As I remember, nothing matched on the two reports from the initial run. I think the dollars on the SAFR report were significantly overstated. Thus, we began the process of guessing at what might be wrong.</p>
+
+<div class="p">
+
+I don't remember the exact steps Jim did; but from doing this multiple times I can describe his approach. I think Jim and I looked at the output and identified a row with the lowest dollar value. Perhaps we modified the view, adding a column with a constant of 1, sub-totaled to give us a count of the number of records from the event file that made up the dollar value we were seeing. We ran that view and saw that the row with the lowest dollar value also had the lowest record count. Perhaps the output might have looked like the following:
+<div></div>
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1254" src="/wp-content/uploads/2018/10/eventfileanalysissampleoutput.jpg" alt="EventFileAnalysisSampleOutput" width="339" height="346" /> <span class="figcap">Figure 55. Event File Analysis Sample Output</span>
+
+</div>
+</div>
+<div class="p">
+
+From this report, if all amounts don't match the values on the legacy system, Jim might have chosen to analyze the one record for the value 522339999, CC111, 123, since it is only one record to look up. He might then have created another view, this one with the following characteristics:
+<ul class="ul">
+	<li class="li"><strong class="ph b">Specify view format and level:</strong> a detailed view of the input records read by SAFR. This means that SAFR doesn't actually change the records it reads. It only applies filter criteria to the event records.</li>
+	<li class="li"><strong class="ph b">Select the event logical record:</strong> Fire System journal entry.</li>
+	<li class="li"><strong class="ph b">Specify logical file:</strong> All the files collected because we assumed they all went into the legacy process that created the report.</li>
+	<li class="li"><strong class="ph b">Filter business events</strong> to include or exclude. Whereas the prior view Jim hadn't specified any selection or filtering criteria, this time Jim told SAFR that it should only select records with the value we saw on the report for the lowest dollar summary row.</li>
+</ul>
+</div>
+<div class="p">
+
+The selection criteria might have looked like this:
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1267" src="/wp-content/uploads/2018/10/samplefilterlogictext.jpg" alt="SampleFilterLogicText" width="1687" height="992" /> <span class="figcap">Figure 56. Sample Filter Logic Text</span>
+
+</div>
+</div>
+<p class="p">Jim then ran the Scan Engine, with both views, producing two outputs but having only passed through the file once; (1) the control report view which we hadn't changed so the results were exactly the same, and (2) the new view which selected only detailed records for one particular type of journal entry.</p>
+<p class="p">Jim then looked at the output file. He might have noted something about that record that told him why it was different than the number on the report. Perhaps a different amount field needed to be used, or two fields needed to be combined in some way.</p>
+<p class="p">Another test for another set of records might have selected a score of records. As he scanned the actual amount field, perhaps one record had the correct amount on it that matched the legacy system report. He then compared that record to the other records and noted one field was different on this one record. He then modified the control report view so instead of selecting every record in the file, it only included these records with the value he had just noted. He would have run the view again, and noted this time that one row matched exactly, and other rows in the report were closer in value.</p>
+<p class="p">Another useful approach, if faced with dead-ends, is to build a new view with permutations of the sort keys. In other words, instead of sorting by business unit, cost center, account, sort by business unit, account, cost center. These permutations give something similar to a 3D perspective on the data, and can help identify how to reduce the data down to a manageable set to investigate.</p>
+<p class="p">And thus began the process of determining what events produced the report. Working with two other team members, who knew no more about the system than he did, in about three weeks he was able to reproduce the report for one day's data.</p>
+<p class="p">Note carefully that this process took about three weeks. If the control report chosen is a trial balance for a business unit, a critical set of business event records will have been identified.</p>
+<p class="p">The next step in the process was to collect the files for a month, and run them through the same refined view, refine it a bit more by identifying a special file that was received only at the end of the month, and prove that all the financial events were accounted for. In this way, one piece of the balanced based system - the control reports - were replaced with a very simple event-based system.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Insurance Financial Warehouse Project Results</h2>
+<p class="p">Proving our ability to understand legacy code demonstrated our ability to do the integration work for the new financial system. These steps, these techniques, were taught to me by Jay. I watched him do these same steps over and over again as we did various benchmarks. Those benchmarks required understanding quickly what an existing process produced, and reproducing it in a more efficient way. It is amazing how consistent these legacy processes are, because processing patterns don't change all that much. Having learned from Jay, I passed that knowledge onto Jim.</p>
+<p class="p">Other feeds had to be discovered for the Auto Company; Wendy Lucas, Fred Horwitz, and a team led the charge on this effort. A similar process had to be followed in reverse to make files for downstream feeds. Scott Penland, Andrea Orth, Michael Shapiro, and others led the charge here. In each case, determining what story the data told was critical to a consistent plot. Lynn Groves Zuccala and Laurie Lesniak helped manage the overall effort.</p>
+<p class="p">So having discovered and balanced event files, the next step is to expand the elements available to report, by searching for more detailed files and repeating the balancing process.</p>
+
+</div>
+</div>
+<div class="related-links">
+<div class="parentlink">
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-27-find-more-detailed-events/">Chapter 27. Find More Detailed Events</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-25-find-the-event-file/">Chapter 25. Find the Event File</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-25-find-the-event-file/" class="prev"><span class="label">&larr; Previous</span>Chapter 25. Find the Event File</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-27-find-more-detailed-events/" class="next"><span class="label">Next &rarr;</span>Chapter 27. Find More Detailed Events</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

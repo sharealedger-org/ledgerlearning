@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 22. Order of Operations — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-22-order-of-operations/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 22. Order of Operations</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<p class="title topictitle1"></p>
+
+<div class="body conbody">
+<p class="p">When I went to Sacramento, the development center for SAFR, I started on the system test team. I remember finding a problem with the system not many days or perhaps a couple weeks after starting. I went into the on-site project manager Bill Bengston, and described what I had found. I was surprised when he asked what I would suggest to fix it: I was the newest guy. I thought for a moment, and suggested some course of action. Bill considered it, and said, "<q class="q">That sounds good. Why don't we do that."</q> I think I then was responsible to communicate to the programmer how to fix the bug. I have thought for years that that inclusive style of leadership demonstrated by Bill was nurtured from the top by Rick.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Consulting</h2>
+<p class="p">Our heritage was slightly different than many later start-ups of the internet age. It was based upon consulting work. The way the problem was solved cut across traditional lines of the reporting architecture and the standard commercial software products that had grown up to support it. It was an incredibly ambitious scope.</p>
+<p class="p">Because of its development in the consulting world, it didn't have to appeal to a large number of potential buyers to be commercially viable. By focusing on solving problems for the largest organizations, performance was always kept top of mind. It also had the freedom to pursue whatever technology or processing options needed to solve the problems. Over years and years, the patterns have emerged and been refined based upon the principles McCarthy outlined.</p>
+<p class="p">Effectively, the result is a highly tuned compiler, processing language and flow that automates report production processes from the detail, minimizing the intermediate inventories that must be developed.</p>
+
+<div class="p">One other aspect of being successful in the rapid development of reports is, as Rick often says, doing things in the right order. A more technical term for that is controlling the order of operations.
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1284" src="/wp-content/uploads/2018/10/safretlprocess.jpg" alt="SAFRETLProcess" width="420" height="452" /> <span class="figcap">Figure 44. Cross Component Development</span>
+
+<div class="image"></div>
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">The Right Order</h2>
+<p class="p">To understand what "order of operations means" think of the order in which a building is built. If the simplified steps were (1) design building, (2) procure materials, (3) ship to site, and (4) assemble building almost any building can be built. Consider the implications on the possible size of the building if just the last two steps are reversed. Instead of shipping materials to the site and assembling, we assemble the building and then ship to the site. The scale of possible building is now a mobile home, not a skyscraper.</p>
+<p class="p">The same thing would be true of Dell's manufacturing line. Imagine they first dumped all the raw materials inside the computer case before connecting any of them. The manufacturing process would be very expensive if not impossible.</p>
+<p class="p">In a similar way in reporting, the entire input file could be sorted for each particular report before selection of what records are needed for the report is performed. This would be very inefficient as records and attributes would be processed (with potentially significant IO) which then would not be used in the report. Sorting after selection is more efficient.</p>
+<p class="p">Another example: In banking, a particularly useful type of balance is an average daily balance. Use of this type of balance eliminates temporary spikes from large but short-lived transactions. The creation of an average daily balance, though, can mean an entire new supply chain of data to balances for specific answers, with a tremendous amount of intermediate report inventory.</p>
+<p class="p">However, use of a movement based architecture with control over the order of operations enables average daily balance calculations from the movements at almost the very last step in report production. Doing this simple divide at the appropriate time is the critical difference between being able to produce a greater number of reports to answer more questions from the same data in a timely manner, or not. SQL as a tool does not provide adequate control over the order of operations to enable use of a movement based architecture.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">The Next Wave</h2>
+<p class="p">Most companies have established the ability to produce enterprise level summaries of financial results. Most have taken this further to implement processes such as funds transfer pricing, allocations, and at times multi-currency processing in a patchwork way into that environment. The deadline for implementing IFRS is looming, and will cause additional changes to the environment. But I am convinced that the next wave progression in financial reporting must come by removing layers of accumulated processes to the financial report supply chain. Each additional layer of processing adds to the diseconomies of scale the environment already has. Only by doing the hard work of removing layers, getting back down to and then carrying forward the details - the business events, can the needs for financial reporting be supported in a cost effective manner.</p>
+
+
+</div>
+<div class="section">Fortunately, the SAFR projects over the years, and the way the tool has developed, have established a pattern, a method if you will, for doing just that. To understand that method let me describe those projects, the broader team, and the next key mentor in implementation, Jay Poulos.</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+<div class="body conbody">
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a></strong>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-21-erp-reporting/">Chapter 21. ERP Reporting</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/">Part 3. The Partner</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-21-erp-reporting/" class="prev"><span class="label">&larr; Previous</span>Chapter 21. ERP Reporting</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/" class="next"><span class="label">Next &rarr;</span>Part 4. The Projects</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

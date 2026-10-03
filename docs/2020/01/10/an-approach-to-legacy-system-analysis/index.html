@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>An Approach to Legacy System Analysis — LedgerLearning</title>
+  <meta name="description" content="Understanding tabulating system principles can be very powerful in analyzing legacy systems, even though card readers have not been used extensively for perhaps">
+  <link rel="canonical" href="https://ledgerlearning.com/2020/01/10/an-approach-to-legacy-system-analysis/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">An Approach to Legacy System Analysis</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">January 10, 2020</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:paragraph -->
+<p>Understanding tabulating system principles can be very powerful in analyzing legacy systems, even though card readers have not been used extensively for perhaps 40 years or more.  In this post I'll describe an approach I would take to replace a large bank's customer deposit system.  You can watch the video <a href="https://youtu.be/eagU0028Bc0">here</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Daily Financial Cycle</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>First, let's be clear about what the daily financial cycle looks like at almost all large banks, with their major customer facing systems.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2471,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/01/slide15.jpeg?w=1024" alt="" class="wp-image-2471" /><figcaption>Daily Financial Cycle at Most Large Banks</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The majority of the day the systems are processing on-line transactions.  But at night, a series of quite predictable steps occurs.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>First, detailed customer posting to customer balances is done</li><li>Second, a stage that might be characterized by finishing the customer posting, and inter-system communication and posting of other transactions happens</li><li>Third, the General Ledger processes are performed, creating the enterprise (rather than the customer) views</li><li>Last, there is a space allocated for a safety margin, in case anything goes wrong to recover before the next day's work begins.</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Let's drill in on the first two processes of this nightly flow, the detailed customer posting and the post processes.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Posts:  <a href="/2016/04/25/the-daily-financial-cycle/">The Daily Financial Cycle</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Tabulating System Entry Point</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>If the system is old enough (perhaps more than 40 years or so), the detailed customer posting and the steps right after it may well be the oldest parts of the system.  This is because these may have been the first parts of the system created.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Tabulating systems meant that all transactions created through the day were simply queued for this nightly process as there was no real-time processing.  They were all batched up.  It was during the detailed customer posting and subsequent process that the computer programs read these transactions, edited them, applied them to balances, and produced daily reports of positions for use the next day.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This fact means that the most critical part of the business processes were likely done in these spaces.  It also means though that all the complexity of the on-line systems can be set aside for this analysis.  To begin with, simply think of the on-line system as someone recording each transaction on a punch card, and nothing more.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2019/04/22/spaghetti-code-or-tabulating-system/">Tabulating Systems</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Detailed Customer Posting</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"id":2472,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/01/slide5.jpeg?w=1024" alt="" class="wp-image-2472" /><figcaption>Detailed Customer Posting</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The major work of the detailed customer posting process is to update customer balances with the effect of any transactions taken during the day.  This is done so that the workload for future days can ignore the transactions, and just use the balance.  It makes the system very efficient.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Note that often even today whenever a customer balance is needed throughout the day, the day's transactions to that point are simply accumulated with the balance from the night before to create a temporary balance, sometimes called "memo posting."  This isn't too inefficient because the number of transactions in any one day is always limited, so the work to be done doesn't cost much.  The importance of the control process we'll discuss next is why those balances aren't simply stored at that time.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2016/04/23/the-big-idea-eliminate-posting/">Eliminate Posting Processes</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Also note that, as shown below, even in today's systems there is a clear cut-off of transactions which are to be posted.  Any transaction that happens after the start of this process is queued, waiting for the completion of the detailed customer posting.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2474,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/01/slide6.jpeg?w=1024" alt="" class="wp-image-2474" /><figcaption>New Transactions are Queued for Later Processing</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading -->
+<h2>Control Processes</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"id":2475,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/01/slide7.jpeg?w=1024" alt="" class="wp-image-2475" /><figcaption>Control Process Objective</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>At the end of the posting process, a key control process is performed, ensuring that everything went right in the posting process.  The net effect of all the transactions is accumulated, and compared to the net change in the balances.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is critical because the transactions won't be used after this point; only the balances.  So ensuring that the balances have been updated correctly is vital.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2017/11/27/financial-system-controls-services-and-history/">Video of Historical Control Processes</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2476,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/01/slide8.jpeg?w=1024" alt="" class="wp-image-2476" /><figcaption>Control Process Completion</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>When the test is complete and all the balances have been updated, the Detailed Customer Posting process is complete.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>General Ledger Feeds</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"id":2477,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/01/slide9.jpeg?w=1024" alt="" class="wp-image-2477" /><figcaption>General Ledger Feeds</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>At this point, it is safe to produce the General Ledger feeds for later processing by the General Ledger.  These are typically aggregated feeds, summarizing out customer details to make journal entries from the transactions.  Often a control balance record is also made, giving the ending position for the customer accounts, again perhaps summarized.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Why aggregation of these transactions?  Because there was never enough compute capacity to produce the enterprise view with all the customer details in it.  It takes multiple hours to do the customer balance postings, and each customer facing system does this process in parallel with all the other customer facing systems.  But the small window remaining in the daily financial cycle before opening for business the next day, and the requirement to know the enterprise view of things prior to doing that, mandated that data had to be aggregated to get processed in time.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The processes that create these journal entries have come to be called Accounting Rules Engines.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Posts: <a href="/2019/08/20/business-rule-structures/"> Accounting and Business Rules</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>New Day Started</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"id":2480,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/01/slide10.jpeg?w=1024" alt="" class="wp-image-2480" /><figcaption>Archive Transactions</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>After the control processes have successfully concluded, the system can mark all the existing transactions in the database as posted, or in many cases actually archive them in historical partitions.  This then clears the transaction area of the system for the next day's transactions</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2481,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/01/slide11.jpeg?w=1024" alt="" class="wp-image-2481" /><figcaption>Opening the New Day</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The system is then set to the next day for processing, and the door which closed off any transactions from being entered into the database is opened.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2016/04/20/timing-of-the-posting-process/">Timing of the Daily Financial Cycle</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Queued Transaction Updates</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"id":2482,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/01/slide12.jpeg?w=1024" alt="" class="wp-image-2482" /><figcaption>Batch Application of Queued Transactions</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>In some cases, there may be a program which applies the queued transactions to the database in bulk.  This application can be an important asset for starting to understand how the system works.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In addition to this process being one of the oldest parts of the system, it is also fairly simple, because it does not have to manage all the complexity of on-line, concurrent transaction processing.  It doesn't need to deal with message queues, locking, inquiry and other types of functions.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Update Cycle Heat Map</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"id":2484,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/01/slide13.jpeg?w=1024" alt="" class="wp-image-2484" /><figcaption>Update Cycle Heat Map Sample</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Using this process in a test environment, a team can load into the queue a particularly kind of transaction, and run this process to update the database.  They can compare the database before and after these updates, and note what changed.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>These changes can be documented, and new transactions can then be loaded and tested similarly.  The heat map that is developed begins to show visually related transactions, and critical elements of the database.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This document will also start to show how the system can be broken down and portions of it implemented over time.  Portions of the database will be defined for new transactions, and intersections with the legacy database will be developed at critical points (likely the posting processes).  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Admittedly, this analysis does not include all types of activity of the system; but it forms the beginning point of analysis.  Transaction updates are the most critical part of the system.  Like the bow of the ship cutting the path through the ocean, this critical analysis provides insight into the direction all the other activity will have to follow.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Conclusion</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Following this process can increase the confidence of the team in understanding the legacy system.  To rebuild a system, all the knowledge about what the system did (not necessarily how it did it) must be working knowledge in people's heads.  Those that built these systems, and those that enhanced them, had this knowledge in their heads when they did that. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>It took courage to automate these systems to begin with, perhaps initially with the batch components.  It took courage to enhance them, like adding on-line processing to them.  It will require courage to replace and extend them to the next set of functions that are required.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But new functionality to further increase the efficiencies of our financial and business systems are needed; the companies that take on and are successful in these tasks will be able to capture those opportunities. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2017/10/02/instrument-id-and-the-coming-social-commerce-platform/">The Coming Social Commerce Platform</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is another episode of Coding with Kip, the technical sub-series of Conversations with Kip, the best financial system vlog there is.  Literally learn more--about ledgers and financial systems--at <a href="http://www.LedgerLearning.com">LedgerLearning.com</a>.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/eagU0028Bc0","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/eagU0028Bc0
+</div><figcaption>Coding with Kip Video</figcaption></figure>
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:paragraph -->
+<p>Watch the series in order at the <a href="https://www.youtube.com/playlist?list=PL2UrMfZzcfvFjnCfOBYqksqzuFbaqUupT">Coding with Kip Playlist</a> </p>
+<!-- /wp:paragraph -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

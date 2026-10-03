@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Value of Data Part 1: Business Functionality — LedgerLearning</title>
+  <meta name="description" content="Optimizations verses Functionality
+
+
+
+An expert recently said to me that the most important optimizations of systems need to be identified at the appropriate ti">
+  <link rel="canonical" href="https://ledgerlearning.com/2020/06/26/the-value-of-data-part-1-business-functionality/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">The Value of Data Part 1: Business Functionality</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">June 26, 2020</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:heading -->
+<h2>Optimizations verses Functionality</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>An expert recently said to me that the most important optimizations of systems need to be identified at the appropriate time.  Trying to identify and create them too early can affect the design of the system, negatively impacting functionality and flexibility.  In other words, the optimization can become more important than the functionality, compromising the over results of the system design.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I thought this was an interesting point.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>He also, to his credit, noted he was not an expert on data per se; tending to deal much more with transaction processing systems and the optimization of them, although clearly with enough experience with reporting systems to understand and make recommendations about them. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Having focused very much on data for my career, his comment made me wonder how might I express the nature of the critical functionality of a data centric reporting and analytical system, independent of the optimizations I have seen driven over the years.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Let's see if this is helpful.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Record Keeping, or perhaps Data Keeping</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Record keeping is a very expensive task.  The overhead on any organization to record, track, and report on transactions is a significant cost when attempting to provide goods or services at the lowest possible price.  Customers can easily understand a price set based upon the labor and materials that go into the specific product they purchase; they are less understanding of paying for the clerk to keep track of the company accounts and prepare the tax forms.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>One of my mentors once explained how the process of recording data is very precious. To make it real, think of what you would have to do if your only available tool was a spreadsheet.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The process of opening a spreadsheet, and giving a name to a tab for the kinds of transactions you need to capture, i.e., sales, purchases, receipts, payments, does not take a lot of time at all.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The next step is deciding on the column headings for what needs to be recorded about each one of those types of transactions.  If on average there are 10 things that could be recorded, then the cost of this task takes 10 times as long and is 10 times as expensive, at a minimum as naming the tabs.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Deciding the column names can take much longer than 10 times as long.  But the costs continue to increase as next we have to decide what the possible values in each one of those columns are.  What codes does one use to capture the legal entity, the cost centers, the accounts, the products, the currencies, the customers and vendors?  If there are on average 50 values that could be recorded in each of the fields, then this again is 50 times as long as the last step.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But now, the most extraordinary cost of all begins, which is almost exponentially more expensive than the last step: for each transaction, someone, somewhere, has to pick those values for each column of the appropriate tab to record each individual transaction.  The rows of data in the spreadsheet, the individuals sales, receipts, payments, shipments, commitments, time, materials, and resources accumulated over days, and weeks, and hopefully even years, is incredibly precious.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>All of the work of defining what to record then stretches over long periods of time as those business events are recorded.  I have noted through the years how valuable real, live, actual data is.  As my friend, Dillon Papenfuss quoted me as saying:&nbsp;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><em>"I have never seen system-generated data that has all the variability<br>of real, live production data. The differences are so stark it is a bit like the difference between a painting</em>&nbsp;<em>of a landscape, and a real, live landscape. The system-generated data is flat; it can give the single image it was intended to produce. But if one walks to the side of the painting, the image is not interesting at all. Whereas if one walks to a different point to view a landscape, it can be just as fascinating</em>&nbsp;<em>and interesting as the original perspective. And one can walk into the landscape, just as one can walk into real production data, and find all sorts of new things within it. System-generated data never has that kind of interest to it."</em><a href="https://www.financialexecutives.org/getattachment/b3d0b159-26df-4ba1-a147-9566f749548f/DataFinal.pdf.aspx">"Data: the Strategic Asset: November 2019</a>" Financial Education &amp; Research Foundation (FERF)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2019/12/13/simple-financial-system-proof-of-concept/">Simple Financial System Proof of Concept</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Transactions to Positions</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The tactical use of record keeping, the follow-up on each row of data is critical to the functioning of business.  As I have spoken about in the <a href="/2020/05/12/intro-to-the-bookkeeping-series/">Bookkeeping Series</a>, there is a flow of data through the accounts, as one transaction causes another transaction.  A purchase causes a payment, a payment causes an expense, an expense causes a reduction in the profitability of the organization.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>And so there is a very tactical use of the data recorded in the spreadsheet.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But Alfred W. Crosby didn't say the magic of bookkeeping was this tactical use of the data.  He said bookkeeping "taught us how to oblige grocery stores and nations, which are always whizzing about like hyperactive children, to stand still and be measured...."  (<a rel="noreferrer noopener" href="https://en.wikipedia.org/wiki/Alfred_W._Crosby" target="_blank">Alfred W. Crosby</a>,&nbsp;<a rel="noreferrer noopener" href="https://www.amazon.com/Measure-Reality-Quantification-Western-1250-1600/dp/0521639905" target="_blank">The Measure Of Reality: Quantification And Western Society, 1250-1600</a>&nbsp;(Cambridge University Press, 1997) Pages 201)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>When we accumulate transactions over time, which creates something either termed a position or a balance, we create a perspective that can be very valuable.  Almost all reporting processes begin with a balance.  When one logs into a bank account, the first number of interest is the account balance, which is an accumulation of the transactions since the account was opened.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>"What's remaining in the budget?"  "How many lines of code have been written?"  How much time have you spent on that?"  "How many customers have responded?"  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>All of these questions are usually answered by a balance; not by any one individual transaction.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Posting Systems</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Balances, though, require a selection of a reduced set of attributes from what was recorded on the transaction.  Each of those questions above deals with an attribute for some  selected quantity for transactions, often by time.  Monetary amounts, accumulation of lines of code, time spent on a task, numbers of customers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>There are some patterns of balances that are often asked for, and so we create systems that make these balances consistently.  Bank accounts have them, and vendor and customer statements have them as well.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But these systems are usually quite fixed and static.  The production of these balances is chosen when the system is designed, and once it is started, the system doesn't produce any other balance but those that were chosen.  It must be nurtured and cared for to make sure the balance does not deviate from the truth of the transactions, or else it may be perpetually incorrect from that time forward.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This process of creating balances consistently is called a posting process.  The steps to do it were written down by Luca Pacioli in 1494 AD, are among the earliest business systems automated in the last century, and undergird every major business process in the world today.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2016/09/04/special-videos-a-cartoon-about-business-systems/">Special Videos: A Cartoon about Business Systems</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Attribute Usability Over Time</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>So consider this difficult dilemma:  We spend all this money and effort to capture all these attributes on the business events, and they are useful for the tactical work of getting paid and finishing the task at hand, and yet most all of them provide no benefit in the most powerful use of all--the perspective over time--because we've had to select a couple of them to be used in the posting process!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Huge costs; huge potential benefits; and for the most part completely unrealized.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This then is the functionality that is really wanted in analytical reporting systems.  With the growth in computing capacities, we should be able to use nearly all the attributes we so painfully captured in analytical processes, to gain perspective and insights into what has happened, why it has happened, and how it relates to the rest of our business.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Volumes and Time and Industries</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Certain industries are very sensitive to these issues.  For example, insurance is a business of understanding trends in data over decades.  One buys insurance for that once in a life time event: the major car accident, the destruction by fire of a home, or even death.  Insurance companies look for trends, causes, risks, and analyze loss events over very long periods of time.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Being able to accumulate transactions efficiently over long periods of time, against trusted repositories (things which agree to the audit worthy book-of-record aggregate posted values) is the most important functionality desired in many businesses today.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>So, having outlines some aspect of the most important functionality of the system, perhaps next we'll talk about optimizations that might be made against such a system, and the technology landscape for tools in this space.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Next post: <a href="/2020/06/26/the-value-of-data-part-2-the-data-supply-chain/">The Value of Data Part 2: The Data Supply Chain</a></p>
+<!-- /wp:paragraph -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

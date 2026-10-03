@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 50. Piping, Tokens, and the Write Verb — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-50-piping-tokens-and-the-write-verb/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 50. Piping, Tokens, and the Write Verb</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<p class="title topictitle1">I noted earlier in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-36-optimize-for-performance/">Optimize For Performance</a> how the concept of piping came to be. It is useful when data needs to be passed from one or more views to one or more additional views. Tokens are another method to accomplish this function for special purposes. The Write statement is often used in conjunction with piping or other advanced SAFR processes.</p>
+
+<div class="body conbody">
+<div class="section">
+<h2 class="title sectiontitle">Piping</h2>
+<p class="p">Piping isn't too difficult a concept. Without piping, one or more views in a SAFR thread read an event file and write to an extract file. Another execution of GVBMR95, often called another pass of the data, allows one or more additional views to read that extracted data. By defining the output extract file from the first set of views as a pipe, and then reading that file as an input to the next set of views allows SAFR to connect the two processes and run them in one GVBMR95 execution.</p>
+<p class="p">Doug accomplished this quite quickly. When a program requires data from disk, it calls an operating system module, called a system service, access method, or something in the PC world akin to a DLL, to get that data from disk. This program on a mainframe talks to a channel. So reading data is really just a subroutine call to another program.</p>
+<p class="p">When piping, SAFR simply calls a very simple little module that keeps track of the reading status and the writing status between the two threads. When the pipe "reader" thread starts up, it calls the little program to tell it to get data. The module knows that the pipe "writer" thread has to execute to fill up the buffer, so it simply says, "OK, I'll be back in a bit with the data." The pipe reader gets swapped off the CPU waiting for data, and as the pipe writer executes.</p>
+<p class="p">When the pipe writer has filled an output buffer and it is ready to be written to disk, instead of SAFR calling the BSAM access method to write the data to disk, it calls this same little module and tells it to write the data. The module says, "OK, be back in a minute" and the pipe writer is swapped off the CPU. This module then posts to the pipe reader that it has data for it to read. The pipe reader wakes up and begins processing the data.</p>
+<p class="p">This little dance continues until the pipe writer says to write the last buffer, and the pipe reader has read what was written. There is a small degree of parallelism occurring because of the overlapped IO, whereby the pipe reader is reading buffers that are different from the buffers being written by the pipe writer. But this parallelism is only as long as it takes to process one buffer of data in either of the threads. The little module in the middle is said to be emulating an access method.</p>
+<p class="p">The pipe reader views must use an LR that matches the output from the pipe writer views to interpret the data, just the same as if they were reading a physical file. This often means that the views writing to the pipe are extract only views, only writing the DT fields to the pipe, but this isn't a requirement. Because extract phase summarization accumulates values in the CT columns, it isn't very common to use it in the midst of piping processes. Rather, typically the last set of views reading the last piped data are "reporting" type views which would use extract phase summarization.</p>
+<p class="p">One purpose for piping is to consolidate logic that would need to be applied in many views in one view, the pipe writer. The pipe reader views becomes like a sub or called module that only acts on the output of the first view, not the original input data. This simply improves the maintainability of the views so logic isn't replicated in multiple places; it doesn't necessarily improve performance.</p>
+<p class="p">Note that if more than one view is writing to the extract file, the record count in the extract file will likely not equal the record count in the original event file. Selection criteria, filtering out certain event records, will certainly change it. Alternatively, if the same event record is selected and written by the more than one pipe writer view, the same event record will be duplicated in the pipe. Thus one input event record can become multiple output records.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Piped Allocation Process Example</h2>
+<p class="p">This fact was used to allocate event records to lower levels of detail for the insurance company. Programs were created that generated SAFR views which wrote to pipes. Thus an expense record for, say, the CEO of the company, could be turned into many new records each ultimately representing the portion of the CEO's salary attributable to an insurance policy, an extreme example. This would be done by allocating to lower and lower levels of detail in successive pipes.</p>
+<p class="p">For example, the first pipe writer views would have a column with the division number in it. There would be one view per division. They would each select the CEO's salary record, and multiply it by the value of that division to the total divisions. These records would be written to a pipe. In the next to last pipe, each insurance policy could have a column with the insurance policy number as a column, and have another column with a calculation multiplying the allocated salary records for the division by the proportion of that insurance policy's value to the total of all insurance policy values.</p>
+<p class="p">The last pipe reader thread would have reporting views within it. These would almost all use extract phase summarization because no one really cared how much of the CEO's salary was attributable to an individual policy. But they were interested in accumulating the total cost per insurance policy in different ways. These different summaries were the only things written to disk.</p>
+<p class="p">Thus there is a huge record explosion occurring in memory, but never going to disk, as one input event record is turned into thousands of allocated records, that are then collapsed into scores of summarized output records. It was quite a remarkable design.</p>
+
+<div class="p">
+
+The following is a sample GVBMR95 control report showing view 3459 writing to a pipe, and view 3458 reading from the pipe. This is done by looking for linkages between DD Names and numbers of records written and read for threads. View 3459 writes to the DD Name F0003459. This is the file handle for the output side. At the bottom of the control report, we can see that the total records written to this DD Name, 18, are written to a pipe. The total records written are the same as the total records read in the top of the report from the pipe DD Name, EVNTPIPE, the file handle of the reading thread. In the middle of the report, View 3458 is shown reading from EVNTPIPE DD Name.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1184" src="/wp-content/uploads/2018/10/gvbmr95pipingcontrolreport.jpg" alt="GVBMR95PipingControlReport" width="1452" height="1412" /> <span class="figcap">Figure 135. GVBMR95 Piping Control Report</span>
+
+<div class="image"></div>
+</div>
+</div>
+<div class="p">
+
+The following is a portion of the trace output showing the end of the pipe writer thread, which contained view 3459, and the beginning of the pipe reader view 3458. Note the WRDT function in view 3459, an extract only view, writing records to the pipe.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1183" src="/wp-content/uploads/2018/10/samplepipetraceoutput.jpg" alt="SamplePipeTraceOutput" width="1418" height="834" /> <span class="figcap">Figure 135. Sample Pipe Trace Output</span>
+
+<div class="image"></div>
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Tokens</h2>
+<p class="p">All threads run asynchronously. That means when they will and won't be executing is unpredictable. There are certain problems where coordination between the views or, more often, between the pipe reader views and other data in the original event file is needed (see next two chapters). Piping can't be used for this. Tokens can be used to solve this problem. They are not often used, but we will describe how they work.</p>
+<p class="p">Tokens can be thought of as a working storage or temporary variables. The token writing view creates the variable that can be used by other views within the same thread. Unlike piping, which passes data between threads, tokens only are available within threads.</p>
+<p class="p">Similar to piping, there are token writer views, and token user views. Let's deal with a single token writer view first. The token writer operates upon event data like any other view, but its output is a token. A token record is simply written to memory. The output must match an LR that will be used to interpret the record similar to a pipe output. Any view that writes a token is moved to the top of the thread, so its output can be used by any other view in that thread.</p>
+<p class="p">Similar to piping, the token reader views can read the token output instead of the regular event file. This is accomplished by a little slight of hand in the thread. GVBMR95 simply changes the address of the event record to point to the single token record (always a single record) written. Thus there will never be more tokens written in a thread than there are event file records. Unlike pipes, tokens do not accomplish the data explosion needed for an allocation process. If selection criteria caused the token writer to not write a record, then the token reader will read one less record from the event file.</p>
+<p class="p">In addition to <em class="ph i">reading</em> a token, the token can also be used as a look-up. Thus a view might still read the event file record as its input, but form a key of some kind to "join" to the token. This isn't a true lookup in the sense of searching for many records to find the one with a matching key. There is always only one record available - the record written as a token. If no record is written as a token, then the lookup is treated as not found.</p>
+<p class="p">There can actually be multiple token writers, even though there is only one token record in a thread. All token writers are moved to the front of the thread. They are executed in order by their view ID. The last token writer to write a record wins; that record will be used by all token using views.</p>
+<p class="p">Thus logic can be consolidated in token views, similar to the purpose of piping. Any token user views can also be aware of all the other aspects of the thread. Tokens are most often used in conjunction with user exits, discussed in the next chapter, which have visibility to the aspects external to the thread. Tokens, though, accomplish no parallelism. The token writers and token readers execute serially.</p>
+
+<div class="p">
+
+In the following example, view 3460 is in the pipe reader thread. It performs a number of look-ups to create a single record that is pre-joined by the pipe writer view. This might be done because it is expected that doing all the joins up front in the thread will make the logic in the using views easier to understand. View 3461 looks up to the token, and view 3462 reads the token, both in the same pipe reader thread.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1182" src="/wp-content/uploads/2018/10/gvbmr95tokencontrolreport.jpg" alt="GVBMR95TokenControlReport" width="1458" height="1620" /> <span class="figcap">Figure 137. GVBMR95 Token Control Report</span>
+
+<div class="image"></div>
+</div>
+</div>
+<div class="p">
+
+The following is a sample of the trace for these two views, with descriptions of the functions in the logic table for each.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1181" src="/wp-content/uploads/2018/10/tokentraceoutput.jpg" alt="TokenTraceOutput" width="1687" height="853" /> <span class="figcap">Figure 138. Token Trace Output</span>
+
+<div class="image"></div>
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Write Verb</h2>
+<p class="p">The write verb allows a SAFR developer a finer level of control over when and where an extract record is written.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a> In all the examples thus far, the views have an implicit Write statement, telling GVBMR95 to write the extract record after it has built the last column of the view and tested for extract summarization. Where the extract record was written is controlled by the View Properties. For extract only views, the default DD Name is "Fnnnnnnn" where nnnnnnn is the view number padded with 0's to the left. Views can also be directed to write to a specific physical file in the SAFR metadata.</p>
+<p class="p">Suppose a single view may be able to satisfy multiple needs even though the output records are exactly the same. Two or more outputs may share many of the same output fields, but one requires another column or two. Inserting a WRITE function after the first record has been built causes GVBMR95 to write that record. Then additional columns can be added and another write verb inserted to write all the data from the first record plus the additional columns.</p>
+<p class="p">Thus the write verb allows multiple copies of the same extracted record for different purposes. One company actually makes on-site and off-sight backups in the midst of the business function SAFR process because it eliminates two additional IOs of the repository. It can also control the target file based upon a condition, or splitting one input record into many.</p>
+<p class="p">Another common use is in partitioning the output to continue parallelism through SAFR processes. Remember that the standard SAFR configuration is that the same view in multiple threads writes to the same extract file. When using piping or writing the output to the repository, it isn't desirable to collapse them into single partitions on output. No parallelism will be achieved in subsequent processes.</p>
+<p class="p">The write verb also allows conditional calls to a write exit, discussed in the next chapter. This allows for write exit parameters to be changed based on column logic. Another less used reason is to break up a multiple occurring segment of a record into individual records. This would be similar to a record containing an "occurs" clause in COBOL.</p>
+
+<div class="p">
+
+In the following example, view 3463 is a copy input view reading both the EVENT1 and EVENT2 physical files. It contained the following logic text:
+<pre class="pre codeblock"><code>If {LEGAL_ENTITY} =  522349731 Then
+	WRITE(SOURCE=INPUT,DESTINATION=EXTRACT=02)
+Else 
+	WRITE(SOURCE=INPUT,DESTINATION=EXTRACT=03)
+EndIf</code></pre>
+</div>
+<p class="p">The file associated with DD Name DEST002 contains all the data for one legal entity and DEST003 contains all the data for the other legal entity. Note that because our input event files were already partitioned this way, the output files will be the same as the input files.</p>
+<p class="p">Let's suppose that these two files are the weekly files, and we have a third input file that contains the new records for the day, a mixture of legal entities. If our view also read this file, but only writes the two new versions of the weekly file, we have read the daily and weekly files, other views could have produced outputs from all of this data, while performed the weekly master file update process. This is a common approach and use of the write verb to update the master file, while maintaining partitioning.</p>
+
+<div class="p">
+
+The control report shows the results of using the write verb in view 3463.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1180" src="/wp-content/uploads/2018/10/gvbmr95writeverbcontrolreport.jpg" alt="GVBMR95WriteVerbControlReport" width="1462" height="964" /> <span class="figcap">Figure 139. GVBMR95 Write Verb Control Report</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">Note that view 3463 now writes to two different output files.</p>
+
+</div>
+<div class="section">
+<div class="p">
+<pre class="pre"></pre>
+Next we'll examine what to do if SAFR native capabilities are not up to solving a specific problem.
+
+</div>
+</div>
+<div>
+<div class="body conbody">
+<div class="section">
+
+&nbsp;
+
+</div>
+</div>
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-15-exits/">Chapter 51. Exits</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-49-control-and-contention/">Chapter 49. Control and Contention</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> I am indebted to Stephen Frobish and Andrea Orth for portions of this material.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-49-control-and-contention/" class="prev"><span class="label">&larr; Previous</span>Chapter 49. Control and Contention</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-15-exits/" class="next"><span class="label">Next &rarr;</span>Chapter 51. Exits</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

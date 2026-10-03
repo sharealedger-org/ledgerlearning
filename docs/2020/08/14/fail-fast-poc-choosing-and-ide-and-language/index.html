@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fail Fast POC: Choosing and IDE and Language — LedgerLearning</title>
+  <meta name="description" content="Objective
+
+
+
+One day in June 2020 I was encouraged to start a new POC.  In simple terms, the idea was to read an XML file containing the processing specificatio">
+  <link rel="canonical" href="https://ledgerlearning.com/2020/08/14/fail-fast-poc-choosing-and-ide-and-language/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Fail Fast POC: Choosing and IDE and Language</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">August 14, 2020</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:heading -->
+<h2>Objective</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>One day in June 2020 I was encouraged to start a new POC.  In simple terms, the idea was to read an XML file containing the processing specification for a z/OS tool, <a href="https://genevaers.org">GenevaERS</a>, and attempt to translate that into another language and file format.  The target language was undefined; it might range from COBOL to Java to Scala to something else.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>It was an interesting day for me, how a number of threads of things came together.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Where to Start?</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I set an objective to get something on this done <a href="https://whatis.techtarget.com/definition/fail-fast">that day</a>; and it wasn't pressure filled.  Even if I did not get something to work, and it was a complete failure, I would know what would not work.   <a href="https://due.com/blog/thomas-edison-10000-ways-that-wont-work/">Edison</a> is a great example of finding value in failure. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I have been using <a href="https://intellij-support.jetbrains.com/hc/en-us#">Intellij</a> for a few years now and have some proficiency with Scala, but I knew it wasn't quite the right language for what I was doing.  It could do it, but there are probably better languages out there.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>One that I had used years ago which was well suited to this sort of work was <a href="https://en.wikipedia.org/wiki/Rexx">REXX</a>; very good at parsing and text manipulations.  Since I had some experience with that, I then started to try to move towards using that in some way.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>What IDE to Use?</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>An IDE can help make these things go quicker, because at times they bring together a lot of the needed elements.  A quick search of Intellij showed me there was nothing there for REXX.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I also have used Eclipse IDE with its Scala package.  I knew Eclipse came with a wider set of languages and plug-ins, some of which are older languages and more connected to z development like REXX is.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>So diving into <a href="https://www.eclipse.org/ide/">Eclipse</a> for a while, I got lost.  The idea of perspectives took me a while to understanding (they are different products in Intellij), and that led to<a href="https://www.ibm.com/products/developer-for-zos"> IBM Developer for z/OS</a> or IDz which is even more z/OS centric for development and had more references to REXX.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>When I installed it,&nbsp;I chose too many components to install. &nbsp;There are a lot of components that seem like they will be useful at some time, but then those things automatically install other things that I didn't want. &nbsp;For example, I installed some CICS components (not all but some) when I was quite sure I'm not going to do anything with CICS.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>All of these things started to make me feel like my the Eclipse environment had become a bit unstable. &nbsp;I started getting error message when it loaded like, "Exception occurred while creating new instance of component Component[name = org.eclipse.epp.mpc.core.transport.http...."  I had no idea how to start to fix that, or even desire to try.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Even after doing all of that, I couldn't find something that easily allowed local development of REXX. &nbsp;I was working from the java developer mindset of local development and then deploy to the execution environment if that needed to be on z. &nbsp;I found in the end one can do the local execution of REXX (even on a Mac which sometimes is a challenge), but IDz as a development tool is not really meant for that paradigm. &nbsp;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I decided I would have been faster to go to <a href="https://en.wikipedia.org/wiki/ISPF">ISPF</a> on z and type the program into it in edit mode than doing all of the above.  It might have been the easiest. Sure, I could write and execute REXX on z, but that wasn't the type of development environment I thought would solve this problem.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Rethinking the Language</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I realized through all this work that REXX is getting fairly old, and all (that I could find)&nbsp;the Eclipse plug-ins supporting it were 10 years old and not working any longer.&nbsp;Although REXX is all over the IDz documentation, none of it is about writing REXX; rather it's about using it perhaps to automate development in some way.  I never did find something that gave syntax checking of it.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>And then I discovered that a better answer than REXX is <a href="https://www.python.org">Python</a>. &nbsp;In a sense it seems Python has perhaps been influenced by REXX (or other similar languages) and can do the parsing of XML with built in functions without having to code it all myself.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>And the Python add in on Intellij is robust. &nbsp;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>So in the end, I landed back at Intellij for prototyping this little thing, and decided on Python, a successor to REXX.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>The Day's Results</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The next morning, &nbsp;<a href="https://www.linkedin.com/in/sandyperesie/">Sandy Peresie</a> connected with me, saying she wanted to learn Python.  #ThePowerofOpenSource was very clear in that moment.  Her desire along with my fail fast investigation resulted in starting to make progress on the work.  The results of her work can be found on the <a href="https://genevaers.org/2020/06/26/initial-open-source-work-metadata-translation/">GenevaERS.org</a> site.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>However, the larger connection for me was when I realized this whole process might look very different in the future.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2><a href="http://www.rosettacode.org/wiki/Rosetta_Code">RosettaCode.org</a></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The day of my prototyping I discovered RosettaCode.org.&nbsp; </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In short, a guy found a listing of "hello world" programs in various languages, and decided that program didn't teach one too much about the various languages.&nbsp; So he started the site which puts out a problem, and then people write a solution in whatever programming language they know.&nbsp; The list of languages used on the one <a href="http://www.rosettacode.org/wiki/XML/XPath">sample XML problem</a> I looked at was very impressive.&nbsp;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I stumbled into this when looking for REXX and XML parsing; one of the sample programs was written in REXX.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I had strong feelings in the evening that there is something interesting about the concept of this website; It teaches that in fact the language used for some computing problem is really not all that important; or perhaps that 'soverstating it - is perhaps not critical to a very large set of computing problems to be solved.&nbsp; The things the language influences is:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>The resources that can work on the problem; people only know a limited set of languages, and specialize in even fewer.</li><li>The length and complexity of the resulting code, as languages have different strengths and weaknesses, even if they can ultimately produce a particular output</li><li>The platform used.&nbsp; Not all languages work on all computer systems.</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>The site shows that someday our use of computer languages might be very different.  Like the premise of the Rosetta Stone which allowed translation between a number of ancient languages, is it possible that at some point one could write a program in one language, but the function of that program to produce that output from that input might be presented to someone else in a language they know, not the one the function was originally written in.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>During my years of international travel, I saw Google Translate transform from something that was not very useful to being in the middle of many conversations.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>At some point, it is possible that choosing a language won't be that important, as through a similar type of mechanism, whatever we specify will be translated into whatever processing language is needed to deliver it.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Insights</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>So what did I learn from this day?  Here are a few points for me:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Failure, particularly when fast, is very useful in getting us on the right path</li><li>Speed in failure comes from not being afraid of failure; if failure is punished, then it will be avoided, and learning will be delayed--perhaps until it is too late</li><li>I gained a broad overview of tooling in the mainframe development space, but touching on more modern languages and data structures (like XML)</li><li>But the implications of the Rosetta Code site are the most powerful.  In that I gained a principle, and understanding principles helps guide us to greater efficiencies in future learning and abilities, particularly when we can use them to predict the future.</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Fail fast was very helpful for me to learn a lot in one single day.  </p>
+<!-- /wp:paragraph -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

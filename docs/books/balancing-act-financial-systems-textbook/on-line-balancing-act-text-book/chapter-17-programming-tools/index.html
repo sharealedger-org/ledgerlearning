@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 17. Programming Tools — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-17-programming-tools/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 17. Programming Tools</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">After my training class in October 1992, Rick sent me to Minneapolis, Minnesota for a project. The project was building a software product, sponsored jointly by my company and a client to do activity based costing, a type of cost accounting. A new type of IT tool was in vogue called CASE tools. CASE tools were designed to make programmers more productive. CASE allowed the programmer to write one statement that would tell the computer to do many things.</p>
+<p class="p">The key issue for performance is the processing patterns generalized by the tool. A hammer and a screw driver both insert a long, thin object with a flat head into materials to hold them together. Although a screw driver might make driving a nail easier in the absence of any other tool, and a hammer might successfully insert a screw enough to hold things together, they were designed for different patterns of work.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Computer Instructions</h2>
+<p class="p">At the bottom of all computer languages and procedures used by the processors are a series of ones and zeros. Each one or zero is called a bit. A grouping of usually eight bits makes a byte. For example, on an IBM mainframe the letters "Y E S" would be represented as "11101000 11000101 11100010". The eight digits of either zeros or ones - a byte - can be combined in 256 possible ways. Only 26 of those combinations are used for capital letters, another 26 for lower case letters, and 10 more for numbers. The others are used for punctuation, and other characters.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a> In a sense, extending our people in a meeting analogy, these combinations of ones and zeros are the alphabet of languages used in every computer "meeting", even though the language itself might be different.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></p>
+<p class="p">Considering our analogy further, take note that language is used in two different ways in our meeting: (1) It records the information we write in the notebook and on the white board; (2) it is also used by people as they think and communicate. These are very different things. If the processors - people - are determining how much to pay employees, the whiteboard might be filled with numbers like hours worked and pay rate, and then ultimately the pay for the current period. All these items would be written in the notebook when the meeting is over. This is generally referred to as data.</p>
+<p class="p">The second category of communication, telling a person in the meeting to multiply the hours worked by the pay rate, is called the program. It is written in a different binder, in this case the binder of payroll procedures, only when the program is created. These programs change must less frequently than the data changes, and are much more time consuming to develop. For the most part creating these procedures is the work of IT projects.</p>
+<p class="p">Although both categories of language used in our meeting are composed of zeros and ones they aren't really the same language. It is a bit like the fact that Hawaiian and Japanese are both composed of very similar sounds, but the combinations of those sounds means completely different things. The language of a computer program is almost always not the same as the language of the data.</p>
+<p class="p">For example, the 11101000 that represents a "Y" in the data means something different in a program. That set of zeros and ones means a Move Character Inverse (MVCIN) instruction. When the processors see that instruction, it tells them to copy data on the white board to another part of the white board, but reverse the order of the letters. Thus when the computer executes an instruction a person would read as "Y", it might make a copy of the white board word "Hello" as "olleH".<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a></p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Computer Languages</h2>
+<p class="p">Almost no one writes computer programs by typing in ones and zeros. That is far too time-consuming. Instead, people instruct computers to do things through various computer languages. In a simplified way, they write "MVCIN" and a computer program called a complier<a href="#fntarg_4" name="fnsrc_4"><sup>4</sup></a> translates it into the instructions 11101000. There are compilers for each computer language which do this function.</p>
+<p class="p">Over the course of computer development, there have been more and more languages created - each one a slightly different tool. Each language has its particular strengths, similar to the way vocabulary is developed in specialized fields (like accounting and computers) to describe different concepts. Some computer languages are better suited to expression of scientific functions, others for graphics and others for a host of other types of computer problems.</p>
+<p class="p">Languages have also been developed to work at different levels of specificity. The most specific language is called "assembler." Assembler is specific to a particular computer, and translates directly into the ones and zeros that computer recognizes. The MVCIN instruction above is an assembler instruction for an IBM mainframe. Because someone has to specify every specific action the computer should take in assembler, it is called a low level language.</p>
+
+<div class="p">
+
+Higher level languages don't require programmers to specify every single action. For example, COBOL is considered a third generation computer language - a higher level language. Binary, the ones and zeros, is the first generation; assembler is the second. In COBOL someone can write the following phase:
+<pre class="pre codeblock"><code>IF HOURS-WORKED GREATER THAN STANDARD-HOURS (EMPLOYEE-GRADE)</code></pre>
+And the COBOL compiler will translate this into the following assembler instructions:
+<pre class="pre codeblock"><code>LH	2,240(0,10)
+L	3,16(0,12)
+MH	2,96(0,3)
+L	4,308(0,9)
+PACK	568(2,13),8(2,4)
+OI	569(13),X'0F'
+AR	2,10
+PACK	576(2,13),174(2,2)
+OI	577(13),X'0F'
+CLC	568(2,13),576(13)
+BC	13,2348(0,11)</code></pre>
+</div>
+<p class="p">One COBOL phrase translates into 11 assembler instructions; 11 assembler instructions translate into 11 machine instructions of ones and zeros.<a href="#fntarg_5" name="fnsrc_5"><sup>5</sup></a></p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Patterns</h2>
+<p class="p">Using higher level languages makes programmers more efficient; it takes less time to write the COBOL statement above than the assembler instructions. Because programmer time is a significant element of automating functions, this is a reasonable approach; making programmers more efficient means automation takes less time. But this efficiency can come at a cost if the language and compiler used - the tool - doesn't automate the correct pattern.</p>
+<p class="p">The person that designed the COBOL language and wrote the COBOL complier had certain processing patterns in mind. He or she designed templates of assembler code for each COBOL statement. If that pattern matches the work that needs to be done then that code will be efficient. If not, it will not be. It may be as inefficient as using a screwdriver to pound in a nail.</p>
+<p class="p">For example, if in our example above the person designing the compiler knew that for some reason the HOURS-WORKED and the STANDARD-HOURS for the specific EMPLOYEE-GRADE are already loaded into computer registers - something like the eyes of those in the meeting reading information from the white board - they could have designed the pattern of assembler instructions to be different. The first ten rows of assembler instruct meeting participants where on the white board to look for the data, and how to get the data into a format that can be compared; if the values were the words "twenty-two" in one case and "25" in the other, the comparison won't work. But perhaps the way the language is structured, the person designing the compiler knows that the eyes of processor will be looking at the right data to be compared when they come to this point and the data is in the right format. If that were the case, then instead of the 11 instructions above, the program would only need the following two:</p>
+
+<pre class="p">CR 2,10<a href="#fntarg_6" name="fnsrc_6"><sup>6</sup></a>
+BC 13,2348(0,11)</pre>
+<p class="p">The COBOL complier doesn't have this pattern; it chose the pattern shown above. For the most part, when it sees an IF statement that compares two numbers, it will assume the computer will need to find the data, and change the format of the data to be comparable. One experienced assembler programmer has found he can remove 1/3rd of the computer instructions generated by COBOL if he writes the program in assembler.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Efficiency Matters</h2>
+<p class="p">But of course, writing compilers is very time consuming; very labor intensive. At times it may be more efficient to use an existing compiler and have the program perform the 11 functions rather than taking the time to build a compiler or for the programmer to write it in assembler. This is often the case because of what is called Moore's law which states that since the mid 1960's computers double in speeds about every two years. Thus as computers become faster, the cost of the more efficient programmer (and less efficient program) is made up for by the faster computer.</p>
+<p class="p">However, in the case of producing answers as close to the time when someone asks the question, 11 machine instructions might matter, particularly if it is 11 machine instructions per business event record summarized. Remember, some questions require accumulation of millions of business events.</p>
+<p class="p">Computer processors run at constant speeds. In a CPU "cycle" a processor can basically execute one machine instruction. If our computer runs at 1 gigahertz, or 1 billion machine instructions a second, and our answer requires summarizing 1 billion business events,<a href="#fntarg_7" name="fnsrc_7"><sup>7</sup></a> then if we use an inefficient tool which uses 13 machine instructions, we will get our results in 13 seconds. If we use a different language or compiler which uses two machine instructions, we'll get our answer in 2 seconds.</p>
+<p class="p">Meetings that use very flowery language like congressional debates take more time to communicate affirmation than someone saying, "Yep."</p>
+<p class="p">Now remember, if the existing system today is providing the answer to this question, and that answer really takes summarizing 1 billion business events, the existing system today must be doing that work. It might be doing that work in pieces; a portion in the operational system in posting the transactions, a portion in the ETL layer loading the data warehouse, and a portion in the database as it does a sum function for the last level of summarization for the actual report request, but the work is being done today. It is simply that the work is done all along the supply chain, a portion of which is hidden during nightly or transaction system processing. Doing this existing work more efficiently will either (1) reduce the time to produce the reports if 13 seconds is unacceptable, or (2) reduce the compute cost if 13 seconds is acceptable.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">SQL</h2>
+<p class="p">CASE tools were considered a "higher level language," a fourth generation language, meaning they are even less detailed than COBOL. CASE tools were viewed as another step up in evolution of computer programming. In the same way a few COBOL lines generates many assembler instructions, a few lines of a CASE tool language could generate a lot of either COBOL or C, another third generation computer language.</p>
+<p class="p">The tool that spurred McCarthy's paper was not CASE tools, but rather the database. Inmon's first word in his book on data warehousing is "Databases". Databases and database technology are very important. They make most of the functions needed at both ends of the subsystem architecture possible: they capture the initial business events, and they present the rows of data the users need to find answers to reporting problems. Because of this fact, the database has become the generalized tool for reporting processes.</p>
+<p class="p">SQL has become the most widely used language to interact with databases, although it is only for a specific type of database called a relational database. SQL is not a procedural but rather a declarative language, something that specifies what has to be done not how it should be done. Thus the patterns chosen by the developers of the databases - the functions that turn SQL into machine code - are even less under the control of the programmer than in other languages where the programmer can specify how the program should solve the problem, like COBOL.</p>
+<p class="p">The patterns SQL is focused on automating are data access; particularly at both ends of the subsystem architecture. These patterns are not the same as the functions for accumulating business events for reporting. SQL was not designed to perform this function.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">As I approached the end of the project, Rick's fiancÃ©e, Julia gave me some good counsel: "Kip, remember, tools are just that; they are tools. Don't confuse them with the results." Matching the tool to the work to be performed will end in better results. Over the next few years, I would see lots of cases where the wrong approach was taken to solving a reporting problem, with terrible results.</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-18-input-output/">Chapter 18. Input/Output</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-16-data-warehousing/">Chapter 16. Data Warehousing</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/">Part 3. The Partner</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="related-links">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Other types of computers, like PCs, use a slightly different representation called ASCII, rather than the Mainframe named coding structure of EBCDIC. For example, instead of EBCIDIC "11101000" in ASCII it is "10101001". But the principles involved are the same for almost all types of computers.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a>  <cite class="cite">IBM System/370 Reference Summary, Eighth Edition</cite>, (February 1989) 34   37.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> IBM Enterprise Systems Architecture/390, <cite class="cite">Principles of Operation</cite> Seventh Edition (July 1999), 7-53, A-24.</div>
+<div class="fn"><a href="#fnsrc_4" name="fntarg_4"><sup>4</sup></a> Technically "assembler" when the language is assembler.</div>
+<div class="fn"><a href="#fnsrc_5" name="fntarg_5"><sup>5</sup></a> The following is a more detailed description of these assembler instructions: Load half word (LH) puts the value EMPLOYEE-GRADE into register 2. The next three instructions, load (L), multiply half word (MH) and load (L) adjust register 2 to point at HOURS-WORKED. The Pack and Or Immediate (OI) instructions format the HOURS-WORKED to be in a comparable format. Add Register (AR) instruction finds the STANDARD-HOURS in memory, and its format is made comparable through the Pack and Or Immediate (OI) instructions. The Compare Logical Character (CLC) instruction compares the STANDARD-HOURS and HOURS-WORKED. The Branch on Condition (BC) instruction then branches based upon which value is greater.</div>
+<div class="fn"><a href="#fnsrc_6" name="fntarg_6"><sup>6</sup></a> If the values for HOURS-WORKED and STANDARD-HOURS were loaded into registers already, their formats would have already been located (obviating the need for the L, MH or AR instructions) and adjusted to be comparable before they could have been loaded (obviating the need for the PACK and OI instructions). So the Compare Register (CR) can be used instead of the CLC instruction. These values might have been loaded into the registers to perform some other function, such as testing for reasonable limits or some other test. At a minimum, the PACK and OI instructions could be eliminated as the formats of the fields are actually comparable.</div>
+<div class="fn"><a href="#fnsrc_7" name="fntarg_7"><sup>7</sup></a> The example assumes all the records fit into memory - the white board in our analogy. Time to read the data from disk (the binder) is thousands of times slower than the CPU clock speed of 1 gigahertz.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-16-data-warehousing/" class="prev"><span class="label">&larr; Previous</span>Chapter 16. Data Warehousing</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-18-input-output/" class="next"><span class="label">Next &rarr;</span>Chapter 18. Input/Output</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

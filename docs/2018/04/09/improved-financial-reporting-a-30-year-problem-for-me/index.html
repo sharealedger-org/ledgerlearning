@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Improved Financial Reporting: A 30 Year Problem for me — LedgerLearning</title>
+  <meta name="description" content="As I approach two years of my vlog, I thought reflecting on its purpose might be helpful. I've been working on how to improve financial reporting for 30 years t">
+  <link rel="canonical" href="https://ledgerlearning.com/2018/04/09/improved-financial-reporting-a-30-year-problem-for-me/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Improved Financial Reporting: A 30 Year Problem for me</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">April 9, 2018</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+As I approach two years of my vlog, I thought reflecting on its purpose might be helpful. I've been working on how to improve financial reporting for 30 years this fall, when I took <a href="https://youtu.be/KFlrZ33YGOI" target="_blank" rel="noopener">Eric Denna's first college course</a> at <a href="https://marriottschool.byu.edu/acc/" target="_blank" rel="noopener">BYU</a> introducing me to the idea of <a href="https://msu.edu/~mccarth4/" target="_blank" rel="noopener">Resources, Events and Agents, REA by Bill McCarthy</a>. I've written a textbook about what I've learned, "<a href="https://www.amazon.com/Balancing-Act-Practical-Approach-Business/dp/0991570103/ref=tmm_pap_swatch_0?_encoding=UTF8&amp;qid=&amp;sr=" target="_blank" rel="noopener">Balancing Act: A Practical Approach to Business Event Based Insights</a>." This week's episode attempts to reduce the 362 pages to a couple of paragraphs here, or 4 minutes in the video.
+
+We would have <a href="https://youtu.be/sfCxRSa86iU" target="_blank" rel="noopener">ultimate flexibility</a> for all financial reporting <a href="https://youtu.be/72m_oUZua2M" target="_blank" rel="noopener">if we could do it from transactional data</a>. However, the cost of maintaining time perspectives with transactional data would be very expensive if it is even possible. Thus we have always used <a href="https://youtu.be/lv6H7KDw_zo" target="_blank" rel="noopener">posting processes</a>, thousands of them in almost <a href="https://youtu.be/zbB2mAf61t4" target="_blank" rel="noopener">every business system</a> which aggregate transactions, to maintain these views. Yet these posting processes drop selected transactional attributes.
+
+The<a href="https://youtu.be/hLPR1BAbL4c" target="_blank" rel="noopener"> daily financial cycle</a> that drives our aggregation posting processes. The <a href="https://youtu.be/yT-QRME8TFU" target="_blank" rel="noopener">originating systems typically consume the first part of the overnight processing cycle</a>; and those systems are all <a href="https://youtu.be/1FFrxwAi6Bs" target="_blank" rel="noopener">partitioned by product, geography, or customers</a>. After that, the <em>enterprise</em> financial perspective must be updated, with results available by next day business opening. Thus, bringing together all the partitioned data--every transaction for the company, in a very <a href="https://youtu.be/Eke4_ps5h7k" target="_blank" rel="noopener">short period of time</a>.
+
+This need drives the <a href="https://youtu.be/RAIXt8FZ4Vc" target="_blank" rel="noopener">General Ledger to be highly aggregated</a>. The GL by and large gives us the right answer, but increasingly it does not answer <em>why</em> that is the answer. The why requires those missing transactional attributes, dropped in the earlier posting processes. So we produce the General Ledger, and then later in the day, <a href="https://youtu.be/QfvbybK34Gw" target="_blank" rel="noopener">using different computing logic, the data warehouse</a> becomes available with more detail. The differences in posting logic <a href="https://youtu.be/PDaJF5rJkMs" target="_blank" rel="noopener">increases reconciliation requirements</a>, adding to GL to the original source systems reconciliations.
+
+The alternative is to <a href="https://youtu.be/d2qZeFfuKq0" target="_blank" rel="noopener">radically change the posting process</a>; posting processes to customer/vendor contracts increases the master file detail dramatically--I call it an <a href="https://youtu.be/PHdFQH96-L0" target="_blank" rel="noopener">Instrument Ledger</a>--but eliminates enough transactional data to allow cost effective processing within the required windows. Doing so allows <a href="https://youtu.be/TjH4bw7baM0" target="_blank" rel="noopener">many more perspectives to be produced</a> off of the same master file--consolidating <a href="https://youtu.be/LAdq4yGonOM" target="_blank" rel="noopener">Data Supply Chains</a>. The ability to query against the instrument ledger and pivot the posted balances to other customer/vendor and contract attributes enables a <a href="https://youtu.be/2bKFdVOorVg" target="_blank" rel="noopener">Metric Engine</a>--something as simple as a Search Engine, but which creates the require aggregated balances.
+
+This is <a href="https://youtu.be/Qm68OVQ8jBc" target="_blank" rel="noopener">Episode 111 of Conversations with Kip</a>, the best financial system vlog there is.
+
+https://youtu.be/Qm68OVQ8jBc
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Ledger POC Results: Potential Infrastructure Software — LedgerLearning</title>
+  <meta name="description" content="In the spring of 2019 I undertook a study of potential infrastructure components that could be used to construct a Universal Ledger System.  Here's a report of ">
+  <link rel="canonical" href="https://ledgerlearning.com/2020/05/22/universal-ledger-poc-results-potential-infrastructure-software/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Universal Ledger POC Results: Potential Infrastructure Software</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">May 22, 2020</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:paragraph -->
+<p>In the spring of 2019 I undertook a study of potential infrastructure components that could be used to construct a Universal Ledger System.  Here's a report of that effort:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Components chosen included:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+<ol><li><a href="https://www.vagrantup.com">Vagrant Containers</a></li><li><a href="https://scala-lang.org">Scala</a> as the Language</li><li><a href="https://www.scala-sbt.org">sbt</a> as the build tool</li><li><a href="https://spark.apache.org">Apache Spark</a> as the analytical application</li><li><a href="https://www.playframework.com">Play Frameworks</a> as the web server/authoring tooling</li></ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>The various scripts used in the video are shown at the bottom of this post.  The source code can be accessed at GitHub <a href="https://github.com/KipTwitchell/universal_ledger">KipTwitchell/universal_ledger</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Conclusion</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I had hoped to get much further in building a universal ledger.  However, the effort resulted in a much deeper understanding of the infrastructure choices one can make in building these kinds of system, and the challenges in using them.  There were a couple of mis-steps, in the web server and database areas, which weren't always painless to correct.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I think the infrastructure chosen would be adequate to build upon initially, as the system is evolving.  Scale, unfortunately, always tests systems very late in the development cycle.  But there is a lot that can be done with these elements combined.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Video of Results</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>This video shows elements of the above running. The different segments of the video can be found as follows:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Overview 0:00</li><li>Vagrant 1:33</li><li>Initialization Script 9:25</li><li>Derby Script 12:05</li><li>Apache Spark 12:40</li><li>Play Framework 14:00</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>This is <a href="https://youtu.be/ix2FolMAaLw">another episode of Coding with Kip</a>, the technical sub-series of Conversations with Kip, the best financial system vlog there is. Literally learn more--about ledgers and financial systems--at <a href="http://www.LedgerLearning.com">LedgerLearning.com</a>. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/ix2FolMAaLw","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/ix2FolMAaLw
+</div></figure>
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:paragraph -->
+<p>Watch the series in order at <a href="https://www.youtube.com/playlist?list=PL2UrMfZzcfvFjnCfOBYqksqzuFbaqUupT">Coding with Kip Playlist</a> </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Vagrant Configuration</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"align":"right","id":2657,"width":376,"height":234,"sizeSlug":"large"} -->
+<div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="/wp-content/uploads/2020/04/screen-shot-2020-04-07-at-12.46.36-pm.png?w=1024" alt="" class="wp-image-2657" width="376" height="234" /></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>As a host of others have discovered, a VM is a very effective way of controlling development environment dependencies.  There are a number of tools that can be used to create these environments, but I chose Vagrant Boxes for the POC.  I was ultimately quite satisfied with choice.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Networking/Multiple VMs</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>This Vagrant Configuration allows for the potential use of multiple VMs on a single host.  I was planning to perhaps try to simulate multiple parties sharing in ledger transactions.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The server (Hostnames) includes: â€¢ulserver â€¢ulclient1 â€¢ulclient2.  The default server is ulserver.&nbsp; If no server is specified on a Vagrant command (i.e, "vagrant ssh ulcient1") then ulserver will be affected.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I was not able to get the networking configuration on my home LAN and my host machine to allow me to do much with the multiple server configurations.  The best I could do was to allow for access to a web site hosted inside the VM from the host machine.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Shared Storage</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The <a href="https://www.virtualbox.org/manual/ch04.html#guestadd-intro">Vagrant Guest Additions</a> were used to allow access to a shared folder between the host and each VM.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I attempted to shared two folders, one containing the source code for the project and another containing the data files I was attempting to use, which are sizable and thus didn't want to include them in the project.  Sharing multiple files in one VM was feasible in some ways, but not really very effective.  In the end I created a script which downloaded the data from a hosting site, which was less efficient than sharing the files locally, but more straightforward to maintain.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Scala and sbt</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I continue to be impressed with Scala as a language.  It has a lot of flexibility when it comes to Java integration, including running on Java VMs on multiple hosts, but also multiple programming styles, and pretty good performance.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Because of this choice, I used sbt as the build tool for the project.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"right","id":2652,"width":427,"height":250,"sizeSlug":"large"} -->
+<div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="/wp-content/uploads/2020/04/screen-shot-2020-04-08-at-2.08.16-pm.png?w=968" alt="" class="wp-image-2652" width="427" height="250" /></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>I was able to construct the project with multiple sub projects.  Each inherits the attributes in the project 'build.sbt" member, highlighted in the graphic.  This project had no dependencies wherein a sub program was dependent upon a build at another level.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Web Server</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"align":"right","id":2655,"width":442,"height":254,"sizeSlug":"large"} -->
+<div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="/wp-content/uploads/2020/04/screen-shot-2020-04-08-at-2.40.01-pm.png?w=846" alt="" class="wp-image-2655" width="442" height="254" /></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>To create a web serve inside the VM, I was limited by ones that would allow me to use Scala.  I initially used a <a href="https://scalatra.org">Scalatra</a> web-server, but that proved inadequate.&nbsp; It was difficult to get it to respond consistently, appeared to have fewer updates to it (although <a href="https://scalatra.org/2020/03/01/2020-03-01-scalatra-2-7-0-released.html">new releases</a> have recently come out), and didn't provide the functionality I wanted.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I replaced it with a <a href="https://www.playframework.com">Play Framework</a> light-weight web server.&nbsp; It is a REST API environment, allowing Scala based templates, which generate complete HTML upon use.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I was able to (1) display prototype screens, (1) construct a web page that uploaded a file from the host to the VM, (3) select a file from the list which then could be submitted as a separate process to Spark, and (4) connect it to the databases (see below) at least in simple ways.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I attempted to find a way to allow it to spawn creation of another process outside of the web server for running Spark, but I wasn't able to do that.  And the final state of the code the uploaded file no longer is listed in the listing screens.  I didn't debug this problem.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>It is held as a separate sub project.  Once built and running, it can be accessed from the host machine, by pointing to http:\\localhost:9000.  It runs within the sbt environment.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Database Components</h2>
+<!-- /wp:heading -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Parquet Considered</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Since I had chosen Spark, I considered <a href="http://parquet.apache.org">Parquet</a>.  After using it for a bit, this quote from research about how to take the next step rang very true: </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><p>Parquet is a file format rather than a database, in order to achieve an update by id, you will need to read the file, update the value in memory, than re-write the data to a new file (or overwrite the existing file). â€¢</p><p>You might be better served using a database if this is a use-case that will occur frequently. </p><cite><a href="https://stackoverflow.com/questions/40802978/spark-update-the-record-in-parquet-file-if-already-exists">Stack Overflow Answer to Question</a></cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:paragraph -->
+<p>I determined that some portion of my needs for the ID assignments processes required an actual database, for which Spark Usage will simply use JDBC connection to the database would be adequate.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Other Databases Considered</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I then tried to use a couple of different databases, but ultimately did not progress too far on that study;  Aerospike, Derby, and PostgreSQL were all used in various ways, but none of them became an integral part of the solution.  For purposes of a Universal Ledger, I determined that structured data capabilities were needed.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This really dropped <a href="http://db.apache.org/derby/">Derby</a> as a tool.  It's a document database, not well suited to the types of structured data uses needed.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><a href="https://www.postgresql.org">PostgreSQL</a> had the required capabilities, but I wondered about the type of scale I was attempting to build ultimately.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><a href="https://www.aerospike.com">Aerospike</a> may have the abilities, but I was loathed to build in a fixed licensing costs for the start-up phases of the system, and the community edition did not support Spark connectivity.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I was able to install, configure, and get Scala code working against both Aerospike and  PostgreSQL Databases in Vagrant.  But in the end the project never went so far as to use the database much at all.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Licenses</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The IBM license analysis engine determined that none of the licenses used were problematic based upon their criteria.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Initialization Scripts</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The following are the initialization scripts in the project. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Vagrant File</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The following is the script I ended up using for Vagrant:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted"><em># (c) Copyright IBM Corporation. 2018
+# SPDX-License-Identifier: Apache-2.0
+# By Kip Twitchell</em>
+Vagrant.configure(<strong>"2"</strong>) <strong>do </strong>|config|
+
+<em># These are the vbguest additions for syncing folders
+</em> config.vbguest.auto_update <strong>= <em>false
+</em></strong> config.vbguest.no_remote <strong>= <em>true
+
+</em></strong> config.vm.define <strong><em>:ulserver</em></strong>, <strong><em>primary: true </em>do </strong>|ulserver|
+<em># ulserver.vm.box = "ktwitchell001/Universal_ledger"
+</em> ulserver.vm.box <strong>= "geerlingguy/centos7"
+ </strong><em># ulserver.vm.network :private_network, ip: "192.168.10.200"
+</em> ulserver.vm.network <strong><em>:private_network</em></strong>, <strong><em>type: </em>"dhcp"
+</strong> ulserver.vm.hostname <strong>= "ulserver"
+</strong> ulserver.vm.synced_folder <strong>"."</strong>, <em># &lt;--- this directory for code
+ </em><strong>"/universal_ledger"</strong>,
+<strong><em>id: </em>"code"</strong>, <strong><em>type: </em>"virtualbox"
+ </strong><em>###### enabled for postgreSQL Subproject use
+</em> ulserver.vm.network <strong>"forwarded_port"</strong>, <strong><em>guest: 5432</em></strong>, <strong><em>host: 5432</em></strong>, <strong><em>auto_correct: true
+ </em></strong><em>###### enabled for Play framework
+</em> ulserver.vm.network <strong>"forwarded_port"</strong>, <strong><em>guest: 9000</em></strong>, <strong><em>host: 9000</em></strong>, <strong><em>auto_correct: true
+ </em></strong><em># the following (and in other boxes below) creates a simple hostname file,
+ # This allows use of hostname in commands in the vm to talk to the other servers
+</em> config.vm.provision <strong>"shell"</strong>, <strong><em>inline: </em>&lt;&lt;-SHELL
+ SHELL
+ end
+
+</strong> config.vm.define <strong><em>:ulclient1</em></strong>, <strong><em>autostart: false </em>do </strong>|ulclient1|
+ulclient1.vm.box <strong>= "geerlingguy/centos7" </strong><em># &lt;- not tested
+ # ulclient1.vm.network :private_network, ip: "192.168.10.201"
+</em> ulclient1.vm.network <strong><em>:private_network</em></strong>, <strong><em>type: </em>"dhcp"
+</strong> ulclient1.vm.hostname <strong>= "ulclient1"
+</strong> ulclient1.vm.synced_folder <strong>"."</strong>, <strong>"/universal_ledger"</strong>, <strong><em>type: </em>"virtualbox"
+</strong> config.vm.provision <strong>"shell"</strong>, <strong><em>inline: </em>&lt;&lt;-SHELL
+ SHELL
+ end
+
+</strong> config.vm.define <strong><em>:ulclient2</em></strong>, <strong><em>autostart: false </em>do </strong>|ulclient2|
+ulclient2.vm.box <strong>= "geerlingguy/centos7" </strong><em># &lt;- not tested
+ # ulclient2.vm.network :private_network, ip: "192.168.10.202"
+</em> ulclient2.vm.network <strong><em>:private_network</em></strong>, <strong><em>type: </em>"dhcp"
+</strong> ulclient2.vm.hostname <strong>= "ulclient2"
+</strong> ulclient2.vm.synced_folder <strong>"."</strong>, <strong>"/universal_ledger"</strong>, <strong><em>type: </em>"virtualbox"
+</strong> config.vm.provision <strong>"shell"</strong>, <strong><em>inline: </em>&lt;&lt;-SHELL
+ SHELL
+ end
+end</strong></pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Java, Scala, sbt, and Play Framework components</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>This script is run after initializing the Vagrant environment.  It is dependent upon have a Play Framework project to run accessible in the Vagrant environment.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted"><strong>#!/usr/bin/env bash
+</strong>
+<em># * (c) Copyright IBM Corporation. 2019
+# * SPDX-License-Identifier: Apache-2.0
+# * By Kip Twitchell</em>
+<strong>
+</strong><em># This script initializes the Aerospike/CentOS vagrant environment with the following
+# Elements needed to do Scala development
+# (1) Update the OS upon initial startup
+# (2) download wget for use in later commands
+# (3) download and install Java 8
+# (4) download and install Scala 2.11 (to be potentially compatible with Spark if needed)
+# (5) install sbt
+# (6) perform an initial compile of the project to initialize sbt further
+
+</em>cd /home/vagrant
+echo <strong>'****************************************************'
+</strong>echo <strong>'************* update operating system *************'
+</strong>sudo yum -y update
+
+echo <strong>'*********************************************'
+</strong>echo <strong>'************* download and wget *************'
+</strong>sudo yum -y install wget
+
+echo <strong>'*******************************************************'
+</strong>echo <strong>'************* download and install java 8 *************'
+
+</strong>sudo yum -y install java-1.8.0-openjdk.x86_64
+echo <strong>"java version:"
+</strong>java -version
+sudo yum -y install java-1.8.0-openjdk-devel.x86_64
+echo <strong>"java compiler version:"
+</strong>javac -version
+sudo cp /etc/profile /etc/profile_backup <em>#Backup the profile file
+</em>echo <strong>'export JAVA_HOME=/usr/lib/jvm/jre-openjdk' </strong>| sudo tee -a /etc/profile
+echo <strong>'export JRE_HOME=/usr/lib/jvm/jre' </strong>| sudo tee -a /etc/profile
+source /etc/profile
+echo <strong>'Java home:'
+</strong>echo $JAVA_HOME
+echo <strong>'JRE home:'
+</strong>echo $JRE_HOME
+
+echo <strong>'******************************************************'
+</strong>echo <strong>'************* download and install scala *************'
+</strong><em># cd ~ # in the initial script, not sure it is needed
+</em>wget http://downloads.lightbend.com/scala/2.11.8/scala-2.11.8.rpm
+sudo yum -y install scala-2.11.8.rpm
+echo <strong>'scala version:'
+</strong>scala -version
+
+<em>#echo '****************************************************'
+#echo '************* Initialize PostgreSQL DB *************'
+#sudo /usr/pgsql-10/bin/postgresql-10-setup initdb
+
+</em>echo <strong>'************************************************'
+</strong>echo <strong>'************* download/install sbt *************'
+</strong>wget https://dl.bintray.com/sbt/rpm/sbt-0.13.16.rpm
+sudo yum -y install sbt-0.13.16.rpm
+
+
+echo <strong>'*****************************************************************************'
+</strong>echo <strong>'********************* start-up Play Framework server; **********************'
+</strong>echo <strong>'************* test in browser on host at: http://127.0.0.1:9000 *************'
+</strong>echo <strong>'*****************************************************************************'
+
+</strong>(cd /universal_ledger/play; sbt compile run)
+
+
+echo <strong>'************************************************************************************'
+</strong>echo <strong>'***** Logout of Vagrant ssh and log back in for Path Updates to take effect *******'
+</strong>echo <strong>'************************************************************************************'</strong></pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Spark Installation</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Here is the Spark Installation Script</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted"><strong>#!/usr/bin/env bash
+</strong>
+<em># * (c) Copyright IBM Corporation. 2019
+# * SPDX-License-Identifier: Apache-2.0
+# * By Kip Twitchell</em><strong>
+</strong><em># This script adds Spark to the universal-ledger Scala environment
+# Run the initenv.sh first to install Java.
+
+</em>echo <strong>'*****************************************************'
+</strong>echo <strong>'************* download and unpack Spark *************'
+
+</strong>SparkVersion=2.4.1
+
+cd /home/vagrant
+
+<em># </em><strong><em>TODO test for file already downloaded to improve restartability
+</em></strong>wget http://archive.apache.org/dist/spark/spark-$SparkVersion/spark-$SparkVersion-bin-hadoop2.7.tgz
+tar -xvf spark-$SparkVersion-bin-hadoop2.7.tgz
+
+<em># Set Spark Home
+</em>sudo cp /etc/profile /etc/profile_backup_spark <em>#Backup the profile file
+</em>echo <strong>'export SPARK_HOME=/home/vagrant/spark-'</strong>$SparkVersion<strong>'-bin-hadoop2.7' </strong>| sudo tee -a /etc/profile
+export PATH=<strong>"</strong>$SPARK_HOME<strong>/bin:</strong>$PATH<strong>"
+</strong>source /etc/profile
+echo <strong>'Spark home:'
+</strong>echo $SPARK_HOME
+echo <strong>'Path'
+</strong>echo $PATH
+<em># Error here. Path didn't get up dated with Spark Directory. Not sure what is wrong with the code.
+
+# create spark logging direcotry for Spark Session use
+</em>mkdir /tmp/spark-events
+
+<em>#Confirm Spark installation
+</em>echo <strong>"Spark version:"
+</strong>(cd $SPARK_HOME/bin/; bash ./spark-submit --version)
+
+
+echo <strong>'*****************************************************************************'
+</strong>echo <strong>'********************* Build SAFRonSpark **********************'
+</strong>echo <strong>'*****************************************************************************'
+
+</strong>(cd /universal_ledger/SAFRonSpark/; sbt package)
+
+echo <strong>'*****************************************************************************'
+</strong>echo <strong>'********************* Run initial SAFR on Spark Test; **********************'
+</strong>echo <strong>'*****************************************************************************'
+
+</strong>(bash /universal_ledger/SAFRonSpark/data/InitEnv/RunSAFRonSpark.sh)
+
+echo <strong>'************************************************************************************'
+</strong>echo <strong>'***** Logout of Vagrant ssh and log back in for Path Updates to take effect *******'
+</strong>echo <strong>'************************************************************************************'
+
+
+</strong><em># Here is the command for running the spark code, after it has been compiled.
+#
+# /home/vagrant/spark-2.4.0-bin-hadoop2.7/bin/spark-submit --class com.ibm.univledger.runSpark --master local /universal_ledger/spark/target/scala-2.12/spark_2.12-0.1.0-SNAPSHOT.jar
+# after path update with Spark_home/bin
+# spark-submit --class com.ibm.univledger.runSpark --master local /universal_ledger/spark/target/scala-2.12/spark_2.12-0.1.0-SNAPSHOT.jar
+</em></pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Derby Installation Script</h4>
+<!-- /wp:heading -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted">#!/usr/bin/env bash
+<em># * (c) Copyright IBM Corporation. 2019
+# * SPDX-License-Identifier: Apache-2.0
+# * By Kip Twitchell</em><strong>
+</strong><em># This script adds Derby DB to the universal-ledger Scala environment
+
+</em>echo <strong>'*****************************************************'
+</strong>echo <strong>'************* download and unpack derby DB *************'
+
+</strong>cd /home/vagrant
+wget http://mirrors.ibiblio.org/apache//db/derby/db-derby-10.14.2.0/db-derby-10.14.2.0-bin.tar.gz
+tar -xvf db-derby-10.14.2.0-bin.tar.gz
+
+<em># Set Derby Home
+</em>sudo cp /etc/profile /etc/profile_backup_derby <em>#Backup the profile file
+</em>echo <strong>'export DERBY_HOME=/home/vagrant/db-derby-10.14.2.0-bin' </strong>| sudo tee -a /etc/profile
+export PATH=<strong>"</strong>$DERBY_HOME<strong>/bin:</strong>$PATH<strong>"
+</strong>source /etc/profile
+<em># add a source statement to profile to consistently load the Derby Classpath file
+</em>echo <strong>"source </strong>$DERBY_HOME<strong>/bin/setEmbeddedCP" </strong>| sudo tee -a /etc/profile
+source /etc/profile
+echo <strong>'Derby home:'
+</strong>echo $DERBY_HOME
+echo <strong>'Path'
+</strong>echo $PATH
+echo <strong>"Class Path"
+</strong>echo $CLASSPATH
+
+<em>#Confirm Derby installation
+</em>echo <strong>"Derby version:"
+</strong>java org.apache.derby.tools.sysinfo
+</pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:heading {"level":4} -->
+<h4>PostgreSQL Script</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>This script is not really complete, but a pretty good starting point for a simple installation.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted"><strong>#!/usr/bin/env bash
+</strong><em># * (c) Copyright IBM Corporation. 2019
+# * SPDX-License-Identifier: Apache-2.0
+# * By Kip Twitchell</em>
+<em># This script adds PostgrSQL DB to the universal-ledger environment
+
+</em>echo <strong>'*************************************************************'
+</strong>echo <strong>'************* download and unpack postgreSQL DB *************'
+
+ </strong><em># The following are commented out as the Vagrant Box chosen already has these installed
+</em>cd /home/vagrant
+
+<em># Install Extra Packages for Enterprise Linux (EPEL)
+</em>sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+<em># Install Repository
+#sudo yum -y install https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm
+</em>sudo yum -y install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+
+<em># Install Client
+</em>sudo yum -y install postgresql10
+
+<em># Install server packages:
+</em>sudo yum -y install postgresql10-server
+
+<em># Initialize DB and enable auto start
+</em>sudo /usr/pgsql-10/bin/postgresql-10-setup initdb
+<em>#sudo systemctl enable postgresql-10
+</em>sudo systemctl start postgresql-10
+
+<em># Set initial environment variables
+</em>sudo cp /etc/profile /etc/profile_backup_postgres <em>#Backup the profile file
+</em>echo <strong>'export PGDATA=/var/lib/pgsql/data' </strong>| sudo tee -a /etc/profile
+echo <strong>'export PGHOST=ulserver' </strong>| sudo tee -a /etc/profile
+<em>#echo 'export PGUSER=vagrant' | sudo tee -a /etc/profile
+#echo 'export PGPASSWORD=univledger' | sudo tee -a /etc/profile
+</em>export PATH=<strong>"/usr/pgsql-10/bin:</strong>$PATH<strong>"
+</strong>source /etc/profile
+echo <strong>'PG Data:'
+</strong>echo $PGDATA
+echo <strong>'Path'
+</strong>echo $PATH
+
+<em># Set modify postgreSQL configuration files to allow access from VM host
+</em>sudo cp /var/lib/pgsql/10/data/postgresql.conf /var/lib/pgsql/10/data/postgresql.conf_backup <em>#Backup the file
+</em>echo <strong>$'listen_addresses = \'*\'' </strong>| sudo tee -a /var/lib/pgsql/10/data/postgresql.conf
+sudo cp /var/lib/pgsql/10/data/pg_hba.conf /var/lib/pgsql/10/data/pg_hba.conf_backup <em>#Backup the file
+</em>echo <strong>'host all all all trust' </strong>| sudo tee -a /var/lib/pgsql/10/data/pg_hba.conf
+sudo systemctl restart postgresql-10
+
+<em>#
+#Confirm postgreSQL installation
+</em>echo <strong>"!!!!!!!!!!!!!!!!!!!"
+</strong>echo <strong>"postgreSQL version:"
+</strong>/usr/pgsql-10/bin/psql --version
+echo <strong>"!!!!!!!!!!!!!!!!!!!"
+
+</strong>echo <strong>'****************************************************************'
+</strong>echo <strong>'************* see additional commands in bottom of *************'
+</strong>echo <strong>'************* /universal_ledger/script/postgreSQLinit.sh *************'
+</strong>echo <strong>'************* to complete db installation *************'
+</strong>echo <strong>'****************************************************************'
+</strong>echo <strong>'# execute the following commands at the Vagrant Linux Prompt '
+</strong>echo <strong>'#sudo su - postgres # Logs in as postgres user ID to access databasae '
+</strong>echo <strong>'#psql -f /universal_ledger/scripts/pginit1.sql # runs script establishing initial user '
+</strong>echo <strong>'# '
+</strong>echo <strong>'#exit # logs out of user postgres '
+</strong>echo <strong>'#psql -d univledger -f /universal_ledger/scripts/pginit2.sql # test new users capabilities to make tables and drop them '</strong></pre>
+<!-- /wp:preformatted -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

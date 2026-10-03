@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Part 5. The Programmer — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Part 5. The Programmer</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<div class="p">
+<p class="pre"></p>
+
+</div>
+<p class="p">Some have said Doug can code on pure metal; that he almost didn't need an operating system. That isn't quite true, but I have found him to be completely fearless. A year or so after starting system testing, Doug called me up and said he had added a new feature to SAFR, the ability to read DB2 data rather than just sequential files. He asked me to create for him a DB2 table with some data, define an LR and view, and run it against the table. He said it would probably abend the first time it was run; when it did I should call him back.</p>
+<p class="p">Consistent with his unassuming manner, I always found Doug willing to take the time to teach anyone that wanted to listen how to do what he did. When I called to say the DB2 test had abended, he asked me where he could locate the system output. As I told him, he found it, and suggested I also follow him into that portion of the output called the system dump or sys dump. This output contained a snapshot of the memory - the white board - at the time the abend happened. The dump can be very large; hundreds of thousands of pages in some cases if it were actually printed. Doug told me once they are only large if you print them, which no one does. Rather they are searched on line, like a large document.</p>
+<p class="p">Doug looked at something and told me to find a particular value. I did. He began directing me to other values in the dump, which is composed of only numbers and the characters "A" through "F", and telling me what was in memory at this particular location or another one. I remember something like, "And see that Fox 2 there? That is the first byte of the directory structure for this block of the VSAM dataset. You see, on the mainframe DB2 stores the data in VSAM datasets, and inside each of those datasets it puts in its own directory structures that tell it how to interpret its data. The directory structure says that in this block there are this many data records, see the 34 there? And they are stored in this kind of format, see the 9754 there?"</p>
+<p class="p">I realized that Doug was showing me the in-memory version of the VSAM files that sit at the bottom of DB2. I suspect there were a lot of application programmers who used DB2 in programs that didn't know about the VSAM files used underneath it. Only people who really supported the tool would have given those things much thought. I asked, "Doug, have you written SQL?" the basic DB2 language for accessing data. He said something like, "No, not really." I was dumbfounded. Doug didn't go through any of the traditional routes to learning a tool. Instead he went right to the bottom of the tool, to read its underlying data structure picking it apart byte by byte. "Completely fearless", I thought.</p>
+<p class="p">This next section begins by examining a system dump, not because I think you will need to do this. But it is important to be fearless, in a sense. It is important to have respect for problems, but not believe that something magical is happening somewhere that ordinary people can't understand. There is nothing too extraordinary in all of this, and analyzing a dump can demonstrate that fact.</p>
+<p class="p">The remaining portions of this section explain the SAFR Scan engine at its core, building step upon step in complexity. It begins with a view which copies data, an extract only view, moves through lookups to sorting data and running the format phase. All of this is done without any parallelism. There is a small break in the narrative to allow you to catch your breath; then we examine parallel processing, piping and other advanced topics including exits and common key data buffering which brings together most of the concepts into one process.</p>
+<p class="p">By understanding what is at the heart of the Scan Engine, one can see application of these patterns in reporting applications. Automation entails making the machine do what people would have to do to achieve the same results. Understanding these steps, and how they add upon each other to create the desired outputs, this is where the rubber meets the road in creating a business event based reporting system.</p>
+Contents of this Part include:
+
+</div>
+<div class="related-links">
+<ul class="ullinks">
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-38-abends/">Chapter 38. Abends</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-39-the-copy-only-view/">Chapter 39. The Copy Only View</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-40-extract-only-view/">Chapter 40. Extract Only View</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-41-look-ups/">Chapter 41. Look-ups</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-42-reference-file-phase/">Chapter 42. Reference File Phase</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-43-extract-files/">Chapter 43. Extract Files</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-44-sort/">Chapter 44. Sort</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-45-sort-user-exits/">Chapter 45. Sort User Exits</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-46-format-phase/">Chapter 46. Format Phase</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-47-look-at-it-go/">Chapter 47 . "Look At It Go"</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-48-multi-threading/">Chapter 48. Multi-Threading</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-49-control-and-contention/">Chapter 49. Control and Contention</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-50-piping-tokens-and-the-write-verb/">Chapter 50. Piping, Tokens, and the Write Verb</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-15-exits/">Chapter 51. Exits</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-52-common-key-data-buffering/">Chapter 52. Common Key Data Buffering</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-53-spin-offs/">Chapter 53. Spin-offs</a></li>
+	<li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-54-crisis/">Chapter 54. Crisis</a></li>
+</ul>
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-38-abends/">Chapter 38. Abends</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-37-maintain-focus/">Chapter 37. Maintain Focus</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-37-maintain-focus/" class="prev"><span class="label">&larr; Previous</span>Chapter 37. Maintain Focus</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-38-abends/" class="next"><span class="label">Next &rarr;</span>Chapter 38. Abends</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

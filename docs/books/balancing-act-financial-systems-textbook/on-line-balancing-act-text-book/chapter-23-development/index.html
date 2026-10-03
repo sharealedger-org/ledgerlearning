@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 23. Development — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-23-development/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 23. Development</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p"><q class="q">"Then let's add an edit."</q> That was the inevitable concluding line from discussing any bug in one of Jay Poulos's programs when I first came to the SAFR team in Sacramento. I was on the system testing team, and would report any problems I found to Jay. Jay was the on-site system architect. He also wrote some of the programs. His programs built the logic table. They ran as the second set of programs in the SAFR process. Whenever I discovered something that didn't work in his process, it turned into a new on-line edit to prevent someone from entering that condition. "The system was never intended to do that" might be the reason given. He never referred to any document, so I had no right to appeal except based upon my own instincts of what was right or wrong. After a few months of this, everyone on the project knew that the "us" in "let's add an edit" didn't really include Jay.</p>
+
+<div class="p">
+
+In fact, only a few weeks into my assignment on the test team, I had found a number of bugs, and learned that a fairly common end result of an unstable program written in assembler for mainframes is called a System message OC1, or SOC1 - an invalid operation exception. I so thoroughly understood Jay's role as designer and Doug Kunkel's role as writer of the assembler programs, I struck off the following poem one Wednesday afternoon:
+<blockquote class="lq"><strong class="ph b">ODE TO SOC 1</strong>
+<p class="p">While performing my testing one day<span class="ph">
+In the consistent and usual way</span><span class="ph">
+I viewed my results, expecting some fun</span><span class="ph">
+But instead I found I had a Soc 1</span></p>
+<p class="p">I called up Jay, he said "NOT!"<span class="ph">
+And then Doug replied "So what?"</span><span class="ph">
+I yanked on my hair till the set of the sun</span><span class="ph">
+Then said to myself, </span><span class="ph">
+<q class="q">I think the Soc won.</q></span></p>
+<p class="p">KMT 8/19/1993<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+</blockquote>
+</div>
+<p class="p">In the years following the Teflon president - Ronald Reagan - Jay became known as the Teflon programmer: bugs just wouldn't stick to him, no matter how fast we were going.</p>
+<p class="p">And it felt at times we were trying to go very fast. Although a start-up high-tech company, we weren't really working in a "garage." Rather, it was a six story office building in quiet downtown Sacramento, the capital of California. The office was only about five blocks from the capital, yet didn't have much of a view. In my mind's eye, the building is brown, the carpet brown, the walls brown, traditional brown wooden desks in the offices. The sixth floor probably hadn't been redecorated since the early 80's or perhaps even late 70's; a very brown time.</p>
+<p class="p">There were a lot of questions about why we were located in Sacramento. SAFR had grown out of the state government practice. The state and local government arm was consolidated in Sacramento from a lot of smaller regional offices in the West. Rick explained one time that state governments were the first organizations to try to do enterprise type systems. They had legal mandates from the federal government that required them to do so. The federal government was too large to tackle an enterprise system, and the subsystem architecture was working well enough for businesses.</p>
+<p class="p">However, we weren't really part of the office all that much. Just a few months later we were transferred to the Midwest region, I think because of Rick's ties to Chicago. Our little group in Sacramento was definitely the far western edge of the Midwest, by about a thousand miles. Geographically, the firm's audit and tax divisions on the fifth floor were much closer. Their office manager and staff were kind to us; they invited us to all the office functions like the Christmas party and such, but we really didn't work closely with any of them. I remember the office HR partner, Sean Barry, one day saying to Randall Ness, "Oh, you Geneva guys, you're like a bunch of cowboys out on the range." He was right.</p>
+<p class="p">Most of the people that had worked with Rick on the early SAFR projects, in Oregon, Washington, and Wyoming, didn't move to Sacramento. Randall Ness did; and Renae Bell, who joined the firm after the Washington project, did too. Bill Bengsten was there for a few months, but decided to move his family back to Minnesota a few months later. Mostly people flew in when they needed to be on site. Jay flew down from Oregon. Brandy Smith welcomed me to the office the first morning, but she lived in Texas. Sometimes Doug drove up from the Bay area, I only remember a couple of visits by Mike Tabb, Dave "Murph" Murphy, Tony Talarico, and Jeff Gibbs from the Wyoming project.</p>
+<p class="p">Probably like many a successful start-up, demand exceeded supply. The software wasn't really finished when Jay led the retailer benchmark in November of 1993. It was buggy. The problem given us fit the software exactly, but they thought - and we hoped - that perhaps there were a thousand other possible uses for it in their company. So there was a massive effort to find all those other uses and then apply them to the software to cut the cost of computing. Each of these uses demanded new features or exposed problems in the software. Rick pulled all the prior projects' team members on site in Chicago for those projects in 1994, including Mukesh Patel from the Oregon project, and Renae from Sacramento.</p>
+<p class="p">That left Randall in charge of the development center in Sacramento, composed of the three remaining local contract programmers Bill had hired to build the system before I arrived, and me. We were supposed to fix the bugs found on the project, test them, find more bugs to prevent them from showing up on the project, and independently install the new software as upgrades for Alaska, Oregon, and Wyoming. Oh, and then we also had to actually finish the last components of the software.</p>
+<p class="p">The first all-nighter I worked was with Randall; the retailer expected a product-like set of scripts to run the system. The benchmark efforts used cobbled together scripts from the test JCL, a primitive mainframe scripting language. I remember being a little surprised as I explained to Randall how I thought the system flow should work. I hadn't worked much with Randall; he was developing another part of the system, and hadn't been involved at all in testing. That had kept him from learning the overall perspective of the latest system. He listened to me as I told him which programs had to execute in which order, and through the night he constructed the first set of product scripts. Over the next week or so I wrote the operations manual that explained that flow.</p>
+<p class="p">We were overwhelmed. The excitement caused by it all allowed Rick to add new people. At first we had new people fly into Sacramento. Mona Breed, one of my instructors in Tampa, came. Julia Braun Roth, recently married to Rick and my project manager on the CASE tool project, came and brought Cheryl Gentsch, wife of Dale from my Wyoming interview. They managed things for a few weeks through the crisis as we brought on more team members.</p>
+<p class="p">We then added more permanent team members who moved to Sacramento. Clyde Simmons, one of the contractors, joined the company. I took Rob Clark, another State of Washington employee, and his wife to lunch as part of their recruiting visit. Monica Logan and Chris Stallman joined the firm the same day, were in the same training class in Tampa, and both came directly from training to be part of the team. Later Barry Arabi and Mark Ashton joined the team as well.</p>
+<p class="p">Sean the HR partner was scheduled to interview for the firm at Sacramento State University; but, no students signed up. To avoid embarrassment, some school official grabbed Spiros Velianitis, a teaching assistant, and said he needed to sign up. Spiros protested that he was in jeans and wasn't looking for a job, but dutifully did it. Pat noted his attire and Spiros simply responded, "I didn't think I would be doing this today, but decided I should." Spiros impressed Pat, who suggested Rick make him an offer. Spiros knew nothing about the firm or the job. But, looking at the offer letter, he said, "<q class="q">I don't want to wonder what would have happened if I had taken the job."</q> Immediately, this passionate Greek, a waiter on weekends because he loved to be with his friends, was whisked off to Tampa for three months training. He was so homesick he almost quit, yet he survived to come join us in the office.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></p>
+<p class="p">By the spring of 1995, we actually had a pretty good system. The Retailer projects had provided testing in ways we never could have imagined. And with the additional resources all working in one location towards the goal of being a software product, we developed documentation, installation and source code maintenance procedures, obtained pagers and set up a help line with a call tickets data base Randall and I built using Lotus Notes.</p>
+<p class="p">We only had one problem: new sales didn't come piling in. Besides, being a mainframe product, it was also because there was no part of the system that really could be demonstrated. The on-line functions were only character based screens just as graphical user interfaces were all the rage. The outputs from the system were files and hard copy reports. There was nothing exciting about watching a batch program run on a mainframe. Software sales are driven by features. Our product didn't neatly fit into any software category to allow it to be compared. So, it came up short in each category because it didn't have all the features of any one category. The theoretical underpinnings of the event based reporting architecture probably overwhelmed a lot more people than we knew.</p>
+<p class="p">Performance issues are very difficult to anticipate. People choose products based upon features, and then in most cases scale the data volume presented to those products by summarizing the input to avoid performance problems. Only people who have been through performance problems, who haven't followed the manufacturer's recommendations on safe volumes, know how painful performance can be. They become conversant with the parameters of performance and are able to assess if something is really fast or not. Others can almost literally be convinced by the uninitiated who proclaim that their bicycle traveling at 10,000 units an hour is so much faster than a car that only averages 60 units an hour, when one is measured in feet and the other is in miles. Many projects buy bikes, and set their project goal in feet, and proclaim success when they reach it.</p>
+<p class="p">In the spring of 1996 I remember commenting to Doug that we had the world's hottest engine, but it was in a really ugly body. Only people who know engines would find it cool. By 1997 we had a dozen customers who knew engines. It was clear we weren't going to have a list of hundreds of customers.</p>
+<p class="p">But the customers we had allowed Randall to refine and establish enough software company processes to have critical mass to keep going. He developed source code management techniques from scratch, and bug tracking processes. We worked with clients on testing fixes and new features. We had perhaps a hundred thousand lines of COBOL, Assembler, and JCL, and kept it all working with a very small maintenance and development staff. Randall used who ever wasn't on a project at the time to help do maintenance, and he himself did this along with his full-time job on projects as well. When everyone was on projects, people helped with maintenance after hours. They did this because we all had a sense of mission.</p>
+<p class="p">I remember when I was on the top of the support call list and received a call one night. I had flown home from a project and hadn't gotten home until perhaps 8 PM or so. When the phone rang at 1:00 AM I found my way to the desk, picked up the phone but couldn't hold on to it. It dropped in the metal trash can and banged around as I tried to pull it out but fumbled. The person on the other end was very concerned I was seriously hurt. I know Randall had probably scores and perhaps even hundreds of those experiences. But he kept the system going for all the clients.</p>
+<p class="p">Finally in 1998 there was no pull for anyone to stay in Sacramento. And as consulting projects opened up in different parts of the country using the software, team members moved to be near them or where they wanted to live and commuted to the project. We had an interesting business model; not wholly services, yet not wholly a software product. Most software products must appeal to potential customer bases of hundreds if not thousands. Most services businesses take few things into the next project but the people and what is in their heads. Our model allowed us to innovate for a customer base of one if needed. Instead of building tract housing for the masses, we could concentrate on those organizations for which standard approaches would not work - those customers that needed skyscrapers.</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-24-skyscrapers/">Chapter 24. Skyscrapers</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+
+<hr />
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> The date was contained in the electronic version of the poem in the author's possession.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> Spiros was very good at the work. However, after two and a half years, at an intense time on the Pharmaceutical Litigation project, Spiros was again homesick, having to be in New York weekly. He looked to me as his boss although he didn't functionally report to me, and wrote me a letter saying he was resigning. I called Rick; we couldn't afford to lose him. Rick didn't have any suggestions what to do. I thought for a few minutes after I hung up and then found Spiros and said, "You can't resign to me; I'm not your boss. You have to do that to Rick, so this letter isn't any good. Now, before you send something to Rick let me tell you what I think. I think you should stick this out, should learn how to push through something like this when it is difficult. You aren't at the end of what you should know from this job." He pondered for a moment, and then said he thought I was right. He stayed through the project and finished up some important assignments before going back to teach at Sacramento State a year and a half later.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/" class="prev"><span class="label">&larr; Previous</span>Part 4. The Projects</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-24-skyscrapers/" class="next"><span class="label">Next &rarr;</span>Chapter 24. Skyscrapers</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 41. Look-ups — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-41-look-ups/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 41. Look-ups</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<p class="title topictitle1"></p>
+
+<div class="body conbody">
+<p class="p">The first tests I remember performing on the product were testing look-ups. I remember finding some problem and calling Doug about it; I also remember his comment about the test that I had set up, "Well this is pretty complex."</p>
+<p class="p">The look-up process can seem pretty complex, and it will take us two chapters to cover. This one will focus on the logic table and extract process; the next will explain the reference file phase and how it supported those results.</p>
+<p class="p">We'll make a change to the input parameters to the VDP Builder to add view 3263 to the other two views we are already executing.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Logic Table</h2>
+<p class="p">Although we'll execute all three views, we'll only show the logic table for our new view. Thus the rows of the logic table continue from the prior example.</p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1228" src="/wp-content/uploads/2018/10/lookuplogictable.jpg" alt="LookupLogicTable" width="1645" height="1581" /> <span class="figcap">Figure 102. Lookup Logic Table</span>
+
+<div class="image"></div>
+</div>
+</div>
+<div class="p">The logic table contains some new functions.
+<ul class="ul">
+	<li class="li">The JOIN function specifies that the next few steps are going to prepare the keys for the join.</li>
+	<li class="li">The LKE function moves data for a lookup key from each event file record to the lookup key buffer.</li>
+	<li class="li">The LUSM uses the values that have been placed in the lookup key buffer to search the in memory table to find a corresponding match. The results from the LUSM can either be that a match was found, or a match was not found, and the GOTO Rows 1 and 2 are next executed for either of those cases respectively.</li>
+	<li class="li">If a match was found, the located matching record can be used in a number of ways. It might be used to test to see if additional values on the record are of a particular value for selection. This would use a CFEL function, for Compare Field Event-file value to Looked-up value. A class test against the looked up value could also be executed. Row 26 in this logic table tests to see if the looked-up value at position 1 for a length of 30 on the LR 1262 matches the constant "K &amp; N jone...", thus a CFLC for Compare Field Looked up value to Constant.</li>
+	<li class="li">Data from the looked up record can be moved into the extract record through a DTL function, such as row 38.</li>
+</ul>
+The following table shows these additional functions.</div>
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1226" src="/wp-content/uploads/2018/10/simplelook-upfunctions.jpg" alt="SimpleLook-upFunctions" width="547" height="344" /> <span class="figcap">Figure 103. Simple Look-up Functions</span>
+
+<div class="image">The Reference File Phase process prepares the in-memory reference file table, and is discussed in the next chapter.</div>
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Extract Phase</h2>
+<p class="p">The following is the trace output for only those rows applicable to our new view.</p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1328" src="/wp-content/uploads/2018/10/lookuplogictabletrace.jpg" alt="LookupLogicTableTrace" width="1687" height="2249" /> <span class="figcap">Figure 104. Lookup Logic Table Trace</span>
+
+<div class="image">Note that we can see that the key values supplied by the event file for the first LKE is "522349999". The LUSM was performed, and because the next executed logic table row is 26, the results of the LUSM were found. In other words, the reference file had a record with the key of 522349999. The CFLC function compares the constant of "K &amp; N jones" to the value on the found looked-up record, which is also "K &amp; N jones".</div>
+</div>
+</div>
+<p class="p">On this first event record, two other lookups and compares are also performed, until we get to logic table row 34. At this point, the trace for view 3263 against record 1 stops, and we go on to event file record two (we have omitted the trace rows for view 3261 and 3262 in this printout which would have been rows 1-21). This tells us that the view did not meet the general selection criteria.</p>
+
+<div class="p">Here is the selection criteria:
+<pre class="pre codeblock"><code>If ({EVENT_JOURNAL_TO_LE_DESC.LEGAL_ENTITY_TITLE}= "K &amp; N jones family" 
+  And {EVENT_JOURNAL_TO_CC_DESC.COST_CENTRE_TITLE} = "DAD"
+  And {EVENT_JOURNAL_TO_ACC_TITLES.ACCOUNT_TITLES} = "checking account")Then
+    SKIP
+EndIf</code></pre>
+</div>
+<p class="p">The "Skip" statement is what causes the record to be skipped. The lookups resulted in values of "K &amp; N jones family", "DAD" and "checking account". The skip statement causes the GOTO True and GOTO False rows to be swapped on the CFLC function for the Account Title. Typically the true row is the next logic table row, and the false row is the a few rows later. Because of the skip statement, they are reversed.</p>
+<p class="p">The following are the output records for this view. The values in these output records can be seen in the logic table trace for DTL and DTE functions.</p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1224" src="/wp-content/uploads/2018/10/lookupextractonlyviewoutput.jpg" alt="LookupExtractOnlyViewOutput" width="1660" height="345" /> <span class="figcap">Figure 105. Lookup Extract Only View Output</span>
+
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Multi-step Look-up</h2>
+<p class="p">The test I was performing that day which Doug found fairly complex was a multiple step lookup. That means that the values for a lookup can come from a prior lookup, rather than all having to come from the event file.</p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1220" src="/wp-content/uploads/2018/10/complexlook-upfunctions.jpg" alt="ComplexLook-upFunctions" width="572" height="338" /> <span class="figcap">Figure 106. Complex Look-up Functions</span>
+
+</div>
+</div>
+<p class="p">LKE function becomes a LKL function: Build Lookup Key from Looked-up value. CFEL functions can similarly become CFLL to compare two looked up values.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Date-effective Joins</h2>
+<p class="p">You'll remember we considered the needs for date-effective joins when using the SAFR method<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a>. Let's examine how date effective joins are implemented in the SAFR process.</p>
+<p class="p">The date field on the target reference table is technically not part of the key because the values passed in for the search do not have to be matched byte for byte. So the effective date field on the target logical record could be thought as being between the key and the data areas of the record.</p>
+<p class="p">Although technically not part of the key, the logic table contains LK functions, specifically Lookup Key Date or LKD functions, to place the desired effective date in the lookup key buffer. And, predictably, these are the last LK functions for a particular join.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></p>
+<p class="p">The dates can come from constants, LKDC. The date can come from the event file, LKDE, or from a looked-up value on another reference table, LKDL.</p>
+<p class="p">The constant value on the LKDC can come from multiple places. For example, in a view definition someone may place a hard-coded date, like December 31 of some particular year. Alternatively, the developer might also use a keyword in the workbench, such as run-date, when specifying what date to use. This keyword is translated into a specific date constant during the logic table phase of processing. By the time the logic table arrives at the extract process, it is indistinguishable from a hard coded date. The translated constant date value is shown in both the logic table print and the logic table trace. Use of the key words allows for dates to be passed in as part of the batch process; thus the View logic remains the same day after day, but the date used in the view can vary.</p>
+<p class="p">When the extract engine performs a search on a date effective table, it will "fall back" to the record with a matching key, whose effective date is less than or equal to the value provided by the LKD function. If there is no record with an effective date less than or equal to the effective date, the extract engine will execute the "not found" condition.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Join Optimization</h2>
+<p class="p">I think the idea was probably Jay's, but I don't think I know for sure where it started. It was that we could add another step into the SAFR Scan engine process to analyze the logic table and remove certain joins which had been performed by a view earlier in the process. For example if view 3261 did a join to the account master table, and 3262 required the same join, there would be no reason to go build the look-up key again; the results of the join were already known and the results of the join could already be known.</p>
+<p class="p">It was such a simple idea, but the word "simplistic" might be a better description. It started a process of work that continued part time for probably a year. We kept running into technical problems every step of the way. When we finally got it to work, the results ended up being remarkable. As we put the new process into production after making the code permanent and more testing, we found that we could reduce the CPU time on some already very efficient, join intensive processes by 60 and 70%. It was nearly unbelievable.</p>
+<p class="p">The result is a process whereby the more views that are resolved in one SAFR execution, with greater numbers of lookups to shared table, the greater the efficiency is for each join.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">Next, let's consider how the data is prepared for joins by understanding the Reference File Phase.</p>
+
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-40-extract-only-view/">Chapter 40. Extract Only View</a></div>
+<div></div>
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> See <a class="xref" href="bibleconsidercomplexjoins.html#bibleconsidercomplexjoins">Consider Complex Joins</a>.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> Note that if a date is part of a key and should be matched byte for byte, it would typically be moved to the key by an LKE function. Only effective dates use LKD functions. Because date effective joins are not matched byte for byte, placing the date at the end of the keys allows the comparison to be performed after matching the key.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-40-extract-only-view/" class="prev"><span class="label">&larr; Previous</span>Chapter 40. Extract Only View</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-42-reference-file-phase/" class="next"><span class="label">Next &rarr;</span>Chapter 42. Reference File Phase</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

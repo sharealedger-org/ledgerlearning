@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 8: REAL Analysis Method — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/real-analysis-method/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 8: REAL Analysis Method</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">I couldn't keep myself from needling Eric in later classes as well. A year or so after he introduced me to the event based concepts, I took a database design class from him. I had learned Lotus 1-2-3 the prior semester, and was familiar with the "database" functions of the spreadsheet. It allowed users to select certain rows of data using criteria entered into other rows. I repeatedly pointed out these functions to Eric, and went so far as to create spreadsheet macros that demonstrated the "ability" to do all sorts of database functions. These generated a few laughs from the class when I showed them as part of our project demonstrations, but I couldn't convince Eric that a spreadsheet was a valid database.</p>
+<p class="p">In another class from Eric I learned how to draw pictures, but it wasn't an art class. It was a system analysis class. System analysis is the process of deciding what a computer system should do. It entails drawing system blueprints and making models of how the system will be used.</p>
+<p class="p">Eric suggested we should make a REAL business process model, a type of blueprint. After I graduated, Eric updated the REA acronym that McCarthy had coined to be REAL, which stands for Resource, Events, Agents, and Locations. Similar to any blueprint, the paper version can be easily changed before the real thing is constructed.</p>
+
+<div class="p">
+
+If the basic component of a building blueprint is a room, with walls, a door, and windows, the following would be the basic blueprint component of McCarthy's business process model.
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1318" src="/wp-content/uploads/2018/10/standardeventtemplate.jpg" alt="StandardEventTemplate" width="439" height="267" /> <span class="figcap">Figure 23. Standard Event Template</span>
+
+</div>
+</div>
+<p class="p">The following picture shows the basic blueprint for the financial transactions we talked about in the prior chapter.</p>
+
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1320" src="/wp-content/uploads/2018/10/financialeventmodel.jpg" alt="FinancialEventModel" width="425" height="221" /> <span class="figcap">Figure 24. Financial Event Model</span>
+
+<div class="image">Expanding on the example in the prior chapter, financial resources are our Balance Sheet accounts and financial events are the Income Statement accounts, as well as the transfers between Balance Sheet accounts. Agents define the family members in our example system, in addition to the store or shop. The "when" is shown in dashed lines because if we simply record the date on the financial events we will have the "when" recorded.</div>
+</div>
+<p class="p">To begin creating our blueprints, Eric suggested we start by identifying "<q class="q">strategically significant business activities"</q> or events.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+
+<div class="section">
+<h2 class="title sectiontitle">Step 1: Understand the Organization's Environment and Objectives</h2>
+<p class="p">This step throws the scope of what our system might do wide open. It assumes that the purpose of accounting is to provide information, and not just financial information. It goes back to the premise of Pacioli's system: accounting was the information provider for the organization. So we start by deciding what information is worth the time and cost to capture and maintain. The type of information we could gather is almost unlimited. Keeping with our family example, most every family records birth, graduation, marriage, and death dates, but we probably don't require a sophisticated system for one family's events. On the other hand, no one I know reports on washing dishes, vacuuming, doing the laundry, or mowing the lawn.</p>
+<p class="p">Let's assume we need financial information, so all our journals are events. So our new system has to at least do what the personal accounting system above does. From there, what other type of information do we want to capture?</p>
+
+<div class="p">
+
+Looking at our family journal entries, we have a few transactions dealing with cars. Let's assume that we really like cars, and we buy fairly expensive cars. Perhaps we also pride ourselves on maintaining our cars very well, but if we had better information about what had been done when, we could do even better.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1306" src="/wp-content/uploads/2018/10/singlesideofcreditcardpayableacctjes.jpg" alt="SingleSideofCreditCardPayableAcctJEs" width="2037" height="487" /> <span class="figcap">Figure 25. Car Related Journal Entries</span>
+
+</div>
+</div>
+<p class="p">So our new system is a Personal Finances and Car Maintenance Information System.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Step 2: Identify Strategically Significant Operating Events</h2>
+<div class="p">
+
+Do we need to record every event that deals with the car, such as when we wash it? Probably not. As we look at our car related journal entries, we can see that not every act of maintaining the car results in a journal entry. Suppose we know that we checked the oil and tire pressure during the month. But neither of those had any financial impact, so we don't have a journal entry about them. Yet, to maintain the car better, we need to know about them as well. Let's assume that we really like cars, and we buy fairly expensive cars. Perhaps we also pride ourselves on maintaining our cars very well. But if we had better information about what had been done when, we could do even better. Additionally, let's record the following events related to the car.
+<ul class="ul">
+	<li class="li">Gas purchases, to track gas mileage</li>
+	<li class="li">Tire maintenance, including purchase and rotation</li>
+	<li class="li">Additional details about other maintenance</li>
+</ul>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Step 3: Analyze Each Event and Identify Resources, Agents, and Locations</h2>
+<div class="p">
+
+So what about those events do we want to know? Eric suggested we think like a reporter.
+<ul class="ul">
+	<li class="li">What happened?</li>
+	<li class="li">When did it occur?</li>
+	<li class="li">Who was involved and what roles did they play?</li>
+	<li class="li">What resources were involved and how much?</li>
+	<li class="li">Where did the event occur?</li>
+	<li class="li">What can go wrong during the execution of the event?</li>
+</ul>
+</div>
+<p class="p">Looking at the car journal entries above, we can see that there really isn't much information about the car in the entries themselves. We know when something happened, at least the payment date. We know we used the credit card, a financial resource, and the amount. Our financial system has external and internal agents. The company name might also tell us the where - the location - at least imprecisely.</p>
+<p class="p">So elements of what we need to know are on the financial events. But the main thing that is missing is the car maintenance event. The journal entry documents the paying for maintenance, not maintaining the car. The only thing that gives some sense of the maintenance done is the description. And how complete is that?</p>
+<p class="p">Think about the receipt from the auto mechanic. The journal entry and financial event is what is at the bottom of it: the total amount. But think of all the lines on the receipt. They checked oil, filled wiper fluid, checked brake pads, rotated tires, and perhaps a host of other things. Each one of those rows might have a price on it, but we didn't record that. The events our financial system recorded were a summary of the details of maintaining the car. That is the point of what Eric was trying to teach us: the accounting view of the data precludes other uses. It leaves out information that doesn't affect the financial statements, but may be critical to the organization.</p>
+
+<div class="p">
+
+So for each car maintenance event, we are going to record:
+<ul class="ul">
+	<li class="li">The mileage (a form of time) at the time of maintenance</li>
+	<li class="li">The vehicle (resource)</li>
+	<li class="li">Each service (resource) we are paying for</li>
+	<li class="li">The family member who was responsible for getting it done (internal agent)</li>
+	<li class="li">The shop that did the work (external agent and location)</li>
+	<li class="li">The date and time of the payment.</li>
+</ul>
+</div>
+<p class="p">The next steps start to move us from the accounting world into the technology world; but don't take that to mean it doesn't need to be understood by the business. Similar to building a home, the homeowner still has a lot to say about what kinds of lighting will be used, and how big the shower is after the basic rooms have been designed.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Step 4: Identify Direct Relationships Among Resources, Events, Agents, and Locations</h2>
+<p class="p">We now move into the world of database design. To keep our explanation simple, we'll use the concept of spreadsheets to explain the next steps. Many of the basic functions of a database can be understood by someone familiar with a spreadsheet.</p>
+<p class="p">Similar to spreadsheets, databases are made up of tables, which usually have a set number of columns, that are "populated" with, or contain, rows of data. In our spreadsheet world, let's assume that each tab of the spreadsheet is a table. Each Resource, Event, Agent, or Location and perhaps Time would be a separate tab on the spreadsheet. We next specify the relationship between each of the tabs: Each row on one tab relates to one (1) or many (m) rows on the other tab. We end up with a picture that might look like this:</p>
+
+
+<img class="alignnone size-full wp-image-1316" src="/wp-content/uploads/2018/10/realprocessmodel.jpg" alt="REALProcessModel" width="1664" height="1556" /> <span class="figcap">Figure 26. Process Model with Relationships</span>
+<p class="p">This is an entity-relationship diagram, a very common type of â€˜blueprint' for information systems. Small letters are used to indicate the relationship of the rows in the tables to the rows in other tables. For example, each car (a row in the car table) has maintenance done to it (a row in the maintenance event table), but each maintenance event only services one car. We don't record on one service event the lube for one car and check tire pressure for the other car. We represent this on the diagram as a 1 on the side of car, and an â€˜m" on the side of Maintain Car events: one car is involved in many maintenance events. These numbers are called the cardinality.</p>
+
+<div class="p">Think of each box on the diagram as a tab of a spreadsheet. Each maintenance event adds a new row to the maintenance tab of the spreadsheet. But as we add new maintenance events, we don't add new cars to the cars tab of the spreadsheet. We simply have one column in the maintenance event tab that records which car (using its identifier like a car number or name) is involved in the maintenance.<sup><a href="#fntarg_2" name="fnsrc_2">2</a></sup></div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Step 5: Identify the REAL Relevant Behaviors, Characteristics, and Attributes</h2>
+<p class="p">The next step in the process is to define what we want to know about each one of the boxes. This is identifying the attributes of our tables in the database, or more simply the column headings for each tab of our spreadsheet.</p>
+<p class="p">Suppose that below are the things we want to know about each of our Resources, Events, Agents, Location, or Time, the columns of our tables.<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a> We'll underline the key or unique identifier for each row.</p>
+
+<div class="tablenoborder">
+<table class="table" border="1" summary="" rules="all" cellspacing="0" cellpadding="4">
+<thead class="thead" align="left">
+<tr class="row" valign="bottom">
+<th id="d15563e194" class="entry thleft thbot" valign="bottom" width="20.72538860103627%">Entity (Table)</th>
+<th id="d15563e196" class="entry thleft thbot" valign="bottom" width="79.27461139896373%">Attributes (Columns)</th>
+</tr>
+</thead>
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="d15563e194 " valign="top" width="20.72538860103627%">Financial Resource</td>
+<td class="entry" headers="d15563e196 " valign="top" width="79.27461139896373%"><u class="ph u">Financial Resource ID</u>
+Name, Bank or Credit Card Account Number, Institution Name, Contact Name</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d15563e194 " valign="top" width="20.72538860103627%">Car</td>
+<td class="entry" headers="d15563e196 " valign="top" width="79.27461139896373%"><u class="ph u">Car ID</u>
+Car Name, Car Make, Car Model, Year Made, Year Purchased</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d15563e194 " valign="top" width="20.72538860103627%">Family Members</td>
+<td class="entry" headers="d15563e196 " valign="top" width="79.27461139896373%"><u class="ph u">Family Member ID</u>
+Family Member Name, Birth Date, Drivers License Number</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d15563e194 " valign="top" width="20.72538860103627%">Shop</td>
+<td class="entry" headers="d15563e196 " valign="top" width="79.27461139896373%"><u class="ph u">Shop ID</u>
+Shop Name, Address, Phone, Contact Name, Hours</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d15563e194 " valign="top" width="20.72538860103627%">Mileage</td>
+<td class="entry" headers="d15563e196 " valign="top" width="79.27461139896373%">Mileage</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d15563e194 " valign="top" width="20.72538860103627%">Date and Time</td>
+<td class="entry" headers="d15563e196 " valign="top" width="79.27461139896373%">Timestamp</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d15563e194 " valign="top" width="20.72538860103627%">Maintain Cars</td>
+<td class="entry" headers="d15563e196 " valign="top" width="79.27461139896373%"><u class="ph u">Maintain Event ID</u>
+ID's from other tables: Car ID, Family Member ID, Shop ID,
+Other Attributes: Amount, Mileage and Date and Time (the actual mileage and date and time, rather than an ID, are placed right in the table)</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d15563e194 " valign="top" width="20.72538860103627%">Service</td>
+<td class="entry" headers="d15563e196 " valign="top" width="79.27461139896373%"><u class="ph u">Service ID</u>
+Service Name (change oil, replace alternator, etc.), Maintenance Event ID</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="p">Defining the columns takes longer than defining the tables because there are more of them. Populating the rows takes even longer. Imagine how long it would take to type in all the values for a spreadsheet that has 10 columns, each one is about 10 characters in length, and which contains 1000 rows: That is 100,000 characters that would need to be typed. That is perhaps 10 hours of typing for an average typist.<a href="#fntarg_4" name="fnsrc_4"><sup>4</sup></a> The rows of data are really what we need to get to; they are the point of reporting.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Results</h2>
+<p class="p">We now have a simplified set of plans for our new information system<a href="#fntarg_5" name="fnsrc_5"><sup>5</sup></a>. This set of steps, and the resulting plans, are not that foreign to anyone who has constructed business information systems. A very similar set of diagrams, and the system built from them, could be used to build systems for manufacturing, banking, sales, and a host of others.<a href="#fntarg_6" name="fnsrc_6"><sup>6</sup></a></p>
+<p class="p">Now imagine we have actually constructed the system, in a very simple way. Imagine a spreadsheet with a tab for each of the boxes, with the above column headings for each tab. Having created the spreadsheet, we have diligently captured each business event we outlined, our car maintenance events and all financial transactions for some period of time. Having captured this data, we can now query against the tables, combining them in myriad ways to produce reports.</p>
+<p class="p">This single system can not only generate the financial statements, it also can generate car maintenance reports. These car maintenance reports will always reconcile to the financial statements. The two types of reports can be integrated, showing costs of car maintenance, cost by car, cost by shop, and financial responsibility by family member.</p>
+<p class="p">The rows of data in our "spreadsheet" database are very different from the simple little financial system our accountant set up. Eric taught us, and McCarthy's paper exposed that, really there is no need for a finance system at all. In modern corporations, with modern information systems, the amount of data actually created by finance is very small compared with the data that comes from these other systems. It is, therefore, theoretically possible to gather the finance data needed from all these other systems and combine it together to produce the financial reports. The amount of data duplication is reduced; finance becomes a more relevant function as it drives a broader view of information needs in the organization; and the overall IT architecture becomes more flexible.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">Having gained this understanding, my time in school was coming to a close. Such changes naturally cause reflection upon what one has learned and what one still doesn't seem to understand.</p>
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-professor/the-ivory-tower/">Chapter 9: The Ivory Tower</a>
+
+<strong>Previous:  </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-professor/resources-and-agents/">Chapter 7: Resources and Agents</a>
+
+<strong>Parent Topic:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-professor/">Part 2: The Professor</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Although not taught in my classes in school, Eric, working with Anita Sawyer and Owen Cherrington, developed these six steps later and documented them. Anita Sawyer Hollander, Eric L. Denna, J. Owen Cherrington, <cite class="cite">Accounting, Information Technology, and Business Solutions</cite>, 2nd ed. ( © McGraw-Hill Companies Inc.: 2000) 46 -64.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> Linking the REA business modeling approach to an Entity Relationship Diagram is discussed in Armitage, Howard M., <cite class="cite">Linking Management Accounting Systems with Computer Technology</cite>, published by The Society of Management Accountants of Canada, Hamilton, Ont. .</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> Mileage and Date and Time, you can see, don't have many things to describe them. We only want to keep track of one attribute on each one of them. For this reason, we will likely simply put the mileage and the timestamp on the events themselves. Thus, in the last version of our plans, we'll make these boxes dashed boxes, meaning we are recording these things, but not in separate tables.</div>
+<div class="fn"><a href="#fnsrc_4" name="fntarg_4"><sup>4</sup></a> Assuming 33 words per minute and each word contains on average five characters.</div>
+<div class="fn"><a href="#fnsrc_5" name="fntarg_5"><sup>5</sup></a> Of course, many more plans are necessary to determine how data is put into these table and taken out of them to produce reports. But the premise of the theory is that capturing the appropriate data for each business event will make the these tasks much easier.</div>
+<div class="fn"><a href="#fnsrc_6" name="fntarg_6"><sup>6</sup></a> Kevin W. Young and Terry Magee took these concepts further in the PwC methodology Ascendant Section R0615 Event-Driven Business Modelling. See<a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/appendices/appendix-2-event-driven-business-modeling/">Appendix 2: Event Driven Business Modelling</a>  for more information.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/resources-and-agents/" class="prev"><span class="label">&larr; Previous</span>Chapter 7: Resources and Agents</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-ivory-tower/" class="next"><span class="label">Next &rarr;</span>Chapter 9: The Ivory Tower</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

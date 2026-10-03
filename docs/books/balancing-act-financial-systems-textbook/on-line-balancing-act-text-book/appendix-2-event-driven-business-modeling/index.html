@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appendix 2: Event Driven Business Modeling — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/appendix-2-event-driven-business-modeling/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Appendix 2: Event Driven Business Modeling</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<div id="bibleeventdrivenbusinessmodelling__EventDrivenBusinessModelling..." class="section">
+<p class="p">Kevin W. Young and Terry Magee took these concepts further in the PwC methodology Ascendant Section R0615 Event-Driven Business Modeling (Copyright IBM Corporation, used by permission). After summarizing the discussion presented in these chapters, they noted:</p>
+<p class="p">"The concepts of event-driven business modelling are also to ensure the development of an integrated enterprise data model that supports the business information needs of the enterprise. Specifically, they are applied in the following areas:</p>
+
+<div class="p">
+
+"Business Event Modelling: Business events are modelled to provide a basis for developing an organization's data models - the enterprise-level Entity Relationship Model (ERM), Conceptual Data Model (CDM), and Multi-dimensional Data Model (MDM). By modelling the essence of business events, various user perspectives of the organization's data resource can be supported. Specifically:
+<ul class="ul">
+	<li class="li">"The ERM provides a high-level enterprise view of an organization's kernel entities and their relationships.</li>
+	<li class="li">"The CDM represents a transaction processing perspective of an organization's data resource. It expands the ERM by identifying the characteristic entities, associative entities, and supertype/subtype entities and is further refined through a process of data normalization.</li>
+	<li class="li">"The MDM is developed from a performance measurement/decision support perspective. It identifies the key business analytical dimensions and facts.</li>
+</ul>
+</div>
+<p class="p">"Entity Relationship Model and Conceptual Data Model: A major weakness of many of today's enterprise data modelling efforts is to focus on a narrow, functional (vertical) view of an organization's business activities. This often leads to the artificial separation of data into business (operational) data and financial data and the subsequent proliferation of information systems that deal with only one kind of data. Event-driven business modelling aims at resolving this problem by forcing the integration of all data relevant to operating and managing an organization's business. With business events being the fundamental units of analysis, the enterprise data model represents an integrated view of the essential data of the organization's business rather than the individual views of information users (e.g., the financial statement view of an accountant or the production management report view of a plant manager).</p>
+
+<div class="p">
+
+"Business Analytical Multi-Dimensional Data Model: As an integral part of enterprise data modelling, a Multi-Dimensional Data Model is developed to support the business analytical or decision support information needs of an organization. Specifically, business analysis dimensions and informational facts about the organization's business are identified and modelled to provide a basis for developing a data warehouse supporting the organization's business analytical information needs. Multi-dimension data modelling is primarily based on an organization's performance measurement framework - the organization's value chain, the performance measurement categories and the specific performance measures. This analysis is supplemented by examining the essential data about business events - the resources, the agents, and the locations. By focusing on business events, an organization's business analytical information needs can be determined in terms of the capabilities to extract information relating to:
+<ul class="ul">
+	<li class="li">"Any events of a business process by time, agents, resources, and locations</li>
+	<li class="li">"Any period of time by events, agents, resources, and locations</li>
+	<li class="li">"Resources by type of event, time, agents, and location</li>
+	<li class="li">"Agents by type of event, time, resources, and locations</li>
+	<li class="li">"Location by type of event, time, agents and resources</li>
+</ul>
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1243" src="/wp-content/uploads/2018/10/fnexploringfullvalueofbusevents.jpg" alt="FnExploringFullValueofBusEvents" width="1202" height="1536" /> <span class="figcap">Figure 151. Exploring the Full Value of Business Events</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">"Taking the event-driven business modelling concept one step further, focusing on business events enables the development of information systems that can not only report in multiple ways on the current state of the business, but can also provide archival information on past events sorted by various criteria. Ultimately, this approach provides a mechanism for reconstructing the execution of a past event to identify not only the outcome of the event but also the conditions that existed within the business that dictated the result of the event (e.g., knowing that a customer order was rejected is important to many parts of a business, knowing why the order was rejected, such as because of a bad credit history or because the stock position was too low, may be even more important to the business).</p>
+<p class="p">"If all of the data relating to a business event is captured, including the conditions and values of any reference files accessed by the event, it should be possible to reconstruct the path of the event and repeat the outcome of the event at some future point in time.</p>
+<p class="p">"In practice, this is a major undertaking and requires that the technology (hardware and software) be sophisticated enough to capture all of the relevant data. Application software must be written to capture the data, as well as the data structures needed to store and allow retrieval of the data. However, once defined, the ability of the organization to manage the data at its disposal is almost infinite. It will effectively capture information that the business users may not even realize the importance of until some future point in time when they determine that they want to understand more about the business events with which they are dealing.</p>
+<p class="p">"The power that this approach brings is that it allows the business users to learn from their past experiences and interrogate business data to answer not just questions about "what happened to a specific business event on a particular day?" but also about "why did a business event result in a specific outcome?" or "what was the rationale behind the decision?"</p>
+<p class="p">"It is this power that information systems ultimately should embrace. As enabling technology becomes available, the development of information systems that utilize the full value of the business events should become the norm. The opportunity to take advantage of the event-driven approach should always be assessed for all current and future systems developments."</p>
+<p class="p">Authorship of material noted from discussion with Kevin Young, IBM Executive Consultant, June 9, 2009. Young noted that in the diagram presented "the lower left illustration of the Event Dependency Model, 'Customer Places Order' is the event and should be shown in the buff color below 'Add Customer Order'... which is the elementary process triggered by the Customer Places Order event."</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/acknowledgements/">Acknowledgements</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/appendices/appendix-1-accounting-model/">Appendix 1: Accounting Model</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/appendices/">Part 8. Appendices</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/appendix-1-accounting-model/" class="prev"><span class="label">&larr; Previous</span>Appendix 1: Accounting Model</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/selected-bibliography/" class="next"><span class="label">Next &rarr;</span>Selected Bibliography</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

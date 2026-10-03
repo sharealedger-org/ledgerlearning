@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 18. Input/Output — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-18-input-output/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 18. Input/Output</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">My time in training and on this first project had taken about a year. In July of 1993, Rick asked that I now join the Geneva team in Sacramento, California. This team was building a software product called Geneva, which was an amalgamation of the letters from the phrase Generalized Event-based Architecture. I believe Rick drew the picture Eric had shown, and this tool was the embodiment of that picture. The tool is now IBM Scalable Architecture for Financial Reporting (SAFR). One of my first assignments for Rick was to help upgrade Alaska to the latest version of the software.</p>
+
+<div id="bibleinputoutput__projectStateofAlaska" class="section">
+<h2 class="title sectiontitle">Alaska</h2>
+<p class="p">Rick was one of the principle architects on the Price Waterhouse team designing the state-wide accounting system for the Alaska Division of Finance in the 1980s. In 1978, Rick was writing a program which needed to solve a particular problem that couldn't be done with the ledger balances. He realized that reading all the required journal entries would make the problem trivial. He did that and wondered why more systems didn't work that way.</p>
+<p class="p">In designing the system in Alaska, he again came to a similar conclusion to McCarthy, that end user access to the detailed event data would provide the greatest flexibility in reporting. State governments were some of the first to undertake "enterprise" wide systems, and Alaska, with oil revenues and resulting tax revenue at a peak, undertook a very extensive system for the time.</p>
+<p class="p">The system processes and posts detail transaction line items. The technology of the day could handle posting one day's worth of journals. However, the financial reports require history, amounting to 53 million transactions in 48 gigabytes of data for two-year period, and 300 users and 400 different reports in various formats (download, hardcopy on-line tape, microfiche and file format output.) They also needed access up to 5 years worth of data on weekends upon request.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+<p class="p">The problem with the volume of data wasn't the processor's ability to add it up; it was the ability to get the data into memory for the processor to access; the reading of the data from the binder to white board. Reading data from disk is thousands of times slower than reading it from memory. Because we hear very large numbers today, such as the US Federal deficit, we sometimes are unfazed by them. But a multiplier of a thousand is a very large number.</p>
+<p class="p">Consider a thousand times difference in travel speeds. Large commercial airliners travel at about 500 miles per hour. Consider that the difference with the speed of a car at 50 miles per hour is only a factor of 10 times. An experienced hiker can walk at 5 miles an hour if pressed. So the difference between a commercial airplane and someone walking is a factor of 100 times - the difference between being able to cross half the world in 15 hours, and attempting to walk 24 hours a day seven days a week for two straight months. A factor of 1000 is the difference between flying halfway around the world and the more practical Marco Polo paced trip.</p>
+<p class="p">Our 13 second response time above becomes 3  ½ hours when multiplied by 1000.</p>
+<p class="p">Input/Output or IO is often the slowest part of computing.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Single Pass</h2>
+<div class="p">
+
+The Alaska team came up with a fairly simple answer to get around the IO problem: a single pass architecture. As the data, the business events, are read from the disk into memory, every report is allowed to see and use the data in any way it would like. Thus instead of transferring the 53 million records into memory 400 times to solve each report individually, the 53 million records are brought into memory once, and all 400 reports get to see each record. A marketing brochure from a few years later stated:
+<blockquote class="lq">In a typical run, Geneva  reads 69 million records, performs 1.6 billion foreign key lookups to hierarchical account structure and vendor tables and produces more than 400 separate reports in about 90 minutes of both wall clock and CPU time. A major feature that makes this possible is 's hyper-performance in processing external table joins.  performs look-ups at an average rate of approximately 500,000 table joins per CPU second.</blockquote>
+<blockquote class="lq"><q class="q">"By using , we reduced data processing costs and reallocated the funds to absorb budgetary cuts without making cuts in financial services</q>," states Don Wanie, Director of the Division of Finance. The Division has also found opportunities to replace subsystems made redundant by . The money saved in annual processing costs now translates to additional funds for staff and technology resources to focus on client inquiry and audit as the number of constituents and federal reporting requirements grow.</blockquote>
+<blockquote class="lq">Beyond providing the savings to employ additional resources,  also allows the existing personnel to work more effectively. Several agencies have reduced federal reporting processes that took 2-3 weeks down to one day. This was accomplished by producing data directly from  according to the specific needs of the respective reporting requirements.</blockquote>
+<blockquote class="lq">According to Cheryl Crawford, Division of Legislative Audit, "<q class="q"> opens up new reporting possibilities that make our jobs more efficient."</q> The faster and cheaper report/view production and tailored report formats support more thorough and efficient audits and superior client service. The state estimates the total cost for each report is only 50 cents.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></blockquote>
+</div>
+<p class="p">These are the benefits of a business event based reporting architecture.</p>
+
+</div>
+<div id="bibleinputoutput__DatabaseSize" class="section">
+<h2 class="title sectiontitle">Database Size</h2>
+<p class="p">There is a lot of talk about database sizes: the larger the database, the more impressive must be the system. However there are a myriad of examples of systems where data is put into the system but can never be gotten out. Loading data isn't usually the issue; reporting on it is.</p>
+<p class="p">Very large sizes can also be an indicator of a poor system or data design. As Steve Mongulla, a long time friend, told Rick one day, "<q class="q">If you denormalize a data structure with enough attributes to stretch from here to China, you can avoid data design all together."</q></p>
+<p class="p">An aspect of database design that the Alaska team hit upon is the difference between balances and movements, much of which has been explained in Part 2 - The Professor. The impact of this difference became clear in 2006 when designing the reporting database for a very large financial services customer. The team responsible created tables to store balances for all the reports the system was supposed to support. The resulting database size for just the North American installation was 46 terabytes. That is 46 followed by twelve zeros. That was more than all the other data the entire company used in North America, just for the finance system.</p>
+
+</div>
+<div id="bibleinputoutput__inputoutputmovements" class="section">
+<h2 class="title sectiontitle">Movements</h2>
+<p class="p">When a movement based approach was applied to the problem, the system that was actually implemented required about 250 gigabytes to store data needed to produce the vast majority of the reports. That is 250 followed by only nine zeros - nearly a factor of 1000 smaller.</p>
+<p class="p">How is that possible? It is possible by properly balancing summarization with the need for detail; balancing the desire to make intermediate inventories of answers - balances - with keeping all the data in its raw format from the beginning of time - transactions - to assemble when a report is needed.</p>
+<p class="p">The following graph shows this relationship.</p>
+
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1290" src="/wp-content/uploads/2018/10/relationshipoftransbalmov.jpg" alt="RelationshipofTransBalMov" width="378" height="206" /> <span class="figcap">Figure 35. Relationship of Transactions, Balances, and Movements</span>
+
+</div>
+<p class="p">Any report can be produced from the business events. If all the business events for any organization were kept from the beginning of that organization, any report using them can be reproduced. But the data volumes to do so may be enormous.</p>
+<p class="p">If every row on every report that was ever needed inside an organization - effectively every balance - were kept, the data volumes would be equally large. This is particularly true if the date of the reported balance is stored with the balance, thus causing balances to be replicated every day even though they may never have changed.</p>
+<p class="p">The value of the transactions diminishes quickly; no one produces reports as of 15 years ago. All the richness of the data from distant periods provides no benefits.</p>
+<p class="p">Not all balances are needed every day, and not all balances have transactions affecting them each day; in other words the number of transactions for a given day is lower than the number of balances on that day.</p>
+
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1266" src="/wp-content/uploads/2018/10/sampletransactionsandbalances.jpg" alt="SampleTransactionsandBalances" width="486" height="412" /> <span class="figcap">Figure 36. Sample Transactions and Balances</span>
+<p class="image">On the left of the Sample Transactions and Balances figure are all the transactions for a company since its inception. On the right are the balances that could be created from those transactions for every month since the beginning of August 2006.</p>
+<p class="image">If the system were designed to keep only the following records, any of the balances shown on the right hand side of the table could be calculated. The reduction in the number of rows needed is visually apparent.</p>
+
+</div>
+</div>
+<div class="section">
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1264" src="/wp-content/uploads/2018/10/samplemovements.jpg" alt="SampleMovements" width="259" height="148" /> Figure 37. Sample Movements
+
+The first balance records represent the opening movements; the change in the value from the beginning of the company history to the date of the record. The other records represent the movements for the particular month. In this manner the size of the database can be reduced to a manageable level. This same technique can be applied to maintaining summaries of transactions within a day.
+</div>
+<p class="p">The impact of this will be to allow faster data access, and less time in producing reports, a highly efficient report production system. In the Alaska system, the historical transactions were collapsed by all the relevant attributes and carried forward into the new file for the new years. Then, the transactions for the period were appended to this file, thus keeping the information-rich current data available for reporting, but not burdening the system with all of the history.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Balancing the Use of Movements and Balances</h2>
+<p class="p">This point of movements, transactions, and balances, is focused on only one part of the data in the database: the numbers. These different approaches mostly change the numbers on the ends of all the attributes of interest (the business unit, ledger account, etc.). The single pass architecture also addresses another problem with reporting: how to let users select, sort and summarize the data of interest to them. These are key steps in the reporting pattern that must also be automated efficiently.</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-19-select-sort-summarize/">Chapter 19. Select, Sort, Summarize</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-17-programming-tools/">Chapter 17. Programming Tools</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/">Part 3. The Partner</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Price Waterhouse Data Warehouse Reporting Solution brochure, <cite class="cite">State of Alaska benefits from data warehouse high-performance solution</cite>, May 1996. Copyright IBM Corporation.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> Ibid.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-17-programming-tools/" class="prev"><span class="label">&larr; Previous</span>Chapter 17. Programming Tools</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-19-select-sort-summarize/" class="next"><span class="label">Next &rarr;</span>Chapter 19. Select, Sort, Summarize</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

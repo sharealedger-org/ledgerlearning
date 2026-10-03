@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 35. Model the Repository — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-35-model-the-repository/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 35. Model the Repository</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">When Eric showed us the simple picture of a business event based system, it gave the impression that the repository of business events contains a single record type where all the attributes to describe the event were recorded along with any amounts. SAFR views are typically created against a single logical record, a single record structure. All views reading that LR and file process see the same kinds of records.</p>
+<p class="p">Of course, the repository also contains reference data. But for the most part these files are relatively small, with keys and answers measured in the tens of thousands to hundreds of thousands of rows. Because the summary structures in the same format as the transaction records, The Cookie Manufacturer's repository was no more complex than this.</p>
+<p class="p">As we approached new problems, we found some did not fit into the simple view of a single record structure. For example, we used SAFR against the stacked data element file that had multiple record structures in it. The views Jim and Mark created had to first test a common field in each record to select only records that were appropriate for that view. Some records could be interpreted by one LR, other records by another. This use of SAFR is a typical ETL process to get around the complexities of the data to be extracted.</p>
+<p class="p">At the insurance company we found a problem with the size of the reference files. Normalization of data elements is more efficient for storage since attributes of a customer account only exist in one place on the customer account record. An account number from the event record can be used to access it. Modern businesses have millions of accounts. The size of these types of "reference" files starts to approach the same size as the event files.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Data Modeling</h2>
+<p class="p">I remember Greg Forsythe, the most practical data modeler I have ever met in my life (a truly rare breed), working with Doug at the Insurance Company to devise an approach whereby SAFR could process these files effectively. Greg modeled the attributes needed for the reports in 3rd normal form. In other words, he placed the policy attributes on the policy table and only represented one row for each policy. Because policies are renewed over multiple terms, he made a different table for the term attributes with a term key to describe it.</p>
+<p class="p">He continued to add tables with additional attributes until he got down to the policy and loss transactions, those that Mark Kimmell had discovered from the Stacked Data Elements. All these other attributes were also in the Stacked Data Elements as separate records. It is likely the source system stored them in a similar manner. On the transactions - the true business events containing monetary amounts - he placed the keys for all the higher level entities: the policy, term, etc.</p>
+<p class="p">Having modeled the data in this way, the tables he designed could have been loaded into any relational database. SQL could have been used to join the tables together to produce the outputs as long as the amount of data in them was sufficiently small. The computer would have used indexed access methods explained in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-19-select-sort-summarize/">Select, Sort, Summarize</a> to locate the appropriate records and combine them into the outputs desired.</p>
+<p class="p">However, with the issues of scale, a better processing pattern needed to be adopted to more realistically reflect what the machine had to do to combine the data together, and get more out of each stage in that process.</p>
+<p class="p">The team chose to use sequential files to exploit the Scan Engine's power and to eliminate the CPU time involved in decoding relational data structures. They chose to maintain the files as zO/S Generation Data Groups, a simple mechanism to manage access to different versions of the sequential files. The files would be maintained in sorted order by their keys.</p>
+
+<div class="p">For example:</div>
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1205" src="/wp-content/uploads/2018/10/sampleinsurancerepository.jpg" alt="SampleInsuranceRepository" width="1549" height="1600" /> <span class="figcap">Figure 85. Sample Insurance Repository</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">The five files above - Policy, Term, Policy Event, Loss, and Loss Event - are maintained in the order shown in separate files. The Policy, Term, and Loss files are reference or static data files. The Policy Event and Loss Event files are event files. Doug added a new feature to the Scan Engine: the Common Key Data Buffer feature.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Common Key Data Buffer Event Files</h2>
+<div class="p">
+
+This feature is a little like a prefetch function in some databases, whereby data that is expected to be used in the process is brought into memory before it is needed. The common key buffer technique brings all the records for a particularly key, in our example one policy, into memory. It does this through a merge process, whereby multiple partitioned files are brought together. The data buffer from our example for the first policy would appear as follows:
+<div></div>
+<div id="biblemodeltherepository__sampleinsuranceinputbuffer" class="fig fignone">
+
+<img class="alignnone size-full wp-image-1222" src="/wp-content/uploads/2018/10/sampleinsuranceinputbuffer.jpg" alt="SampleInsuranceInputBuffer" width="1569" height="553" /> <span class="figcap">Figure 86. Sample Insurance Input Buffer</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">Each of these records, as long as they have unique keys, can be used either as an event file or a reference file. The data for this policy is held in memory until all the records in it are read as event file records. When they have been processed as event files, all the data for the next policy is brought into memory.</p>
+<p class="p">SAFR's common key buffering feature appends three fields on the front to indicate from which file the records had come. The first field defines what LR describes the record. The next two fields describe from which partitions of that entity it had come and are discussed in the next chapter.</p>
+<p class="p">The Entity ID field is used so that the views can filter which business events they are reporting on. Because each of the records is passed to the views, reference data views can be resolved at the same time event file views can be resolved. Thus a view which counts policies of a particular type can select records with the Policy entity ID. Views which are summarizing premium payments can summarize Policy Events. This is similar to having views read an event file with multiple record types within it.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Common Key Data Buffering Lookups</h2>
+<div class="p">
+
+Lookups to other records are accomplished by building a join with the linkage between these records. For example, if my view is summarizing premium payments from the Policy Event record by Term Length, I would define my view to select records where the Entity ID is Policy Event. The first record chosen will be the following.
+<div class="tablenoborder">
+<table class="table" border="1" summary="" rules="all" cellspacing="0" cellpadding="4">
+<thead class="thead" align="left">
+<tr class="row" valign="bottom">
+<th id="d12357e119" class="entry thleft" char="." valign="top" width="11.806543385490755%">Entity ID</th>
+<th id="d12357e121" class="entry thleft" char="." valign="top" width="10.526315789473683%">Partition</th>
+<th id="d12357e123" class="entry thleft" char="." valign="top" width="10.81081081081081%">Category</th>
+<th id="d12357e125" class="entry thleft" char="." valign="top" width="10.526315789473683%">Policy ID</th>
+<th id="d12357e127" class="entry thleft" char="." valign="top" width="10.099573257467995%">Term ID</th>
+<th id="d12357e129" class="entry thleft" char="." valign="top" width="16.927453769559033%">Policy Event ID</th>
+<th id="d12357e131" class="entry thleft" char="." valign="top" width="19.34566145092461%">Policy Event Type</th>
+<th id="d12357e133" class="entry thleft" char="." valign="top" width="9.95732574679943%">Amount</th>
+</tr>
+</thead>
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="d12357e119 " char="." valign="top" width="11.806543385490755%">Policy Event</td>
+<td class="entry" headers="d12357e121 " char="." valign="top" width="10.526315789473683%">00</td>
+<td class="entry" headers="d12357e123 " char="." valign="top" width="10.81081081081081%">A</td>
+<td class="entry" headers="d12357e125 " char="." valign="top" width="10.526315789473683%">1</td>
+<td class="entry" headers="d12357e127 " char="." valign="top" width="10.099573257467995%">1</td>
+<td class="entry" headers="d12357e129 " char="." valign="top" width="16.927453769559033%">1</td>
+<td class="entry" headers="d12357e131 " char="." valign="top" width="19.34566145092461%">Prem. Payment</td>
+<td class="entry" headers="d12357e133 " char="." valign="top" width="9.95732574679943%">100.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="p">
+
+I'd define a join which uses the Policy ID and Term ID to find the Term record. The join will return the following record.
+<div class="tablenoborder">
+<table class="table" border="1" summary="" rules="all" cellspacing="0" cellpadding="4">
+<thead class="thead" align="left">
+<tr class="row" valign="bottom">
+<th id="d12357e166" class="entry thleft" char="." valign="top" width="13.137557959814528%">Entity ID</th>
+<th id="d12357e168" class="entry thleft" char="." valign="top" width="12.364760432766616%">Partition</th>
+<th id="d12357e170" class="entry thleft" char="." valign="top" width="12.828438948995363%">Category</th>
+<th id="d12357e172" class="entry thleft" char="." valign="top" width="13.601236476043276%">Policy ID</th>
+<th id="d12357e174" class="entry thleft" char="." valign="top" width="12.364760432766616%">Term ID</th>
+<th id="d12357e176" class="entry thleft" char="." valign="top" width="17.619783616692427%">Term Length</th>
+<th id="d12357e178" class="entry thleft" char="." valign="top" width="18.083462132921174%">Start Date</th>
+</tr>
+</thead>
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="d12357e166 " char="." valign="top" width="13.137557959814528%">Term</td>
+<td class="entry" headers="d12357e168 " char="." valign="top" width="12.364760432766616%">00</td>
+<td class="entry" headers="d12357e170 " char="." valign="top" width="12.828438948995363%">A</td>
+<td class="entry" headers="d12357e172 " char="." valign="top" width="13.601236476043276%">1</td>
+<td class="entry" headers="d12357e174 " char="." valign="top" width="12.364760432766616%">1</td>
+<td class="entry" headers="d12357e176 " char="." valign="top" width="17.619783616692427%">6 months</td>
+<td class="entry" headers="d12357e178 " char="." valign="top" width="18.083462132921174%">11 Months ago</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p class="p">Note that this record has already been processed as an event file record (it is the second record in Figure 86, but because of the Common Key Data Buffering it is still in memory and available for lookup. The view can now use any of these fields for any purpose, selection, sort, placing in columns, or used to join to other data. Thus I can produce a view of premium payments by term length if desired. This join technique also supports date effective joins as well<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a>.</p>
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-36-optimize-for-performance/">Chapter 36. Optimize For Performance</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-34-consider-complex-joins/">Chapter 34. Consider Complex Joins</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+<hr />
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Technically he simply wrote a read exit. SAFR had the ability to call exits since 1994. The exit he created was subsequently generalized and made part of the SAFR product.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> See <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-52-common-key-data-buffering/">Common Key Data Buffering</a>  for more details.</div>
+&nbsp;
+
+&nbsp;
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-34-consider-complex-joins/" class="prev"><span class="label">&larr; Previous</span>Chapter 34. Consider Complex Joins</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-36-optimize-for-performance/" class="next"><span class="label">Next &rarr;</span>Chapter 36. Optimize For Performance</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

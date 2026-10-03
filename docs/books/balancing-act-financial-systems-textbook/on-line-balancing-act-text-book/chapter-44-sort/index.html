@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 44. Sort — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-44-sort/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 44. Sort</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">We performed a benchmark for an airline, and in that process Jay (I suspect) outlined a way of reducing the amount of data in the extract files that turned into a feature called extract phase summarization. We'll discuss that below. But before that feature was available, I remember many hours of babysitting SAFR processes only to see the sort portion of the process fail.</p>
+<p class="p">Remember in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-19-select-sort-summarize/">Select, Sort, Summarize</a>, we reviewed the challenges of sorting data. Sorting data can be the longest process in general business computing, particularly in reporting. High volume sort processes can challenge and even exceed two of the three parts of our compute environment, memory and disk for even the largest compute environments. Memory is challenged because that is where all the work takes place. Disk is challenged because the file must be at a minimum copied, in most cases nearly tripled, before the process is through. Only CPU capacity is typically not challenged in sort processes.</p>
+<p class="p">Sorting data is the one part of the SAFR batch process that uses other companies' software products. Sort utilities have existed for years on mainframes, and are highly tuned through years of development and testing. But because it is such an important part of the reporting process, it is important to understand some basics about sorting large files.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Sort and Merge Basics</h2>
+<p class="p">Before describing sorting large files, let's first understand what a merge process looks like. Sort utilities can merge multiple files that are already in sorted order. Merging requires reading the first record from each of the files, comparing those records to determine which record to write out next to the output file. Only one record from each file needs to be in memory at any point in time.</p>
+<p class="p">Back to sort. Like any other program, sorting utilities only work with data in memory. That doesn't mean that files which can't fit into memory can't be sorted. If the data is too large to fit into memory, sort utilities bring as much data into memory as they can, sort those records, and then store that set of records onto disk in temporary files. They then bring in another section of the file, and do the same thing. After the utility has read and sorted into a temporary file the last record in the file (which might end up needing to be the first record written to the output file), it then performs a merge process. It opens each of the temporary files, reads the first record from each, and writes the first record to the output file.</p>
+<p class="p">Note here, though, that a record was read from disk (1st IO), sorted into a temporary file and written to disk (2nd IO), read from disk (3rd IO) and finally written to the output file (4th IO). For this one reason, sorting large files can be very, very, very slow.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Business Event Based Sorts</h2>
+<div class="p">
+
+The need for extreme care is even more acute when attempting to implement a business event based reporting architecture. Consider why by examining the views we have built and run thus far. Suppose all of the views we have constructed were Format Phase views, they all had no general selection criteria, so every event record read is written to the extract file<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a>, and they all wrote to EXTR001. If that were the case, then the GVBMR95 control report would look like this.
+<div id="biblesort__MultiViewImpactonSortPhaseCtlRpt" class="fig fignone">
+
+<img class="alignnone size-full wp-image-1198" src="/wp-content/uploads/2018/10/multiviewimpactonsortphasectlrpt.jpg" alt="MultiViewImpactonSortPhaseCtlRpt" width="1461" height="602" /> <span class="figcap">Figure 118. Multiple View Impact on Sort Phase GVBMF95 Control Report</span>
+
+<div class="image">Note that from reading an event file with only 18 records in it, we have created the need to sort 77 records (18 x 4 views, + 4 header records, + 1 control record). It becomes clear how reports which perform a significant summarization of business events can have performance issues.</div>
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Extract File Sorts</h2>
+<p class="p">Think for a moment about the order of the records in the extract file if we had executed the above set of views. GVBMR95 Logic Table Trace would show event file record 1 being read by view 3261, and written to the extract file. Then that same record would be processed by view 3262 and written to the extract file. Then on to the next view, and the next view. At the end of the processes, each event file record would be written four times into the extract file. Except for putting the sort keys on the front of each extract record, extracting the data does nothing to put them into the right order<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a>.</p>
+<p class="p">When GVBMR88 runs, it needs all the records for view 3261 to be next to each other, in sorted order by the sort key so it can perform sub-totaling and calculations. Because SAFR shares the extract files, to reduce operational complexity by having every view written to a separate file, SAFR precedes the Sort Key Data with the View ID, as the last field of the control area. The Extract Program creates the sort control cards--the commands to the sort utility--for each extract file. The start position always starts with the view ID in the control area, but the length of the data to be sorted is the longest SK area for any view writing to that extract file.</p>
+<p class="p">The control record and header records are constructed in such a way that they sort to the top of either the file or the view respectively. In this way, sort places the control record, then header for view 3261 then all the extract records for view 3261 in order by their sort criteria at the top of the file, followed by the header record for 3262, etc.</p>
+<p class="p">Typically, one has to instruct the sort utility about specific fields by position and length that are needed to be sorted in descending order. But because all the data is in one file, sorting data in descending order requires a bit of a trick. The Extract program converts the data into a form called "two's complement" which is similar to creating a reverse image of the data. The data can then be sort ascending, and the Format program then converts it back into the original form, thus creating a descending order to it. We'll show an example below.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Extract Phase Summarization</h2>
+<p class="p">Jay recognized in the airline benchmark that we had to create a single record which summarized the entire file to be used in another pass of the data as a reference file key. Perhaps the problem was one where we had to calculate the percentage of total for the individual rows. He asked Doug to create a special process at the end of the Extract engine that, instead of writing the record to the extract file, kept the record in memory until the next extract record came along. When the process saw the next extract record, it would compare the sort keys; if they were different, then the first record was written to the extract file; if they were the same, the process would accumulate all CT columns immediately, and no record was written to the extract file.</p>
+<p class="p">The impact of this process was that a very large file with one value on all records for collapse was reduced to a single row containing the total of all the records in the file at the end of the extract process. Instead of having to replicate every record into the extract file, sort them, and then reduce the answer to one row, SAFR arrived at the answer at the end of the extract phase.</p>
+<p class="p">This is great, but what if the event records had multiple values that needed to be collapsed? One approach considered was sorting the event file before execution of the Extract. But requiring the input event file to be in a sorted order reduced the application of this technique to a broader set of views. The idea behind the event based architecture was the ability to produce many views of the business events with access to all the business event attributes. Having the event file in sorted order was the same as requiring definition of indexes on the file, which reduced the type of access that could be gained. If the records came in completely random order, the extract file may end up with just as many records with no extract phase summarization.</p>
+<p class="p">Doug realized this, and could see that with a small change, the technique could be broadened to apply to many more views. What was needed was to keep a stack of output rows, a thousand or so for each view, rather than just one row, and keep those rows which had the most activity against them in memory, allowing the least used rows to drop into the extract file. Thus as an extract record was ready to be written to the extract file, a simple index of the view's sort keys pointing to the proper record would allow collapsing that record. Let's use an example to show how this works.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Extract Phase Summarization Example</h2>
+<div class="p">
+
+I have created view 3265. This view reduces our 18 journal entries by the family name into two categories, working capital and other. I have used the following logic text to convert the accounts into constants that are then used in collapsing the data as the second sort key.
+<pre class="pre codeblock"><code>If {ACCOUNT} = 111 Or {ACCOUNT} = 211 Then
+	COLUMN = "Working Capital"
+Else
+	COLUMN = "Other"
+EndIf</code></pre>
+The view generated the following logic table.
+<div class="fig fignone">
+
+<img class=" size-full wp-image-1197 aligncenter" src="/wp-content/uploads/2018/10/extracttimesummlogictable.jpg" alt="ExtractTimeSummLogicTable" width="1628" height="765" /> <span class="figcap">Figure 120. Extract Phase Summarization Logic Table</span>
+
+<div class="image">Note that his logic table contains a WRSU function, a write summarized extract record. When turning this feature on, knowing the event data as I did, I told SAFR to make a stack of four extract records; I knew there would be no more than four records in the final output, so no memory would be wasted, but the sorted file would be as small as possible.</div>
+<div></div>
+</div>
+</div>
+<div class="p">
+
+The following is the Logic Table trace for records 1 and 2. Note that the comparison on record two failed the "IF" selection criteria above, so the "else" condition was executed. After these two rows, there were two records in the stack, both for the "K &amp; N jones" family, one "Working Capital" and one "Other".
+<div class="fig fignone">
+
+<img class=" size-full wp-image-1196 aligncenter" src="/wp-content/uploads/2018/10/extracttimesummlogictabletrace.jpg" alt="ExtractTimeSummLogicTableTrace" width="1483" height="832" /> <span class="figcap">Figure 120. Extract Phase Summarization Logic Table Trace</span>
+
+<div class="image">The following is the extract file.</div>
+</div>
+<div class="fig fignone">
+
+<img class=" size-full wp-image-1195 aligncenter" src="/wp-content/uploads/2018/10/extracttimesummextractfile.jpg" alt="ExtractTimeSummExtractFile" width="1574" height="582" /> <span class="figcap">Figure 121. Extract Phase Summarization Extract File</span>
+
+<div class="image">I have made the second sort key, the "Working Capital" and "Other" values, descending. The extract program has therefore translated these values into two's complement; thus the values are not readable in the extract file. But it is clear there are only four records in the extract file, and there are two sets of the same unreadable characters, "other" and "working capital". The numbers in the CT area for column 3 (the two byte binary value on the front of the CT column) match the final output after sorting and running the Format phase (remember they have 8 decimals places). Note that the records aren't yet in sorted order; they appear in the extract file in the order they first appeared in the event file.</div>
+</div>
+</div>
+<div></div>
+<div class="p">
+
+Here is the final output from the Format phase.
+<div class="fig fignone">
+
+<img class="  wp-image-1194 alignright" src="/wp-content/uploads/2018/10/extracttimesummoutput.jpg" alt="ExtractTimeSummOutput" width="540" height="120" /> <span class="figcap">Figure 122. Extract Phase Summarization Output</span>
+
+<div class="image">Now, if I changed the stack count so that the extract program only keeps 3 records, I know that the stack will overflow; there won't be enough records in the stack to summarize all the event records. Here is the extract file having done so (and making the sort key ascending so it is now readable).</div>
+<div></div>
+</div>
+</div>
+<div class="p">
+<div class="fig fignone">
+
+<img class=" size-full wp-image-1193 aligncenter" src="/wp-content/uploads/2018/10/extracttimesummwsmallerstack.jpg" alt="ExtractTimeSummwSmallerStack" width="1544" height="752" /> <span class="figcap">Figure 123. Extract Phase Summarization with Smaller Stack</span>
+
+<div class="image">See that there are two "c wheeler/Working Capital" rows in the file that will be collapsed by the Format engine. The first record was the least used set of keys, and so when the fourth record showed up, this one was dumped to the extract file. Later on, another record with this key showed up again, and so the next lowest record, likely the "K &amp; N jones family/Working Capital" record was dumped to the file, leaving the last three records in the stack until the end of the event file was reached and they were written to the extract file as well.</div>
+<div></div>
+</div>
+</div>
+<p class="p">In this way the memory used for the stack can be efficiently used; we don't need to know exactly what results we will get at the end of summarization, but we can still gain the benefits in reducing the sort file size. Typically, a few thousand records are kept in the stack by default for each view which uses extract phase summarization. If per chance, one knows that the extract file will not significantly be reduced (it has a lot of sort keys or very large number of possible values per sort key), then it is best not to use extract phase summarization. The cost of the CPU cycles to test to see if things can be summarized may be less efficient than simply allowing sort to do its job.</p>
+
+</div>
+<div class="section">
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">It is difficult to overstate the importance of the extract phase summarization innovation, and I don't think anyone saw how far reaching it was when created. Overnight, the long running sort jobs went away because the extract files were now measured in hundreds and thousands of rows, not millions. Beyond that, it highlighted exactly the right place to perform the function of collapsing records.</p>
+<p class="p">The act of summarization is the act of building an index, and extract phase summarization builds an index based upon the intersection of the event data and the view definition at exactly the right point in the process. As we noted in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-14-reporting/">Reporting</a>, reporting by and large is the act of accumulating business events to an understandable level, and that level almost always has a high degree of summarization with it. Thus millions and billions of business events are reduced down to thousand, or hundreds, or sometimes even tens and single digit numbers of rows. The computer has sufficient memory to maintain hundreds of these small summaries while passing through the event file.</p>
+
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-43-extract-files/">Chapter 43. Extract Files</a></div>
+<div></div>
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a>
+
+</div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+</div>
+<div class="related-links">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> They may have different sort criteria, columns, calculations, etc., thus all the outputs may be different, but the total record count would not change.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> This need not be the case, if each view's outputs are assigned to a unique extract file. Thus the extract program by segregating the data has furthered the sort process.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-43-extract-files/" class="prev"><span class="label">&larr; Previous</span>Chapter 43. Extract Files</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-45-sort-user-exits/" class="next"><span class="label">Next &rarr;</span>Chapter 45. Sort User Exits</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 46. Format Phase — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-46-format-phase/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 46. Format Phase</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">Remember in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-43-extract-files/">Extract Files</a>, we outlined that the Format Phase is a control break program which performs the "group by" or "sum" function. Our focus in this chapter is upon the functions that can be performed in this phase.</p>
+<p class="p">In early 2003, as part of developing Version 4 of SAFR, I volunteered to sit in front of the computer with Doug and to recreate each defect in the debugger to speed up Doug's time coding. Over the course of a couple of months we had closed out most of the significant defects we had in the extract engine, GVBMR95. However, there were a pile of defects for the Format engine, GVBMR88, that we hadn't seriously attacked. I remember telling Doug one night, "I don't think we have any other defects right now for GVBMR95 that we can productively work." Doug reluctantly responded, "OK, pull up GVBMR88 in the debugger, and let's get started." I could tell Doug loved MR95, and tolerated MR88.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Format Time Logic</h2>
+<p class="p">Our focus on the extract thus far has focused on performing functions against business events, for the most part. As we noted in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-27-find-more-detailed-events/">Find More Detailed Events</a>, the syntax of building logic text which is turned into logic table functions uses fields from the event file. Fields on the event file can be used for selected values and making keys for joins, etc. that are not passed into the extract file in any way, or included in the final output.</p>
+<p class="p">We can't ignore the need, though, to perform some of the same functions after summarization. These needs are much less frequent, but they exist nonetheless. For example, certain reports would be extremely long if all the zero values were shown in the report. Many accounts may not have any activity against them, or after all the activity is summarized, it nets to zero. Extract time logic can be used to eliminate <em class="ph i">event records</em> with zero balances, but excluding <em class="ph i">zero balances</em> that are the result of netting has to ultimately be performed after summarization is complete.</p>
+<p class="p">The format phase logic uses columns in the workbench, not field names. This is because data going into the format phase no longer matches an LR. For example, the extract program may have "created" a new field by inserting a constant in a column, similar to what was done with words "Working Capital" or "Other" sort constants were used above. In this case, there is no "field" to use in the logic text during the format phase. As another example<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a>, the input to the format phase may not come from just one event file.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a> Views can combine data from multiple event files into the same extract file. Thus GVBMR88 is limited to working with data in the extract file, no matter where that data came from.</p>
+<p class="p">To repeat, GVBMR88 has a number of the same functions as GVBMR95. The difference is, the logic text executed in GVBMR88 specifies columns, view columns, and it only operates against numeric fields. In other words, the 'Event File' for GVBMR88 is the extract file, and its 'fields' are the columns of data in the extract record.</p>
+<p class="p">Although both selection and calculations can be performed in GVBMR95 or GVBMR88, originally calculations were only available at Format time in GVBMR88, and selection was only available in GVBMR95. Even now, more functionality for each of those functions is available in the original respective engine.</p>
+
+<div class="p">
+
+The format time logic text for GVBMR88 record selection looks like the following:
+<pre class="pre codeblock"><code>	SELECTIF (COL.4&gt;200 and COL.5 &gt; 200.00) </code></pre>
+This will only select summarized rows where column 4 (record count) and column 5 (amount) are greater than 200.
+
+</div>
+<div></div>
+<div class="p">
+
+As another example the following performs a calculation.
+<pre class="pre codeblock"><code>	If COL.5 &gt; 200 Then
+		COLUMN = COL.5 /100
+	EndIf </code></pre>
+It tests column 5 (amount) and if it is greater than 200, it makes the column equal to the value in column 5 / 100.
+
+</div>
+<div></div>
+<p class="p">All format time logic text causes the numbers involved to be CT columns in the extract record. This is because CT format, packed with a standard number of decimal points, is the most efficient format for doing calculations, including summarization.<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a></p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Hardcopy Output</h2>
+<p class="p">The SAFR Scan Engine is neither solely an ETL tool, nor truly a reporting tool, but it began life, with the Alaska implementation, as more of a reporting tool. The Format program, GVBMR88 began as a print formatting engine.</p>
+
+<div class="p">
+
+The following is a sample of a SAFR hardcopy report still produced by GVBMR88.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1192" src="/wp-content/uploads/2018/10/sampleformatphasehardcopyoutput.jpg" alt="SampleFormatPhaseHardcopyOutput" width="1522" height="1389" /> <span class="figcap">Figure 124. Sample Format Phase Hardcopy Output</span>
+
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Sort Titles</h2>
+<p class="p">In recent years, there are few customers using this type of SAFR output. But it is instructive to investigate this format a bit, not only because the tool still produces these outputs, but also to understand the functions they performed. Such functions are done in different ways now, but the principles involved are the same.</p>
+<p class="p">One feature of this report is that the report is sorted by the code values for Legal Entity, Cost Centre and Account, but next to each of these code values is a description. The report is not sorted by these descriptions. These descriptions are called sort titles. In many reporting applications today code descriptions are embedded in or referenced by dimension attributes.</p>
+<p class="p">When creating SAFR Version 4, I argued that the process of creating these titles should be called aggregation phase look-ups or joins. I didn't win the day, but thinking of them that way may help understand how they are produced.</p>
+
+<div class="p">
+
+The following is the logic table for this view:
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1190" src="/wp-content/uploads/2018/10/sorttitlekeyslogictable.jpg" alt="SortTitleKeysLogicTable" width="1616" height="801" /> <span class="figcap">Figure 125. Sort Title Keys Logic Table</span>
+
+<div class="image">This view has three sort keys, the SKE functions above. It also has two columns of data, the CTEs. We know the output is sent to the Format phase because of the write extract record, WRXT function at the bottom.</div>
+<div></div>
+</div>
+</div>
+<p class="p">In the middle there are a number of build Look-up Keys from Event file, LKE functions, but these aren't preceded by JOINS. They are followed by KSLK, which stand for Key Save, Look-up Key.</p>
+<p class="p">At the end, the SK area of the extract record is a section of the record for Sort Title Keys. GVBMR95 performs all the functions to prepare the keys for doing the Look-up to Summary Structure, or LUSM function, but it doesn't do that last step in the lookup. The actual look-up is done in the Format phase, by GVBMR88.</p>
+<p class="p">The Reference Phase actually prepares two sets of files. It creates the RED and REH for Reference Extract Data and Header. It also prepares a similar set of data called the RTD and RTH, for Reference Title Data and Header. The RTD and RTH are used by GVBMR88 to do this last stage of look-up.</p>
+<p class="p">So GVBMR88 only does one step look-ups, the last step of the lookup. If a multiple step look-up is required to get the title, the beginning joins will all be performed by GVBMR95. Only when a LUSM function is about to be performed to get the actual sort title data will GVBMR95 be instructed to save the key it was about to use, for use in GVBMR88.</p>
+<p class="p">GVBMR88 performs the join after summarization. So this process can perform many less look-ups (less CPU time) if there is a high degree of summarization in the extract file.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Sort Keys</h2>
+<div class="p">
+
+Also, while developing version 4, I suggested to Doug we should create an option to simply show the sort fields as columns of data because people seem to be more comfortable with this nowadays through familiarity with spreadsheets. The following output is what I had in mind, and which Doug agreed we could do.
+<div class="fig fignone">
+<div class="image">
+
+<img class=" size-full wp-image-1191 aligncenter" src="/wp-content/uploads/2018/10/samplehardcopywsortfieldsascol.jpg" alt="SampleHardcopywSortFieldsasCol" width="1687" height="1237" /> <span class="figcap">Figure 126. Sample Hardcopy Output with Sort Fields as Columns</span>
+
+Although I was more successful in arguing this feature, Doug protested mildly saying that the indented format was much more elegant. It caused me to pause for a moment. I hadn't recognized the function the indenting did in the report until then. But the indenting was a form of indexing, indexing for human eyes to find the appropriate row on the report. One can scan the report quickly to find changes in Legal Entity, whereas in this second report one has to look for repeating lines or subtotals.
+
+</div>
+<div></div>
+</div>
+</div>
+<p class="p">Note that what we typically experience in a spreadsheet is fundamentally different than what is shown in this report. Most spreadsheets do not have multiple levels of summarization within them. People like to copy formulas across a lot of rows, and placing the report above into a spreadsheet requires different formulas when sub-totaling the cost center or legal entity. Typically, the cost center summary would be on a separate tab, and not include the account column, and the legal entity summary would be on another spreadsheet tab as well, and not include cost center or account.<a href="#fntarg_4" name="fnsrc_4"><sup>4</sup></a></p>
+<p class="p">Each of these tabs could be produced as a separate view; they would only have the sort keys of interest for that tab. The problem is, the extract file that must be sorted to produce these three views would have more data in it than the data needed to produce this one report which has all the same information on it. Again we see the proliferation of outputs needed from one set of business events.<a href="#fntarg_5" name="fnsrc_5"><sup>5</sup></a></p>
+<p class="p">Alternatively, a pivot table can be created from one spreadsheet with all the columns in it, and by including or excluding columns, the subtotals change. But very large spreadsheets can take a long time to update the pivot tables. Again, the balancing act is apparent between function and performance for reporting processes, whether on a large machine or a PC.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Subtotaling and Calculations</h2>
+<p class="p">There are times when the level at which calculations are performed is important. In some cases, calculations must be performed on the detailed records. For example, it isn't possible to summarize the cost of different items and the number of items selected and then multiply the summarized numbers to produce a total cost. Math dictates performing multiplication first, before addition; summarization is a form of addition. Before the advent of extract phase calculations, a different set of codes was available in GVBMR88 to tell MR88 to do the calculations at the detailed level. These functions can be used, or extract phase calculations.</p>
+<p class="p">Additionally, in some cases, like in calculating percentages, the calculation must be re-performed at each level of the subtotal break. There is no value to calculate a percentage at the account level (for example record count / amount for a percentage of amount per record) and then add up these percentages for the cost center level. The division must be performed at each level of summarization. A different type of subtotal code is available for this function.</p>
+<p class="p">GVBMR88 also has the ability to add the value of the prior line to the current line, thus creating a running total on the report.</p>
+<p class="p">All these features are still available in GVBMR88, but used much less frequently than they were when it was much closer to an end user reporting tool. With the advent of spreadsheets and proliferation of database reporting tools, such functions tend to be performed there, after the hard work of summarization of business events is performed by SAFR.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">File Format Output</h2>
+<p class="p">These hardcopy and spreadsheet type outputs were the only outputs from GVBMR88 in the earliest days. It was likely Jay who suggested the format phase should also be able to simply produce sequential files, sometimes called flat files. These types of files have no index structure to them; they are basically a dump of data. Adding this feature moved SAFR from being purely a reporting tool to having more characteristics of an ETL tool. It could now put out data that can be used in subsequent processes. And often those subsequent processes ended up being additional SAFR passes of the data to do more complex functions.</p>
+<p class="p">Later, the ability was created to create the copy and extract only views we first discussed was created, reducing the number of Format time File Format Output views that are created. If summarization is needed though, they have to go through sort and GVBMR88.</p>
+<p class="p">With respect to summarization, there is a key distinction that should be remembered about file format output though. In the same way spreadsheets don't deal well with having different levels of summarization in one tab - account subtotals, cost center subtotals, and legal entity subtotals - most other tools that would act upon file output do not as well. Therefore it was decided that GVBMR88 would simply produce the lowest summarized level outputs. For example, from the report above, it would only write out the Account level rows, not the Cost Center or Legal Entity subtotals. This means many of the sub-totaling codes aren't applicable for file format output.<a href="#fntarg_6" name="fnsrc_6"><sup>6</sup></a></p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Executive Information File Structure</h2>
+<p class="p">The last type of output to be created by GVBMR88 actually demanded a new program be written. These are the SAFR Executive Information files or cubes. And although produced by another program, they are part of the Format Phase as well.</p>
+
+<div class="p">
+
+We introduced the SAFR Executive Information File output or XIF in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-29-iteratively-view-results/">Iteratively View Results</a>. Each XIF file is like one cut of a reporting cube. It contains all the data for one hardcopy report in it; in other words, subtotals for multiple levels of sort breaks are contained in the file. The first records in the file contain information that allows a program to interpret the rest of the file, including the view title (record type 0), the sort/subtotal fields (record type 1), descriptions of each column (record type 2), and an index as to where in the file the different subtotal breaks start (record type 3). The following is a representation of the version 1 XIF file, modified in some ways to make it more readable.<a href="#fntarg_7" name="fnsrc_7"><sup>7</sup></a>
+<div class="fig fignone">
+
+<img class=" size-full wp-image-1189 aligncenter" src="/wp-content/uploads/2018/10/sampleexecutiveinformationfilelayout.jpg" alt="SampleExecutiveInformationFileLayout" width="1581" height="1700" /> <span class="figcap">Figure 127. Sample Executive Information File (XIF) Layout</span>
+
+<div class="image">Although the file contains all the rows of the hardcopy report shown above, they are upside down order, in that the grand total record is at the top of the file. After the grand total are the other subtotals. The next section of the file contains the lowest level of detail in the file, the type 5 records. These have the same type 4 subtotal records interspersed within them. Thus a hardcopy report could be produced just by reading the type 5 and 6 records. The last records, the type 7 and 8 records, are used if a file contains more than one view's output. The type 7 record, always the last record in the file, says where the type 8 records start, and the type 8 records point to the various type 0 records for the views which might be contained in the file.</div>
+<div></div>
+</div>
+</div>
+<p class="p">The file format allows a program to read the top part of the file, format the page layout for view title, sort fields and columns, and display the first grand total record. Then, when the user drills down on the grand total record, the RBA pointer and record count on type 4, 5, and 6 records tells the program to do a "seek" for an RBA, which moves the read-write head of the disk to the specific point where the next record exists, reads the number of records in the record counter, and display them to the user. This is incredibly efficient indexing method; exactly the right data is transferred into memory for display. Each of these new displayed records also has RBA pointers to allow for additional drill down to the next level.</p>
+<p class="p">GVBMR88 writes the different record types and levels to individual files. The type 0, 1, 2 and 3 records are written to the XIH, executive information Header file. The grand total record is written to the XIS00, summary level 00 file in our example. The Legal Entity subtotals are written to the XIS01, file, the Cost Center subtotals to the XIS02, and so on. The type 5, 6, 7 and 8 records are written to the XID, for detail, file.</p>
+<p class="p">After GVBMR88 runs, one additional major program, GVBMR49 runs. It simply assembles the XIF file from these different files, in order.</p>
+
+</div>
+<div class="section">
+<div class="p">
+<pre class="pre"></pre>
+The Executive Information file replaced some of the earlier backend SAFR components, like CRP, Consolidated Report Production which accumulated the hardcopy reports, and reproduced sections of them and routed them to users. These relied on people to send printed papers to mail stops; we now rely upon computers and IP addresses to do the same.
+
+</div>
+<p class="p">The Executive Information File structure, and reporting tools that are built upon them, allow users to get to the data they need in a very efficient manner. The format is an open format; any tool can be used to create an XIF file for use by the SAFR Insight Viewer.</p>
+
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-47-look-at-it-go/">Chapter 47. "Look At It Go"</a></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-45-sort-user-exits/">Chapter 45. Sort User Exits</a></div>
+<div></div>
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a>
+
+</div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+</div>
+
+<hr />
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> As discussed in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-27-find-more-detailed-events/">Find More Detailed Events</a>.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> It may be profitable to review <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-27-find-more-detailed-events/">Figure 39</a> - Extract and Format Phase Differences.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> Extract phase calculations result in another set of logic table functions, including ADD, SUB, MUL, and DIV, as well a DIM function to declare and initialize accumulators, and SET functions to move values to them.</div>
+<div class="fn"><a href="#fnsrc_4" name="fntarg_4"><sup>4</sup></a> This discussion ignores the fact that often additional sort breaks are needed for understanding balances at differing levels within the account, cost center or legal entity hierarchies. These would add additional tabs to the spreadsheet.</div>
+<div class="fn"><a href="#fnsrc_5" name="fntarg_5"><sup>5</sup></a> An alternative is to use the Sort Permutation process to create each of these tabs from this base report.</div>
+<div class="fn"><a href="#fnsrc_6" name="fntarg_6"><sup>6</sup></a> The way this decision was implemented in GVBMR88 means that file format output cannot be effectively used by the GVBSR02. GVBMR88 examines the entire sort key area in determining break points, rather than inspecting individual fields within that sort key. Thus all the outputs from GVBMR88 sort permutations for file format output look exactly alike.</div>
+<div class="fn"><a href="#fnsrc_7" name="fntarg_7"><sup>7</sup></a> The file structure has been modified for this book, including adding dashes between fields, removing some space and values for formatting. The version 2 format is null delimited in a slightly different structure. The general relationship between records is the same.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-45-sort-user-exits/" class="prev"><span class="label">&larr; Previous</span>Chapter 45. Sort User Exits</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-47-look-at-it-go/" class="next"><span class="label">Next &rarr;</span>Chapter 47. "Look At It Go"</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

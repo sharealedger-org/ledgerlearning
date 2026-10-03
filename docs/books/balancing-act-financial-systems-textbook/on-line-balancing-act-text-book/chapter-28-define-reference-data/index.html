@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 28. Define Reference Data — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-28-define-reference-data/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 28. Define Reference Data</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">In the year 2000, Jim assisted me with a prototype of SAFR to detect ticketing fraud for a large US air carrier. Again, the data we were to read was not in a very simple format, so Doug wrote a read exit that would read the IDMS database and present the records to the views. Jay made enhancements to SAFR so it would automatically detect the number of database partitions that existed and create that many parallel threads.</p>
+<p class="p">Jim and I worked to define views that, as we scanned the production database, detected when ticketing fraud had occurred. Unlike transaction system tests which audit each individual transaction, these tests could only be done after the ticketing process and travel was complete, and all the data from all the independent ticketing systems were brought together.</p>
+
+<div id="bibledefinereferencedata__projectAirlineFraud" class="section">
+<h2 class="title sectiontitle">Airline Project Results</h2>
+<p class="p">SAFR scanned the production database containing over a year worth of airline tickets, 587 million records, in 2 hours and 46 minutes, 6 1/3 hours CPU time. It extracted 23.5 million records, composing about 100,000 tickets that potentially were fraudulent. The data wouldn't tell us if fraud had actually occurred; that required people looking at the data and making judgment calls. But the potential for savings were more than enough to pay for the project itself.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Reference Data Keys</h2>
+<p class="p">You'll remember, from <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-14-reporting/">Reporting</a>, that reporting is a process of classifying. We said that we assigned attributes to business events to describe them. Also looking at the tables defined in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-professor/real-analysis-method/">REAL Analysis Method</a>, you'll note we did not store the descriptions or titles of each of these values on every row. This not only saves space because duplicated values aren't stored on every row, but allows the descriptions to change with time if needed. These descriptions of business units, cost centers, and accounts can generically be referred to as reference data.</p>
+<p class="p">One day during this airline project the project manager brought someone to my desk who was on another project attempting to use some data from the production database. He said they had created programs to deal with the documented values in a particular field. But as they were testing, things were not working right and they weren't sure why. He asked if it would be possible for us to scan the database to tell them all the values in a particular field. I said that would be pretty easy.</p>
+<p class="p">I created a summary view sorting by the single field he was interested in, and accumulating a constant of one in the column for a counter of the number of occurrences. I ran it and printed the small file. His reaction was interesting. It was something like, "Well I knew about these fifteen values, but what are these other four values no one told us about?" We found a support person who had long experience with the database. She looked at them and said, "Oh, yea, I remember now, there was a conversion done on the database four or five years ago and we used that value to mean ..." She went on and could name a few others. She didn't know what one was for.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+&nbsp;
+
+</div>
+This is a common tale in IT. And there are a couple of lessons to be learned here. First, the moment documentation is finished it is out of date because something on the system has changed; documentation is no substitute for using the data. Second, understanding the keys, the identifiers in the data, is fundamental to developing reference data to describe those keys. Getting a complete list of the descriptions of business events as captured by the source system is critical to understanding the data.
+<p class="p">Remember also, in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-professor/real-analysis-method/">REAL Analysis Method</a>, we noted that the longest process is understanding the rows of data. Determining the event file is relatively short. Defining the fields on those on the event logical record takes a bit more time. Determining the values for each field takes even more time.</p>
+<p class="p">But the real value in reporting comes only as the rows of data are understood. There is no purpose to all of the work if the rows of data don't provide answers to questions that inform specific actions. We can make this point again without overemphasizing it: Real value comes from understanding the rows of data. For example, with people, it isn't the list of possible hair colors or potential heights that makes a difference. The actual people are what matters, their names, sizes and shapes and colors. Until we get to the rows of data we have nothing really to report.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Joins or Lookups</h2>
+<div class="p">SAFR supports joining data together to combine the results on a view output. For example, if we built views against our sample event file for Legal Entity, Cost Center, and Account, the outputs would have given a list of all values in those fields, shown on the left column in each of the three areas below.</div>
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1247" src="/wp-content/uploads/2018/10/samplereferencedatatables.jpg" alt="SampleReferenceDataTables" width="476" height="201" /> <span class="figcap">Figure 53. Sample Reference Data Tables</span>
+
+</div>
+&nbsp;
+
+</div>
+&nbsp;
+<p class="p">Once armed with all of these possible key values, names or descriptions can be assigned to all of them by making simple editable files that describe them.</p>
+&nbsp;
+<div class="p">The following screen shows how in SAFR to build a join. Let's suppose this Event LR would have been used in doing our reports thus far.</div>
+&nbsp;
+<div class="p">
+<div></div>
+
+<img class="alignnone size-full wp-image-1283" src="/wp-content/uploads/2018/10/event-logical-record.jpg" alt="Event Logical Record" width="567" height="181" /> <span class="figcap">Figure 64. Event Logical Record</span>
+
+<div class="image">The LR below describes the file that contains the Account Titles, the file shown in the Sample Reference Data Tables figure.</div>
+</div>
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1282" src="/wp-content/uploads/2018/10/account-titles-reference-table-lr.jpg" alt="Account Titles Reference Table LR" width="578" height="136" /> <span class="figcap">Figure 65. Account Titles Reference Table LR</span>
+
+</div>
+&nbsp;
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1279" src="/wp-content/uploads/2018/10/look-up-or-join-path-creation.jpg" alt="Look up or Join Path Creation" width="356" height="530" /> <span class="figcap">Figure 66. Look up or Join Path Creation</span>
+
+</div>
+&nbsp;
+
+</div>
+&nbsp;
+<p class="p">The next step is to define the actual join. Joins are considered part of the metadata, set up by an administrator, someone who understands how to connect SAFR Scan Engine to the files that contain the data, and how to interpret the data in the files.</p>
+&nbsp;
+<p class="p">To build the join, we select the source event file and the target table we want to join to. We then select those fields from the source that will be used to populate the key to the target table, the account field. When the length of the fields provided from the source matches the length of the key in the target, the join is valid. Having defined the join, we can now use any of the fields on the join table in our view.</p>
+&nbsp;
+<div class="p">This join only has one step to it, i.e. we go directly from the source to the target. Although if needed, we could have repeatedly selected targets and sources to go through interim tables and find additional values; those are called multistep joins.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1277" src="/wp-content/uploads/2018/10/new-view-wizard-join-field-select.jpg" alt="New View Wizard Join Field Select" width="578" height="312" /> <span class="figcap">Figure 67. New View Wizard Join Field Selection</span>
+
+</div>
+&nbsp;
+
+</div>
+&nbsp;
+<p class="p">As we build our view, we can see all the fields on the account table, our event LR. Note that this screen shows that joins have also been defined for cost center descriptions and legal entity titles. Also note that these reference tables aren't simply to display results on the reports; the values in them can be used for filtering and calculation functions.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+<p class="p">Sample output from the view is shown below. The reports become more useful because the titles are more informative than the code values by themselves.</p>
+&nbsp;
+<div class="image">
+
+<img class="alignnone  wp-image-1245" src="/wp-content/uploads/2018/10/samplereportwithrefdatadesc.jpg" alt="SampleReportwithRefDataDesc" width="542" height="306" /> <span class="figcap">Figure 68. Sample Report with Reference Data Descriptions</span>
+
+</div>
+&nbsp;
+<div class="p">A couple of important notes:
+<ul class="ul">
+	<li style="list-style-type:none;">
+<ul class="ul">
+	<li style="list-style-type:none;">
+<ul class="ul">
+	<li style="list-style-type:none;">
+<ul class="ul">
+	<li class="li">All physical reference files must be presented to the SAFR process in sorted order by the key specified on the LR if the file will be used in a join.</li>
+</ul>
+</li>
+</ul>
+&nbsp;</li>
+</ul>
+</li>
+</ul>
+<ul>
+	<li style="list-style-type:none;">
+<ul>
+	<li style="list-style-type:none;">
+<ul>
+	<li style="list-style-type:none;">
+<ul>
+	<li class="li">All reference file keys must be unique; duplicates are not allowed in any case.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+	<li style="list-style-type:none;">
+<ul>
+	<li style="list-style-type:none;">
+<ul>
+	<li style="list-style-type:none;">
+<ul>
+	<li class="li">SAFR has to be able to locate one specific reference file record as the result of SAFR join processing.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+&nbsp;
+
+</div>
+<p class="p">SAFR join processing then requires a many to one join. Many event file records can look up to one reference file record, or many lower level reference file records can look up to one higher level reference file record on a multistep join<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a>. Approaches to performing union, full outer, and right outer joins are discussed in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-34-consider-complex-joins/">Consider Complex Joins</a>.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Static Data</h2>
+<p class="p">Reference data isn't all created by finance users; some very important reference, or static, data comes from the operational systems. For example, it is unlikely finance will update customer names, like the K &amp; N Jones Family on the report above. Static data is data residing in the operational or close to operational systems which describe the business events, like customers, contracts, products, offices, etc. The process of gathering this data is no different than finding the event files in the legacy systems. It is critical to have it available in reporting processes to make sense of the business events, and it is sampled and refined just like reference data.</p>
+<p class="p">To do standard SAFR join processing, SAFR loads the reference data structures into memory. At times the volume of this static data may exceed the memory available on the machine. The Common Key Data Buffer feature, discussed in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-35-model-the-repository/">Model the Repository</a> and <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-52-common-key-data-buffering/">Common Key Data Buffering</a>, may be necessary. At this stage consider using a limited set of this data in producing the initial reports.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Mapping</h2>
+<p class="p">Thus far in these chapters, we've had the simple view that attributes of business events are assigned when business events are first captured in the operational systems. However, as noted in Rick's subsystem lecture, in reality there can be layers and layers of classifications established before anyone attempts to understand the data. Legacy accounts in operational systems may be a couple of decades old, and not used for reporting or analysis any longer. Somewhere within the accumulated systems constructed over the years, those accounts are translated into other accounts that are now used for reporting. That can be true for any reporting attribute.</p>
+<p class="p">The translation process is not always one field to another field. At times, multiple fields are used to determine one new value in a new system, or a single field produces multiple attributes in the new system. For example, accounting systems from 30 to 40 years ago had only the three fields of legal entity, account, and perhaps cost center. Newer systems usually have numerous other fields, like product, customer type, and intercompany affiliate. So when the legacy account, which sometimes also meant the product for that customer type, is translated into the new ledger, it may result in three field values, account, product, and customer type.</p>
+<p class="p">The insurance company had a company code structure that had grown up over 30 or more years. When they decided to break down all the embedded meaning in it, like mail stop and cost center, legal entity, and HR department, they found it took over thirty tables, each with many fields, to describe the one ten character field they had used for so many years. This field is likely still used 10 years after starting the process of replacing it in a host of systems, and will likely be used in some way for years to come.</p>
+<p class="p">Mapping tables don't describe the values in one system, as much as translate them to the values for another system. The keys to the tables are those from the source system, and the targets or answers are those for the new system. Mapping tables are simply reference data files to SAFR.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">How To Begin</h2>
+<p class="p">Making up reference data, categorization schemes from scratch if you will, takes a long time. A faster way is to leverage the thought already put into legacy reporting systems. New accounts are never added to the chart of accounts because someone hoped someone else would want them. Most are added as some piece of information is needed to address some specific action. So start with and modify the existing reference data. If two ledgers are to be combined into a single chart of accounts, then start by either identifying the one to keep, or building the new chart by referencing both.</p>
+<p class="p">In addition to using the legacy chart of accounts, reference data in other systems should be leveraged when working with lower levels of data. For example, reference data is used to classify arrangement level attributes in financial data warehouses for regulatory purposes. These types of classifications can be used when exploring the event files from lower level data in other systems.</p>
+<p class="p">Reference data can't fix lack of detail. There is no way to translate from a summarized record and create a lower level detailed record for a receiving system. Summarization destroys visibility to the details. Translation processes are made easier when working with the details, as long as the details are preserved out of the translation process. A single value in a source system can be translated into a single value in the target system. Again, keeping the detail provides greater flexibility.</p>
+<p class="p">If we look at all the summarized results of financial data for all financial reporting systems, in other words if the set of reference data for all finance systems is combined into one set, we will find the lowest common denominator is pretty close to the customer contract level. Maintaining the detail will provide economies of scale in the long run.</p>
+<p class="p">There is really no short cut for this work of creating reference data. It will take longer than anyone wants it to, and thus it must be started early, perhaps even before finding the event files. Finding and balancing the events files is a way IT can help. Perhaps every project I have been on has missed nearly every deadline for when the reference data would be known. In some cases it was missed by nine months or 50% of the time. In others it was missed by 2 years or 90% of the estimate. That's because it is an iterative process of adding values to reference descriptions or mapping tables, and looking at the outputs to see if they properly characterize the results of the business events and inform potential actions.</p>
+<p class="p">The more iterations of viewing the results, the better the results will be. The system can't be built until the reference data is understood, but the reference data can't be built without looking at the results of the system. Thus, again, a tool that supports a prototyping approach to the problem, including going clear to producing usable outputs, is nearly mandatory.</p>
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-29-iteratively-view-results/">Chapter 29. Iteratively View Results</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-27-find-more-detailed-events/">Chapter 27. Find More Detailed Events</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+&nbsp;
+
+</div>
+&nbsp;
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+&nbsp;
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Note that in a pervious chapter we spoke of creating a view which selected only records for one particular account using the following selection criteria:
+<pre class="pre">If  (  {Legal_Entity} = "522339999" 	And {Cost_Centre} = "CC111" 	And {Account} = "123" )
+	Then Select
+EndIf</pre>
+<span class="ph">With these reference file tables, the selection criteria could have been written as</span>
+<pre class="pre">If  ( {Legal_Entity_Desc.Event_Journal_To_Legal_Entity_Title_Join.Legal_Entity_Title} = "K &amp; N Jones Family"
+	And {CC_Desc.Event_Journal_To_CC_Desc_Join.Cost_Center_Title} = "Mum" 
+	And {Account_Titles.Event_Journal_to_Account_Titles_Join.Account_Titles} = "Home" ) 
+	Then Select
+EndIf</pre>
+The values tested for are more readable, but the logic text is more verbose. This selection also causes look-ups to be performed on each record - something that requires additional CPU instructions over simply testing values in the event file; so it is less efficient. But there are cases when it is useful to join to perform selection and calculation logic. For example testing to see if the reference data is complete can be done by using the key words FOUND or NOT-FOUND. Records that either have or do not have corresponding reference data can be selected for reporting or more analysis.
+
+</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> See also <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-41-look-ups/">Look-ups</a> and <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-42-reference-file-phase/">Reference File Phase</a></div>
+&nbsp;
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-27-find-more-detailed-events/" class="prev"><span class="label">&larr; Previous</span>Chapter 27. Find More Detailed Events</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-29-iteratively-view-results/" class="next"><span class="label">Next &rarr;</span>Chapter 29. Iteratively View Results</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>z/OS on Vagrant: A Personal Mainframe — LedgerLearning</title>
+  <meta name="description" content="Building on other POC projects, including the short Raspberry Pi experimentation, and the longer Universal Ledger Infrastructure project, I have recently experi">
+  <link rel="canonical" href="https://ledgerlearning.com/2020/07/28/z-os-on-vagrant-a-personal-mainframe/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">z/OS on Vagrant: A Personal Mainframe</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">July 28, 2020</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:paragraph -->
+<p>Building on other POC projects, including the short <a href="/2020/05/07/experimenting-with-a-raspberry-pi/">Raspberry Pi experimentation</a>, and the longer <a href="/2020/05/22/universal-ledger-poc-results-potential-infrastructure-software/">Universal Ledger Infrastructure</a> project, I have recently experimented with a personal mainframe system.  These systems are not new developments, having been around for more than a decade.  I did add one twist I think, making it run on Vagrant as a VM.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Hercules z/OS VM Container</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>"<a href="http://www.hercules-390.org/">Hercules</a> is an open source software implementation of the mainframe System/370 and ESA/390 architectures, in addition to the new 64-bit z/Architecture. Hercules runs under Linux, Windows (98, NT, 2000, and XP), Solaris, FreeBSD, and Mac OS X (10.3 and later)."</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Hercules does not include the z/OS operating system, but is a VM itself. It does not require Vagrant as a container, and can likely run on the operating system of the machine you have chosen (Linux, Windows or Mac). Vagrant is simply added here to make the installation process easier, repeatable, and to isolate all configuration from your local machine.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>You can read more about Hercules at <a href="http://www.hercules-390.org/">the Hercules Emulator</a>.  </li><li>The code base I created is available <a href="https://github.com/KipTwitchell/vagrant-zOS" target="_blank" rel="noreferrer noopener">here on GitHub</a>. </li><li>A video of the results of this project is available on <a href="https://youtu.be/121MWcHlVgo" target="_blank" rel="noreferrer noopener">my You-tube Channel</a>. </li><li>More details on the code are shown below.</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/121MWcHlVgo","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/121MWcHlVgo
+</div></figure>
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:heading {"level":1} -->
+<h1><a href="https://github.com/KipTwitchell/vagrant-zOS#operating-system"></a>Operating System</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>There are two forms of "turnkey" z/OS installations available in this project:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+<ol><li>The SimpleMVS version I think is the easiest to use. I happened to have discovered it last though (thus a second is included in the project). It's documentation is a little less comprehensive, but the startup is very simple. You can read more about it here:&nbsp;<a href="http://wotho.ethz.ch/tk4-/">http://wotho.ethz.ch/tk4-/</a></li><li>The IPL version is a larger download, and the user is required to enter the commands to actually IPL the operating system. You can read more about it here:&nbsp;<a href="http://www.bsp-gmbh.com/turnkey/herc_mvs.html">http://www.bsp-gmbh.com/turnkey/herc_mvs.html</a></li></ol>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":1} -->
+<h1><a href="https://github.com/KipTwitchell/vagrant-zOS#technologies"></a>Technologies</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>This project uses the following technologies:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(1) Vagrant as the VM container (which relies up Virtualbox or other similar technology)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(2) CentOS as the Linux Distro (no specific reason for this Distro)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(3) Hercules VM inside the Vagrant Container</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(4) One of the two MVS OS implementations</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I have left scripting in place to install other development tools in the Vagrant (not Hercules) VM environment if desired using the javaScalainitenv.sh script in the project's script directory. It will download and install:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(5) Java development environment</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(6) Scala as the development language</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(7) sbt as the build manager for Scala</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":1} -->
+<h1><a href="https://github.com/KipTwitchell/vagrant-zOS#vagrant-setup"></a>Vagrant Setup</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The project can be used by doing the following:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(1) Download and install Vagrant&nbsp;<a href="https://www.vagrantup.com/downloads.html">https://www.vagrantup.com/downloads.html</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(2) Download and install Virtualbox&nbsp;<a href="https://www.virtualbox.org/">https://www.virtualbox.org</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(3) Replicate this git project to your hard disk</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(4) At a command prompt within the root directory of this project, (the directory that contains the Vagrantfile)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(a) Install Vagrant Virtual Box Guest Additions by typing (this step is not tested)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:syntaxhighlighter/code -->
+<pre class="wp-block-syntaxhighlighter-code">vagrant plugin install vagrant-vbguest
+
+and then
+
+vagrant vbguest
+
+(if you receive a message about "Vagrant was unable to mount VirtualBox shared folders. This is usually because the filesystem "vboxsf" is not available." then use the command "vagrant vbguest --status" to see if something is wrong with this installation)</pre>
+<!-- /wp:syntaxhighlighter/code -->
+
+<!-- wp:paragraph -->
+<p>(b) Start the virtual box by typing</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:syntaxhighlighter/code -->
+<pre class="wp-block-syntaxhighlighter-code">vagrant up</pre>
+<!-- /wp:syntaxhighlighter/code -->
+
+<!-- wp:paragraph -->
+<p>(5) When that is complete, type "vagrant ssh" which will put you inside the vagrant VM.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(6) change directory to /vagrant-zos/scripts</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":1} -->
+<h1><a href="https://github.com/KipTwitchell/vagrant-zOS#simplemvssh"></a>SimpleMVS.sh</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>If you choose the simple implementation, use the bash script to initial Hercules and the operating system, by typing "bash ./simpleMVSinitenv.sh"</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This script will: (1) Update the operating system (2) Download and install Hercules (3) Download and install the tk4- MVS 3.8j operating system</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This script will automatically start the mvs environment.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The Vagrant script forwards communication on ports 3270 and 8038 to the host.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>A 3270 emulator will be required to access the system. The emulator should be pointed to address 127.0.0.1, and port 3270.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>When connected to the system, use the "Clear" key to be presented with a log on. There are multiple user IDs set up, but one can simply use HERC01 with a password of CUL8TR to access the system.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Shutdown can be accomplished from the 3270 emulator by exiting (often PF3) from the editing environment and typing "shutdown" at the TSO prompt.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The 8038 port can be used to access the console via a browser at:&nbsp;&nbsp;<a href="http://127.0.0.1:8038/">http://127.0.0.1:8038</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>After the first time setup, the operating system can be started by (1) starting Vagrant with the "vagrant up" command (2) "vagrant ssh" into the Vagrant environment (3) "cd tk4-" to moved from the home (home/vagrant) director the installed location of the operating sytem (4) typing "./mvs" to start the operating system.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Additional instructions can be located here:&nbsp;&nbsp;<a href="http://wotho.ethz.ch/tk4-/">http://wotho.ethz.ch/tk4-/</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":1} -->
+<h1><a href="https://github.com/KipTwitchell/vagrant-zOS#iplinitennvsh"></a>IPLinitennv.sh</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Although you can do the IPL steps manually with the above configuration, (see documentation) they are required with the "turnkey" version implemented by the IPL Script.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If you choose this implementation, use the bash script to initial Hercules and the operating system, by typing "bash ./IPLinitenv.sh"</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This script will: (1) Update the operating system (2) Download and install Hercules (3) Download and install the tk4- MVS 3.8j operating system</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This script will automatically start the mvs environment.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The Vagrant script forwards communication on ports 3270 to the host (this system does not have a web browser console to access).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>A 3270 emulator will be required to access the system. The emulator should be pointed to address 127.0.0.1, and port 3270.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>After opening the emulators, in the unix command prompt (now showing the running operating system) type "ipl 148" and hit enter</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The 3720 screen that is "Device 10" will be the console. In this screen, once the system starts, use the steps in this document to IPL the system:&nbsp;<a href="http://www.bsp-gmbh.com/turnkey/cookbook/opmvs.html#MVSIPL">http://www.bsp-gmbh.com/turnkey/cookbook/opmvs.html#MVSIPL</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Once the operating system is IPLed, use the steps in this document to log on to TSO sessions:&nbsp;&nbsp;<a href="http://www.bsp-gmbh.com/turnkey/cookbook/howto.html#LOGTSO">http://www.bsp-gmbh.com/turnkey/cookbook/howto.html#LOGTSO</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>A hard stop of the system can be accomplished by typing "exit" at the Unix Command prompt, which will stop the system rapidly.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>After the first time setup, the operating system can be started by (1) starting Vagrant with the "vagrant up" command (2) "vagrant ssh" into the Vagrant environment (3) "cd mvs38j" to moved from the home (home/vagrant) director the installed location of the operating sytem (4) typing "./startmvs" to start the operating system.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Additional Information is availble here:&nbsp;<a href="http://www.bsp-gmbh.com/turnkey/herc_mvs.html">http://www.bsp-gmbh.com/turnkey/herc_mvs.html</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":1} -->
+<h1><a href="https://github.com/KipTwitchell/vagrant-zOS#teardown"></a>Teardown</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The above script can be used to reset the environment if one frist destroys the vagrant environment. To do this:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(0) if you are at the sbt prompt, you need to hit control-C to get back to Vagarnt ssh prompt</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(1) Type "Exit" to exit the VM shell environment</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(2) Within the VagrantFile directory, type "vagrant destroy"</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(3) Confirm the choice to destroy the vagrant environment.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(4) To rebuild the environment start again with the "Vagrant up" command.</p>
+<!-- /wp:paragraph -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apache Spark IO and Index Access — LedgerLearning</title>
+  <meta name="description" content="In the next three week's episodes of Conversations with Kip, I focus on Apache Spark, a technology that recognizes the power of scanning large transactional dat">
+  <link rel="canonical" href="https://ledgerlearning.com/2017/12/18/apache-spark-io-and-index-access/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Apache Spark IO and Index Access</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">December 18, 2017</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+In the next three week's episodes of Conversations with Kip, I focus on Apache Spark, a technology that recognizes the power of scanning large transactional data sets to produce analytical outputs.
+
+This week we focus on the Input Processes for analytical processes. The larger the amounts of data we can scan efficiently and quickly, the greater our potential analytics. Yet the scan process can be separated from how the data is stored. Scanning data in a deeply encrypted manner means that, although Spark may be faster than other methods of getting at the data, the amount of data we can process is reduced.
+
+Storage choices for data are important. Often choices about the storage of data are not based upon access patterns for the data, but rather upon the skills of the developers involved. Certainly data stored in a format that is unusable by anyone is of no use, but more often the usage patterns are not evaluated. Indexed access methods, like SQL, are often useful in transaction capture, and perhaps in individual balance presentation, but infrequently in posting processes.
+
+Poor or lazy data storage choices perpetuates our poor data availability as much as lack of compute resources in decades past.
+
+Watch<a href="https://youtu.be/st4iJhY-H2A" target="_blank" rel="noopener"> the 95th episode of Conversations with Kip here</a>, the best financial system vlog there is.
+
+https://youtu.be/st4iJhY-H2A
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

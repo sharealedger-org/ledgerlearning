@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 62. Calculation Engines and Reporting — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-62-calculation-engines-and-reporting/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 62. Calculation Engines and Reporting</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">With the tremendous pressure to make the project work, at times small arguments would break out, sometimes between the business and IT, sometimes between different parts of each of those teams. We developed a pattern of weekly meetings to make decisions and find resolutions as quickly as possible. Besides my technical team meeting about the architecture, Dave Willis and I met weekly with Pete Galbo and Mike Mann, from the business, to do almost nothing more than make decisions. We made those at what seems to me to be an amazing pace.</p>
+<p class="p">In the February of 2007 I reacted to a small prompting for an argument with a very caustic e-mail. Seeing my e-mail broadcast much further than I expected, I felt a need to apologize, so I left a handwritten note on Mike Mann's desk before leaving to catch my flight home. I quoted from Lincoln's first inaugural address. "We are not enemies, but friends. We must not be enemies. Though passion may have strained, it must not break our bonds of affection." The pressure cooker tested this resolve throughout the entire next year.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Engineering and Volume</h2>
+<p class="p">Unfortunately, systems must be built from front to back, just like buildings must be built from the ground floor up. This means that the lion's-share of time is spent getting data into the system, and getting it out is always squeezed. The same was true for this system.</p>
+
+<div class="p">
+
+As if this weren't enough pressure, as we have noted, data loads increase through the layers of the system.
+<ul class="ul">
+	<li class="li">The ancillary or support functions of the system have the lowest data volumes.</li>
+	<li class="li">The Technical Transform Layer and Accounting Rules Engine have more volume because they have to accept transactions and reconciliation balances from the source systems. But the number of transactions for a period - a day for example - is limited by the length of the period itself.</li>
+	<li class="li">The posting processes in the Arrangement Layer typically have more volume, because they must not only deal with the outputs from the accounting rules, including reconciliation balances, but also transactions that have now been turned into debits and credits. It must also take all these and apply them or compare them to yesterday's balances to create today's balances. This increases volume substantially.</li>
+	<li class="li">The highest volumes are with the reporting space, though, where the accumulated effect of history must be dealt with, not just today's transactions or today's balance, but balances for prior days, weeks, months and perhaps years. Not only this, but also these balances must be rolled up, summarized for the myriad of needed outputs, creating additional volume. This is an incredibly ambitious computer engineering challenge.</li>
+</ul>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Data Stores</h2>
+<p class="p">We constructed the system to use sequential master files for the Arrangement Ledger. This is because so many rows are touched in each update cycle that it is more efficient to read the entire master file and write an entirely new copy; and having the most efficient access method makes doing so possible in the shortest period.</p>
+<p class="p">The outputs from the master file roll-ups and the creation of a set of summary structures at the same time are stored in the Financial Data Store. These outputs facilitate the drill down from higher level summaries to lower and lower levels of detail, mimicking the basic financial reporting process of starting at summaries and gaining greater insight and transparency through drill down. The financial data store uses database technology as the basic access method for retrieving records. Achieving high performance load processes is a key to, again, making the system work in a reasonable time period.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Calculation Engines</h2>
+<p class="p">Our engineering and volume discussion above ignored one more fundamental computing pattern: that of a calculation engine. As discussed in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-15-operational-versus-informational/">Allocation Processes</a>, at times business events are generated using other business events or balances as input. Multi-currency translation, allocations, funding and analytical modeling are all examples of calculation engines. "Ledgers" tend to have a mix of receiving input records and posting them as well as generating new records, reflecting the passage of time as an example.</p>
+<p class="p">What to do with the results of these types of processes? It may be simple to think of these outputs as standalone, used in some set of reports. Thus they may be held in their own output area for use in reporting. It may be more efficient to place the results from these processes back into the Arrangement Ledger. The key question is do the outputs from these processes need be combined with other outputs to create meaningful reports. For example, do a significant number of reports need to include funding results with the original actual results to be meaningful? If they must be combined for one report, doing that at report time may be most efficient. If they must be combined for hundreds of reports, combining the resulting granular data in a high performance reporting environment may be the better answer.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Extracts</h2>
+<p class="p">The finance systems typically are not the tail end of all processing. There are a lot of uses of finance data, and producing output files to be used in other systems is needed. A facility that allows the application of business rules, including translation of platform values into other code sets used for other purposes (a reverse Accounting Rules Engine in a sense) provides tremendous flexibility to answer questions from the information-rich environment provided. If constructed with an eye towards the calculation engine, great synergies are possible between these components.</p>
+<p class="p">Performance for this component must again be kept top of mind. Ways must be found to make use of the data when in memory. Mike Perez and Ravi Challagondla led a team that constructed a simplified front end to SAFR for use by the business called Rules Maintenance Facility (RMF), while still using the SAFR engine to produce the extract outputs. All the base SAFR capabilities become important in actually producing the outputs.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Managed Query</h2>
+<p class="p">About the time Jeff Wolfers assigned me to be the Solution Architect , Rakesh Kant and Greg Forsythe were attempting to find a reporting solution with acceptable performance for the limited amounts of data that had been gathered through the Proof of Concepts (POCs) to that time. It proved very challenging, for many of the performance reasons discussed in this book. We determined that what was needed was an "on-line" version of SAFR, one that could be invoked and, each time the user clicked to either request a report or to drill down, perform all the steps of a reporting process - select, sort, summarize, format - rather than doing all those functions for all requests in one pass of the data. They used the database for basic record selection, sort and limited joins, but none of the other functions were required. They created a compiler, in Java, to perform the other tasks needed in very efficient manner.</p>
+<p class="p">I cannot do justice at this juncture to how the team went about doing this. I can say that having started last with the fewest usable components from the POCs, this team worked at break-neck pace to meet the implementation date, just a little over a year from the project restart date. Getting to the finish line proved very, very challenging for everyone involved.</p>
+<p class="p">Their work in this space was remarkable, and without it and the extract engine, all the efforts to capture and post the data would have been meaningless. Rakesh and Greg were joined by Sreenivasan Raghavan (who goes by just one name Raghavan, like all really cool people in the world) and a set of extraordinary people. They created the capstone of the system, and it was a very fitting capstone indeed.</p>
+&nbsp;
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/chapter-63-go-live/">Chapter 63. Go Live</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/chapter-61-support-processes/">Chapter 61. Support Processes</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/">Part 6. The Platform</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+</div>
+</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-61-support-processes/" class="prev"><span class="label">&larr; Previous</span>Chapter 61. Support Processes</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-63-go-live/" class="next"><span class="label">Next &rarr;</span>Chapter 63. Go Live</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

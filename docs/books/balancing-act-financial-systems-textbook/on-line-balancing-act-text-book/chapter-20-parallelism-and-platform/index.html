@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 20. Parallelism and Platform — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-20-parallelism-and-platform/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 20. Parallelism and Platform</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">A few months after I joined the SAFR project, Rick allowed a major US retailer to challenge the system to solve the most difficult problem of their choosing. The results of these benchmarks showed that a scan process, the heart of organizing the report production process to produce the results at the last possible minute, could be performed very rapidly.</p>
+
+<div id="bibleparallelismandplatform__projectRetailer" class="section">
+<h2 class="title sectiontitle">Major Retailer</h2>
+<p class="p">A major US retailer had a customer marketing database containing all of this retailer's point of sale credit transactions during the last two years, organized by household. A series of COBOL programs, the standard tool for this type of work in 1993, would scan this data, and score each household's buying activity according to various criteria as to attractiveness for marketing mailings. The output of this weekly process is used to drive mailing list applications.</p>
+<p class="p">The following are the results from the runs from November 1993. The data was stored on 80 tapes.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1262" src="/wp-content/uploads/2018/10/majorretailercmdbbenchmarkresults.jpg" alt="MajorRetailerCMDBBenchmarkResults" width="1475" height="293" /> <span class="figcap">Figure 39. Major Retailer CMDB Benchmark Results</span>
+<p class="image">The results<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a> were astounding to everyone involved: A 96% reduction in wall time from 28 hours to just over one hour, CPU time from 22 minutes to less than a minute, and CPU (computing) costs from US $18 thousand to less than US $1000.</p>
+The reduction in wall or elapsed time is due to parallelism. Parallelism is designing a computer system to use more than one CPU at a time. Think of it as using multiple computers at the same time, although in large computers each computer actually contains multiple CPUs. Suppose instead of doing road construction from one end of the project to the other, a city deployed multiple work crews along the road to work on segments of the road at the same time. The total length of the project might be as low as dividing the estimated time for the project by the number of work crews deployed.
+
+</div>
+&nbsp;
+<p class="p">CPU time is the accumulation of time used by all processors or computers. In our road work example, the total work time spent on the road project is the accumulation of each of the work crews' time. One would have to pay each work crew for the time spent on the project, even though they are working all at the same time. So although using parallelism takes less time to complete the project, the total time worked and cost may not be reduced at all. In fact, if the plan for parallelism is poor, it may actually be slower and cost more: having one crew responsible for paving and the other responsible for grading means they would be working over the top of each other and saving no time or money.</p>
+<p class="p">The reduction in cost and CPU time for this application is purely because the machine code used by SAFR to solve the problem has many less instructions in it than the machine code of the COBOL program. Rick called this instruction path length. If the number of instructions for the COBOL program to accomplish the task were 100, SAFR accomplished the same work in less than four. There is no way around this. Not all of this reduction may be attributable to poor patterns in the COBOL compiler; some portion may attributable to a poorly written program that performed tasks that were not essential to solving the problem that needed to be solved. But consistent tests like this have shown that SAFR was 30% to 60% more efficient than COBOL for particular types of computing patterns. And those patterns exist in thousands, perhaps millions of business processes.<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a></p>
+<p class="p">Being able to scan 1 billion records in one hour was an unheard of level of performance at the time, and is still impressive today. It proved that organizing the report manufacturing process to use a great deal more detail than is used in the subsystem architecture is technically feasible.</p>
+
+<div class="p">
+
+The retailer couldn't believe the results. So they asked to have SAFR applied to another problem of their choosing. They selected a system called Delinquent Account Collector Assignment. This nightly process evaluated all accounts that are one or more days past due and determined the follow up action to be taken and the collector assigned to follow up. Approximately 80,000 unique criteria were used in making the determination. Wall or elapsed time was a critical issue in this application as the results had to be available for the collectors each morning, and the production system ran multiple hours nightly. Here are the results:
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1260" src="/wp-content/uploads/2018/10/majorretailerdelacctcolbenchmark.jpg" alt="MajorRetailerDelAcctColBenchmark" width="1509" height="300" /> <span class="figcap">Figure 40. Major Retailer Delinquent Account Collector Benchmark Results</span>
+
+<div class="image">Again, the reduction in wall, CPU, and cost was similar to the prior application. Over the years, these types of results were repeated again and again and again.</div>
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Death of the Mainframe</h2>
+<p class="p">Around this time, the IT industry was embracing a new processing model called client-server. Client-server used a combination of PCs with larger servers to perform much of the computing. Many in the industry proclaimed the death of the mainframe.<a href="#fntarg_4" name="fnsrc_4"><sup>4</sup></a></p>
+<p class="p">One of the drives for this was the cost of mainframe computing. I remember joking with Rick at this time that one of the problems with the mainframe was its ability to track its own costs; because it showed up as a line item on the IT financial report, people knew how much it costs, whereas PCs and servers tended to be buried amid other numbers in the report. Thus to reduce cost, the mainframe was attacked because it was visible.</p>
+<p class="p">Yet in truth at the time the machines were very expensive compared to getting similar computing capacities from PCs and servers. These less expensive machines used less expensive operating systems as well. One operating system that came to be used extensively was UNIX. You'll remember that UNIX operating system is well suited to on-line processes, and the mainframe operating system tends to emphasize batch processes.<a href="#fntarg_5" name="fnsrc_5"><sup>5</sup></a></p>
+<p class="p">This trend to client server computing tended to emphasize the processing characteristics at both ends of the subsystem architecture - the input and the final output. This trend contributed further to a de-emphasis of the need for the process in the middle, the process of turning business events into report values.</p>
+<p class="p">Rick responded to this trend first with a series of papers that pointed out the need for these functions, some coauthored by Eric.<a href="#fntarg_6" name="fnsrc_6"><sup>6</sup></a> At times the discussion led to what some would call a holy war, with those supporting the mainframe allied against those supporting other platform architectures. The high point in this battle was when IBM asked Rick to install SAFR on the IBM Executive Briefing Center machine in Poughkeepsie, NY and show what it could do. The IBM engineers that monitored the system said they had never seen a system more fully utilize all aspects of a mainframe, from the disk processing system getting the data into and out of memory to the CPU processes. Not even IBM's own software exploited the hardware more effectively to solving a business problem.</p>
+<p class="p">But our product had just come to market at a time when the market was being declared dead. At times the team felt like we were lone voices in the wilderness. With time and the maturing of the UNIX operating system, Rick proved that the concepts were not platform dependent while he was engaged at a global investment bank.</p>
+
+</div>
+<div id="bibleparallelismandplatform__projectGlobalInvestmentBank" class="section">
+<h2 class="title sectiontitle">Global Investment Bank</h2>
+<p class="p">Beginning in 1998 Rick was engaged on a project for a worldwide investment bank, to manage its Detail Repository, a central component of the Global General Ledger ERP implementation. The constructed repository provided trade-level detail analysis for internal and external global reporting. The project ported SAFR to UNIX to build the detailed financial reporting environment.</p>
+<p class="p">Approximately 1.3 million detailed transaction data records from twenty-two different feeder systems were loaded into the Detail Repository nightly. These transactions were trade level detail records from Europe, Asia Pacific, and North America. The UNIX version of SAFR scanned the repositories' 51 million records in 22 entities and 269 physical partitions. It extracted 20 million records that were aggregated into approximately 480,000 summary balances. These summary records were sent to the GL for balance sheet and summary profit and loss reporting. This process ran in approximately 3 hours of elapsed time and 5 and  ½ hours of CPU time and produced 30 different outputs.</p>
+<p class="p">A second Detail Repository process used the UNIX version of SAFR and custom programs to satisfy the intricate regulatory requirements. This system was executed 19 times with each execution handling a subset of the core business requirements. During this nightly process SAFR read 71 million records in 40 gigabytes, extracted 59 million records in 30 gigabytes, and performed 229 million table joins. The output was created in 12 CPU hours and 8 wall clock hours. In comparison, legacy applications required 24 hours to complete a limited number of these processes.</p>
+
+<div class="p">
+
+Outputs from these processes were used for US tax and regulatory, Asia-specific regulatory management, and Swiss regulatory reporting. They included information on:
+<ul class="ul">
+	<li class="li">Capital Allocations</li>
+	<li class="li">Average Balancing and Multi-Currency Revaluation</li>
+	<li class="li">Syndicated Loan Netting</li>
+	<li class="li">Federal and Swiss Regulatory Collateral Allocation</li>
+	<li class="li">Residual Maturity</li>
+	<li class="li">Interest Rate Selection</li>
+	<li class="li">Product Risk Weighting</li>
+	<li class="li">Specific Reserve Allocation</li>
+	<li class="li">Un-utilized Facility Calculation.</li>
+</ul>
+</div>
+<p class="p">The process outputs included files used in additional processing or to feed other systems, delimited files, tabular reports, and inputs to a cube-based reporting system.</p>
+
+<div class="p">
+
+The following slide depicts the system architecture for this implementation:
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1265" src="/wp-content/uploads/2018/10/globalinvestmentbanksolarch.jpg" alt="GlobalInvestmentBankSolArch" width="1687" height="966" /> <span class="figcap">Figure 41. Global Investment Bank Solution Architecture Diagram</span>
+
+<div class="image"></div>
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">UNIX Benchmark</h2>
+<p class="p">In the spring of 2002 the team conducted a head-to-head benchmark of the UNIX version of SAFR against the mainframe version. The test consisted of running 10 concurrent SAFR extract processes (in parallel) writing to 10 extract files. Each thread read 1 million rows, 100 megabyte source file and wrote 1 million rows, 300 megabyte output file.</p>
+<p class="p">Each output row contained 6 sort key columns, 10 columns with fields from the source file, and 16 columns with derived fields from joins. The results show that the UNIX and mainframe versions of the software were similar, and performance increased roughly in a linear fashion with platform power.<a href="#fntarg_7" name="fnsrc_7"><sup>7</sup></a></p>
+
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1258" src="/wp-content/uploads/2018/10/unixvsmfplatformbenchmark.jpg" alt="UNIXvsMfPlatformBenchmark" width="1739" height="356" /> <span class="figcap">Figure 42. UNIX vs. Mainframe Platform Benchmark Results</span>
+
+<div class="image"></div>
+</div>
+<p class="p">The test showed that the UNIX platform actually could perform the functions faster than the mainframe, although the mainframe CPU time was less.</p>
+<p class="p">In 1999 Doug, Jay and Al Sung, who performed the z/OS to UNIX port, investigated porting SAFR to a new generation Intel processor called Itanium. They worked with Intel on the potential for having a much smaller computer perform data analysis like no other small machine.<a href="#fntarg_8" name="fnsrc_8"><sup>8</sup></a></p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Batch</h2>
+<p class="p">The issue isn't really the platform; it's the need for a process between event capture and reporting. My experience is that people who work with mainframes understand batch processes, particularly long running batch processes, better than those that work with UNIX.</p>
+<p class="p">It seems to me that writing a batch program is a dying art, or science, or craft, or whatever you care to call it; fewer and fewer people can write these programs. One reason is the overwhelming emphasis on on-line systems, and the desire to reduce latency in processes, the lag between the time the transactions are created and when the reports are produced.</p>
+<p class="p">Does this mean that batch processing will someday go away? Over my career, I have heard a lot of opinions saying yes; but I don't believe it. Innovation, by and large, usually does not eliminate earlier classes of technology, but rather adds to them. Batch processes are not in danger of being eliminated soon for a number of reasons.</p>
+<p class="p">As we have noted, reporting processes by their nature deal with history, they deal with business events that happened hours, days, weeks, months or even years ago. They also require accumulation of those events. Also, financial reporting processes in particular include cutoff points. Year end reports, a whole raft of them, are produced including business events up to 12:00 midnight December 31. All reports are using this data, and should be produced consistently. The use of a batch program facilitates these requirements nicely.</p>
+<p class="p">It seems to me they are unlikely to go away for a more fundamental reason: The most advanced information processing mechanism on the planet, the human brain, sleeps every night. The earth turns on an axis as it revolves around the Sun, and half the world is dark at any one time. Sleep and dreaming are a type of batch processing. If evolutionary biology hasn't eliminated batch processes, they are unlikely to go away in my lifetime.</p>
+<p class="p">So although initial data capture of business events and the ultimate display of accumulated business events will likely always entail some type of on-line processing, the reporting processes in the middle will likely continue to have a batch component. ETL processes are by and large batch. What many people are saying when they argue batch should be done away with is the length of time batch processes take is too long. Because on-line systems are driven by clicks with people sitting in front of the screens, their processing cycles from start to end of each transaction must be short.</p>
+<p class="p">Yet if the report production process was driven down to an acceptable level, the number of new "configurations" if reports that may be available may dramatically change the nature and structure of the reporting solution.</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-21-erp-reporting/">Chapter 21. ERP Reporting</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-19-select-sort-summarize/">Chapter 19. Select, Sort, Summarize</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/">Part 3. The Partner</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Data for the major US retailer benchmarks from interview with Jay Poulos on May 18, 2009. As part of the project, the retailer's IT personnel review system outputs to verify results.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> The differences in the records read were because SAFR didn't ignore voided records or households with more than 1,000 purchases. Thus SAFR did more work than the production system.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> A 2009 program translated from COBOL to assembler results in a reduction in the load module size from 13,808 bytes, to 5,416 bytes, a 60% reduction in the load modules size. Load module size is not exactly the same as the machine instructions contained in the program, but it is indicative. One of the major efficiencies in the retail benchmark likely came from the use of BSAM access method rather than COBOL's default QSAM access method. The access method is a function of the operating system, not COBOL.</div>
+<div class="fn"><a href="#fnsrc_4" name="fntarg_4"><sup>4</sup></a>  "<q class="q">It was around that same time that some industry observers were declaring the impending death of the mainframe. One such analyst wrote in the March 1991 issue of <cite class="cite">InfoWorld</cite>, for example, I predict that the last mainframe will be unplugged on March 15, 1996."</q> <cite class="cite">IBM Online Archives, Exhibits, Mainframes</cite>, Page 4, or at <a class="xref" title="(Opens in a new tab or window)" href="http://www-03.ibm.com/ibm/history/exhibits/mainframe/mainframe_intro4.html" target="_blank" rel="noopener">http://www-03.ibm.com/ibm/history/exhibits/mainframe/mainframe_intro4.html</a>, (Accessed May 2009).</div>
+<div class="fn"><a href="#fnsrc_5" name="fntarg_5"><sup>5</sup></a> See <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-12-types-of-computers-and-processes/">Servers and Online Processes</a> in the Types of Computers and Processes chapter.</div>
+<p class="fn"><a href="#fnsrc_6" name="fntarg_6"><sup>6</sup></a> Richard K Roth, Denna, Eric L. Ph.D. <cite class="cite">Making Good on a Promise: Platform Assignment is the Key to Leveraging Data Warehouses Manufacturing Systems</cite>, February 1996 ( © Chilton Publications).
+Richard K. Roth, Denna, Eric L., Ph.D., <cite class="cite">Platform Assignment Principles For Decision Support Systems And Data Warehouses</cite>, Price Waterhouse White Paper, Nov. 1995.</p>
+
+<div class="fn"><a href="#fnsrc_7" name="fntarg_7"><sup>7</sup></a> Mainframe power is measured in Millions of Instructions per Second, (MIPS) rather than in mega or gigahertz.</div>
+<div class="fn"><a href="#fnsrc_8" name="fntarg_8"><sup>8</sup></a> Notes from interview with Jay Poulos and Doug Kunkel, June 11, 2009.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-19-select-sort-summarize/" class="prev"><span class="label">&larr; Previous</span>Chapter 19. Select, Sort, Summarize</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-21-erp-reporting/" class="next"><span class="label">Next &rarr;</span>Chapter 21. ERP Reporting</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

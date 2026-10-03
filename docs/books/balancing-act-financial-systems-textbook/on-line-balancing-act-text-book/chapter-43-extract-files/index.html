@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 43. Extract Files — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-43-extract-files/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 43. Extract Files</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<p class="title topictitle1"></p>
+
+<div class="body conbody">
+<p class="p">I remember one day when Doug was in the office in Sacramento asking him a question, and him needing to go look at the source code. So we walked into his office and he booted up his PC. At the time, before Windows 95, our PCs had Windows 3.1 which ran on top of DOS. I was a bit surprised after the machine completely booted up with the Windows graphical interface to watch Doug go to the top of the screen and close the graphical user interface. He wanted to get back to the DOS prompt so he would be able to work. This fact speaks a great deal about removing layers between him and the machine.</p>
+<p class="p">The Format phase program is a generalized control break engine, a very different kind of program than the extract program. Control break logic is what performs a "group by" function in a database, or a "sum fields" function in a sort utility. It collapses a set of records with the same key together to produce a subtotal of some kind, and then performs the same function on the next set of rows.</p>
+<p class="p">The Extract Record was created to support this control break logic. It is vital to understand it's structure before understanding the remaining logic table functions, and the remaining processes of the SAFR Scan Engine.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Extract Record Overview</h2>
+<p class="p">I have created view 3264 and specified that it use the Format Phase. This changes some of the function codes that are used in the extract phase.</p>
+<p class="p">The extract records are written to Extract Files, temporary files between the Extract Phase and the Format Phase. The Extract Record has the following general layout.</p>
+
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1212" src="/wp-content/uploads/2018/10/extractrecordstructure.jpg" alt="ExtractRecordStructure" width="1687" height="155" /> <span class="figcap">Figure 110. Extract Record Structure</span>
+
+</div>
+<ul class="ul">
+	<li class="li">The control area contains values that describe the rest of the record, like the number of SAFR view columns on this record, and the length of the sort key. The last field in the control area is the view number. We'll explain why later.</li>
+	<li class="li">The Sort Key or SK area contains the values the user has specified the output file should be sorted and/or grouped by.</li>
+	<li class="li">The Data Transform or DT area contains alphabetic and alphanumeric and numeric column data that is not used in a format time calculation, including sub-totaling, or format time selection logic.</li>
+	<li class="li">The Calculated Transform or CT area contains column data that is either used in a format time calculation, including sub-totaling, or format time selection logic.</li>
+</ul>
+<p class="p">With this understanding, let's look at the logic table for a view requiring the format phase.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Logic Table Phase</h2>
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1206" src="/wp-content/uploads/2018/10/formatphaseviewlogictable.jpg" alt="FormatPhaseViewLogicTable" width="1687" height="906" /> <span class="figcap">Figure 111. Format Phase View Logic Table</span>
+
+<div class="image">This logic table has an SKL function, a build sort key from looked-up values. It also has a SKC, build sort key from constant in case the lookup fails. It also has a CTE, a calculated transform from an event file field. It also has a WRXT, a write the extract record, rather than the WRIN for the input record, or WRDT for just the DT section of the extract record.</div>
+</div>
+</div>
+<p class="p">The following graph shows these additional functions.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1204" src="/wp-content/uploads/2018/10/formatphaselogictablefunctions.jpg" alt="FormatPhaseLogicTableFunctions" width="532" height="309" /> <span class="figcap">Figure 112. Format Phase Logic Table Functions</span>
+
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Extract Phase</h2>
+<p class="p">The following is the Extract Phase Logic Table Trace for view 3264 for the first event file record.</p>
+
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1203" src="/wp-content/uploads/2018/10/formatphaseviewlogictabletrace.jpg" alt="FormatPhaseViewLogicTableTrace" width="1415" height="601" /> <span class="figcap">Figure 113. Format Phase View Logic Table Trace</span>
+
+<div class="image">CT data in the extract file are stored in packed format in order to save CPU cycles converting the data into and out of other formats. z/OS, the mainframe operating system, performs numeric calculations most efficiently on data in packed formats. Since all CT data is used in a calculation of some kind, it is converted into packed format as soon as possible. To see the CT values in the trace, you must display the output in hex mode to read the packed numbers.</div>
+</div>
+<p class="p">The following is the first extract record for this view shown in hex format:</p>
+
+<div class="fig fignone">
+
+<img class=" size-full wp-image-1202 aligncenter" src="/wp-content/uploads/2018/10/sampleextractrecord.jpg" alt="SampleExtractRecord" width="1586" height="734" /> <span class="figcap">Figure 114. Sample Extract Record</span>
+
+<div class="image">The following is the GVBMR95 control report for all the views we have constructed so far, run in one pass.</div>
+</div>
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1187" src="/wp-content/uploads/2018/10/parallelformatphasegvbmr95ctlrpt.jpg" alt="ParallelFormatPhaseGVBMR95CtlRpt" width="1455" height="698" /> <span class="figcap">Figure 115. Extract Record Example GVBMR95 Control Report</span>
+
+<div class="image">View 3264 extracted 13 of the 18 event records read. But any view sent to the Format phase also receives a Header Record for each thread (each input file) processed, with control information about that view. Thus the total record count of 14 records, written to EXTR001 DD Name includes one header record from reading a single input file.</div>
+</div>
+<p class="p">Only one view wrote to EXTR001. But each extract file also receives a Control Record which has a count of all the records written to the extract file. This record is the last record written to the extract file. Thus the total records written to the extract file is 15.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></p>
+
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">At the conclusion of the Extract Phase, the following extract records are contained in the file, plus the header and control records.</p>
+
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1201" src="/wp-content/uploads/2018/10/sampleextractfile.jpg" alt="SampleExtractFile" width="1687" height="930" /> <span class="figcap">Figure 116. Sample Extract File</span>
+
+<div class="image">Note that these extracted records are in random order. All are for K &amp; N jones family, because our view only selected those records. But the account name, the second sort key is not in alphabetical order, and the rows with the same sort keys have not been collapsed, as shown in what will be the output from the format phase below.</div>
+</div>
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1199" src="/wp-content/uploads/2018/10/sampleformatphaseoutput.jpg" alt="SampleFormatPhaseOutput" width="561" height="149" /> <span class="figcap">Figure 117. Sample Format Phase Output</span>
+
+<div class="image"></div>
+</div>
+</div>
+<div class="section">And that brings us to the next step in the process, the need to sort the extract file.</div>
+</div>
+<div class="parentlink"></div>
+<div>
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-42-reference-file-phase/">Chapter 42. Reference File Phase</a></div>
+<div></div>
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+<div>
+
+<hr />
+
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Additional class tests are also shown. CNE is Class Test Numeric in event record, CHE is Class Test High-values (hex Fs) in event record, CXE is Class Test Null (hex zeros) in event record, and CSE is Class Test Spaces (hex 40)in event record.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> Also, note that view 3264 performed no lookups, although the logic table contained Join functions. This is because these same joins were performed in view 3263, and thus did not need to be repeated for view 3264, in this case saving the CPU time for 18 joins. This is join optimization at work.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-42-reference-file-phase/" class="prev"><span class="label">&larr; Previous</span>Chapter 42. Reference File Phase</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-44-sort/" class="next"><span class="label">Next &rarr;</span>Chapter 44. Sort</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

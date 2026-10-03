@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 15. Operational Versus Informational — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-15-operational-versus-informational/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 15. Operational Versus Informational</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">The last step in my training class was a class project. I remember I was assigned the task of working with the database to produce the final outputs of the system. Although I didn't know it, I was using a technology developed to solve both ends of the subsystem architecture, the data capture and reporting. Over the years IT recognized the limits of the traditional reporting model, as implemented in the subsystem architecture. There were a number of initiatives to overcome them. They go by names of data management, decisions support systems, executive information systems, business intelligence and data warehousing, and started with the advent of data bases; the same technology that spurred McCarthy's initial paper.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+
+<div class="section">
+<h2 class="title sectiontitle">Operational versus Informational</h2>
+<p class="p">In data warehousing, one of the latest approaches to overcoming reporting problems, the reports supported by the posting processes are called <em class="ph i">operational</em> reports; the systems which do the posting are operational systems. Data warehousing says that reports which are needed beyond the posting attributes are <em class="ph i">informational</em>. By some definitions, data warehousing is intended to support the informational reports, not the operational.</p>
+
+<div class="p">
+
+Bill Inmon, often referred to as the father of data warehousing, in his preface to his very influential book <cite class="cite">Building the Data Warehouse</cite>, noted:
+<blockquote class="lq"><q class="q">"Databases and database theory have been around for a long time. Early renditions of databases centered around a single database serving every purpose known to the information processing community - from transaction to batch processing to analytical processing. In most cases, the primary focus of the early database systems was operational - usually transactional - processing. In recent years, a more sophisticated notion of database has emerged - one that serves operational needs and another that serves informational or analytical needs ..."</q></blockquote>
+<blockquote class="lq">"The split of operational and informational databases occurs for many reasons:
+<ul class="ul">
+	<li class="li">The data serving operational needs is physically different data from that serving informational or analytical needs.</li>
+	<li class="li">The supporting technology for operational processing is fundamentally different from the technology used to support informational or analytical needs.</li>
+	<li class="li">The user community for operational data is different from the one served by informational or analytical data.</li>
+	<li class="li">The processing characteristics for the operational environment and the informational environment are fundamentally different."<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></li>
+</ul>
+</blockquote>
+</div>
+<div class="p">
+
+I wouldn't disagree with any of these points as they related to the state of system development at the time. However, I would argue the next evolution in reporting is recognizing that the informational systems must take on more operational characteristics. The finance systems provide the example of why that needs to be done, and how to accomplish it.
+<ul class="ul">
+	<li class="li">The finance systems cannot completely separate the informational from the operational. The finance system is an informational system. In fact, it was the original enterprise data warehouse. The finance system has to deal with history, whereas the operational systems do not. Yet, with the required timing and critical nature of it, and because it does generate some original data, the finance system is an operational system. In fact, because it was the first to be automated, it is perhaps the original operational system. Thus it is both informational and operational. There is constant demand for higher integration of this finance data with additional attributes held in other originating operational systems.</li>
+	<li class="li">Because of the blended operational and informational need, the technology has to support both. The missing piece of technology is not the database. Data warehousing has driven innovations in the database that were needed to support better reporting. The missing technology is a high performance posting and report generation engine. We have not advanced the posting processes at the same rate as the database, exacerbating the distinction.</li>
+	<li class="li">The differentiation between types of users is not as distinct as it once was because operational reporting at times involves summaries and informational at times involves details; Demands for better information and tighter integration will cause this distinction to become less and less over time.</li>
+	<li class="li">Focusing on system performance - a near single minded focus on performance - can significantly reduce the differences in processing characteristics of the two environments and thus enable greater reporting, greater system flexibility, and lower IT maintenance cost by not having to support two different environments and processes.</li>
+</ul>
+</div>
+<p class="p">To highlight the overlap further, consider certain finance processes which generate large amounts of data, and those which require access to detail business events.</p>
+
+</div>
+<div id="bibleoperationalversusinformational__opvsinfoprocesses" class="section">
+<h2 class="title sectiontitle">Allocation Processes</h2>
+<p class="p">A number of years later I was the architect for an allocation process for a large insurance company. An allocation process, as we noted in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-10-reality/">Management Accounting</a>, assigns costs or overhead to individual production items, like the salary of the CEO to each bank loan. More often it is for costs such as the HR, finance, IT, and other support functions whose output is not measured by what the company sells.</p>
+<p class="p">The input to these processes could be composed of thousands to millions of business events, such as a listing of loans. The outputs could be millions more transactions as each one is assigned a portion of the cost. Are these types of processes operational or informational? I think it is difficult to say. Do these types of processes fit in a business event based model. I think they do.</p>
+<p class="p">Imagine if you will the desire of someone to know how much of the CEO's salary is attributable to a single insurance policy. If there were a need to manage such a low level of detail, then the outputs from the allocation process would be the product of the number of rows to be allocated to (the count of the number of specifically produced items) times the count of the items to be allocated. That could be a very large number indeed.</p>
+<p class="p">However, that fact that no one manages these detailed events does not mean these types of processes have no value. A well formulated set of allocation rules can inform and motivate some important behaviors. And we shouldn't doubt the fact that they are business events just because these processes produce millions of outputs. Business events are anything we want to plan, control, execute or evaluate. Each resulting row of data from an allocation process is an event and could be created in isolation from all others. We simply have millions of business events occurring in a relatively short period of time as the allocation process is executed. And what triggers the event is the fact that another event has happened; if not generated in batch from a time trigger, it might simply be based upon capturing the original transaction record.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Funds Transfer Pricing</h2>
+<p class="p">A similar type of process is called Funds Transfer Pricing. This process assigns a cost to funds provided to various parts of a financial services company. For example, the commercial loan department might have an opportunity to invest for a short time in a particular high risk real estate fund. Other opportunities exist in other areas of the organization. The financial institution needs to assess what is the best use of its funds, something the market uses interest rates to decide. Funds transfer pricing is a type of internal interest rate calculation.</p>
+<p class="p">The outputs from this process are intended to motivate appropriate behaviors - to inform specific actions if you will - choosing the best use of funds available. If risk is not assessed correctly, the appropriate returns may not be obtained. The end result can be very damaging.</p>
+<p class="p">Determining interest rates requires understanding risk, which means dealing with the details of loans or deposits. The greater the number of parameters that can be used in the formulas, the greater the assessment of risk, and the better the motivation. Having the ability to do funding at the detail level increases its accuracy. Again, this is about generating business events, not reporting on them.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Balance Versus Transaction Based Processes</h2>
+<p class="p">Other processes reflect the passage of time, often called temporal events. Accrual entries are a reflection of this; others are like allocations and funds transfer pricing, and revaluing balances in foreign currencies to reflect the impact of exchange rate fluctuations. These types of processes often depend upon balances as of a point in time.</p>
+<p class="p">For example, currency revaluation is the process of making journal entries to reflect a change in exchange rates. Suppose you live in the US and keep most of your finances in US dollars, but you have one account in the UK where you keep 100 pounds. If you want to produce a balance sheet, you can't add a 100 pound row in the midst of the dollar rows on the report; the report would be meaningless. So you have to convert the 100 pounds into dollars using the exchange rate as of the date of the balance sheet. You need a journal entry affecting an income statement account that reflects the difference in the exchange rate multiplied by the 100 pounds.</p>
+<p class="p">The event that causes creation of this entry could be the change in exchange rates, but they can change minute by minute depending on which rate is chosen. Mathematically creating journal entries every second and then summarizing them will result in the same answer as waiting until the balance sheet date to create a single entry with the accumulated exchange rate changes. It is much more efficient to create the entries at some predetermined time - like closing the books. Thus processing the record containing the 100 pound balance during the close process can become the triggering event. This first can be used to perform processes against detailed balances covering history during the night, and then processing in the same way the remaining transactions that come later.</p>
+<p class="p">Note this point: Just because a process is a point-in-time process does not mean it must use a balance record as input. Because all balances are the result of accumulating individual movements, mathematically the results are the same if the amount is calculated from the movements or from the balance.</p>
+<p class="p">And remember, all these processes become more accurate or capable of informing more specific actions if they are informed by the details of preceding business events. I have often heard experts, with tools that struggle with volume, question why anyone would need all the details from these types of processes. Who has the time or need to go look at an individual product, be it a loan or deposit or policy or something else? Doesn't leverage require managers to find ways of not having to do everything manually at the detailed level?</p>
+<p class="p">This argument moves from the subject of generating business events to reporting on them. It misses the point that the number of summaries required from these processes are quite expansive. The principles involved in reporting on the results of processes, including these newly generated business events, are exactly the same as for any other business event. Business events are anything the business wants to plan, execute, control or evaluate. By and large, reporting is the process of accumulating business events, and reporting from the detail provides more flexibility than any other approach.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+&nbsp;
+
+</div>
+&nbsp;
+<p class="p">In the end, the line where operational processes stop and informational processes start is at the back end of the finance processes, just before report production  -  when data creation stops and only summarizing to produce the report remains. The implications on reporting processes from any finance generated data are no different from business events which are sent to the finance system.</p>
+&nbsp;
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">Let's consider the reporting piece of IT architecture in more detail.</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-16-data-warehousing/">Chapter 16. Data Warehousing</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-14-reporting/">Chapter 14. Reporting</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/">Part 3. The Partner</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+
+<hr />
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Frank Hayes, "The Story So Far" <cite class="cite">Computerworld</cite>, April 15, 2002 or at <a class="xref" title="(Opens in a new tab or window)" href="http://www.computerworld.com/databasetopics/data/story/0,10801,70102,00.html" target="_blank" rel="noopener">http://www.computerworld.com/databasetopics/data/story/0,10801,70102,00.html</a>, Accessed May 2009.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> W.H. Inmon, <cite class="cite">Building the Data Warehouse: Second Edition</cite>, (John Wiley &amp; Sons, Inc.  © 1996) vii   viii.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-14-reporting/" class="prev"><span class="label">&larr; Previous</span>Chapter 14. Reporting</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-16-data-warehousing/" class="next"><span class="label">Next &rarr;</span>Chapter 16. Data Warehousing</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

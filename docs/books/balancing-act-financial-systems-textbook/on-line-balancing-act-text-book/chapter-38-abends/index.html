@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 38. Abends — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-38-abends/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 38. Abends</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">The first interaction I remember with Doug was soon after meeting Jay when I started as a system tester. I found a problem in one of his programs. Renae Bell, the other system tester with whom I shared an office in Sacramento, told me to call him. I underwent the same initiation many others did through the years when I wondered if it was right to call and tell a partner - in the very real sense an owner of the firm - I had found a bug and he needed to fix it.</p>
+<p class="p">Doug was perhaps the most unassuming partner anyone had ever met. I remember him taking assignments to fix problems from people brand new to a project or even the company. His response was even more unexpected for some because of the stories about him they heard before having to call him.</p>
+<p class="p">One of the great stories was about Doug finding a bug in the COBOL complier while working in Alaska. I have heard Rick repeat the story a number of times. It seems the system was in construction, but a new version of the compiler was needed to overcome a technical limit of the old compiler. When the new compiler was installed, a new problem showed up. Rick remembers going to the office on the weekend, and seeing Doug surrounded by stacks and stacks of printouts from a computer dump, a listing of all the ones and zeros in computer memory at some particular point in time. Doug showed him he found a series of them that were causing the problem, traced them to the place in the compiler that had put them there, modified the IBM compiler using a utility called Zap that actually allows inserting a different sequences of ones and zeros into any file including the IBM COBOL compiler, and sent a printout of the code in error and his correction to IBM.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+&nbsp;
+
+</div>
+In the early days of SAFR most of the defects showed up as system abends, short for abnormal end. If you have experience with the blue screen of death on a Windows platform, you have seen an abend. To many programmers an abend is an extremely bad thing, something that means things went catastrophically wrong.
+<p class="p">The truth of the matter is abends in SAFR processes on mainframes rarely affect anything adversely. The blue screen of death is an abend in the operating system, and can mean one has lost data and rebooting can be annoying. That is very different than an abend in a single application, like Excel. I have not seen an abend in the operating system on the mainframe. And because the vast majority of SAFR processes do not perform any updates, the effect of an abend is that Scan Engine simply has to be restarted.</p>
+<p class="p">When dealing in the world of high performance computing, the cost of the niceties of controlling all the potential problems becomes simply too expensive. Allowing the operating system to trap certain types of errors is a very efficient approach to the problem. CPU cycles are not spent trying to prevent errors when in fact if an error occurs the process has to be restarted anyway.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Quick Review</h2>
+<p class="p">But first let's review our computer and business meeting analogy of <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-professor/computers/">Computers</a>. Each execution of a program is like a meeting in a conference room. Memory is like the whiteboard, and disk storage is like a meeting minute binder. The processors or CPUs are like the people in the room. Now, we'll need a bit more detail, so let's enhance this analogy a bit to explain registers and the operating system.</p>
+<p class="p">The eyes of the people in the meeting, our processors, need to be looking at the data on the white board before doing something with that data. The "eyes" of the computer are called registers. Just like people have two eyes, computers have multiple registers. In fact, just as some people in the room are better at math than others, some registers have special capabilities for particular types of functions. But in all cases the registers must be "looking" at the data to be acted upon by the computer in order for the computer to work.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+There is typically a person responsible for the meeting, the chair. This person follows an agenda or perhaps better, our very detailed set of procedures to conduct the meeting - the computer program. In our example here the procedures are the computer program GVBMR95. The procedures (computer programs) are kept in a separate binder from the minutes of the meeting. Similar to data from the "meeting minutes" binder, the procedures must also be transferred onto the white board in order to be read by the chair of the meeting. The "eyes" of the processor reading this program is a special register called the Program Status Word, or PSW.
+<p class="p">Now let's see what happens when something goes wrong in the meeting.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Dumps</h2>
+Over the course of those few years I got so I could follow the pattern in Doug's analysis of a dump. To give some flavor of what's involved, to demystify the whole thing, let's analyze a dump. A fairly common problem when working with raw data is an OC7 or soc7, a data exception. This occurs when SAFR (or any mainframe program) is asked to perform an arithmetic operation against non-numeric data. The first indication something has gone wrong is the following messages printed in the log file, the top portion of the output containing primary messages from the operating system:
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1253" src="/wp-content/uploads/2018/10/oc7snapsystemdump.jpg" alt="OC7SnapSystemDump" width="1687" height="950" /> <span class="figcap">Figure 89. OC7 Snap System Dump</span>
+
+<div class="image">The printout is chronological, in that new rows show up as the batch process is executed. The first four lines are the results of preprocessing steps. Then there are two rows of messages printed by GVBMR95, the Extract Engine that Doug wrote. The first message says that the program started parallel processing. The next says it detected there was a data exception. GVBMR95 turns the problem back over to the operating system. The IEC223I message comes from the operating system and says which file the offending record came from. The operating system then prints a snap dump. Doug would begin his analysis here.</div>
+&nbsp;
+
+</div>
+</div>
+<div class="p">
+<pre class="pre codeblock"><code>   661             SYSTEM COMPLETION CODE=0C7  REASON CODE=00000000</code></pre>
+The completion code of OC7 is a data exception, as I have stated. Other common messages are OC4, which means the program tried to use memory that was out of bounds - in other words it tried to read or write data from a white board used in another meeting. Each meeting is considered confidential. An OC1 means that we asked the computer to perform an invalid instruction.
+
+</div>
+<pre class="pre codeblock"><code>   661              PSW AT TIME OF ERROR  078D2000   920340D6  ILC 6  INTC 07
+   661                NO ACTIVE MODULE FOUND                                 
+   661                NAME=UNKNOWN</code></pre>
+<p class="p">The next row says where the PSW was looking, the instruction that should have been performed. Then two rows tell what program - which detailed agenda - was at that location. The data here is a bit peculiar to the SAFR extract program, GVBMR95. "No Active Module Found" means that the operating system doesn't recognize what program was at this location. That's because the operating system didn't load a program to that location; it didn't put an agenda there. Rather, the only program/agenda it loaded was GVBMR95. To understand this, we need to discuss code generation and parallel processing.</p>
+<p class="p">Our SAFR meeting room actually has more than one meeting happening inside of it. The meeting starts as one meeting, but the first part of the agenda for the meeting is to create other agendas. After those agendas are created, the participants (CPUs) in the meeting are assigned to work on specific agendas for specific periods of time.</p>
+
+<div class="p">The "no active module found" message means that the "meeting" that had a problem was one of these generated agendas, not the main meeting agenda. Because the operating system didn't load this agenda to the white board, it doesn't know as much about this meeting.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></div>
+&nbsp;
+<p class="p">Doug had to make sure something else hadn't gone wrong and the OC7 was the symptom, not the cause of the problem. For example, an OC1 can also look similar to the OC7 problem, but can happen in the main meeting, not the sub meeting<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a>. To detect between these two different types of problems, and make sure this hadn't happened, Doug would then ask me to tell him a few details in other places in the dump. If those values were in the range of what he would have expected from knowing the program, he would feel comfortable that the problem had occurred in the generated code.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Generated Code</h2>
+<div class="p">
+
+Doug would have me read the series of characters after the dash in the next line.
+<pre class="pre codeblock"><code>   661                DATA AT PSW  120340D0 - F8B48002  6019F0B5  80020006</code></pre>
+</div>
+<p class="p">These values F8B48002 6019F0B5 80020006, are the machine instructions. They are contained at memory location 120340D0 where the eyes of the person conducting the sub-meeting are looking; the PSW.</p>
+
+<div class="p">
+
+I remember Doug often repeating the actual machine code, the F8B48002 etc., over and over to confirm he had them clearly in his mind, particularly if he was in the car driving and he couldn't write them down. He would then tell me that the "F8" is hexadecimal representation of the machine code for a Zero Add Pack instruction.<a href="#fntarg_4" name="fnsrc_4"><sup>4</sup></a> He knew the hex values of most of the instructions he used in his programs by heart. The Zero Add Pack instruction moves a value from a location to another location, and adds zeros on the left if needed to increase the length.<a href="#fntarg_5" name="fnsrc_5"><sup>5</sup></a>The digits of the F8 instruction have the following meanings:
+<ul class="ul">
+	<li class="li">F8 = ZAP instruction</li>
+	<li class="li">B = The target field length minus 1 is 11, or a B in hexidecimal in the dump</li>
+	<li class="li">4 = The source field length minus 1 is 4</li>
+	<li class="li">8 and 002 = The target memory address is 2 bytes beyond the address in register 8</li>
+	<li class="li">6 and 019 = The source memory address is 19 bytes beyond the address in register 6.</li>
+</ul>
+</div>
+<p class="p">The F0 instruction after the 019 begins the next machine instruction.</p>
+
+<div class="p">
+
+The next portion of the snap dump shows the values in the registers.
+<pre class="pre codeblock"><code>   661                AR/GR 0: 90A63EDE/00000000   1: 00000000/FFFC6FE4
+   661                      2: 00000000/12034008   3: 00000000/00038F10
+   661                      4: 00000000/12084004   5: 00000000/11F056FF
+   661                      6: 00000000/11F4805A   7: 00000000/1203A008
+   661                      8: 00000000/1203A03B   9: 00000000/120570C0
+   661                      A: 00000000/920340D0   B: 00000000/00010000
+   661                      C: 00000000/00011000   D: 00000000/00038F10
+   661                      E: 00000000/00000000   F: 00000002/00018FA0
+   661              END OF SYMPTOM DUMP</code></pre>
+</div>
+<p class="p">The AR/GR says that the first set of numbers is the Access Registers; after the slash is the General Purpose Register values. Doug was only interested in the GR numbers. The registers, the "eyes" of the processors in our meeting, contain the addresses of data on the white board, or at times, numbers. Numbers can be added to registers. Displacements are values that are added to register values without changing the value in the register.</p>
+
+<div class="p">
+
+Often based upon what Doug saw in the machine code above he would have me take the value in register 6, the 11FA805A, add the hexadecimal 19 displacement from the machine instruction to get address 11FA8073, and go to a different part of the system output, the sys dump, to find what was at that location.
+<div></div>
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1250" src="/wp-content/uploads/2018/10/memorydumpforaddrinregister6.jpg" alt="MemoryDumpforAddrinRegister6" width="1495" height="978" /> <span class="figcap">Figure 90. Memory Dump for Address in Register 6</span>
+
+<div class="image">The first column gives the address in memory of the data shown immediately to its right<a href="#fntarg_6" name="fnsrc_6"><sup>6</sup></a>. Doug would have me round down the address in register 6 to the nearest hex 20 to search the dump; not every memory address is labeled in the dump or the dump would be very, very large. So I would search not for 11FA8073 but for 11FA8060. After finding the address at the nearest hex 20, it is necessary to count across the columns to find that address. The second column is exactly the address to its left. Column 2 adds hex 4 to the address, so 11FA8064. The third column is at hex 8, 11FA8068. The fourth column is at hex C, or 11FA806C. The right half columns begin 11FA80570.</div>
+</div>
+</div>
+<p class="p">We are getting close, so now I start adding hex 1 for every two characters in the display. The value at 11FA8073 begins with 81. I could translate from the hex value into the display value using an EBCIDIC translation card, or I could look at the display portion of the dump. When I look there, I see the word "alpha" which is obviously not numeric. I now know what needed to be fixed for SAFR to complete successfully; either the LR had been defined wrong, or the event data was bad.<a href="#fntarg_7" name="fnsrc_7"><sup>7</sup></a></p>
+
+<div class="p">
+<pre class="pre"></pre>
+Going through these steps I learned that everything that was happening could be understood; that it didn't really take a special mind of some kind to comprehend it; it just took time and attention to details. Building up of these small steps in careful ways results in something quite extraordinary.
+
+A number of years later I remember Doug commented, as we worked on a problem in an area of the code he hadn't been in for quite awhile, that he was going to have to study the program for a bit to remember how it was structured. He then paused and told me a little story.
+
+</div>
+&nbsp;
+<p class="p">He said when working towards his master's degree in computer science he was required to write a teleprocessing monitor. He built different parts of the system over time and one day he had to go back to a completed part to either fix or add something else to it. He had the same experience where he had to go remember how the things work. He said, "I realized then that I had created something beyond my ability to keep it all in my head; it was bigger than I was." There are a lot of people who would agree he has constructed something bigger than any one person.</p>
+
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-39-the-copy-only-view/">Chapter 39. The Copy Only View</a></div>
+&nbsp;
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a>
+
+</div>
+<div></div>
+&nbsp;
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+&nbsp;
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+&nbsp;
+
+</div>
+&nbsp;
+
+</div>
+&nbsp;
+
+</div>
+&nbsp;
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> IBM mainframes have 16 "eyes" or general purpose registers. IBM Enterprise Systems Architecture/390, <cite class="cite">Principles of Operation</cite> manual (IBM  © 1990   1999) 2.2 to 2.3.</div>
+&nbsp;
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a>
+<div class="p">A few pages down in the output, after the messages shown above, is another snap dump. In this additional snap dump, the top lines look like this:
+<pre class="pre codeblock"><code>   498               USER COMPLETION CODE=0999                                  
+   498              PSW AT TIME OF ERROR  078D1000   80010418  ILC 2  INTC 0D   
+   498                ACTIVE LOAD MODULE           ADDRESS=00010000  OFFSET=0000
+   498                NAME=GVBMR95G</code></pre>
+</div>
+<p class="p">This snap dump is from the main program GVBMR95. When the sub-meeting had the OC7, the main meeting - GVBMR95 - called for help by telling the operating system it wanted to stop as well. Thus instead of a system completion code like OC7, we have a user completion code of 999. Note that the memory address, the PSW, for GVBMR95G is at 078D1000 . This is the address of the white board agenda of GVBMR95G, not 078D2000 or submeeting agenda shown in the "No Active Module Found" message.</p>
+
+</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> An OC1 can occur if the instructions in the main agenda by mistake say to go over to some other area of the white board and begin to use that data as an agenda. If it pointed the PSW to some part of the white board that had the word "movement" in it, the computer might use the first four characters and think we wanted it to move something. After it had done this, it might then get to "ment" and give us an OC1; it doesn't know what "ment" means any more than it knows what Jones means. Note that the computer program word for "move" is actually the value "D2"</div>
+<div class="fn"><a href="#fnsrc_4" name="fntarg_4"><sup>4</sup></a> Hexadecimal representation means that four bits of zeros and ones are turned into a number or the characters A   F meaning numbers 10   15. Thus "F" in hex is 1111 in binary and 15 in decimal. Hex is a more efficient "language" for expressing binary numbers.</div>
+<div class="fn"><a href="#fnsrc_5" name="fntarg_5"><sup>5</sup></a> IBM Enterprise Systems Architecture/390, <cite class="cite">Principles of Operation</cite> manual (IBM  © 1990   1999) Seventh edition (July 1999) 8-13. Also available on line at <a class="xref" title="(Opens in a new tab or window)" href="http://www-03.ibm.com/systems/z/os/zos/bkserv/" target="_blank" rel="noopener">http://www-03.ibm.com/systems/z/os/zos/bkserv/</a>.</div>
+<div class="fn"><a href="#fnsrc_6" name="fntarg_6"><sup>6</sup></a> The Display portion shown in the lower half of this figure actually is to the right of the Hex display in the memory dump.</div>
+<div class="fn"><a href="#fnsrc_7" name="fntarg_7"><sup>7</sup></a> The Extract program, GVBMR95, can be made to print the entire generated program (agenda), which would include the F8...instruction and all the other parts. It accepts a parameter file in the DD Name MR95PARM. A keyword of SNAP=Y in this parameter file causes it to print the generated machine code (SNAP data ID 30) and in memory logic table with pointer addresses (SNAP Data ID 20) to the output DD Name SNAPDATA after generation of the machine code.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/" class="prev"><span class="label">&larr; Previous</span>Part 5. The Programmer</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-39-the-copy-only-view/" class="next"><span class="label">Next &rarr;</span>Chapter 39. The Copy Only View</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

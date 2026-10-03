@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 29. Iteratively View Results — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-29-iteratively-view-results/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 29. Iteratively View Results</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">The cookie manufacturer in the fall of 1995 needed a solution to their reporting problems. Doug developed a solution called the Executive Information File, or XIF. In later years a similar capability in other tools would be termed a cube. The structure of this file had the most summarized information at the top, and lower and lower levels of detail farther down.</p>
+
+<div class="p">
+
+For example, from our sample hardcopy report, below:
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1298" src="/wp-content/uploads/2018/10/samplehardcopyreport.jpg" alt="SampleHardcopyReport" width="1586" height="1541" /> <span class="figcap">Figure 69. Sample Hardcopy Report</span>
+
+</div>
+</div>
+<div class="p">
+
+The XIF file would have the subtotals for the two families listed at the top of the file, as shown on the top portion of the next figure.
+<div></div>
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1269" src="/wp-content/uploads/2018/10/drilldownviews.jpg" alt="DrilldownViews" width="1669" height="962" /> <span class="figcap">Figure 70. Drill-down Views</span>
+
+</div>
+</div>
+<p class="p">When the user double clicked on one of the families, the subtotals for the next level down would appear, as shown in the bottom portion. The process could then be repeated, showing the individual account subtotals if the user selected Dad, Mom, or Charles.</p>
+<p class="p">This approach simply automated the manual process of searching sort fields on a hardcopy report to find the desired information at lower and lower levels.</p>
+<p class="p">There were a couple of unusual aspects to this file. One was that instead of using SQL to find the next level down, it used a very simple addressing scheme called relative byte addressing. Because SAFR had built the report, and then turned it upside down, it knew how big the report was, and where the subtotal records for the next level down would be. It could simply add on to the front of each record an address of where in the file the next records would be. Computers have the ability to open and read a file at a particular point, rather than starting at the top. It would be similar to opening a binder or book to a particular page and beginning to read. This approach required that no unnecessary data be transferred into memory for each click by a user. It made the access of the file very, very efficient.</p>
+<p class="p">The other unique aspect of the file was that the entire definition of the report was contained in one place: the view. In many systems, portions of what a report needs to contain are in the ETL definition, portions in the database, and portions in the reporting tool. Changes to a report might mean changes to each of these layers. The Executive Information File, though, contained the definition of the view in the top records. Thus the Scan Performance Engine changed the report however requested by the user as it read the data, and the web page that displayed the results to the user could simply adjust what it displayed based upon this data in the file. No heavy duty programmer needed to be involved to make report changes.</p>
+<p class="p">This characteristic is important for the work we have been describing. Our process has involved many changes - defining and reading new files, adding new columns for record counts, changing selection criteria, adding new views and outputs which investigate areas in more detail, adding new reference data to describe fields, and changing the sort criteria to identify a subset of records of interest.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Output Types</h2>
+<div class="p">Of course the same flexibility exists for all the different types of SAFR outputs. SAFR has the ability to produce the following outputs: Insight Viewer, Hardcopy reports, delimited files, and sequential files.</div>
+<div class="p">
+<div class="fig fignone">
+
+&nbsp;
+
+<img class="alignnone  wp-image-1268" src="/wp-content/uploads/2018/10/safrinsightviewer.jpg" alt="SAFRInsightViewer" width="508" height="376" /> <span class="figcap">Figure 71. SAFR Insight Viewer</span>
+
+</div>
+</div>
+<p class="p">The Insight Viewer output from the Scan Performance Engine provides the summary totals first, allowing a user to select additional detail they wish to see by drilling down on the file. The output is a simple sequential file; no database is involved.</p>
+<p class="p">The limitation of this format is that it creates a copy of the lowest level detail included in the view in each output file. It is an effective format for investigating summary results, or results of samples of data from very large systems, but is not a mechanism to maintain access to all the detail needed for enterprise reporting.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+<p class="p">The SAFR Hardcopy reports are traditional print ready, character based reports. Sort data can be presented as columns or more elegantly as indented values based upon the sort order. The view builder can control report headings, column headings, subtotal descriptions, sort titles, masking or display format for numbers. Additional formatting can be done via user exits for more specific shop standards.</p>
+<p class="p">The limitation is the basic format is fixed, as columnar character based reports for up to 255 characters in width. Tools for on-line investigation of these reports tend to be mainframe based products, which are not very glamorous in today's reporting world.</p>
+<p class="p">SAFR has the ability to put out two different types of files, delimited files which can be used to download into common tools such as spreadsheets, or sequential files which can be used either as interface files or loaded into databases and other reporting structures.</p>
+<p class="p">The limitation on these outputs is they aren't immediately easily viewable, but rather have to be placed in other tools to see the results.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">ETL Functions</h2>
+<div class="p">
+
+SAFR's heritage was as a reporting tool. But it transitioned from the early years of being a reporting product to being more ETL focused. This occurred because SAFR was a mainframe tool and the mainframe batch characteristics were so critical to its performance, and it was influenced by the advent of graphical user interfaces and the "death of the mainframe". Thus, while retaining certain reporting capabilities, it grew in the ability to transform data from raw structures into those reports. This happened to such an extent that for a number of years in the late 90's we described it in marketing literature as an ETL tool.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1469" src="/wp-content/uploads/2018/10/safretlprocess1-e1540944372193.jpg" alt="SAFRETLProcess" width="1367" height="374" /> <span class="figcap">Figure 72. SAFR ETL Process</span>
+<p class="image">Some of the ETL like features that were added to the tool over this time included the following.</p>
+
+<div></div>
+</div>
+</div>
+<div class="p">
+
+SAFR can read, write, or convert any of the following numeric data types, a number of which are not even supported by COBOL
+<ul class="ul">
+	<li class="li">Binary Coded Decimal</li>
+	<li class="li">Binary, 2, 4 or 8 byte</li>
+	<li class="li">Sortable Binary</li>
+	<li class="li">Edited Numeric</li>
+	<li class="li">Masked Numeric</li>
+	<li class="li">Zoned Decimal</li>
+	<li class="li">Packed</li>
+	<li class="li">Sortable Packed</li>
+</ul>
+It can convert and interpret data in more than two score different date formats; it can convert numeric data into four score masks, comma and decimal format combinations; ASCII or EBCIDIC code sets. The UNIX version can translate between big and little endian structures.
+
+</div>
+<div class="p">
+
+These functions allow it to do many things an ETL tool can do. But real ETL tools are defined by the types of file formats they can read. The UNIX version of SAFR only reads sequential files. The mainframe version can read data in the following formats and ways:
+<ul class="ul">
+	<li class="li">Sequential access of sequential files using high performance BSAM access method</li>
+	<li class="li">Sequential access using SAFR channel programs</li>
+	<li class="li">VSAM files in sequential access</li>
+	<li class="li">DB2 data by reading and interpreting the underlying VSAM data structures</li>
+	<li class="li">DB2 data via SQL</li>
+</ul>
+These relatively limited set of data types I don't think qualify as it as an ETL tool. It breaks the boundary between traditional tools.
+
+</div>
+<p class="p">SAFR also has a host of key words including testing field values for SPACES, NUMERIC, HIGH-VALUES, LOW-VALUES and others, as well as testing join results for FOUND, and NOT-FOUND. These key words allow it to help in an inevitable, but unenviable reporting system task called data cleansing.</p>
+
+</div>
+<div id="bibleiterativelyviewresults__iterativelyextensibiliity" class="section">
+<h2 class="title sectiontitle">Extensibility</h2>
+<div class="p">
+
+One of the first things recognized immediately after the retailer benchmark was the need to be able to extend SAFR for non-native functions. On mainframes this capability was termed the ability to call an exit, a custom program at a specific point in the process. A more common term now is an application program interface or API. SAFR has multiple points where a custom program can be called to perform logic that SAFR itself cannot do. This extensibility has been used to add new features to SAFR over time, as most new features are first written as APIs and then folded into the base product as they prove durable for other implementations. The following are the common API points in the Scan Engine.
+<ul class="ul">
+	<li class="li">VDP XML API. Although not traditionally called an exit, this API allows a completely different way of defining SAFR metadata and views. It is discussed more in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-33-define-processes/">Define Processes</a>.</li>
+	<li class="li">Read Exit. This API point emulates an access method, allowing for custom code before a SAFR thread sees data from the event file. It can be used to manipulate an event file, combine multiple physical files into one event file for the SAFR views or even completely generate an event file. From a SAFR perspective, the views read the output from the exit rather than a physical file.</li>
+	<li class="li">Lookup or Join Exit. This API point is called whenever a join to a reference file table is to be performed. The parameters of the join are passed to the program, and a pointer to a resulting record is returned. From a SAFR perspective the result of the join is the output from the called program. This feature is often used to create function calls which accept parameters and return results.</li>
+	<li class="li">Write Exit. This function is called when a view is to write a detailed record to the extract file. It can be used to manipulate the output, evaluate if the record should be written at all, or write multiple records if desired.</li>
+	<li class="li">Sort Exits. The standard sort utilities used to sort extract files have the ability to call exits. A commonly used SAFR sort exit creates permutations of extract records to simulate the creation of multiple views from a single SAFR extract file. This reduces the total data extracted and sorted. This is used to create SAFR cubes which are composed of multiple executive information or XIF files.</li>
+	<li class="li">Format Exit. This function is called at the end of the format program after summarization has occurred. Similar to write exits, it can change the record, determine not to write it at all, or write multiple records if desired. See <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-15-exits/">Exits</a>  for more details on Exits.</li>
+</ul>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Data Cleansing</h2>
+<p class="p">Data cleansing is a process of making data conform to a standard, like the values in the airline database. Data cleansing can be a very long process on some projects. In some approaches to reporting problems, data has to be clean before any reporting can be done on it. Therefore, it must be cleaned in ETL processes before it can be loaded into the database.</p>
+<p class="p">The approach we have suggested can find value in the data immediately, without first having to make sure all values are consistent. It is much like any type of cleaning: whatever is visible is what gets cleaned up. The first step to cleaning is understanding the data. Think back to the airline example above, when I handed the guy the list of values that actually existed in the data. Until you know what's in the data, you can't clean it up. Visibility will drive more data cleansing than any other activity could.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">Having a tool that facilitates both ETL and reporting functions allows us to work closely with the operational systems data, and assess the quality of the information of that data. The next step in our process is to assess the reporting needs and how they measure up against the data samples we have taken.</p>
+<p class="p">For the first time in our method we are going to look at what we need to build, what the new systems must do. Consider this carefully; all the steps we have performed thus far have been focused on the data that exists in the organization today. When undertaking reporting projects so many organizations become distracted by what needs to be built; the structure of the new skyscraper. They spend years working on them, when the hardest part of the project is dealing with the data they already have.</p>
+<p class="p">So care must be taken as we begin to focus forward. To help keep from losing focus, our analysis of the reporting needs of the new system is best informed by the reporting already being done in the organization. These help uncover the real reporting needs.</p>
+&nbsp;
+
+</div>
+</div>
+<div class="related-links">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-30-assess-reporting-needs/">Chapter 30. Assess Reporting Needs</a>
+
+<strong>Previous:  </strong>  <a href="/chapter-28-define-reference-data/">Chapter 28. Define Reference Data</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+<hr />
+
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> See <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-46-format-phase/">Format Phase</a>  for more details on the file structure.</div>
+&nbsp;
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-28-define-reference-data/" class="prev"><span class="label">&larr; Previous</span>Chapter 28. Define Reference Data</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-30-assess-reporting-needs/" class="next"><span class="label">Next &rarr;</span>Chapter 30. Assess Reporting Needs</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

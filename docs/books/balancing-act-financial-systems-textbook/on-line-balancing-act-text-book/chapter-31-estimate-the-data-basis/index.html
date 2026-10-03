@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 31. Estimate the Data Basis — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-31-estimate-the-data-basis/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 31. Estimate the Data Basis</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">As part of the Cookie manufacturer project, I analyzed the existing reports that were being used to run the business from the legacy environment. After compiling that list, I analyzed the data from the new system that would be needed to produce those legacy reports. At Rick's request, I generalized my work into a sizing tool and created instructions for others to follow the same steps. But sizing a reporting environment won't necessarily be done the same way for all companies; we will need to accommodate variations in circumstances. So, let's first discuss how to think about the sizing method before we look closer at how to construct a sizing spreadsheet.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Overview</h2>
+<p class="p">The primary purpose of the method is to assist in sizing the reporting environment- providing number of bytes per report, files used by each report, and performance requirements for hardware and software. But, additional benefits accrue by being able to track each significant report, its use and creation.</p>
+<p class="p">Assessing the reporting requirements is important for getting the right set of numbers to estimate the data load for report processing over time; and by far the largest single factor in determining overall reporting load is data basis. The approach seeks to create an accurate picture by aggregating the data basis and report sizes across the number of reports and the frequency with which they will be executed in a given period of time, stratifying by frequency like on-demand, daily, weekly, monthly, quarterly, and annually. Then analysis can determine if processing can be performed within software and hardware constraints.</p>
+
+<div class="p">
+
+This step of the method consists of several smaller steps, shown in the following high level flow diagram.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1478" src="/wp-content/uploads/2018/10/process-flow-of-rptg-env-estimation.jpg" alt="Process Flow of Rptg Env Estimation" width="583" height="236" /> <span class="figcap">Figure 73. High Level Process Flow of Reporting Environment Estimation Method</span>
+
+</div>
+</div>
+<div class="p">
+
+Our process starts by first gathering information or estimating the data that will be used to process all the reports in the new system.
+<ul class="ul">
+	<li class="li">Estimate the size of the detail source transactions or event file (called a fact table in data warehousing).</li>
+	<li class="li">Define the reference files (called dimension tables in data warehousing).</li>
+	<li class="li">Identify how often reports will be produced. And choose a base frequency so all our data for analysis are "apples to apples".</li>
+</ul>
+</div>
+<div class="p">
+
+Then we need to analyze all the reports expected to be generated by the new system, and their impact on processing.
+<ul class="ul">
+	<li class="li">Identify what reports will be produced, what reports will use which files to determine the number of records read to produce the reports, and the number of foreign/primary key joins each report requires with the reference files.</li>
+	<li class="li">Then, calculate the amount of processing required to produce the reports, and analyze if the processing requirements can be met within the project hardware and software constraints. If yes, no additional work is necessary.</li>
+</ul>
+</div>
+<div class="p">
+
+If our analysis reveals that processing requirements cannot be met, we proceed with decisions about summarization to improve processing.
+<ul class="ul">
+	<li class="li">Determine what summary files to create to reduce the reporting load. And then, recalculate the processing estimates to determine if processing can now be performed within the software and hardware constraints.</li>
+</ul>
+</div>
+<p class="p">The basic point here is we first see if we can produce all the reports from the business events themselves. If our business required ten transactions a year, sales reporting can probably be accomplished without performing any intermediate summaries.</p>
+<p class="p">Now, let's begin to explore the steps of our sizing method in greater detail.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Detail Transaction Files</h2>
+<p class="p">We need to estimate the number and size of the business events the system will generate to produce the report covering the greatest amount of history. For example, if we want to produce the balance sheet for the last five years and all income statements in between, we start with the assumption that doing so from the business events is the most flexible approach. So we estimate the business events that might be generated which will have an impact on the balance sheet and income statement for those five years.</p>
+<p class="p">The largest single factor in determining overall reporting load is data basis. The most important aspect of data basis usually relates to the number and size of records that must be extracted then further manipulated to produce the report output.</p>
+<p class="p">Retrieve daily volume estimates from current transaction posting systems. Use the information gathered by finding the event file and then finding more detailed events. If only an estimate is available, use known statistics about the company to estimate the number of detail records. For example, current invoice line items may be an appropriate estimate for a sales system, the number of customers and their average transactions per day for a retail banking system.</p>
+<p class="p">This isn't a completely theoretical step either; be practical as well. Although it is possible to calculate payroll costs from individual timesheet records from the HR system, for many businesses there is little benefit to having that level of detail in a financial reporting repository. High value customer details have a great deal more value in a financial reporting repository.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Reference Files</h2>
+<p class="p">As described above, reference tables supplement information when reports are built, for example, account descriptions, cost center names and have a notable impact on processing. Later in the method when we identify all report information, we will list the number of table joins per report, reflecting the number of times the report will require a foreign to primary key join (lookup) to a reference or summary table for use as constraints (selection parameters) or descriptive titles. Table joins can have a significant impact on processing time and are another aspect of data load.</p>
+<p class="p">Use the reference data tables created as part of the Define Reference Data step already performed. For the reference data, the number of keys and answers is more important than the size of the files which are usually relatively small. However estimating the size of the static data - things like customers and arrangements - is akin to estimating the transaction files. Size of these files can be significant.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Frequency</h2>
+<p class="p">Identify each of the frequency types for which reports are produced, e.g. daily, monthly, quarterly, annually.</p>
+<p class="p">Choose a base frequency that will allow you to â€˜normalize' all report data for a consistent analysis. Typically this is daily or monthly depending on the frequency of the majority of the reports to be produced.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Report Information</h2>
+<p class="p">We need to project the reports or queries that are expected to be processed. For each report, we need to know frequency produced, report name, report description, width of the report (# bytes), estimated extract percent, and number of table joins. The impact from all table joins, whether to reference files or static data, needs to be included in the calculations for report processing load.</p>
+<p class="p">If the information about all the reports is not available from recent project efforts, then this data may also have to be gathered from current system documentation, soliciting assistance from the business, or even potentially reading the report programs. Most systems projects are expected to improve the situation which means, at a minimum, old reports which are still used will need to be produced by the new system. I refer to this as the do no harm principle.</p>
+<p class="p">Knowledge of the business process and reporting requirements will be necessary to provide an approximate extract percent - the number of records extracted from the event file(s). For example, if a report of customers from Nebraska is produced from a file containing all customers in the United States, the report might extract on 1/50 of the total records in the file. Because a balance sheet is to summarize all financial transactions, it typically will require a very high percentage of event records.</p>
+<p class="p">Ad hoc queries should be identified as a report.</p>
+<p class="p">Some reports are produced with permutations of the sort keys. This will commonly be done where a report needs to be sorted and presented in various ways but all reports select the same data and are essentially the same columns. It may be easier to multiply one of the reports by the permutations than to track each individually.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Calculate Processing Estimates</h2>
+<p class="p">We need to calculate the total number of detail and summary records being processed to meet the reporting requirements.</p>
+<p class="p">The information we have identified so far - about the detail transaction file, the reference files, the frequencies, and reports - must all come together through calculations to create a picture of the anticipated report processing load. We need to aggregate the data basis and report sizes across the number of reports and the normalized frequency with which they will be executed in a given period of time, and take into account the processing load from table joins.</p>
+<p class="p">Compare the required number of table joins, records read and the number of records and megabytes extracted with the standards for your hardware and software platforms. If the processing requirements can be met within the project hardware and software constraints, no additional work is necessary. If not, we need to proceed to determine what summary files to create to reduce the reporting load.</p>
+<p class="p">Here's where the use of the sizing spreadsheet can help with the calculations of processing estimates.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Using the Sizing Spreadsheet</h2>
+<p class="p">I created a template spreadsheet that was distributed with Rick's white paper. There is nothing magical about it or the formulas it contained. Mostly the principles I learned in my first Information Systems class were all that was needed in order to construct it. The following descriptions and screen shots may be adequate to perform similar steps on your project.</p>
+<p class="p">The specific steps I took are not the most important point. The most important step to take is one that I have heard Jay, and Doug and Rick say multiple times over the years: "<q class="q">DO THE MATH!"</q> There is no excuse for not doing the math to calculate what is and what is not possible. Computers are very predictable when the principles upon which they operate are understood. If the principles are not understood, the results will appear random.</p>
+<p class="p">You may not have all the data I had available to me, and you may have other data I didn't have available. Adjust your approach to make the best use of the data you have and to analyze problems that may be unique to your situation.</p>
+<p class="p">I made spreadsheets to ask as few questions as possible and use the input in calculations and sizing methods - the spreadsheet did all calculations and roll-ups.</p>
+
+<div class="p">
+
+My spreadsheet had the following tabs:
+<ul class="ul">
+	<li class="li">Detail Temp - Detail Source File Data Template (fact table)</li>
+	<li class="li">Sum Temp - Summary File Data Template (aggregate fact table)</li>
+	<li class="li">Ref Temp - Reference File Template (dimension table)</li>
+	<li class="li">Freq - Reporting Frequency Listing</li>
+	<li class="li">Report - Listing of Reports to be produced</li>
+	<li class="li">Sum Norm - Summary Adjusted to a Common Frequency (i.e., records read and extracted daily)</li>
+	<li class="li">Sum Not Norm - Summary Not Adjusted to a Common Frequency</li>
+</ul>
+</div>
+<p class="p">All the worksheets were required, except Sum Temp if summary tables are not needed. In the next chapter we'll review the detail file findings before deciding if we must build summary file structures. If the detail can be adequately processed, creation of summary files may be unnecessary.</p>
+<p class="p"><strong class="ph b">Step 1 - Complete the Detail Temp Worksheet Area 1</strong></p>
+
+<div class="p"><dl id="attachment_1241" class="wp-caption alignright" style="width:460px;"><dt class="wp-caption-dt"><img class="alignnone  wp-image-1241" src="/wp-content/uploads/2018/10/detailtempworksheetarea1.jpg" alt="DetailTempWorksheetArea1" width="460" height="297" /></dt><dd class="wp-caption-dd"><span class="figcap">Figure 74. Detail Temp Worksheet Area 1</span></dd></dl>In the top portion of the Detail Template worksheet, I estimated the number and size of the detail records which would be needed to produce all reports. This is estimating basic characteristics about the primary event file. The required input items include File Name, File Abbreviation, Number of records estimated per day and Bytes per record.
+<div class="fig fignone">
+<div class="image"></div>
+</div>
+</div>
+<p class="p"><strong class="ph b">Step 2 - Complete the Frequency Worksheet</strong></p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1239" src="/wp-content/uploads/2018/10/frequencyworksheet.jpg" alt="FrequencyWorksheet" width="463" height="360" /> <span class="figcap">Figure 75. Frequency Worksheet</span>
+
+</div>
+</div>
+<div class="image">I entered each frequency for which reports needed to be produced.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></div>
+<div></div>
+<p class="p"><strong class="ph b">Step 3 - Complete the Reports Worksheet</strong></p>
+<p class="p">Using the Reports worksheet, I projected the reports or queries to be executed. I entered each report to be produced as a separate line with the columns to record information such as Frequency Produced, Report Count, Report Name, Report Description, Number of Table Joins, Width of the Report (# bytes), and Estimated Extract Percent.</p>
+<p class="p">When I had completed all the worksheets, this sheet provided a list of each report, the megabytes estimated to read and extract for each and the number of table joins. These listings of reports were also shown in the lower section of the detail and summary file worksheets so I could decide the number of records to be read and extracted from that particular file based on extract percent and report file usage retrieved from the other worksheets.</p>
+
+<div>
+
+<img class="alignnone size-full wp-image-1237" src="/wp-content/uploads/2018/10/reportsworksheet.jpg" alt="ReportsWorksheet" width="2804" height="840" /> <span class="figcap">Figure 76. Reports Worksheet</span>
+
+</div>
+<div class="p">
+
+You might complain you don't have a listing of the reports the new system needs to produce. I didn't either. But I knew the new system would need to produce equivalent information to the old system, so my report listings were from the old system. The business events hadn't changed, they just came from a new system. New reports were possible, but I knew without the old reports the company couldn't continue to operate so they were required.
+<div class="fig fignone"></div>
+</div>
+<p class="p"><strong class="ph b">Step 4 - Complete the Detail Temp Worksheet</strong></p>
+
+<div class="p">As I noted above, after completing the Reports Worksheet, each report and its frequency was displayed by reference in the lower section of the Detail Worksheet. I inserted columns for each file frequencies. I then went down the list of each report and specified how many files of each frequency that report will use. For example, a daily report might show data in columns for the last 3 business days plus a month-to-date column. This report would use a maximum of 4 daily files and 4 weekly files. I recorded the maximum numbers of records needed. Because this report has a month-to-date column, assume it is being produced on the last day of the month, not the first when the volume would be the lowest. In this example, record 4 under daily and 4 under weekly.</div>
+<div></div>
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1235" src="/wp-content/uploads/2018/10/detailtempworksheetarea2.jpg" alt="DetailTempWorksheetArea2" width="2447" height="826" /> <span class="figcap">Figure 77. Detail Temp Worksheet Area 2</span>
+
+</div>
+</div>
+<p class="p"><strong class="ph b">Step 5 - Complete Reference File Worksheet</strong></p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1233" src="/wp-content/uploads/2018/10/referencefileworksheet.jpg" alt="ReferenceFileWorksheet" width="529" height="407" /> <span class="figcap">Figure 78. Reference File Worksheet</span>
+
+</div>
+</div>
+I created a Reference File Worksheet for significant known reference files (dimension table). The purpose of this tab is to estimate join processes, which can be a significant consumption of processing time. The required input items include Reference File Name, File Name Abbreviation, Key Fields, Number of Occurrences of Key Fields, and Number of Table Joins to This File. This will approximate the number of records expected in the completed file.
+<p class="p">On the lower section of this worksheet I again showed by reference each report, allowing the entry of number of table joins per report. I entered the number of table joins required for a foreign to primary key join (lookup) for use as constraints (selection parameters) or descriptive titles.</p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1231" src="/wp-content/uploads/2018/10/summaryworksheet.jpg" alt="SummaryWorksheet" width="407" height="535" /> <span class="figcap">Figure 79. Summary Worksheet</span>
+
+</div>
+</div>
+<p class="p"><strong class="ph b">Step 6 - Analyze Summary Worksheets</strong></p>
+
+<div class="p">Next I created a Summary Worksheet containing a pivot table. It showed the number of detail or summary records being processed to produce the reports.</div>
+&nbsp;
+<p class="p">This summary sheet<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a> reported the processing requirements by all the frequencies of reports and computed the totals. I compared the required number of table joins, records read and the number of records and megabytes extracted to what others knew were the standard processing capabilities for the hardware and software platforms.</p>
+<p class="p">If the processing requirements could have been met within the project hardware and purchased software constraints, then no additional work would have been necessary. However, it couldn't, which meant I had to proceed with step 7 to determine what summary files to create to reduce the reporting load.</p>
+&nbsp;
+
+</div>
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-32-define-summary-structures/">Chapter 32. Define Summary Structures</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-30-assess-reporting-needs/">Chapter 30. Assess Reporting Needs</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+<div class="section">
+
+<hr />
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> The tool allows selecting a base frequency to â€˜normalize' the data. The required input items include Frequency, Base Frequency Indicator (X), and Normalizing Occurrence for each Frequency.</div>
+<div class="fn">For example, to see all data reported by year (megabytes and records per year), "year" will be the base frequency and you should place a â€˜1' in the Normalizing Occurrence on that line. You would then report 12 and 52 in the Normalizing Occurrence for Period and Week respectively (e.g., 12 months in a year and 52 weeks in a year). This information is used to create a summary that is normalized to a yearly reporting period. You may change the frequency at any time during the completion of the workbook but it will change the numbers reported in the summary normalized worksheet.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> This summary is actually after estimating the summary files which were constructed for the customer as outlined in the next chapter. The version prior to creation of summary files is no longer available but would have shown "the weekly data basis would have been over 20 times the 23 gigabytes if all processing had been done using transaction level data..." as noted in Rick's original paper.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-30-assess-reporting-needs/" class="prev"><span class="label">&larr; Previous</span>Chapter 30. Assess Reporting Needs</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-32-define-summary-structures/" class="next"><span class="label">Next &rarr;</span>Chapter 32. Define Summary Structures</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

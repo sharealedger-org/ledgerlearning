@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match-Merge or High Speed Joins — LedgerLearning</title>
+  <meta name="description" content="This Coding with Kip episode explains a very old approach to doing join processes, called a match-merge.  
+
+
+
+Match-merge required the data files to be joined b">
+  <link rel="canonical" href="https://ledgerlearning.com/2019/12/20/match-merge-or-high-speed-joins/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Match-Merge or High Speed Joins</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">December 20, 2019</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:paragraph -->
+<p>This Coding with Kip episode explains a very old approach to doing join processes, called a match-merge.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Match-merge required the data files to be joined be in sort order by the key.   In a sense this is the oldest type of "relational" databases, where entire files were processed, but the records had known keys and defined uniqueness that were not enforced by the computer but rather by the application and developers.  Putting the file in order might require some pre-process, but sort utilities historically were very, very efficient ways of doing this work.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2017/11/06/sorting-in-todays-ledger-based-processes/">Historical Sorting Processes</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:paragraph -->
+<p>Once the files are in sorted order, the program opens both files, and reads a single record from each.  The key comparison has two possible outcomes:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>1-Equal, which means that the two records should be joined</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>2-Not Equal, which means the programmer has to decide what should be done on a not found condition.  This might mean skipping using that record, or using default values in some way.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If the files have many to one relationships, then the logic is built to advance one file to the next record and test again.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Match-merge can be done with more than 2 files, combining many, many files.  This is possible because memory is very efficiently used, as only one record from each file at a time has to be in memory for the comparison.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Quite frequently when working with young programmer I find their default for doing this kind of work is to first open the files and load them all into memory.  The ubiquity and lower costs of memory today makes this an easy answer--for smaller scale problems.  But the match-merge approach to joining can be done on any size of data files.  Yes, you read that correctly, any size of data to be joined.  In fact, the more difficult process is sorting very large files, not the actual join processing.  But because sort processes can break files into pieces to sort, and then do a match-merge process themselves to create larger and larger files, there is no limit to that ability either.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If one of the input files is designated a master file, and the other a transaction file, then the output from the process might produce an updated master file.  This would be known as a special case of match-merge, called a posting process.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2017/11/13/ledger-posting-processes-in-1959/">Historical Posting Processes</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:paragraph -->
+<p>The video has a second part where it shows the results of using this approach to join together 100 million records in about 3 minutes on a 2 core 3.1 Gig MacBook Pro.  The data used in this demo was the transaction and vendor master files produced as part of the <a href="/2019/12/13/simple-financial-system-proof-of-concept/">Posting Process POC written in Scala</a>.  The source code for the demo is available on GitHub  <strong><a href="https://github.com/KipTwitchell/VAPostAnalysisRSCDemo">VAPostAnalysisRSCDemo</a></strong>. (This code is not maintained and is intended for educational purposes only. It is released by IBM under Apache 2.0 License.)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is another episode of the new Coding with Kip series, the technical sub-series of Conversations with Kip, the best financial system vlog there is.  Literally learn more--about ledgers and financial systems--at <a href="http://www.LedgerLearning.com">LedgerLearning.com.</a>  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/sZcoDqpudAw","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/sZcoDqpudAw
+</div></figure>
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:paragraph -->
+<p>Watch the series in order at the <a href="https://www.youtube.com/playlist?list=PL2UrMfZzcfvFjnCfOBYqksqzuFbaqUupT">Coding with Kip Playlist</a> </p>
+<!-- /wp:paragraph -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

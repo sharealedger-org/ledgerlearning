@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 19. Select, Sort, Summarize — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-19-select-sort-summarize/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 19. Select, Sort, Summarize</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">The Alaska team recognized a processing pattern, and built the system to automate that pattern. The pattern is selection of business events, sorting those events by the attributes of interest, and then summarizing the numbers by those attributes. While these things were happening in Alaska, database reporting systems were focused on using the database capabilities to solve similar problems. One of the major features of databases that allow for selection of records is the index.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Indexes</h2>
+<p class="p">In <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-professor/computers/">Computers</a>, we reviewed two approaches to getting data from a book; one was reading the book from beginning to end, and the other was to use an index at the end of the book. For the most part, databases provide direct access to the data that is needed. Rather than having to read all records to find the one of interest, databases allow programs to nearly immediately retrieve the exact information that is needed. This is important for processes at both ends of the subsystem architecture, input and ultimate output.</p>
+<p class="p">Indexes, though, are focused on answering one type of question. Questions about business units use the business unit index; questions around account use the account index. Thus within databases, there isn't just one index like in a book, there are many indices. And using each one takes computing (CPU) and IO time.</p>
+
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1314" src="/wp-content/uploads/2018/10/accountidindexstructure.jpg" alt="AccountIDIndexStructure" width="456" height="339" /> <span class="figcap">Figure 38. Account ID Index Structure</span>
+<p class="image">Although for databases (and books) of any size, indexed access is much faster than scanning the data, the process of finding the right information does require processing time. There are many types of indexes, but for our example, let's assume that we have an attribute named account ID, made up only of letters, and that it is 3 characters long like ABC. This would mean we could have a total of 17,576 accounts (26 x 26 x 26). The first level of the index might have the 26 entries representing the first letter of the account in it, A through Z. Each row of this level of the index points to another level in the index. These second level, 26 of them, could have 26 entries in each of them, representing the second character of the account ID, the "B" in "ABC". Each of these entries could point to the third level of indexes, 676 in total (26 for the first character x26 for the second character), and again, each of these would contain 26 rows for the third letter of the account ID, the "C" in our example. These rows would point to the position (page number, paragraph, and even page line and column if it were a book index) of individual accounts in the actual data.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+This scheme allows a program to find the record needed at worst after searching 78 rows for account ID ZZZ, and at best 3 rows for account ID AAA; on average searching 42 rows of the index. Even for the worst case of searching 78 rows to find the location of account ZZZ, the search is much more efficient than a sequential search of over 17,000 rows in the data file. But take note that indexed access does not mean instantaneous access; the process requires a varying number of searches in the index to find the correct account. And the index must be transferred into memory to be searched (the people in our meeting can't read from the index in the binder, they only can read from the whiteboard). So searching an index requires IO.
+
+</div>
+</div>
+<div id="bibleselectsortsummarize__SectionBlockSizes" class="section">
+<h2 class="title sectiontitle">Block Sizes</h2>
+<p class="p">Data isn't transferred into memory by record; it is transferred by something called a block. An easy way to think of this is to say that although the sizes of records can change for each system, the record size used to transfer data from disk to memory is fixed, and it is called a block. It is usually fairly large, on mainframes it is 32,768 bytes. If the records for our system are less than half that size, a block can contain multiple "logical" records. At times a block can contain a lot of records.</p>
+<p class="p">If our index of 17,567 records has three bytes for the letters of the index, and one additional byte for an address that specifies where the data exists in the file, then it is in total 70,268 bytes. It will be stored in three different blocks on a mainframe disk: the first block might contain entries from AAA to LCZ, the second block may contain LDA to YEZ, and the last block may contain entries YFA to ZZZ. If our search is for AAA then we only need the first block read into memory. If the data we are searching for is LDA, then we'll need the first block (to find where the L entries are), and the second block. If we are searching for YFA, then we'll need the first and last blocks.</p>
+<p class="p">The time to transfer data into memory is not the same as the time taken to search the index to find the specific index entries. Once we find a pointer from the index to the actual data - the actual page in the book, we also need to transfer the actual block containing the data or page into memory to find the record itself.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Multiple Indexes</h2>
+<p class="p">Now this index scheme works when we search for one attribute. But searching on two attributes requires that we build a single index that combines the two values. In others words, if the ABC value used above were actually three different one character attributes, the process of finding the appropriate record which contains the values ABC would be the same, but searching for each of those characters independently would have required three additional indexes.</p>
+<p class="p">What happens if I want to search by the first and last characters, the A and the C, and find all possible combinations of the center character? The index above won't help with this, because the first set of indexes must point to the second set of values. We need another index to be able to do that. In order to search all the permutations of ABC, six indexes would be needed.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></p>
+<p class="p">So now, the database needs nine indexes, one for each of the permutations of ABC, and one for each of the individual attributes themselves. The more attributes that are indexed, and the more values in each of those attributes, the greater the data volume maintained in the indexes. Indexes can add substantially to the total amount of data maintained in data base.</p>
+<p class="p">Knowing what indexes to add requires deciding how we are going to use the information, just like the choices an editor of a book makes as to what words are important to include in the index and what are not. Indexed access is important for on-line applications: getting to the right record as fast as possible is critical. People will not, for the most part, wait for a program to read all the records in a file to get to the right record. Indexed access is critical for both ends of the subsystem architecture; the on-line components.</p>
+
+<div class="p">
+
+If an index hasn't been planned or is not available to answer a specific question, then the only way to answer the question is to scan the primary data - a process called a table scan, similar to reading the book from beginning to end in a sequential fashion. It doesn't matter if the user is unhappy waiting; it is the only way to get the answer. In producing 400 reports, if one - just one - report needed to select data based upon an attribute or combination of attributes that were not indexed, the database has to scan all the business events to produce the report. If the disk system was bringing the primary data into memory, it would be more efficient to resolve all the queries from the primary data than to also transfer the indexes into memory. The total IO would be lower if the indexes are not used at all. The more reports that are produced, the greater the chances one will require a table scan. One of Rick's white papers stated:
+<blockquote class="lq">In general, indexed access works at about 200,000 bytes per second (about an hour and a half per billion). So, as long as the transaction processing or reporting involved only requires that single billions of bytes be touched in the process once a processing cycle, indexed access is sufficiently fast for the purpose ...</blockquote>
+<blockquote class="lq">Sequential access methods are the basic alternative to indexed access methods. The advantage of sequential access is that it is very fast (1   20 million bytes/second depending on hardware and software configuration) compared to indexed access.<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a></blockquote>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Sort</h2>
+<p class="p">This discussion about indexes can miss the bigger point. The people requesting those reports are not looking for a listing of all the transactions that have applicability to the question they were trying to answer; they want the answer. In most instances, the answer is an accumulation of transactions. And in financial reporting, because financial reporting deals with history, it is an accumulation of lots of transactions or business events.</p>
+<p class="p">Accumulating transactions in an efficient manner - turning business events into balances as of a point in time - requires the records to be sorted. Sorting doesn't have to happen after the records have been selected. If we use an index to select which records we want, no sort is necessary after the selection. But building the index required the data to be sorted: to search an index to find the values we wanted, the index has to be in a sorted order and so the data has to be put in proper order to build the correct pointers. Sorting the data by the necessary attributes is needed somewhere between data capture and report production.</p>
+<p class="p">Although perhaps many questions can be answered by one row of information on a report, the questions asked aren't always that specific. At times users want a report, like a trial balance, that has many different rows, each of which requires accumulating business events for different attributes. Answering this question from an indexed search is even more difficult because it requires selecting blocks of values<a href="#fntarg_4" name="fnsrc_4"><sup>4</sup></a>.</p>
+<p class="p">Sorting data can be a very slow process - a very slow process. This is because all of the data to be sorted must be understood within the context of a single process. Effectively every record in the file up to and including the last record has to be read and analyzed before the computer can decide which record should be the first record output. If the memory is too small for all the data to fit into - the white board can't contain everything in the binder - then sections have to be brought into memory, sorted, and then written out to a temporary disk - a temporary binder. The last step, after the last record from the file has been read, is to bring one record<a href="#fntarg_5" name="fnsrc_5"><sup>5</sup></a> from each of the temporary files into memory, compare which is lowest or highest (depending on the sort order), and then write it out to the permanent file. This means the data may be passed onto and out of disk multiple times within a single process. For sizable files, because of all the IO involved, it can feel as long as walking half way around the world.</p>
+<p class="p">There are many computer books written about sorting data alone. The details of how to sort data are outside the scope of this work (at this point in the book, I am sure you are relieved).</p>
+<p class="p">What is important to note here is that building a system to assemble reports from business events as close as possible to the time the report is needed requires sorting in the midst of the assembly line process. And if we are producing hundreds of reports, we may well have hundreds of sorts occurring simultaneously. An experiment to replicate this reporting architecture with a well known ETL tool in the fall of 2006 proves the point.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">ETL Approach</h2>
+<p class="p">ETL tools can do many of the functions in the general reporting pattern we have talked about. They have the ability to scan the data to select events that are relevant for a particular report. They can either sort, or can call sort utilities to perform sorting operations; and they can accumulate or summarize values into rows. Because ETL tools are not concerned with actually delivering reports to the end user, but rather leave that to the database as request by the reporting tool, they tend to be implemented as point to point solutions, taking data from one location and loading into one other location. I have yet to see an instance where an ETL has been configured to scan a repository of business events based upon users' specifications of the reports they need, and in one pass through the data produce all the outputs needed.</p>
+<p class="p">In the fall of 2006, Rick thought in fairness to a customer we should see if a lower cost, more commonly used technology would be adequate. He asked experts with the tool to do the following: The team was to take 36,425,958 business events with various attributes on them and produce 33 different summaries from them. Because the summaries were financial summaries, there was little selection logic that needed to be applied. The summaries included hierarchies, because users need to know what the subtotals are for various levels in an organization, product or account hierarchies.</p>
+<p class="p">The results of the prototype were that the initial process of selecting records to go into the sort processes worked fine. However, that process ended up turning 36 million records into 47,996,555,264  -  nearly 48 billion records! Again, perhaps the size of that number won't mean anything to you, but no one I know of in business ever sorts 1 billion records without really thinking about how to do it, let alone sorting 48 billion records.<a href="#fntarg_6" name="fnsrc_6"><sup>6</sup></a></p>
+<p class="p">Ultimately, the machine failed not because the data was too large, but because the number of concurrent tasks to be managed by the operating system overwhelmed the UNIX operating system. This issue is discussed in greater detail in the next chapter<a href="#fntarg_7" name="fnsrc_7"><sup>7</sup></a>.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Summarize</h2>
+<p class="p">Another very common "old school" processing paradigm is a program doing control break logic. A control break program reads a file with multiple attributes in sorted order. It accumulates the rows into totals. As it detects a change in one of the attributes, it prints an extra line with the subtotal for that level. This is the process by which the figure Sample Hardcopy Report was made. Creating these subtotals when the data is available and in sorted order is a very efficient way of being prepared to answer the next question that will be asked<a href="#fntarg_8" name="fnsrc_8"><sup>8</sup></a>.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">So using a scan as opposed to an index, with selection, sort and summarize is a different processing pattern for resolving reporting problems. But can it be done within the timeframes required of reporting? The next step in the process would prove that scan processes could be accomplished very rapidly when focus is maintained on performance.</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-20-parallelism-and-platform/">Chapter 20. Parallelism and Platform</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-18-input-output/">Chapter 18. Input/Output</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/">Part 3. The Partner</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Each of these last entries would point to a single row in the actual data file unless the keys could be non-unique; in other words, there can be two rows of data with the same "ABC" characters.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> Factorial of 3. Combinations include ABC, ACB, BCA, BAC, CAB, CBA.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> Roth, Richard K., <cite class="cite">A Practical S/390 Parallel Processing Option for Data Warehouses</cite> Price Waterhouse White Paper, undated (c. mid 1990s) p. 2.</div>
+<div class="fn"><a href="#fnsrc_4" name="fntarg_4"><sup>4</sup></a> Unless the table were loaded with just the information that was needed at the level of detail it was needed which means we anticipated the need and already did the work of producing the report and just stored the results in the table</div>
+<div class="fn"><a href="#fnsrc_5" name="fntarg_5"><sup>5</sup></a> Actually, entire blocks are brought in but the eyes of the computer only focus on one record at a time.</div>
+<div class="fn"><a href="#fnsrc_6" name="fntarg_6"><sup>6</sup></a> Report to client, unpublished, in author's possession.</div>
+<div class="fn"><a href="#fnsrc_7" name="fntarg_7"><sup>7</sup></a> Techniques that can be used to reduce the records that must be sorted are discussed in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-44-sort/">Sort</a>.</div>
+<div class="fn"><a href="#fnsrc_8" name="fntarg_8"><sup>8</sup></a> This process is explained further in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-44-sort/">Sort</a>, <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-45-sort-user-exits/">Sort User Exits</a>, and <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-46-format-phase/">Format Phase</a>.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-18-input-output/" class="prev"><span class="label">&larr; Previous</span>Chapter 18. Input/Output</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-20-parallelism-and-platform/" class="next"><span class="label">Next &rarr;</span>Chapter 20. Parallelism and Platform</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

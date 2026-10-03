@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 66. Expand to Risk — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-66-expand-to-risk/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 66. Expand to Risk</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">Through interactions with multiple people in explaining these concepts, I have realized that in some measure what I am talking about might be called a data "supply chain." One of the big trends of ERP implementations for manufacturing organizations was supply chain consolidation. The systems allowed creating a very efficient process to procure materials for manufacturing goods and then distribute the finished products, providing significant savings. The systems did so by integrating with key vendors and significantly streamlined processes.</p>
+<p class="p">The same is possible in reporting and analytical processes. As we have noted in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-13-business-system-architecture/">Business System Architecture</a>, we have traditionally built a new, single-use supply chain for every reporting need, taking the business events - transactions or acts of commerce - to the reporting use for them. The cost of IT is driven by the number of components that must be maintained: Systems, programs, scripts, copies of data, processors, disk farms, network devices, etc. Each time we write a new program and do not retire an old one there is a good chance we have increased the IT budget in some way, even if only marginally<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a>. Each time IT creates another data supply chain, feeding the results of the same business events to another reporting application, we increase the cost of IT.</p>
+<p class="p">Establishing entire new supply chains is much more expensive than adding just a new reporting output. An entire new supply chain requires a data acquisition layer, a target repository, and posting processes of some kind (even if only in the database), as well as a reporting layer. Then there are business processes such as reconciliation and adjustment that must be performed for systems with high data standards.</p>
+<p class="p">An alternative, of course, is using the finance data backbone discussed above to reduce the data acquisition, target repository, posting and some portion of the reporting processes. The cost of establishing the data backbone is more than a traditional reporting "supply chain", but the per-unit cost of processing each business event through all the differing supply chains is less.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">The Risk Supply Chain</h2>
+<p class="p">One of the major supply chains built in financial services firms over the last few years supports risk reporting. Risk reporting started much later than the basic financial reporting. In many cases it has established a much newer supply chain of business events, and this supply chain continues to be enhanced as additional regulatory requirements emerge, like those issued as from Basel, Switzerland known as Basel Accords.</p>
+<p class="p">Because the attributes needed for risk analysis are many more than those traditionally kept by the finance system, the risk supply chain requires much lower levels of detail. Longer periods of history for account details are also typically desirable. Thus it has been even more challenged in its use of the basic reporting or subsystem architecture. This need for detail is mitigated because the risk system does not need to capture all financial events, but rather focuses much more on the originating product system postings, ignoring the offset side of the accounting system and financial events occurring in other systems which are not financial product related. The risk system also does not typically deal with some aspects of time, such as accruals processing.</p>
+<p class="p">In my discussions, some have suggested that instead of re-mediating the finance supply chain, we should switch and use the newer risk supply chain. If someone were to determine to use the principles outlined in this book to build the risk system first, it might be a simple thing to change the system components to have the following names.</p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1330" src="/wp-content/uploads/2018/10/risk-management-updated.jpg" alt="Risk Management updated" width="994" height="560" /> <span class="figcap">Figure 149. Risk Management Platform</span>
+
+<div class="image"></div>
+</div>
+</div>
+<div class="p">
+
+Building out the risk system first, I believe, should still follow the approached outlined in the SAFR method:
+<ul class="ul">
+	<li class="li">Locate the summary level financial feed from the originating system;</li>
+	<li class="li">Determine those portions of the feed that relate to both the finance and risk systems;</li>
+	<li class="li">Drive the risk portions to lower levels of detail ensuring details balance with the summary level finance feed.</li>
+</ul>
+</div>
+<p class="p">If this approach is not taken, the risk system and the finance system will never be truly reconcilable. Following this method is likely still the right approach for the simple reason that in spite of all the shortcomings of the finance system, the risk systems are still reconciled to it rather than the other way around. The requirements are in the data.</p>
+<p class="p">When this risk-only system is turned on, it should be approached as a parallel run with the finance system, similar to when we start up the FMS solution. The FMS solution typically only runs in parallel for a short period of time before the legacy system is cut off in some way (perhaps through tranching, as described in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-27-find-more-detailed-events/">Find More Detailed Events</a>). The risk solution may run in parallel for years before it is determined to add to it the remaining finance data, if they ever do.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Integrated Risk and Finance System</h2>
+<div class="p">Alternatively, if the finance systems feeds are taken to the customer/contract level, and posted within the Arrangement Ledger, the risk system processes can use this data backbone as a source for its processes. The following picture represents a much more detailed view of the FMS platform, including risk analysis capabilities.</div>
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1178" src="/wp-content/uploads/2018/10/safr-and-risk.jpg" alt="SAFR and Risk" width="1224" height="800" /> <span class="figcap">Figure 150. The SAFR Financial Management and Risk Solution</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">The picture contains more details of the source systems, TTL, Accounting Rules Engine, Data Store and Reporting Layers. Additionally, it clarifies the relationship of the traditional financial expense processes, such as accounts payable, payroll, etc. to the platform. These functions are typically handled by an ERP package of some kind.</p>
+
+<div class="p">
+
+In this respect, though, rather than the traditional integration of these modules with the GL, the GL is tightly coupled with the Arrangement Ledger, or AL. A few key aspects of the Arrangement Ledger are worthy of emphasis.
+<ul class="ul">
+	<li class="li">Finance: The component is a finance owned component. It is not a transaction processing, settlement or other operational subledger system. Finance specifies the coding structures and processes. It is tightly coupled with the General Ledger.</li>
+	<li class="li">Detailed: It contains detailed data, often at a customer/contract level providing greater transparency for a greater set of purposes.</li>
+	<li class="li">Integrated: The AL is integrated with the source systems, but also with the integrated enterprise. Because its code structure starts with the General Ledger view, it encompasses the entire organization.</li>
+	<li class="li">Ledger: It is not a simple repository of source system data. It is not a simple data warehouse. Rather ledger functions are performed within it, like multi-currency processing, eliminations and consolidations, reclass and year-end processes. Thus drill down from any of the General Ledger balances is possible.</li>
+</ul>
+</div>
+<p class="p">The use of on-platform or off-platform calculation services is reflected with the addition of the extract and integration rules processes. These would be used to extract that data from the AL needed for risk engine analysis. The outputs from that analysis may be used independent from the finance data. But as the diagram shows, there is only one supply chain of data into the platform, thus helping to ensure consistency.</p>
+<p class="p">The implications are much more than simply eliminating another set of systems or supply chain of the same business events to the risk systems. As I have watched the discussion on capital reserves funding that financial institutions must keep in wake of the 2007 financial meltdown, I have come to see that financial reserves are a question of risk, no doubt, and some portion of risk can be offset by knowledge. Increased transparency in reporting - visibility to the underlying causes of results and the current status of instruments - can significantly reduce the risk of default.</p>
+<p class="p">Undertaking building the type of system I have proposed is very expensive, as far as typical IT projects are concerned; it is a reworking of the entire information supply chain for organizations. I therefore have a proposal. I recommend that funding be provided by a corresponding reduction in capital reserves required for organizations that under take the initiative.</p>
+<p class="p">Extremely small changes in capital reserve laws can lock up - effectively consume - billion and billions of dollars. The changes in the systems needed are nowhere near that expensive. This is a reasonable approach, motivating the appropriate behaviors to build the new generation of reporting systems that will go much further to solving the financial reporting problems. It will be much more effective than focusing on indirect controls, or other types of regulation.</p>
+<p class="p">It may be possible, though, to take the solution even further, providing a greater base for the total reduction in IT costs.</p>
+
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part7-the-plan/chapter-67-beyond-finance-and-risk/">Chapter 67. Beyond Finance and Risk</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part7-the-plan/chapter-65-start-with-finance/">Chapter 65. Start with Finance</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part7-the-plan/">Part 7. The Plan</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+<div>
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Additional automation of the IT functions itself can mean less cost per item than in times past, but it is unlikely to ever be zero.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-65-start-with-finance/" class="prev"><span class="label">&larr; Previous</span>Chapter 65. Start with Finance</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-67-beyond-finance-and-risk/" class="next"><span class="label">Next &rarr;</span>Chapter 67. Beyond Finance and Risk</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

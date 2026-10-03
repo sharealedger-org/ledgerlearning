@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 49. Control and Contention — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-49-control-and-contention/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 49. Control and Contention</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<h1 class="title topictitle1">Control and Contention</h1>
+<div class="body conbody">
+<p class="p">Doug is fond of repeating a conversation he had one day with another consultant that was an expert on a different hardware platform. They were talking about the procedures of replacing failed CPUs within a computer, and Doug was impressed with how well-versed the consultant was in these procedures. Doug asked, "How often do they fail?"</p>
+<p class="p">"All the time," was the response.</p>
+<p class="p">I have heard statistics about the amount of down time for some large organizations for specific mainframes, and was impressed that in the course of a whole year it was measured in seconds totaling a few minutes. I wouldn't be surprised to learn there are mainframes that have run continuously for years. Mainframe crashes are very rare. I have tremendous respect for the operating system.</p>
+<p class="p">Those results haven't come by accident; a lot of thought over a long time has created that ability. And the thought isn't just by those who design and write the operating system and create the hardware. It also comes from those who make the systems run routinely at specific companies. They tend to be a careful lot, wanting to know something of the way the tools will impact the machine.</p>
+<p class="p">That's why on every project, as we have explained how SAFR works to the project team members, we always anticipated the meeting with systems people. As we outlined the potential performance of SAFR someone always says, "We better meet with so and so." We would begin by being grilled on what impact it can have and how it can be controlled.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Oops</h2>
+<p class="p">Those concerns aren't without merit. There is a very small group of people I know who have mistakenly found ways of impacting various mainframes running SAFR. I am one of them, but am not going to share that story. I will share Mukesh Patel's story, a long time consultant with SAFR. He once created some custom programs called read exits that would run under SAFR. SAFR executed in parallel mode, each thread calling these programs. Unfortunately, he or someone else created a condition that caused an infinite loop in the exit program, not in SAFR itself.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+<p class="p">Mukesh knew the test he needed to run required reading a large amount of event data to test the new program functions. So he started the job and left for the day. After the jobs had been running for hours, and the infinite loops had kicked in, the monitoring operator, who didn't know anything about the jobs or Mukesh, decided he would help GVBMR95 finish. So he issued an operating system command to give it a higher priority effectively allowing it to use more CPU time.</p>
+<p class="p">When it was explained to me, I was told the operator mistyped the command and gave it the highest priority on the box, higher than the operating system. This meant that no other process or program on the computer would cause the SAFR threads to be swapped off the CPU. In addition to the infinite loop, SAFR also required no IO. The threads would run forever. There were enough threads so that every processor was fully utilized. SAFR, the infinite loop exits, abetted by the operator, took over the machine. The machine had to be IPLed<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a>, the mainframe term for rebooted.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Control Parameters</h2>
+<p class="p">In our meetings with the systems people, we would begin by explaining that the primary means of controlling GVBMR95 is the JCL parameters. SAFR is subject to all the typical system controls, including job classes, which indicate how long a job can execute and its priority relative to other jobs, space allocation, region size, which indicates how much memory can be used, and others. These parameters have always proven adequate in preventing SAFR from doing things it should not. And for most installations, these parameters are adequate for tuning SAFR runs so that SAFR is used to solve the problems required of it while using the resources that the organization allocates to it.</p>
+<p class="p">Additionally, other parameters have been developed over time to allow additional control. These include parameters that indicate how many threads should be executed. The Thread Governor, as it has come to be called, allows whoever defines the SAFR pass (an execution of a set of views reading a set of event files) to say how many disk threads and how many tape threads can be run simultaneously, up to 999 threads each.</p>
+<p class="p">The thread governor was developed because of tape drives. The actual number of tape drives available on a machine limited how many event files could be read. Tape is a particularly low cost medium for storage of event files. Because SAFR reads event files serially, reading from and writing to tape is completely acceptable. There is no need for direct or random access which disks provide. But typically the number of tape drives in an environment is substantially lower than the number of disk drives. So, on some projects, a SAFR developer would unwittingly submit a SAFR job that wanted to read 10 tape event files in parallel, when there were only 8 tape drives for example. The job would sit and ask the operator to allocate additional tape drives he would have had to go buy and install to satisfy the request. Finally he would cancel the job saying "Sorry, can't do that."</p>
+
+<div class="p">
+
+If the logic table contains views which are reading more event files than the thread governor allows, SAFR will begin executing the number of governed threads. When a thread is complete, the next waiting thread is started. Thus the SAFR GVBMR95 processing loop is:
+<pre class="pre">	Loop until end of threads
+		Loop until end of event records
+			Loop until end of views
+			Next view
+		Next event record
+	Next thread</pre>
+</div>
+<p class="p">GVBMR95 accepts additional parameters to control various debugging and run time parameters.</p>
+<p class="p">Having established control of the process, we need to understand the other extreme of what is possible. Simply breaking up event files into a lot of small files to be processed in parallel may not produce any performance gains. It is possible that although GVBMR95 executes parallel threads, that effectively because of system or process configuration, they effectively run serially.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">A Parallel Processing Example</h2>
+<div class="p">
+
+Over the years, I have seen Doug explain the details of parallel processing with the following chart.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1208" src="/wp-content/uploads/2018/10/ibmmainframearchitecture.jpg" alt="IBMMainframeArchitecture" width="1687" height="1277" /> <span class="figcap">Figure 132. IBM Mainframe Architecture</span>
+
+<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a>
+
+</div>
+</div>
+<p class="p">When parallel processing starts, depending upon the other programs being run by other users and the control parameters assigned to SAFR, the operating system will assign threads to individual CPUs, shown in the middle of the picture. Let's suppose that we execute two threads in parallel, and both are assigned at the same time to individual CPUs. Almost immediately the threads will require event file data to be read from disk.</p>
+<p class="p">On many computers, the CPU plays some role in transferring data from disk, but not on mainframes. Instead, mainframes have a set of specialized CPUs called channels, represented by CHs around the sides in the diagram. These limited function CPUs only transfer data from disk into memory. Because the threads require data from disk, they are "swapped off" the main CPUs to wait for the data to be made available by the channels. The CPUs move on to other programs.</p>
+<p class="p">As discussed in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-19-select-sort-summarize/">Block Sizes</a>, data is stored on disk in what is called a block. A block is a fixed size for the disk. The event file records might be 100 bytes long, but the block might be 32760 bytes in length. The channels know nothing of the 100 byte record length. They transfer one block, 32760 bytes, for each event file into memory. If two files are on the same non PAV disk (parallel access volume), then the same channel must do the work for both files serially. After a block is in memory, the channels instruct the operating system it has retrieved the data. The operating system then assigns the threads to a CPU. If only one CPU becomes available, only one thread begins processing, by reading the event file data. Thus if the file shares a channel or disk, or there is only one CPU available, we have had no parallelism.</p>
+<p class="p">Our potential road blocks to parallelism aren't through yet. A moment later, perhaps, another CPU becomes available and the other thread is assigned to it. Because each block contains 3,270 records in our 100 byte LR example, for a few milliseconds they might both read data, do lookups, transform fields into sort keys, DT and CT columns, and write records to an area of memory reserved for the output file. If both threads need to write to the same extract file at the same moment, one of the threads will be given permission by the operating system; the other will be told to wait. It may be swapped off the processor if the wait is very long. Again, no parallelism.</p>
+<p class="p">Supposing each extract record is also 100 bytes long, at some point one of the threads might attempt to place the 3,277th record into the extract file buffer, the space of memory allocated for the output file. The record won't fit; it would make the block too large to store on disk. This triggers a call to the operating system to transfer the filled buffer out to disk; to write a block. The thread needing to write the record is swapped off the CPU. The assigned channel takes over and actually writes the block to disk. The other thread might continue processing if it doesn't require this extract file.</p>
+
+<div class="p">
+
+Again, perhaps we have no parallel processing when the last block of the last running thread is transferred into memory, and the thread has read all event records in the input buffer and created all the extract records in the output buffers, the threads can then shut down. GVBMR95 writes a message to the JES Message Log when each thread finishes processing, as shown below:<a href="#fntarg_4" name="fnsrc_4"><sup>4</sup></a>
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1185" src="/wp-content/uploads/2018/10/jesmessagelogthreadmessages.jpg" alt="JESMessageLogThreadMessages" width="1543" height="597" /> <span class="figcap">Figure 133. JES Message Log Thread Messages</span>
+
+</div>
+</div>
+<p class="p">It is possible, therefore, to execute multiple threads, but for those threads to almost never run in parallel. To avoid this, we need to think about contention.</p>
+
+<div class="p">
+
+It is difficult to represent parallel processing in a book, but we can see the results of it in the extract program trace. Parallel processing means the extract file record write-order becomes completely random. The records written to the trace output are equally random. Now, looking at the event file DD name in trace becomes important. Note that below, record 5 is being processed in one thread, Event1, and then record two begins being processed in the Event2 thread. Reading the trace requires looking at the thread in addition to the record number and view ID.<a href="#fntarg_5" name="fnsrc_5"><sup>5</sup></a>
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1177" src="/wp-content/uploads/2018/10/parallelprocessingtrace.jpg" alt="ParallelProcessingTrace" width="1420" height="827" /> <span class="figcap">Figure 134. Parallel Processing Trace</span>
+
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Contention</h2>
+<p class="p">Parallel processing only happens when there is no contention between threads; when the threads do not need to share a resource, such as a portion of memory, or a channel to read the event files sitting on the same physical disk or an extract file.</p>
+<p class="p">This is a key point; memory or disk can only be updated by one process or one thread at a time. The operating system provides controls to make sure this happens. In our meeting example, confusion would reign if two people were trying to write to the same spot on the white board at the same time. This fact is what can create contention. Read only access to memory, such as searching the core image reference data, does not require single threading and does not create contention.</p>
+<p class="p">Doug has taken pains, and over time the team has discovered places where additional efficiencies can be gained by not sharing resources. For example, Doug made the in memory extract summary buffer unique per view within a thread. Thus the stack of records kept is actually by view by thread (event file). Randall found that significant CPU time can be removed from jobs if extract files are not shared by threads. The threads do not have to test and request access to extract files.<a href="#fntarg_6" name="fnsrc_6"><sup>6</sup></a></p>
+<p class="p">Here are a few rules of thumb developed over the years. Obviously if a free CPU cannot be used to process a thread, then the machine will not be fully applied to solving the problem. And because threads typically require some IO and are not on a processor all the time, a ratio of three possible threads to each CPU usually allows for sustained parallelism.</p>
+<p class="p">There is a constant act of balancing CPU to IO. Some processes end up being CPU bound. In other words, there are not enough CPUs to run the process any faster; the amount of time on each CPU is much longer than the time needed for IO. For example, if a thread read in one record from disk, generated multiple gigabytes of data in memory from that one record, performed many calculations against that data, then summarized it down to write out a single record to the output file, there would be almost no IO involved. More CPUs would be necessary to run the process faster. The extreme of dividing the input records, each to its own file, so that we have one CPU for each input record would not even be enough to make the process run faster.</p>
+<p class="p">On the other hand, I have seen processes where the views scan millions of records, but only select a handful; sort of a needle in a haystack problem. Testing each record for inclusion in the output requires very little CPU time. These types of processes are IO bound. Additional files, and channels can be added but at some point the operating system overhead for controlling the number of parallel threads consumes more and more CPU time. So one might achieve a balance between CPU and IO on these kinds of problems, but only because the CPU usage has become inefficient, total elapsed time may decrease, but CPU time may increase to a wasteful extent.</p>
+
+</div>
+<div class="section">
+<div class="p">
+<pre class="pre"></pre>
+We should note that the threads aren't the only level of parallelism happening in GVBMR95. GVBMR95 also has overlapped IO. GVBMR95 actually allocates multiple buffers in memory for any one file it is reading or writing. Instead of waiting for the channels to operate against one large portion of memory, either reading it or writing it, GVBMR95 can begin reading data from one buffer while the channels are operating against other buffers. The same is true for writing data; the channels can begin to transfer extract file data to disk while MR95 is writing to other buffers.<a href="#fntarg_7" name="fnsrc_7"><sup>7</sup></a>
+
+</div>
+<p class="p">Next we'll learn about additional techniques to eliminate IO.</p>
+&nbsp;
+
+</div>
+</div>
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-50-piping-tokens-and-the-write-verb/">Chapter 50. Piping, Tokens, and the Write Verb</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-48-multi-threading/">Chapter 48. Multi-Threading</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+<div>
+
+<hr />
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> SAFR itself has only one looping construct, that of the Event File read in the RENX statement. The user cannot assign "goto" row values; they are all determined by the SAFR View Complier. With the exception of the possibly codependency of views reading and writing to the common key buffer, users cannot create infinite loops.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> IPL stands for Initial Program Load.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> The statistics on this chart are from approximately 1997.</div>
+<div class="fn"><a href="#fnsrc_4" name="fntarg_4"><sup>4</sup></a> The threads do not issue the command to write the last block of the extract files, because the GVBMR95 mother task must add the control record to the standard extract files, those being sent to the Format phase, with a record count of the total records in that extract file. Thus the mother task issues the last write statements and closes the extract files.</div>
+<div class="fn"><a href="#fnsrc_5" name="fntarg_5"><sup>5</sup></a> Writing the trace records to Sysout is also a shared file and requires single threading. Because Sysout is just a file, it can be edited, and using the "Sort," "Find Exclude" and "Find Include" commands, one can more effectively analyze the trace. Alternatively, using trace parameters can control what data is written to the trace.</div>
+<div class="fn"><a href="#fnsrc_6" name="fntarg_6"><sup>6</sup></a> Although not often configured this way, the sort utility can read concatenated Extract files. GVBMR88 can handle multiple control records in one execution. Thus the greatest efficiency can be gained if each view within each thread writes to its own extract file, and then files for particular views are concatenated together as input to the sort job.</div>
+<div class="fn"><a href="#fnsrc_7" name="fntarg_7"><sup>7</sup></a> The number of these buffers is controlled by two GVBMR95 parameters, READBUF and WRITEBUF. After a typical point, the number of buffers typically is not a constraint inhibiting parallel processing. Doug has suggested that it takes about three times as long to write a record as it does to read a record. Thus he has suggested there should be a ratio of 1:3 for read verses write buffers. The default values of 5:15 are typically adequate.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-48-multi-threading/" class="prev"><span class="label">&larr; Previous</span>Chapter 48. Multi-Threading</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-50-piping-tokens-and-the-write-verb/" class="next"><span class="label">Next &rarr;</span>Chapter 50. Piping, Tokens, and the Write Verb</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

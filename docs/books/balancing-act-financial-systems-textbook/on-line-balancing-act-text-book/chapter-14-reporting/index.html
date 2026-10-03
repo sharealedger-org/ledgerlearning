@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 14. Reporting — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-14-reporting/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 14. Reporting</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">In my training I learned how to write a batch reporting program in COBOL, a ubiquitous language for such processes. I believe we may have even printed the report on something called green bar paper. The paper contained shaded light green bars to help trace information across the rows. The principles behind these reports are still valid today.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Classifying Attributes</h2>
+<p class="p">Reporting is a process of classifying attributes. Some of the earliest arithmetic children are taught is how to classify objects. Very young children begin by making piles, even though those piles may not be intuitive to an adult. One pile might include "things that have some shiny part to them" and thus a toy car with a shiny plastic window and a mirror are combined in the same pile. Over time and with maturity, commonly understood and measured characteristics are used, such as size, shape and color.</p>
+<p class="p">Making piles reduces the number of objects the child has to perceive at any one time. If asked what colored objects exist - a request for a report - the child can name the piles. To the question of how many big objects exist, the count of objects in one pile is the response. The child understands the nature of the objects more easily by classifying them.</p>
+<p class="p">Later, we use more complex schemes by making enough piles for the combinations of all of the possible values for all of the possible groups. For example, if we wanted to classify objects by shape (round, long, or flat), size (large, medium, or small), and color (red, yellow, or blue), we would make 27 piles; objects that are flat, red, and large in one pile, and objects that are yellow, medium sized, and round in another.</p>
+<p class="p">The different characteristics of physical objects, color, size, shape, might be called attributes by IT. In business systems, IT assigns attributes to many things, including customers, employees, even IT systems. Common accounting attributes include business unit, cost or profit center, and account. We use these groups to decide what the business events mean, what action should be taken because of them, or what relationship they should have to other events.</p>
+<p class="p">Because business events aren't "real" objects, they don't have a natural set of characteristics. What are legal entities, accounts and cost centers? They aren't some naturally occurring thing, but something we make up and assign to business events to "plan, execute, control, or evaluate" them.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a> A "legal entity" might be a corporation - a made up person that can own property, sue, and do other things real people can do before the law. A "cost center" is a group of people, often with someone in charge and accountable for a budget. And perhaps account means what everyone agrees the business event means as interpreted by the accounting standards. Our example financial and car maintenance system had planned about 25 different things - attributes - we wanted to track.</p>
+<p class="p">Of course, comprehending nine piles of things is possible but nine hundred thousands piles is not. Because the piles are the product of possible values, the numbers grow quickly. Quickly finding three piles containing yellow objects (large, medium and small) and adding the numbers together to determine the number of yellow objects is possible, although more tedious than having all the yellow in one place. Dealing with larger numbers of piles becomes impractical.</p>
+<p class="p">Today's businesses of course have millions, and in some cases billions of events daily. Understanding the events themselves has long been impossible. Major businesses are run today by keeping track of various piles.</p>
+<p class="p">And every new question someone asks - the need for a report - has the potential to require a new pile.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Answers in a Single Row</h2>
+<div class="p">
+
+The reports I created in my training class, and most of those still produced today, are usually composed of rows of information with numbers on the right hand side, and the descriptions of those numbers to the left. Most spreadsheets still look much like this. Here is something that looks much like the reports I would have created in my class.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1298" src="/wp-content/uploads/2018/10/samplehardcopyreport.jpg" alt="SampleHardcopyReport" width="1586" height="1541" /> <span class="figcap">Figure 31. Sample Hardcopy Report</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">Reports are useful when they contain answers to questions. Sometimes the answers come from a single row on a report; how many flat red large objects there are, or how much were expenses for the sales department of XYZ Company for last year.</p>
+<p class="p">These hard copy reports contained a great deal of information. Because the sort keys, those values on the left of the report, were in sorted order, one can search through them in order and quickly find the legal entity, cost center, or account total they are interested in. The report, in a certain sense, contains a number of different reports within it: account total by cost center and legal entity, cost center totals by legal entity, and legal entity totals. For each of these it contains the debits, the credits, and the grand total. In more recent IT trends, these three things may have ended up being three or even nine different reports or database tables.</p>
+<p class="p">But the end of the reporting process might still result in the need for one row of information.</p>
+<p class="p">This need to find one row of information is sort of ironic since the beginning of the subsystem architecture begins with data, captured as business events, often being recorded on one row as data. Thus the beginning of the basic business system starts with a single row, and it ends with a single row as well.</p>
+<p class="p">Although single rows of data are needed at both ends of the process, the two rows are very different things. There is work that must be performed in the middle to create the reporting record. This is because the row at the beginning most often represents a single business event; a deposit, a sale, a receipt of inventory, a payroll payment. But the row at the back of the system represents an accumulation of many business events; total deposits, total revenue, total inventory received, total payroll expense. Somewhere between the beginning and the end of the system, these business events must be accumulated before the row that answers the question can be displayed.</p>
+<p class="p">And note there is, by definition, a passage of time between the business event and the reporting record, because the reporting record is an accumulation of business events. This accumulation can be done one record at a time, as each business event occurs, or it can be done after batches of business events have occurred.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">The Posting Process</h2>
+<div class="p">
+
+Of course this accumulation is what the posting process does. Historically, it did this at the end of the day, after the batch of business events had been received. The structure of these programs has probably changed very little since standardized in structured programming not long after the first ones were written. The program reads two files, and writes one file. The basic structure is
+<div id="biblereporting__BasicBatchProgram" class="fig fignone">
+
+<img class="alignnone  wp-image-1315" src="/wp-content/uploads/2018/10/basicbatchprogram.jpg" alt="BasicBatchProgram" width="373" height="228" /> <span class="figcap">Figure 32. Basic Batch Program</span>
+
+<div class="image"></div>
+</div>
+</div>
+<div class="p">
+
+The parts of the program are as follows:
+<ol class="ol">
+	<li class="li">Perform initialization. This section starts the program and gets ready for processing. It also usually reads the first record from the journal entry file, and the first record from the ledger file.</li>
+	<li class="li">Process records. This process compares the account number on the journal entry with the ledger record. Obviously a comparison has three possible results, less than, equal, or greater than.
+<ol class="ol" type="a">
+	<li class="li">If the ledger account is lower, then updates to the ledger account are complete. The program writes the ledger balance for this account to Today's Ledger Balance file. The program then reads the next ledger record from Yesterday's Ledger Balance file and goes back to step 2.</li>
+	<li class="li">If they match, the program updates the Ledger Balance record with the amount from the journal entry. It does not write the new record to Today's Ledger Balances file yet, but rather reads a new journal entry record, and returns to step 2.</li>
+	<li class="li">If the ledger account is high, then the journal entry is for a brand new account that we don't have on yesterday's file. So the program creates a new Ledger Balance record and adds the Journal entry amount to it. Again, it does not write the new record, but rather reads a new journal entry record and returns to step 2.
+<p class="p">Logic has to be added to force the program to continue until the end of each file is reached. In other words, it has to continue to copy all the ledger balances out to the new file even after it reaches the end of Journal File, or ensure that all new accounts created in the Journal File are created on Today's Ledger file.</p>
+</li>
+</ol>
+</li>
+	<li class="li">Perform termination. Having read the last input record from both files, this section prints out a control report and the program cleans up after itself and stops processing.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></li>
+</ol>
+</div>
+<p class="p">After the update program, a report using the updated balances was produced by another program. It simply read the new Ledger Balances, and created a report of the new balances. Because it only read the ledger balances, only the attributes that were part of that record were available for reporting; balances by other attributes on the journal entries could not be reported.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Summarization</h2>
+<p class="p">This posting process of the subsystem architecture defines what answers can be provided at the time it is created; whatever attributes are assigned to the summary file (effectively the ledger in our accounting example) are the only things that can be used in reporting. Other attributes are immediately dropped and thus unavailable for use in answering any other questions. In effect the piles are predefined at the time the system is started and the system can create no others.</p>
+
+</div>
+<div class="section">
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">So alternatively, what if the posting process was defined to not drop any attributes? This could be done, usually with significant performance implications because almost no summarization would happen. Each business event is almost unique simply because it has recorded on it the date and time the business event happened. This would also result in the posting processes answering almost no questions; it simply delays the problem of accumulating the rows to get to the answer to another place in the system. Ultimately these rows have to be accumulated to present the single row answer to a question.<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a></p>
+<p class="p">So the fundamental question is where in the system architecture to do the accumulation of business events to reporting answers? That depends on which approach is taken to the reporting problem.</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-15-operational-versus-informational/">Chapter 15. Operational Versus Informational</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-13-business-system-architecture/">Chapter 13. Business System Architecture</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/">Part 3. The Partner</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+
+<hr />
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> See <a class="xref" href="biblebusinessevents.html#biblebusinessevents__EventsSection">Events</a> in the Business Events chapter.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> As noted earlier, most people today have little experience with batch programs. An antivirus scan or a hard disk defragmentation process might be the closest. Many people from experience can tell how long it takes for a virus scan to happen, and how slow the machine can be when they are running. Although there are not too many of these types of processes on PC, in the business world there are still millions of such processes, and they can consume large amounts of computing time. Perhaps because these processes are so rare on PCs contributes to the lack of general understanding of the process involved.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> See discussion of adding the cost center to the simple accounting model in <a class="xref" href="biblebusinessevents.html#biblebusinessevents__AdditionalAttributesSection">Additional Attributes</a> in the Business Events chapter.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-13-business-system-architecture/" class="prev"><span class="label">&larr; Previous</span>Chapter 13. Business System Architecture</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-15-operational-versus-informational/" class="next"><span class="label">Next &rarr;</span>Chapter 15. Operational Versus Informational</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

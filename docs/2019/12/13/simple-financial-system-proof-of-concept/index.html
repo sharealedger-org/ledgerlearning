@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Financial System Proof of Concept — LedgerLearning</title>
+  <meta name="description" content="In order to make my vlog and blog more useful, I have started a new video series call Coding with Kip.  The format of this series will be more technically focus">
+  <link rel="canonical" href="https://ledgerlearning.com/2019/12/13/simple-financial-system-proof-of-concept/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Simple Financial System Proof of Concept</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">December 13, 2019</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:paragraph -->
+<p>In order to make my vlog and blog more useful, I have started a new video series call Coding with Kip.  The format of this series will be more technically focused, and will be a longer format to go more in-depth.  The initial videos, four parts, are described here.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Starting in July 2017 I created a very simple financial system proof of concept (POC).  The videos inserted in this post show the results of that work.  The POC was complete by mid September 2017, so approximately two months. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Objective</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The objective of this POC was to strip away all the other processing paradigms and get back to what the simple posting processes looked like, why there were done, and how the were able to scale.  It was intended to use simple but more recent technologies to turn transactional data into usable information.  Posting processes assist in that journey by creating point in time balances, which give a perspective on what has happened over time in a very efficient manner.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2018/04/09/improved-financial-reporting-a-30-year-problem-for-me/">Retrospective of a 30 Year Problem</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Data Used</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The first problem in doing such a POC is finding the appropriate data.  As my POC was not sponsored by some organization who might give me real financial data, I worked for months to find publicly available, real data.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>As my friend, Dillon Papenfuss quoted me as saying: </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><em>"I have never seen system-generated data that has all the variability<br>of real, live production data. The differences are so stark it is a bit like the difference between a painting</em> <em>of a landscape, and a real, live landscape. The system-generated data is flat; it can give the single image it was intended to produce. But if one walks to the side of the painting, the image is not interesting at all. Whereas if one walks to a different point to view a landscape, it can be just as fascinating</em> <em>and interesting as the original perspective. And one can walk into the landscape, just as one can walk into real production data, and find all sorts of new things within it. System-generated data never has that kind of interest to it."</em> <a href="https://www.financialexecutives.org/getattachment/b3d0b159-26df-4ba1-a147-9566f749548f/DataFinal.pdf.aspx">"Data: the Strategic Asset: November 2019</a>" Financial Education &amp; Research Foundation (FERF)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Adhering to this standard, I came upon the publicly available financial data from the Commonwealth of Virginia.  Virginia's commitment to transparency is remarkable because of the depth and breadth of data they have made available, from 2003 to the present, payment and aggregated tax receipt data, along with descriptive reference files.  You can find it on <a href="https://www.datapoint.apa.virginia.gov/">Virginia Data Point</a>.  I have also packaged the data for download in my <a href="https://data.world/finsysvlogger/state-of-virginia-publicly-available-financial-data">Data World</a> page.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2016/12/26/new-video-data-discovery-the-requirements-are-in-the-data/">Requirements Are In The Data</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:paragraph -->
+<p>This video gives an overview of the POC and the results of it.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/bk8h5A11gIY","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/bk8h5A11gIY
+</div></figure>
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:paragraph -->
+<p>The overall POC was composed of three parts:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Really Simple Commerce - A Business to Consumer (B2C) blockchain ledger system for payments and receipts</li><li>Posting - Turning transactions into balances for efficient processing in a universal ledger</li><li>Analysis - A simple financial analysis engine.</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>The POC description starts with the posting process first, the first component developed.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Posting Process</h3>
+<!-- /wp:heading -->
+
+<!-- wp:image {"id":2383,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2019/12/cod-3-e181-posting-demo-tn.jpg?w=1024" alt="" class="wp-image-2383" /><figcaption>Posting Process Overview</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The above diagram gives an overview of the first two parts of the system, the posting and at the very end bottom left, the analysis (discussed below).  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The following diagrams give a view of the inputs and outputs from the system:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2388,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2019/12/slide115.jpeg?w=1024" alt="" class="wp-image-2388" /><figcaption>Input Data from State of VA</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":2389,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2019/12/slide116.jpeg?w=1024" alt="" class="wp-image-2389" /><figcaption>Intermediate Files in Posting Process</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":2390,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2019/12/slide117.jpeg?w=1024" alt="" class="wp-image-2390" /><figcaption>Posting Process Outputs</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>In brief, the system has two programs: the ID Assignment program, and the Posting program.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Post:<a href="/2016/04/23/the-big-idea-eliminate-posting/">  The Big Idea: Eliminate Posting</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:heading {"level":4} -->
+<h4>ID Assignment </h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>ID Assignment takes in payment and receipt data at a detailed level.  The payment data contains a vendor name.  The system uses the vendor name to build (as well as possible) a vendor master file, with a unique ID assigned to each Vendor.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>It also creates Universal Journals.  It does not do double entry accounting rules, a single transaction in creates a single journal out, but with most of the attributes one would expect to see on a journal entry.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>It also produces records of changes to the vendor master file.  This is needed because the vendor master is maintained in two different sort sequences for efficiencies: one sorted by vendor name (for ID assignment), and the other sorted by ID (for use in the match-merge posting process.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2016/07/18/new-video-metric-engine-and-a-detailed-identifier/">Metric Engine and Detailed Identifier</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Intermediate Sorts</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Between the ID Assignment and the Posting Program, the outputs from the first phase are resorted into ID order.  The major master files used in the Posting program are always maintained in ID sorted order.  Resorting these master files would take a long time, and the objective of this POC was very efficient processing, both CPU and elapsed time.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Let me emphasize that by restating it.  The much larger master files, balances and Vendor Master sorted by Vendor ID, are never resorted, but are read in sorted order, updated and written in sorted order.  This is a key processing paradigm from a much earlier period in computing for maximum computing efficiency.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The sorting process on the input transaction records and vendor master update records are always limited in size because the files only contain the data after the last execution of the ID Assignment program.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2017/11/06/sorting-in-todays-ledger-based-processes/">Sorting in Historical Process</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Match-Merge Posting Process</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The second major program takes in four files: the transactions (in the form of journals), the vendor update records, the vendor master and the balance file.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>It outputs two files: The updated vendor master and the updated balances.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>To do this, it uses another very old processing paradigm, the match-merge process.  In a match-merge process, because the files are maintained in sorted order (and the program should detect and throw an error condition if they are not), each record from each file are evaluated to determine (1) if they match and thus an update should be made to the master file based upon the transaction record, (2) if the transaction record is higher, and thus the prior master record should be finished up and written to the master output file and a new master read (3) or the transaction is lower, and a new master record must be created.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2016/08/01/new-video-metric-engine-and-master-file-update/">Master File Update</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:paragraph -->
+<p>The Posting program performed these test twice: (1) once on the Vendor Master with the Vendor Update transaction record, and (2) when working on a particular vendor, doing another loop for all the balances for that vendor, and the associated transactions for each of those balance.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Because the VA data is only released quarterly, and did not have a transaction date on it, only a single quarter for each file named, the program was written to make annual balances.  A new file was created each year for balances in that file, rather than putting multiple balances onto a single record for the appropriate key.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Contrast with a General Ledger</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Typical general ledgers lose all visibility to customer or, in this case, vendor details.  But this POC was to prove that it is possible to keep these details, yet record all the information typically maintained in a General Ledger.  Thus instead of a typical tens of thousands of rows General Ledger, this system has twelve million of balances.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But these twelve million balances are still substantially lower in data volumes than the 100 million transactions which composed them. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The power of this approach will be demonstrated in the Analysis Program Section below.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2017/03/27/new-video-the-gl-in-the-consolidated-data-supply-chain-architecture/">GL in the Financial System Architecture</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Performance</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>In order to decrease elapsed time, I divided the input files creating 10 different partitions using the first two characters vendor name.  These partitions were not equal in size (they had some lumpiness to them), but it was what capacity I had available to me during the POC timeframe.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I ran the system at full volume on my personal MacBook Pro machine with the following configuration:  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>MacBook Pro MacBookPro12,1</li><li>Processor: Intel Core i7, 3.1 GHz, 1 Processor, 2 Cores</li><li>L2 Cache (per Core): 256 KB</li><li>L3 Cache: 4 MB</li><li>Hyper-Threading Technology: Enabled</li><li>Memory: 16 GB</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>The time to process was:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Starting time:  Sat Sep 9, 2017 03:31:39 UTC 2017</li><li>Ending time:  Sat Sep 9, 2017 06:09:43 UTC 2017</li><li>Total time is 2 hours 38 minutes </li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>(A separate run on Wed Sep 6 took 1 hour 28 minutes.  I have not analyzed the log files completely, but I believe the work done should be the same.)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In this space the two Posting Programs did the following:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Read over 432 million records in total</li><li>Wrote over 348 million records in total</li><li>For a grand total workload of over 780 records</li><li>Input transactions from the State of Virginia were over 101 million</li><li>Vendors identified were over 2 million (there are duplicates because of the various ways vendor names are spelled which I only did minimal effort to clean.)</li><li>Total balances produced was over 12 million</li><li>Years of data processed included 2003 to 2016</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2019/03/26/daily-financial-cycle-a-conversation-with-tata-rao/">The Daily Financial Cycle</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Apache Spark</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Note that only the input transactions were partitioned, and once established, the partitioning scheme remained static for all remaining time periods (13 years of quarterly processing).  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In my analysis of using Spark as an engine to perform the same features, it was not clear to me how one would instruct Spark to not dynamically repartition the master files before performing the required instructions.  There are numerous Spark turning options available, so perhaps I just never got deep enough to find this one.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In a true one pass architecture (which my system was, albeit two different functions were being performed so one pass each, one set of functions on names, the other on IDs), dynamic repartitioning of the master files to more effectively utilize computing resources available at the time is a waste of a pass of the data; the functions to be performed could have been performed in the repartitioning pass and doing so will always result in the lowest compute resource consumption, as an IO pass of the data is avoided.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I would be interested if anyone sees a way around this limitation.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The other limitation I see with Spark is the ability to direct it that the input files are in sorted order by the primary key of any joins.  The Posting program, the second in the series, performed a four way join, on the (1) vendor master, (2) vendor master update records, (3) journal entries, (4) and balances.  Yet the memory required by the program was very small, as each record needed for the join was either the last record read in the file or missing, in which case it was a not found condition.   </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I would also be interested if anyone can see a way to accomplish the same thing with Spark.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse -->
+<pre class="wp-block-verse">&gt;&gt;&gt; Related Post:  <a href="/2018/01/03/apache-spark-transaction-generation-and-balance-posting/">Apache Spark and Data Supply Chains</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Posting Video</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The following is the video of the posting portion of this POC</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group -->
+<div class="wp-block-group"><div class="wp-block-group__inner-container"><!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/iuy3BBLTohM","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/iuy3BBLTohM
+</div><figcaption>Posting Program Video</figcaption></figure>
+<!-- /wp:core-embed/youtube --></div></div>
+<!-- /wp:group -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Analysis Program</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The Analysis Process was intended to show the power of a universal ledger in the following ways:  (1) The efficiency of using balances for speed in analytical processes, (2) the types of views typical of a General Ledger, (3) the power of a universal ledger to also show much more granular views as well.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2016/05/03/new-video-data-supply-chains-defined/">Data Supply Chains Defined</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Load Process</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I modeled my analytical process off an in-memory database to show the greatest speed possible.  Because the memory of my laptop was limited to 16 Gig, the program requires one to select a period of time to be loaded in memory to analyze.  The program loaded all ID partitions of the data for the chosen time periods.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>As the data is loaded, various anticipatory cuts of the data are created, to improve performance.  In our analytical processes, we often make these types of tables, but the most often get stored for use.  The POC approach taken of working the more granular balances means that these in memory structures never have to be updated; never get out of date; never drift from the more detailed data, and yet are very efficient in use of compute capacities.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The following graphic shows the various cuts created as the data is load.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2411,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2019/12/cod-4-e182-analysis-demo-structures.jpg?w=1024" alt="" class="wp-image-2411" /><figcaption>Analysis Program Data Load and In Memory Cuts</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The center top box is the detailed balances for the chosen period, as produced by the Posting Engine.  These balances have most all the attributes of the transaction available, because they are at the vendor/time period level, so they are very close to having all the transactions loaded into memory.  A limitation of the POC was that quarterly views cannot be produced, as the balances created are yearly balances.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The box below the center box represents the vendor attributes.  All vendors for all periods, all 2.1 million vendors in the vendor master file, are loaded, independent of the time periods chosen for analysis.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The box on the left represents a selection of the top 50 vendors by spend.  This table represents a typical area of detailed analysis, those with high levels of interaction with the business.  The program makes use of the "one-pass" concepts of high volume analytics by creating this table as the data is loaded, thus avoiding the processing of determining the high value vendors on each query.  This table contains 50 total rows.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The box on the right represents an aggregated view of the detailed data.  This is something like the typical General Ledger view, which drops the vendor key from the aggregate, but keeps all the other attributes.  The few low single digit millions of rows of balances for any year typically collapses in this table to less than 150,000.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2017/04/10/new-video-reporting-layer-of-the-consolidated-data-supply-chain-architecture/">Reporting Layer in Financial System Arch</a>. &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Cuts and Pivots</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The following graphics taken from the video give a sense of the functionality of this program.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The first cut of data shown after loading the data into memory is the 50 top vendors by spend or revenue.  One could continue to analyze this table if desired.  Note that the output shows that 50 records have been used to produced this view.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2415,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2019/12/screen-shot-2019-12-12-at-5.26.38-pm.png?w=1024" alt="" class="wp-image-2415" /><figcaption>Top Vendor Cut</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Next the program is shown displaying cuts of data from the General Ledger like table, the far right table.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2416,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2019/12/screen-shot-2019-12-12-at-5.27.12-pm.png?w=1024" alt="" class="wp-image-2416" /><figcaption>General Ledger Cut of Data</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>This cut shows aggregated views, like legal entity, nominal account, product or project views.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The program also allows one to produce these same views using the detailed balances.  The response time is similar to doing them off the summary structure.  So in a sense, one might ask the question why is the far right table needed?  The answer, in today's computing world is that it may not be!  Our General Ledgers were architected decades ago, and with today's compute environments, we might not need them if we managed the detail data in line with their required views.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This last screen shows the power of a universal ledger.  In this view, we analyze detailed vendors, producing aggregated views, but with additional attributes on them.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2417,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2019/12/screen-shot-2019-12-12-at-5.28.50-pm.png?w=1024" alt="" class="wp-image-2417" /><figcaption>Vendor Type Analysis</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>In this POC, I did not have any additional vendor attributes available to me to place on the Vendor master besides vendor name, with the exception of one: whether that vendor came from an Expense or a Revenue file (in the case of Revenue, it is not really a vendor, and in fact I simply reused the Agency Name as a vendor, in order to demonstrate the capabilities).  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>What this analysis shows is that it is possible to produce a view of the data that very efficiently joins the detailed balances with the vendor master table.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>As I noted in the video, it's like producing a pivot table in Excel upon a tab of 1 million balances, where the column of vendor type is a vlookup function to another tab of the 2.1 million vendors, and having the response come back nearly instantaneously.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Video: <a href="/2017/10/02/instrument-id-and-the-coming-social-commerce-platform/">Instrument IDs in Next Gen. Platform</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Performance</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The performance of this module could be improved, because I used strings for all the data elements, which in java is a real inefficient memory structure to be used.  A more efficient in memory representation would have allowed more data to be loaded for use in analysis.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This POC obviously did not consider use of database structures for doing the analysis, which would provide a broader set of analytical views, but at the cost of the database access overhead. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:verse {"textAlign":"center"} -->
+<pre class="wp-block-verse has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2018/01/08/balances-are-the-inventory-of-finance/">Balances are the Inventory of Finance</a> &lt;&lt;&lt;</pre>
+<!-- /wp:verse -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Analysis Video</h4>
+<!-- /wp:heading -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/wIpGL05KQqI","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/wIpGL05KQqI
+</div></figure>
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:heading -->
+<h2>Really Simple Commerce</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The final module in the POC moved to the transaction processing side of financial systems.  This module did not utilize the Virginia data in any way, but rather represented an approach to capturing those transactions, but going far beyond any of the current systems which do that.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The POC simulates three cell phones and a server: (1) an authorizer, (2) a consumer, (3) and a store owner.  It combines payment, shared ledgers, democratization of credit creation, social network, and may ultimately  extend to virtual currencies.  The transaction capture outputs from such a system would be posted into a universal ledger, that would provide the on-going control for the members of the community.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Because it goes so much further than the items published above, I'm going to let the video do the talking about this part of the system:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/_pAhvTEbZf4","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/_pAhvTEbZf4
+</div></figure>
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:paragraph -->
+<p>Additional videos that help explain the implications of this POC can be found in this <a href="https://www.youtube.com/playlist?list=PL2UrMfZzcfvEi6WX5WvsfKhH_ZBMSrjSs">Conversation with Kip Playlist</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Source Code</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The source code for this POC can be found on GitHub <strong><a href="https://github.com/KipTwitchell/VAPostAnalysisRSCDemo">VAPostAnalysisRSCDemo</a></strong>.  This code is not maintained and is intended for educational purposes only.  It is released by IBM under Apache 2.0 License.</p>
+<!-- /wp:paragraph -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

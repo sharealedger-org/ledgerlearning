@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 21. ERP Reporting — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-21-erp-reporting/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 21. ERP Reporting</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">As part of the trend towards client server applications, Price Waterhouse caught the wave of ERP system implementations. These, like most major systems projects tend to focus first on getting the data into the system - the operational systems that do data capture. All of the project time gets eaten by defining and capturing business events. Then, when it comes time to produce reports the system has performance problems.</p>
+
+<div class="p">
+
+Through the mid 90's, many SAFR projects were started by following a common trend:
+<ul class="ul">
+	<li class="li">Get a call from a project that now had accumulated a lot of data but can't report on it</li>
+	<li class="li">Do a benchmark with SAFR to show that using a different approach works</li>
+	<li class="li">Build the reporting solution around SAFR.</li>
+</ul>
+</div>
+<p class="p">We have already noted the Global Investment Bank example above which followed this trend. Before talking more about the solutions to these problems, let's highlight other examples of the tell-tale signs of analytic challenges.</p>
+
+<div id="bibleerpreporting__projectCookieManufacturer" class="section">
+<h2 class="title sectiontitle">Cookie Manufacturer</h2>
+<p class="p">In the fall of 1995 a major US cookie manufacturer installed an ERP system to manage all aspects of its manufacturing, HR and financial operations. The system captured data and provided adequate information for managing most operational aspects of the business. But it could not deliver the detailed sales analysis necessary to support the highly detailed, store-specific sales process.</p>
+<p class="p">The reporting requirements were substantial. The company required detailed information at the customer/line item level over various time slices from daily to year-to-date, for over 60,000 customer stores and 2,000 items, selecting and summarizing by over 100 fields. The company sold over a million items per week, and they needed comparative information for each time period for at least the last two years. They also needed comparative data to be reorganized to reflect changes in organizational structure over time.</p>
+<p class="p">The team attempted to write a query - one query - against the main reporting table. The query ran for more than 24 hours without completing. This would have solved only one of the hundreds or thousands of permutations that ultimately would be needed. They canceled the query and called Rick.</p>
+
+<div class="p">
+
+Rick analyzed the reporting requirements. After the fact he wrote a white paper that summarized the results of the project.
+<blockquote class="lq">Implementation experience is demonstrating that current  reporting and data warehousing facilities effectively support most information delivery requirements. In some cases, primarily where substantial data volumes are involved, a reporting architecture that includes additional components is required to meet needs that are outside the scalability bound of baseline  facilities.</blockquote>
+</div>
+<p class="p">In other words, operational reporting, mostly satisfied by indexed access, works well within the framework of the ERP tool set.</p>
+
+<blockquote class="lq">Although the number of high data-basis operational reports tends to be dramatically smaller than the number of low data-basis reports, the data basis and size for these reports tends to be dramatically larger. The experience at A-REAL-Co. clearly bears this out: in the original analysis of high data-basis operational reporting requirements, only 45 sales analysis reports were identified, but the data basis for these reports turned out to be approximately 23 gigabytes per week on average<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a> (peak loads at end of period are much higher than the average indicates). Examples of these reports are included below:
+<div class="tablenoborder">
+<table class="table" border="0" summary="" rules="all" cellspacing="0" cellpadding="4">
+<tbody class="tbody">
+<tr class="row">
+<td class="entry nocellborder" valign="top">
+<ul class="ul">
+	<li class="li">FS Sales Force Ranking</li>
+	<li class="li">FS Item Customer Pch: SIUs</li>
+	<li class="li">FS Item Customer Pch: Cases</li>
+	<li class="li">Food Service Ranking - ITEM</li>
+	<li class="li">Food Service Ranking - Customer</li>
+	<li class="li">Food Service Comparison CASES</li>
+	<li class="li">Food Service Comparison $$$</li>
+	<li class="li">Food Service Budget - PTD to HYTD</li>
+	<li class="li">Item Sales to Budget (Div.)</li>
+	<li class="li">Diversified Retail Sales - Final</li>
+	<li class="li">SBU Item Sales for Period: (by Sales Org)</li>
+</ul>
+</td>
+<td class="entry" valign="top">
+<ul class="ul">
+	<li class="li">SBU Item Sales for Period: (SBU-Brand-Item) Corp Type</li>
+	<li class="li">Item Sales to Budget (Store Door)</li>
+	<li class="li">Budget Buster RANKED</li>
+	<li class="li">Final Sales BT</li>
+	<li class="li">Budget Buster</li>
+	<li class="li">Military Account Item</li>
+	<li class="li">Account Item - Trend &amp; YTD</li>
+	<li class="li">Customer Purchase (Store Detail)</li>
+	<li class="li">Gain &amp; Loss, w/ Allow.</li>
+	<li class="li">FS Cat. Grouping</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+As should be evident from the titles, these do not represent "nice to have" reporting requirements, but are blocking and tackling period-to-period comparisons of key volume statistics needed to run the company. The 23 gigabytes also does not include A-REAL-Co.-specific requirements for data reorganization due to material, sales and other account hierarchy changes, legacy systems data integration, replacement of reporting currently outsourced and substantial ad hoc requirements that are anticipated. Unless a detailed analysis of the high data-basis operational reporting requirements is done, it is easy to dismiss these kinds of basic reporting requirements as something that will be handled in background processes when time is available.</blockquote>
+<div class="p">
+
+Note that Rick isn't talking about optional reporting, reports that don't matter if they don't get done today. These are operational reports that have to be done to run the business every day, and yet they require summarization of a large number of business events - the definition of data basis.
+<blockquote class="lq">In order to understand whether a given reporting load could be handled in background when time is available, it is necessary to have some basic metrics about how fast this kind of processing can be done in a given environment. Assuming an HP T-500 8-Way world with EMC disk (the A-REAL-Co. configuration), extract processing can be done at a rate of about 6 megabytes/minute (if table joins are required, calculations need to be adjusted to reflect processing at a rate of about 3,000 joins/minute). These numbers are consistent with information from  on performance in reporting and general Price Waterhouse experience with UNIX SMP machines running third-party relational data bases. In the A-REAL-Co. case, this would mean approximately 65 hours per week of continuous processing just to complete the initial extract, assuming no table joins were required. Taking into account table joins would mean the basic extract processing would take about 260 hours of continuous single-threaded processing. Further, a general rule of thumb is that reports with a data basis of several hundred thousand records will require several hours to process. Considering that the 23 weekly A-REAL-Co. gigabytes represent about 210 million extract records, something on the order of 2,000 processing hours per week would be a reasonable estimate (albeit a practical impossibility to implement) of the end-to-end processing load, given the A-REAL-Co. environment.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></blockquote>
+</div>
+<p class="p">In other words the work involved in producing these reports would completely consume the servers purchased to do the operational tasks; there was no additional capacity to accumulate the needed business events and produce the reports.</p>
+<p class="p">This paper was one of the key elements for following engagements. The methodology and approach it outlined to analyze data basis are discussed in depth in Part 4. The results of the project are described in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-32-define-summary-structures/">Define Summary Structures</a>.</p>
+<p class="p">In March of 1996, I was asked to go help warn a Fortune 100 PC chip manufacturer about the experience of the cookie maker. They said they didn't have significant volumes, and so they wouldn't have a problem. We'll talk more about this example in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-37-maintain-focus/">Maintain Focus</a>.</p>
+
+</div>
+<div id="bibleerpreporting__projectUSInsurerAllocations" class="section">
+<h2 class="title sectiontitle">US Insurance Provider</h2>
+<p class="p">After assisting the chip manufacture for a couple of months to solve their problem I was at the front of convincing a Fortune 100 Insurance Company that their data volumes for reporting and allocation processes would likely overwhelm the ERP financial implementation. After two years of work by scores of people trying to get the ERP allocation engine to work, the team constructed a SAFR process that generated all the outputs but at much greater speeds. Programs were developed which generate over 6,000 SAFR processes based upon over 7,000 ERP rules. SAFR executes these views to scan the financial repository selecting records eligible for allocation. It then allocates these costs through four allocation layers, such as products, and geographical units. At 1999 year-end, this process read over 50 million records selecting nearly 3 million that were eligible for allocation. These 3 million records were exploded into over 290 million virtual allocation records, of which 186 million summarized records were written to physical files. The process ran in 7 ½ hours wall clock time and 28 ½ hours of CPU time.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Global Bank</h2>
+<p class="p">In 2009, after 5 years of work and tens of millions of US dollars (if not a hundred million), a major global bank determined that neither they, nor the ERP vendor, could make the ERP GL posting and other financial functions to process much more than 6,000 records a minute. This was substantially below the 140,000 rows a minute published by the vendor in a benchmark for a similar hardware configuration. A major difference is the functionality performed in each test. The customer had chosen to use almost all features of the product simultaneously, including daily accounting periods, large numbers of key values, multi-currency processing, etc. This was in comparison to the SAFR performing the same functions at, on average, a million records a minute.</p>
+
+</div>
+<div id="bibleerpreporting__projectSQLBenchmark" class="section">
+<h2 class="title sectiontitle">SQL Benchmark</h2>
+<p class="p">People find it difficult to believe that major software products produced by the largest software vendors in the world are only capable of these types of results in spite of spending millions of dollars by those implementing them. The root cause is the automation pattern of the tools does not match what the actual computers have to do, and these tools are added layer upon layer resulting in greater and greater inefficiencies. Let's analyze some of these layers.</p>
+<p class="p">In the fall of 1994, I was surprised to learn one day that Doug Kunkel, the key SAFR developer, had added the ability for SAFR to read data base tables instead of just reading sequential files, and he had added the ability to do this two different ways. One way was going through the database facilities, in effect presenting the entire database to SAFR within SQL. The other was by actually reading the file the database stores the data in, called a VSAM file. <a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a></p>
+<p class="p">I was the first to test and use this feature at a benchmark for a large transportation company in November. In that test I saw SAFR using the Direct VSAM method extract 2 million rows from SQL tables in about the same CPU and wall time as a BMC load utility, admittedly at the time the fastest way to get data into and out of a SQL table. The BMC utility also accessed the underlying VSAM files. So SAFR was effectively as fast in resolving a single query as the load utility.<a href="#fntarg_4" name="fnsrc_4"><sup>4</sup></a></p>
+
+<div class="p">
+
+In 1999 a SAFR customer wanted to compare the difference in accessing data using these methods and the standard approach accessing through SQL. They devised a test, and here are the results:<a href="#fntarg_5" name="fnsrc_5"><sup>5</sup></a>
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1256" src="/wp-content/uploads/2018/10/safrvssqlextractbenchmark.jpg" alt="SAFRvsSQLExtractBenchmark" width="1557" height="1030" /> <span class="figcap">Figure 43. SAFR vs. SQL Extract Benchmark Results</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">Using SQL, the only way anyone every really goes at data in the database, is seven times slower than it could be. So to begin with, the first layer of software, SQL has longer instruction path lengths than other approaches. The lowest level technology is not all that efficient.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">ERP Approach</h2>
+<p class="p">Commercialized software is built upon the premise that software does not need to be created from scratch for each customer. However, unlike the PC with the ubiquitous Windows operating system, the server market was not dominated by any one operating system. Software vendors require a large enough potential market to justify the investment in building the software. Thus they need a way to make their product work across the various operating systems used by large businesses. Many hit upon the idea to use SQL<a href="#fntarg_6" name="fnsrc_6"><sup>6</sup></a>.</p>
+<p class="p">SQL was standardized well enough that they could have their packages generate and issue SQL, and then the database vendors had the responsibility for working with the various operating systems. Thus the software vendors did not need to manage small differences between the operating systems.</p>
+<p class="p">The result, though, was that another level of abstraction was introduced into the system. The ERP package generated SQL, which the database then used to generate machine code. This approach works just fine for indexed access - those processes at either ends of the architecture.</p>
+<p class="p">In other cases - most notably batch processes - the work pattern that is automated by the ERP package has little to do with the work the machine will actually have to do; in fact I suspect in some cases it may be geared towards reducing the work effort of programmers at the software vendors; an easy to read and debug form of language might be used, even though its form has little to do with what the computer actually does.</p>
+<p class="p">Certainly there is value to be gained by purchasing the investment in software made by others, even if the investment requires additional computing capacity and larger machines. I remember Rick saying to a customer about this time that on many projects the ERP aspects of the program were critical, particularly for transaction processing. Certainly data that is not captured cannot be used in reporting, and as we'll see in the next part of this book, consistency in the coding structures used in that data is critical to exposing connections and patterns in reporting. It is, however, critical to recognize the scale limitations of the tools for reporting. The scale, even for the largest organizations in the world, for payroll analysis typically does not exceed the capacity of the tools, or make them too expensive. But for analysis of higher volume transaction processing areas, there are times when choosing a more efficient method, but with more up front costs in development time, will be more appropriate.</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-22-order-of-operations/">Chapter 22. Order of Operations</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-20-parallelism-and-platform/">Chapter 20. Parallelism and Platform</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/">Part 3. The Partner</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Footnoted in original white paper: "<q class="q">The weekly data basis would have been over 20 times the 23 gigabytes if all processing had been done using transaction level data (basic transaction volume is 120,000 order lines per day @ 1,608 bytes per line). Based on the reporting requirements identified, summary file structures were defined that would reduce total data manipulation load necessary to produce the reports. As new reporting requirements emerged during development, summary files were repeatedly modified and regenerated from the transaction detail as necessary to support efficient production processing. It is expected that the summary file structures will continue to be modified and regenerated over time as new reporting requirements evolve."</q></div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> Roth, Richard K., <cite class="cite"> High-volume Operational Reporting/Data Warehousing Summary of Sizing Concepts and Architectural Alternatives</cite>, Price Waterhouse White Paper, September, 1996 p. 1, 4, 5. Copyright IBM Corporation. Used by permission.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> See the introduction of Part 5 <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">The Programmer</a>.</div>
+<div class="fn">
+
+<a href="#fnsrc_4" name="fntarg_4"><sup>4</sup></a> SAFR (module STGMR95) extracted 2,047,630 from 32 physical partitions in the following time.
+<p class="p">IEF373I STEP /STEP65 / START 94314.0706
+IEF374I STEP /STEP65 / STOP 94314.0717 CPU 4MIN 49.51SEC SRB 0MIN
+17.16SEC VIRT 4036K SYS 664K EXT 22272K SYS 9792K</p>
+<p class="p">The BMC Load utility (ADUUMAIN) extracted 2,036,921 rows from the same 32 partitions:</p>
+<p class="p">IEF373I STEP /UNLDSTEP/ START 94303.0632
+IEF374I STEP /UNLDSTEP/ STOP 94303.0738 CPU 4MIN 12.45SEC SRB 0MIN
+14.53SEC VIRT 236K SYS 472K EXT 7420K SYS 8964K</p>
+<p class="p">The difference in the records extracted is unexplained, but may be attributable to activity in the database between the runs. Earlier test with small test files showed no differences in the outputs when compared byte for byte. Copies of control reports from November 10, 1994 in possession of author.</p>
+<p class="p">Note that the single pass architecture of SAFR means that the incremental time for the second extract of the same data for different criteria performed at the same time is minimal.</p>
+
+</div>
+<div class="fn"><a href="#fnsrc_5" name="fntarg_5"><sup>5</sup></a> Report to client, unpublished, in author's possession. Again, note that the single pass architecture of SAFR means that the incremental time for the second extract of the same data for different criteria performed at the same time is minimal, while the time for a second similar report doubles the total CPU time required.</div>
+<div class="fn"><a href="#fnsrc_6" name="fntarg_6"><sup>6</sup></a> Others have chosen to use a virtualized operating system like Java--a program that runs on top of one operating system and allows other programs to run on top of it, giving the appearance to the program that the virtual operating system was actually interacting with the hardware. The additional CPU instructions required by the virtual operating system have the same impact as SQL can have if they do not reflect the underlying compute patterns.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-20-parallelism-and-platform/" class="prev"><span class="label">&larr; Previous</span>Chapter 20. Parallelism and Platform</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-22-order-of-operations/" class="next"><span class="label">Next &rarr;</span>Chapter 22. Order of Operations</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 42. Reference File Phase — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-42-reference-file-phase/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 42. Reference File Phase</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">Another of my early memories with Doug was one day during the large retailer project when Doug happened to be in the office in Sacramento. I am sure he was under a great deal of pressure to add features to SAFR to support the project. I went into his office and somehow complained about the workload Randall and I were carrying trying to finish up the software on our own. He looked up and said very quickly something to the effect of, "Life is pretty hard for everyone." I understood what he meant immediately. Stop feeling sorry for yourself and get back to work. So I did.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Core Image</h2>
+<p class="p">There are always resource constraints. The concept of a "core image" file used for in memory processes has been around for decades and was developed to get around computer memory constraints.</p>
+<p class="p">Computer programmers have always known that memory access is much faster than disk access, but memory is much more expensive than disk. So probably to solve some problem whereby a lot of data (for the day) had to fit into memory for rapid access, someone suggested that those parts of data known to not be needed be removed from the data in a preprocess before the data is actually loaded into memory for use.</p>
+<p class="p">SAFR performs this process in the reference file phase process. The reference file phase analyzes the logic table to determine all joins that will be performed, what the keys to the reference tables are, what effective date keyword constants need to be translated, and the resulting data fields on each table that will be use. It then reads the actual reference data and creates a copy that can be loaded in memory which is as small as possible. It also builds a control file and control report that tells the extract phase what memory will be required to load the data.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Logic Table Phase</h2>
+<p class="p">The reference file process begins actually in the Logic Table phase. Think back to the extract only view we created above. Remember that it read the event file, and extracted only those columns of data that were required into the extract file. When any of the views need to perform joins, the Logic Table program dynamically creates similar views.</p>
+<p class="p">First, after the VDP Builder selects views that are required for this run, the Logic Table program creates a logic table we have been analyzing, called the XLT for Extract Logic Table, for these views.</p>
+<p class="p">The Logic table program then reads this XLT. Every time it sees a logical record that is not the event file, it knows a join is needed.</p>
+<p class="p">The Logic table program then creates a JLT, or Join Logic Table. For each new LR, it creates an extract only view, which is to read the look-up LR as an event file. The Logic Table program looks at the logical record definition to determine what the keys are to the target LR. For each key field, it creates a column, a DTE, that will extract that key data and place it in the reference file phase extract file for that reference file. It puts the start date field if the LR is effective dated as the first column after the key.</p>
+<p class="p">It also keeps track of all the fields that are required as data, or answer fields by the views from that reference file, for example, the customer name or an account description. In other words, each "L" field in DTL or CFLC in view 3263 would be another column in this generated extract only view. In the JLT each of these fields are DTEs.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Reference File Phase</h2>
+<p class="p">The same program that executes the XLT is used to execute the JLT, GVBMR95. The event files for this phase are the reference files. There are no lookups performed in this phase of processes, each column is a DTE. When the JLT is executed, the outputs from these views are a set of files known as the RED, Reference Extract Data. These are the core image files.</p>
+
+<div class="p">
+
+Here is an example of the RED for the Account Title Master reference file.
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1219" src="/wp-content/uploads/2018/10/sampleredfile.jpg" alt="SampleREDFile" width="400" height="191" /> <span class="figcap">Figure 107. Sample RED File</span>
+
+<div class="image">The RED is prefixed by 16 bytes (four full words) of data that are used in the Extract Phase after the data is loaded into memory. So the key begins in position 17. On this reference file, the key is 3 bytes in length. The values used in CFLC or DTL functions begin at position 20, the "checking account" on row 1.</div>
+</div>
+</div>
+<div class="p">
+<pre class="pre"></pre>
+&nbsp;
+
+</div>
+<p class="p">The reference file phase also builds a view to produce a control record for each reference file. This view only puts out one record per reference file LR. Each of these views is also in the same JLT; they read the same event file, just like views 3261 and 3262. This view accumulates the number of reference file records that have been written to the RED. The Logic table contains a counter, including a DIM4, to define a four byte binary field, an ADDC to add a constant of 1 to the counter for each reference file record read, and a SETC to set the accumulator to zero before the next file is processed. The extract file containing these records is called the REH or Reference Extract Header records.</p>
+<p class="p">A small program produces a control report from these records to show what the memory utilization will be in the extract phase for loading the reference files.</p>
+
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1217" src="/wp-content/uploads/2018/10/rehreport.jpg" alt="REHReport" width="1687" height="501" /> <span class="figcap">Figure 108. REH Report</span>
+
+<div class="image">The following is the GVBMR95 control report for the reference file phase.</div>
+&nbsp;
+
+</div>
+&nbsp;
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1214" src="/wp-content/uploads/2018/10/reffilephasegvbmr95controlrpt.jpg" alt="RefFilePhaseGVBMR95ControlRpt" width="1452" height="850" /> <span class="figcap">Figure 109. Reference File Phase GVBMR95 Control Report</span>
+
+<div class="image">It shows that the program read three different input files, the ACCTIT, CCDESC and the LEDESC files. Two views executed against each for a total of six views. It read 12 records and wrote 15: 12 reference file records and 3 REH records.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Custom Processes</h2>
+<p class="p">The format of the RED and REH files are open formats. Other processes could be used to build these files and present them to the extract engine. In fact, in some instances with voluminous reference files, specific views could be built and maintained that output these record structures. Unlike the standard SAFR processes where every record in the reference file will be written to the output RED (albeit likely shorter with fewer fields and the key and effective date at the front), these views could include selection logic, or join together data in preprocesses before executing the main SAFR extract process.</p>
+<p class="p">Additionally, Doug created a small subroutine, GVBUR45, containing the SAFR lookup algorithm. This routine can be called from any program to perform lookups. It accepts an REH file, and multiple associated REDs. It must be called once to initialize the process, and once to clean up at the conclusion. The parameters passed to it during mainline processing look much like the values passed by a join and the LK functions. In this way, the SAFR lookup capabilities can be used outside of SAFR.</p>
+<p class="p">Our next step in the process will be to understand the Extract Files.</p>
+
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-43-extract-files/">Chapter 43. Extract Files</a></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-41-look-ups/">Chapter 41. Look-ups</a></div>
+<div></div>
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a>
+
+</div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+
+<hr />
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Note that the reference file phase is executed in single thread mode, noted by the number of parallel threads executed message. This is because the REH views must not write their data until after all RED record have been written. The REH views contain a counter of the RED records, and must wait to be executed after the RED views are complete. This can most easily be accomplished by running in single threaded mode.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-41-look-ups/" class="prev"><span class="label">&larr; Previous</span>Chapter 41. Look-ups</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-43-extract-files/" class="next"><span class="label">Next &rarr;</span>Chapter 43. Extract Files</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

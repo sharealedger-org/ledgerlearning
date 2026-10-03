@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 25. Find the Event File — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-25-find-the-event-file/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 25. Find the Event File</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<div id="biblefindtheeventfile__projectPharmaceuticalLitigation" class="section">
+<p class="p">The subsystem architecture theory says that operational systems usually capture and process business events. In Rick's lectures about the system, he would point out that the transaction files, which are archived off as soon as they are created, could be used instead of the posted balances. In July of 1995 I was asked to help build a pharmaceutical company litigation support database. A number of pharmaceutical companies were being sued for antitrust practices. They had agreed to join up and provide data that could be analyzed to show that their pricing practices were not anti-competitive.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Find the Event File</h2>
+<p class="p">The first step to apply SAFR to any problem is to identify the event file. The event file contains business events; or more simply, transactions. Most systems have them stored somewhere. It is normally made up of a series of fields that simply have codes in them like 8456, QRM, etc., and have at least one amount somewhere in the record. They aren't very meaningful in and of themselves, but they contain the raw data from business events.</p>
+<p class="p">The pharmaceutical companies created computer tapes of their sales files for the prior 5 years. These were pretty raw dumps of data; there was very little programmer time involved in making them. However, the records were identifiable, and representatives from each company could tell us what each field meant. In some cases the source system had changed during those five years, or sales were recorded in more than just one system, so we received multiple record formats for one company.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">SAFR Components</h2>
+<p class="p">SAFR at the time was composed of three major divisions, the Developer Workbench, the Scan Engine which produced multiple outputs called Viewpoints, and the Insight Viewer.</p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1270" src="/wp-content/uploads/2018/10/safrscanengineoverview.jpg" alt="SAFRScanEngineOverview" width="458" height="416" /> <span class="figcap">Figure 45. SAFR Components</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">Our work begins with the Developer Workbench.</p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1299" src="/wp-content/uploads/2018/10/the-safr-developer-workbench.jpg" alt="The SAFR Developer Workbench" width="996" height="471" /> <span class="figcap">Figure 46. The SAFR Developer Workbench</span>
+
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Define Metadata</h2>
+<p class="p">SAFR as a tool was designed to be data independent. In other words, it was designed to read different types of files without having to change or write specific programs. The tool's programs adjust to interpret the data in the file. The first thing to do is to define the file to SAFR, and its associated structure or layout. We call these Logical Files and Logical Records (LRs); logical because they may be used to describe records in many different files.</p>
+<p class="p">Logical Records are composed of many fields or attributes. SAFR is able to interpret different kinds of field formats. For example, on mainframes numeric data is often stored in a format called "packed." SAFR can make sense of the numbers in these fields if we tell it how to interpret them.</p>
+<p class="p">The file definition, the LR, and the fields are part of the SAFR metadata. Metadata is data that describes data. A system administrator creates these once, and they are used over and over and over again.</p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1297" src="/wp-content/uploads/2018/10/logical-record-definition.jpg" alt="Logical Record Definition" width="996" height="768" /> <span class="figcap">Figure 47. Logical Record Definition</span>
+
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Test Metadata by Creating a View</h2>
+<p class="p">The next step on the project was to test to make sure the metadata was defined correctly. To do this, we construct a SAFR View. Back in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-professor/the-ivory-tower/">The Ivory Tower</a>, Eric passed out a piece of paper with a very simple architecture diagram on it. It described SAFR, and it looked somewhat like this:</p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1287" src="/wp-content/uploads/2018/10/eventrepositoryarchitecture.jpg" alt="EventRepositoryArchitecture" width="369" height="564" /> <span class="figcap">Figure 48. Simplified SAFR Architecture</span>
+
+</div>
+</div>
+<p class="p">Eric explained that each report generated is simply that user's view of those business events. The accounting view of the data is independent from other legitimate views. Thus the Views don't change the business events; they simply summarize and report them.</p>
+<p class="p">The business event repository isn't necessarily some mysterious structure with hundreds of different database tables all interlinked and updated by a web of processes. Rather as in the case of the litigation support warehouse, it could be thought of containing a single type of record, with all the desired attributes on it. In data warehouses this is often called the fact table. This generalization isn't quite accurate for the pharmaceutical data, in that each company's record format was slightly different, but the concept is not much different.</p>
+<p class="p">Creating a view requires the following steps:</p>
+<p class="p"><em class="ph i"><strong class="ph b">Step 1: Specify view format and level</strong></em></p>
+<p class="p">What output do we want SAFR to produce? Do we want a file that can be processed in another system, do we want a report, a file to download? Do we want each record read to be an output record, or do we want to summarize the inputs records creating fewer, accumulated output records? We specify those on the View Properties screen.</p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1296" src="/wp-content/uploads/2018/10/view-properties-wizard.jpg" alt="View Properties Wizard" width="712" height="544" /> <span class="figcap">Figure 49. View Properties Wizard</span>
+
+</div>
+</div>
+<p class="p"><em class="ph i"><strong class="ph b">Step 2: Select the event logical record</strong></em></p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1293" src="/wp-content/uploads/2018/10/logical-record-selection-wizard.jpg" alt="Logical Record Selection Wizard" width="714" height="394" /> <span class="figcap">Figure 50. Logical Record Selection Wizard</span>
+
+</div>
+</div>
+<p class="p">Which event file in the business event repository has the data we want to report on? For example, let's assume we want a phone list of people on our street, and we have an event file with names and address of all the people in the country.</p>
+<p class="p"><em class="ph i"><strong class="ph b">Step 3: Specify the logical file</strong></em></p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1291" src="/wp-content/uploads/2018/10/logical-file-selection-wizard.jpg" alt="Logical File Selection Wizard" width="714" height="323" /> <span class="figcap">Figure 51. Logical File Selection Wizard</span>
+
+</div>
+</div>
+<p class="p">Let's assume the actual names and addresses are broken into files by state. We select the logical file containing our state.</p>
+<p class="p"><em class="ph i"><strong class="ph b">Step 4: Select output fields</strong></em></p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1271" src="/wp-content/uploads/2018/10/field-selection-wizard.jpg" alt="Field Selection Wizard" width="714" height="491" /> <span class="figcap">Figure 52. Field Selection Wizard</span>
+
+</div>
+</div>
+<p class="p">Next we select which fields from the LR we want on the output report. Let's assume we want name and phone number on our report.</p>
+<p class="p"><em class="ph i"><strong class="ph b">Step 5: Specify sort order</strong></em></p>
+<p class="p">Then we specify in what order we want the fields sorted on the output. For example, a typical name and address report is sorted in ascending order by last name, then first name.</p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1288" src="/wp-content/uploads/2018/10/sort-order-wizard.jpg" alt="Sort Order Wizard" width="714" height="230" /> <span class="figcap">Figure 53. Sort Order Wizard</span>
+
+</div>
+</div>
+<p class="p"><em class="ph i"><strong class="ph b">Step 6: Filter business events</strong></em></p>
+
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1285" src="/wp-content/uploads/2018/10/event-filter-wizard.jpg" alt="Event Filter Wizard" width="821" height="504" /> <span class="figcap">Figure 54. Event Filter Wizard</span>
+
+</div>
+</div>
+<p class="p">Last we specify which records to include or exclude. Let's assume we only want people who live on our street; so we'll specify that the address field should contain the value "Maple Ave.". Note that this field doesn't have to be shown on our report, but is in the event file.</p>
+<p class="p">The next step in the process is to run the SAFR Scan Engine. This set of programs translates the metadata and view into a program. The program then reads the event file from top to bottom and produces the desired output.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Test Metadata</h2>
+<p class="p">On the project, the first view we created after defining the metadata was to test if it had been created correctly. These views were very simple. We selected every field on the event file, in the order defined on the LR, and output them to another file. We ran the Scan Engine, and inspected the output file. If the output records looked like the input records, then the metadata (and the documentation provided from the pharmaceutical companies) was correct.</p>
+<p class="p">Finding the event file is the first step, even if not working with legacy transaction systems. Even in a database world, at the bottom of the database there are tables, and those tables are files. By examining the database structure and the SQL one can determine what the event file must be to start the process; it's often in the "from" clause.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Pharmaceutical Litigation Support Project Results</h2>
+<p class="p">This was the first step in the pharmaceutical litigation support project. Having established the ability to read and produce reports from the raw data, the team continued over four and a half months to process data for 17 different companies, reading 10 billion and extracting 5.9 billion records, performing 8.5 billion joins, and processing 6,000 views.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+<p class="p">The starting step in building a business event based insight system is locating the event file. This often starts with the journal entries for an existing ledger, defining that to SAFR, and then testing that the metadata has been created correctly. Now, the next step is to balance the event file to a known report.</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-26-balance-the-event-file/">Chapter 26. Balance the Event File</a>
+
+<strong>Previous:  </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-24-skyscrapers/">Chapter 24. Skyscrapers</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Billing documentation from project in author's possession. The 6000 views do not translate into 6000 reports. Views are processed against individual file partitions, but reports can combine many files. Created a simple billing process that used the Billing File from MR95 to accumulate statistics from each run over time.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-24-skyscrapers/" class="prev"><span class="label">&larr; Previous</span>Chapter 24. Skyscrapers</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-26-balance-the-event-file/" class="next"><span class="label">Next &rarr;</span>Chapter 26. Balance the Event File</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

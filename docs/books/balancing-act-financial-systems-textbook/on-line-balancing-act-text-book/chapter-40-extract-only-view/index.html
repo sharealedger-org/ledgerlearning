@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 40. Extract Only View — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-40-extract-only-view/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 40. Extract Only View</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">Similar to a copy view, our extract only view will not require the Reference and Format phases. But now, instead of copying the input records to the output files, we will only select those fields we wish to use and write those to the output file. In this example, we'll also still execute the copy view at the same time, demonstrating how the single pass architecture works.</p>
+
+<div class="p">
+
+The only change we have to make to the select phase is to ask it to execute two views, so the input parameter to the VDP Builder now includes both 3261 and 3262.
+<pre class="pre codeblock"><code> ****** ************** Top of Data ***************
+ 000001 3261                                      
+ 000002 3262                                      
+ ****** ************** Bottom of Data ************</code></pre>
+</div>
+<p class="p">The VDP that is created after running the VDP Builder contains two views, plus all the metadata needed for both.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Logic Table</h2>
+<div class="p">
+
+The following is the logic table created from the VDP which contains both these views.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1238" src="/wp-content/uploads/2018/10/extractonlyviewlogictable.jpg" alt="ExtractOnlyViewLogicTable" width="1687" height="1554" /> <span class="figcap">Figure 97. Extract Only View Logic Table</span>
+
+</div>
+</div>
+<p class="p">The HD Header, RENX Read Next, ES End of String and EN End of Logic Table functions are all pretty much the same. The rows for view 3261, logic table rows 3, 4 and 5 area also unchanged.</p>
+
+<div class="p">
+
+The Extract Only view, 3262, also is reading file 1284, and so it is placed immediately after view 3261. So when a record is read from that file, it will be passed first to view 3261 and then to 3262. This view is more complex. The Logic Table functions it performs are as follows:
+<ul class="ul">
+	<li class="li liexpand"><u class="ph u">Output Columns 1, 2, and 3:</u> Rows 7, 8 and 9 are DTE functions, which tell the extract program to perform three "Data Transformations", moving data to the extract file. The view asks that data at position 10, for a length of 5 be moved, next the data at position 1 for a length of 9, then the data at position 15 for a length of 3. The sequence number shows the column of the view requesting these functions.</li>
+	<li class="li liexpand"><u class="ph u">If Statement:</u> Rows 10, 11, and 12 are generated based upon the following view logic text in column 4:
+<pre class="pre codeblock"><code>If ({ACCOUNT} = 111 Or {ACCOUNT} = 121 Or {ACCOUNT} = 123  )
+  Then 
+    COLUMN = "AssetAcct"
+  Else
+    COLUMN = "LiabAcct"
+EndIf</code></pre>
+Similar to the copy only view, the row 10 CFEC function tests data in the event file at position 15 for a length of 3 (the same data put in column 3) to see if it is equal to "111". If the value at position 15 is "111" then the next row executed is row 13; the DTE. If it is not, then the next row executed is row 11. Row 11 tests for a value of "121" in a similar way. Then row 12 tests for a value of "123". If the value is not "123" then the next row that executes is row 15. In other words, all "or" conditions failed.</li>
+	<li class="li liexpand"><u class="ph u">Output Column 4:</u> Row 13 is a DTC, a Data Transformation Constant. This row, the "then" condition, places a constant of "AssetAcct" into column 4. Row 14 then instructs the program to skip row 15. The DTC in row 15, the "else" condition, places a value of "LiabAcct" in that same column. The only way to get to this row is based upon failing all the "or" conditions on row 12.</li>
+	<li class="li liexpand"><u class="ph u">Output Column 5:</u> Another DTE function is executed on row 16 to place the value contained in the event file at position 18 for a length of 8 in the output for column 5.</li>
+	<li class="li liexpand"><u class="ph u">Numeric Test:</u> Row 17 is generated based upon this logic text:
+<pre class="pre codeblock"><code>If ISNUMERIC({AMOUNT}) 
+  Then 
+   COLUMN = {AMOUNT}
+  Else
+    COLUMN = 0
+EndIf</code></pre>
+The CNE is a Class test, Numeric against Event file field. The value in the event file at position 26 for a length of 5 with a format of 4 (which is packed), is tested to see if it contains a numeric value. If the value is numeric, the row 18 is executed. Otherwise, row 20 is executed.</li>
+	<li class="li liexpand"><u class="ph u">Output Column 6:</u> The DTE places the Amount field, which is in the event file at position 26 for a length of 5, in the output file. The DTC function places a zero in the same column if the value from the event file is not numeric.</li>
+	<li class="li liexpand"><u class="ph u">Write:</u> Instead of the WRIN function used in the copy view which wrote the Input record, this view contains a WRDT function, which writes the results of the Data Transforms, namely any of the data placed in the extract record by DT type functions.</li>
+</ul>
+</div>
+<div class="p">
+
+The following table shows how the different areas in memory in GVBMR95 are used by the different function codes.
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1230" src="/wp-content/uploads/2018/10/logictablefunctionsandfilebuffers-jpg.jpeg" alt="LogicTableFunctionsandFileBuffers.JPG" width="367" height="343" /> <span class="figcap">Figure 98. Logic Table Functions and File Buffers</span>
+
+<div class="image">The Logic Table is used to generate the machine code. The RENX brings a record from the event file into the input data buffer. CFEE, Compare Field Event File Field to Event File Field and CNE, Class Numeric Event functions work against only the input record. The DTE Data Transform Event file field moves data from the input buffer to the output record buffer. The constants, in either the CFEC or DTC are in the logic table and in the generated machine code. What record is written to the output file is determined by the Write Functions, either WRIN or WRDT.</div>
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Extract Process</h2>
+<div class="p">
+
+The trace from running the same event used in the last chapter is as follows:
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1236" src="/wp-content/uploads/2018/10/extractonlylogictabletrace.jpg" alt="ExtractOnlyLogicTableTrace" width="1316" height="1663" /> <span class="figcap">Figure 99. Extract Only Logic Table Trace</span>
+
+<div class="image">Note that event file record 1 is first processed by view 3261, and then serially (not in parallel) processed by view 3262. View 3261 has two WRIN functions, against event record 1 and event record 2. But three records are written for view 3262 by the WRDT function. Here are the records output for view 3262, in hex mode: The record copied by 3261 had the value "alpha" in it, but note that the second record no longer has a value of "alpha" where the number should be because of the numeric test in the view 3262. Instead, logic table row 20 was executed, a DTC function, which placed instead a set of zero's in that location.</div>
+</div>
+</div>
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1234" src="/wp-content/uploads/2018/10/extractonlyviewsampleoutput.jpg" alt="ExtractOnlyViewSampleOutput" width="1487" height="517" /> <span class="figcap">Figure 100. Extract Only View Sample Output</span>
+
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Extract Program Control Report</h2>
+<div class="p">
+
+A key control report in the process is the Extract Engine report, shown below:
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1232" src="/wp-content/uploads/2018/10/extract-only-mr95-report.jpeg" alt="extract only mr95 report" width="1482" height="578" /> <span class="figcap">Figure 101. GVBMR95 Control Report</span>
+
+</div>
+</div>
+<div class="p">
+<ul class="ul">
+	<li class="li">Because we only read one event file, only one thread was executed<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a>.</li>
+	<li class="li">There were two views reading this file. If one of these views had been reading another event file as well, the count by "views per file processed" would have been 3, even though there were only two outputs.</li>
+	<li class="li">The "logic table rows" is equal to the row number on the EN row, i.e., the total number of rows in the logic table.</li>
+	<li class="li">The machine code generated from those logic table rows is 424 bytes. In other words, in the prior chapter we noted the CFEC created a CLC and BC assembler instructions, which required 20 bytes of the 424 generated.</li>
+	<li class="li">The record count of the records read from the Event file (with a DD Name of Event) is 3. Because we only read one event file, the total event records read is the same on the next line. Our process used no "pipes" which are virtual event files.</li>
+	<li class="li">The next section shows the results of each view against each event file.
+<ul class="ul">
+	<li class="li">View 3261 extracted two records, and wrote them to DD Name F0003261.</li>
+	<li class="li">View 3262 extracted three records, and wrote them to DD Name F0003262.</li>
+	<li class="li">The zeros next to "F" and "NF" are for lookups "Found" and "Not Found", because these views require no joins.</li>
+</ul>
+</li>
+	<li class="li">Multiple views can write to an extract file. Thus the next set of rows show the total of record written to each extract file, and the total to all extract files, and to all Pipes.</li>
+	<li class="li">The Elapsed time is the total wall-clock time for the extract process.</li>
+</ul>
+</div>
+<p class="p">If the outputs are not what was expected, this is perhaps the first places to look.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Analysis</h2>
+<p class="p">The Extract Engine in this process has significantly increased efficiency over alternative methods of producing these two outputs, because in a single pass of the file, one IO to get the event file into memory for processing has allowed both outputs to be done. Certainly programs can be written to do this same thing, but it demands a programmer writing the program to design it that way. Here, two people independently can create views, and the tool will resolve them efficiently.</p>
+<p class="p">Remember, though, that this process does not include any parallelism. View number 2 is executed after view number 1 has seen the event record.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">The next step in growing our understanding is to understand how to do lookups.</p>
+
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-41-look-ups/">Chapter 41. Look-ups</a></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-39-the-copy-only-view/">Chapter 39. The Copy Only View</a></div>
+<div></div>
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a>
+
+</div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> See <a class="xref" href="biblemultithreading.html#biblemultithreading">Multi-Threading</a> for a discussion of reading multiple event files.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-39-the-copy-only-view/" class="prev"><span class="label">&larr; Previous</span>Chapter 39. The Copy Only View</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-41-look-ups/" class="next"><span class="label">Next &rarr;</span>Chapter 41. Look-ups</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

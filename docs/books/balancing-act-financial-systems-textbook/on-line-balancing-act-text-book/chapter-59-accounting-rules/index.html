@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 59. Accounting Rules — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-59-accounting-rules/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 59. Accounting Rules</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">Through the early period of the project, my role was mostly one of secondary support. I sometimes joked about being the office of "post decision support"; after a decision was made I could either give a thumbs up or thumbs down, but really was expected to be quiet during the deliberations.</p>
+<p class="p">One day, as I viewed the results of the performance test for a component called the accounting rules, I couldn't take it any longer. On February 1st, 2006 I came across a recent performance test of the accounting rules component. As I reviewed the results, I could tell the component was going to have significant performance problems when higher volume systems were used. I wrote an e-mail to Dave Willis about my observations, and stepped in the middle of a significant area of confrontation on the project. Dave told me later he wasn't sure he wanted to get my e-mail, but decided he couldn't ignore it once I sent it.</p>
+<p class="p">After a few months of serious debate about which course was the best, I was asked to give a presentation on accounting rules. The meeting was in a small room on a second floor of a rather old building in late June and I was assigned to present late in the afternoon. My slide deck was only 30 slides long, but later I was accused of having a 3,000 page deck. After 45 minutes, John Carr, the IT exec. at the head of the meeting, turned to someone sitting next to him and said "Pull him off the stage." I had carried the debate for my approach but was subsequently teased that if I were a doctor I would solve people's health problems by boring them to death.</p>
+<p class="p">Having made it this far in the book, I hope no one dies from reading the following summary of a paper I wrote in the midst of the debate.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">Accounting Rules Engines and Accounting Rules are any automated facility that generates input data for the accounting systems. It performs many of the functions described in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-33-define-processes/">Outputs</a>. They can be programs or the parameters programs use. A program in a product system, like a checking account system, that calculates accrued interest and creates a transaction could be considered an accounting rules engine. Many rules and engines are embedded in operational systems. Accounting environments usually contain processes between the source systems and the general ledger to modify and refine source system accounting transactions, and generate new transactions, e.g., to reflect offsets or reversals.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Transactions, Values and Journal Entries</h2>
+<p class="p">Interest accrual records, for example, created in different bank operational systems have varying formats because source systems vary. Yet the general ledger classifies similar records from different sources in the same way. Therefore one function of the accounting rules is to change these records into a common or standard format before posting to the general ledger.</p>
+<p class="p">Doing so requires using values in the records produced by the operational system. For example, a value of "ABC" may mean "Deposit" in one current account or checking system, but "123" is used in another. Values from both records must be changed into journal entries, to reflect the credit to current account liability before posting to the ledger. Thus, the accounting rules for the first system must associate "ABC" with "credit current account liability" whereas rules must associate "123" with the same meaning for the other. Additionally, one source system may send the offsetting debit as an additional record, whereas the debit for the other might need to be generated.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Technical Transformations</h2>
+<p class="p">In ages past, finance has been adequately served by writing specifications for IT functions and having IT write the programs. Changes required were specified by the business, and made by IT. However, with more frequent need for changes and greater familiarity with IT systems by finance, systems have become more and more parameterized. Finance can make changes to the systems by changing the parameters or reference data.</p>
+<p class="p">Finance could actually take responsibility for all aspects of the system, writing and implementing programming logic. However most finance departments do not desire complete control, including responsibility for very technical functions such as initializing data formats or error handling.</p>
+<p class="p">The architecture includes a Technical Transform Layer or TTL which can perform these functions. Effectively, any function that finance does not want to own specifically can be placed in this layer. If finance were comfortable with IT making all changes to all parameters and programs required to create accounting system inputs, the entire Accounting Rules Engine function could be placed in TTL.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Logic and Tables</h2>
+<div class="p">
+
+Accounting Rules Engines (ARE) are programs. Accounting Rules are often expressed as parameters to those programs. They are mostly maintained in one of two ways: Tables or procedural logic.
+<ol class="ol">
+	<li class="li">Tables are easily thought of as spreadsheets, with rows and columns. They have one or more columns designated as the key. For example, if the "123" were a value in the first column of the table, the second column might contain "credit current account liability". The reference data described in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-28-define-reference-data/">Define Reference Data</a> could be considered a list of parameters which act as rules. Values in one column - the key - are converted into values selected in the outputs - the answers.</li>
+	<li class="li">Procedural logic is very close to program code. This logic might be presented to the user in syntax comparable to that used in Excel for conditional statements such as IF (A31 = "123", "credit current account liability"). This does not require that all valid values be listed, thus reduces the number of rules that must be maintained.</li>
+</ol>
+</div>
+<p class="p">An accounting rules engine can be constructed completely of logic without the use of any tables, but the opposite is not possible. An ARE cannot be constructed purely of tables. Logic is necessary to string together and access tables. Said another way, someone could write all of the logic needed in an IF statement without using an Excel "Lookup" function, but simply creating a table within a spreadsheet does not highlight the row containing the answer.</p>
+<p class="p">Although an accounting rules engine can be constructed completely with logic, tables provide a distinct advantage: transparency. Values in tables can be easily searched, more quickly understood, and are simpler to update than values embedded in logic. As an analogy, the financial statements are also presented as tables, allowing simple search, rather than trying to find total interest expense in a management discussion document. Tables are easier to search and update than is logic. In most systems a combination of logic and tables is used.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Record Types</h2>
+<div class="p">
+
+Source systems for financial services companies normally provide more than one type of record to the accounting environment.
+<ol class="ol">
+	<li class="li">Transactions. Records that reflect particular business events are called transactions. They are most often turned directly into journal entries, as discussed above.</li>
+	<li class="li">Balances. Often systems also present end of day balance records, giving perhaps the end of day position for each customer's account. These can be used as either "post and reverse" type journal entries for some systems, or to reconcile the platform balances to the source systems.</li>
+	<li class="li">Static data or Arrangement. They also can provide account details, describing customer account arrangement type, interest rate, and maturity date. These records are used primarily in reporting processes, to categorize the posted balances. The values on these records must also be standardized across the system, by product at least, to simplify the reporting processes.</li>
+</ol>
+</div>
+<p class="p">All three records are used for financial and regulatory reporting processes.</p>
+
+</div>
+<div class="section">
+<p class="p">The accounting rules bridge the source systems to the accounting functions. The functions they perform are tightly coupled with the source systems, but the outputs are standard across the enterprise. They can be expressed as either tables or procedural logic. And they can use information from multiple types of records to properly classify information.</p>
+<p class="p">Having expressed these concepts, I watched over the next few months as Dave "Murph" Murphy, Debbie Byrnes, and Jerry Canterbury proved that these thoughts were correct. I was very impressed with the simplicity of the architecture Murph defined to make this all real. What had been months of debate and contention simply washed away as the solution began to take form. It showed me how important it is to have the right idea and a team capable of making that idea reality.</p>
+&nbsp;
+
+</div>
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/chapter-60-reclassification/">Chapter 60. Reclassification</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/chapter-58-the-arrangement-ledger/">Chapter 58. The Arrangement Ledger</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/">Part 6. The Platform</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-58-the-arrangement-ledger/" class="prev"><span class="label">&larr; Previous</span>Chapter 58. The Arrangement Ledger</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-60-reclassification/" class="next"><span class="label">Next &rarr;</span>Chapter 60. Reclassification</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

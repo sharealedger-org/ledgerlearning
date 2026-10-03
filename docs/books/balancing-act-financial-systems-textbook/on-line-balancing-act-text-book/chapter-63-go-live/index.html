@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 63. Go Live — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-63-go-live/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 63. Go Live</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">At the end of September 2007, a little over a year from being empowered to really move things forward, I was in a weekly meeting when it became clear expectations were not aligned about how the system would perform the first day we tested it in parallel a month later. There was an expectation the system would run in one hour. I was a bit dumbfounded, knowing the pace we were running that such a schedule for the first run was no where near possible.</p>
+<p class="p">All testing to that point had been manually executed. The system had thousands of processes to be run, and it took multiple days to run the system through a test cycle. There simply had not been time in the race to meet the deadlines for analyzing which processes might be executed in parallel.</p>
+<p class="p">The race continued for another month. We ran the system in an abbreviated form to convert history for two weeks the end of October. But we could not end the history conversion processes and then start the first day of daily processing on the same day the source systems produced their outputs. So we started the daily schedule behind the source system, having to catch up to get on a daily schedule.</p>
+<p class="p">Doing so proved very difficult because the first part of the system could not be completely automated. The right files from the source systems had to be attached to the jobs manually, the jobs run, results verified, and errors corrected by rerunning. This work, plus the still barely automated sequential flow for many of the thousands of ancillary processes meant the system took 15 hours for the first day.</p>
+<p class="p">We also never had time to test rolling from one day into the next day. We had to determine on the fly what the key steps were in sequence for this process. Any mistake in developing these new procedures might mean we had to rerun an entire day, which would have been disastrous. We may not have been able to recover.</p>
+<p class="p">The business team was required to validate the results at intermediate points in the process at very odd hours. All of these factors added to the 15 hour run time in some measure. Because we had multiple days to catch-up, we could tell it was going to be a very long few weeks.</p>
+<p class="p">The teams worked around the clock. People would work as long as they could and then hand off to someone else. A week into it, I heard one team member explaining to another that he couldn't work the next evening because he had to attend his brother's wedding, but it would only be a couple of hours.</p>
+<p class="p">On November 9th, I woke up just after midnight and checked my e-mail. I'd received a message a few minutes earlier from Mike Blom who had run testing and was taking lead in keeping the schedule going in production. The only thing it said was "Somwthing went wrong" . From the spelling I could almost hear him hitting the floor as he hit the "send" button. I dialed into the ever open conference call number and picked up where he had "fallen" off. By 8:00 AM I wrote back, "Now that the problems are all resolved, I can confirm. â€˜Somwthing' did indeed go wrong."</p>
+<p class="p">Everyone on the project, IT and business, pulled together. Small improvements were made in the schedule every day, and the system began to run faster and faster. Within two weeks the system became quite stable, although additional tuning was necessary.</p>
+<p class="p">The plan had been to run the system for about 7 weeks, shut it down, implement more functions, convert history again and restart after the first of the year. As we analyzed the functionality the system was already providing, and what was required to hit the next major milestone, we determined we couldn't afford the additional conversion time. However, that meant we had to keep the system going through year-end: a whole series of processes we didn't think we needed to build for another 10 months had to be analyzed, designed, built and tested in three weeks. When January 2nd rolled around it all worked, to everyone's amazement.</p>
+<p class="p">There was never really a break for a great deal of celebration. I am also not sure our experience was all that unique: every large system implementation requires tremendous efforts by many people over a long period of time. Yet, I do remember thinking to myself, and perhaps even saying to a few other people on the team, that I was certain every team member would someday look back with fondness upon that time in some measure. I had a lot of team members expressed a deep sense of commitment to making the system work, and of accomplishment at overcoming the challenges in building it. The team work was terrific, and as the system was enhanced and greater and greater amounts of detail added to it over the ensuring years, it became a greater repository not just for finance but for a host of information needs. The business found immediate savings in its capital requirements because of increased understanding of its underlying obligations.</p>
+<p class="p">Over a year later, as the system began to be implemented in Hong Kong, I had lunch with Mike Mann who had taken a tour of duty there to help them implement the system. Three years earlier, January 2007, in our first project "summit" after the project reset, we had ended the day with raised voices and differing opinions. By May of that year, we had our second summit, and Mike approved clearing scores of issues from our path, as we raced to testing and then implementation.</p>
+<p class="p">Now here we were, another year beyond implementation, and both feeling we had succeeded in large part. At the conclusion of our day together, I gave Mike a copy of Lincoln's selected speeches and writings as a gift for his support through the project. Although all this is about reporting and computer systems, which in and of themselves aren't really that important, as Doug has told me over a lot of years, it is always good to be able to engage in good, honest work, regardless of what that work is. With that in mind, I had underlined this quote from the 2nd inaugural address, "With malice toward none; with charity for all; with firmness in the right, as God gives us to see the right, let us strive on to finish the work we are in."</p>
+&nbsp;
+
+</div>
+<div class="parentlink">
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part7-the-plan/">Part 7. The Plan</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/chapter-62-calculation-engines-and-reporting/">Chapter 62. Calculation Engines and Reporting</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/">Part 6. The Platform</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-62-calculation-engines-and-reporting/" class="prev"><span class="label">&larr; Previous</span>Chapter 62. Calculation Engines and Reporting</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part7-the-plan/" class="next"><span class="label">Next &rarr;</span>Part 7. The Plan</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

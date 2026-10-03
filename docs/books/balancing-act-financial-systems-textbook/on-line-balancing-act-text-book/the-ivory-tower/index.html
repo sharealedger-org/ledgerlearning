@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 9: The Ivory Tower — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-ivory-tower/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 9: The Ivory Tower</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">We have reviewed what I learned in school about the basics of computers and bookkeeping and financial reporting. We have explored whether an alternative to the standard general ledger and journal entries could provide the financial statements. We reflected on what else might be considered the book of record besides the general ledger. We considered using just the journal entries which meant we didn't have to store balances because the computer can add them up quite efficiently. This system could generate the financial statements at any point in time. We no longer have to close the books in order to have the Income Statement.</p>
+<p class="p">We then considered a different set of "journal entries" as the book of record, something close to single sided accounting. This reduced the number of rows we had to record to get to the same answer. But both of these approaches are still pretty focused on the accounting process; the information we captured wasn't expanded to other attributes very easily.</p>
+<p class="p">We then analyzed the system in terms of all information needs, not just the accounting needs. This last approach, in a certain sense, placed the accounting function for automobile related transactions right in the middle of a car maintenance system. We could, therefore, from the same data, produce not only car maintenance reports, like cost per mile driven, but also the data needed for financial reports as well. We could do this without having duplicated the data in a car maintenance system and a separate financial system, or having tried to put that data back together to show the reports after it had been captured and stored separately.</p>
+<p class="p">We've shown that the financial information in our personal financial system can be stored in different forms, and yet produce the basic financial information needed. Neither of the last two systems have much resemblance to Pacioli's system, or something that would immediately qualify for most accountants as the book of record. But all the information needed is there.</p>
+<p class="p">However, moving from the ivory towers of academia to the real world teaches there are a lot of reasons why things have developed the way they have; and changing all that is not easy or inexpensive.</p>
+<p class="p">As noted, one reason is that accounting is tradition bound. The other though, is that although computers are much more efficient at math than humans, they still have limited capacities: The space on the white board is limited, the speed of the data transfer from disk is slow, and the verboseness of the language or meeting procedures dictates processing speed.</p>
+<p class="p">The pure unadulterated academic theory could require massive amounts of storage and processing power, and experience shows is impractical to implement at scale. This is because the volume of data needed to recreate the ledger if no summarization process were performed at all is very large.</p>
+<p class="p">This need to balance computing and storage costs with the broader use of data was recognized by McCarthy in his original 1982 paper: "<q class="q">To this point in the paper, events accounting has been viewed in terms of maximum temporal generality with all transaction data being maintained indefinitely. During design of an actual system, quite obviously, consideration of both decision usefulness and storage costs would temper these requirements somewhat and identify places where temporal summation of event data might be appropriate. An important point to remember about REA accounting model in this respect is that modifications to the ideal (complete events system) are made knowingly and only after an exhaustive cost-benefit analysis of <em class="ph i">all</em> (not just accounting) data usage has indicated that the adjustments make economic sense. Imperfections are the result of deliberate choice. Such a process is in sharp contrast where traditional summations are routinely directed by reporting cycles. In REA terms, closing summations are usually derived data or viewed data, and they should be treated as such."</q><a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+<p class="p">Both accounting tradition and computer scalability have resulted in few practical implementations of the theory over the years.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></p>
+
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">I remember meeting with Eric in his office after the last class I took from him. Eric asked me how I had felt about the final exam. I don't remember doing poorly on it, but not acing it either. I sensed he wanted to understand what I had learned from the class, and how to improve his explanation of the topics; I don't think I provided much insight. Yet I do remember feeling as if the material all made sense to me, but I just wasn't sure why it all mattered. If what he explained was possible, what was all the fuss about? We should just do it. With more practical experience, I would come to understand why it wasn't that easy.</p>
+<p class="p">I also remember another time in Eric's class. It seems he had returned from a consulting trip and had learned more about how the theory was being advanced on a project. I vaguely remember him handing out a picture that looked something like the following, and saying the technology feasibility of the approach was much more possible than he had previously thought.</p>
+
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1287" src="/wp-content/uploads/2018/10/eventrepositoryarchitecture.jpg" alt="EventRepositoryArchitecture" width="345" height="528" /> <span class="figcap">Figure 27. Event Repository Architecture</span>
+
+To take my understanding further, I needed to study with the person who had drawn that picture.
+
+&nbsp;
+
+</div>
+<div>
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/">Part 3. The Partner</a>
+
+<strong>Previous:  </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-professor/real-analysis-method/">Chapter 8: REAL Analysis Method</a>
+
+<strong>Parent Topic:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-professor/">Part 2: The Professor</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> William E. McCarthy, <cite class="cite">The REA Accounting Model</cite> p. 572.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> As McCarthy concluded in 1999, "<q class="q">Completely customized implementation of a new enterprise information system is not a common occurrence..."</q> William E. McCarthy, <cite class="cite">Semantic Modeling...</cite>, 6 of 11.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/real-analysis-method/" class="prev"><span class="label">&larr; Previous</span>Chapter 8: REAL Analysis Method</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/" class="next"><span class="label">Next &rarr;</span>Part 3. The Partner</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

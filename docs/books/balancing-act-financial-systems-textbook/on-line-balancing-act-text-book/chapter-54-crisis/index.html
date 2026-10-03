@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 54. Crisis — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-54-crisis/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 54. Crisis</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<p class="title topictitle1">The first few weeks of the project, I continued to work with Digneer while everyone else suddenly was immersed in the race. Monica Logan headed up the team organization, and Chris Stallman took on the project approach. In perhaps a week the team expanded to 20 people.</p>
+
+<div class="body conbody">
+<div class="p">
+
+The first order of business was to deploy people to 12 different countries or processing regions that represented something like 80% of the global PwC revenues. These included the U.S., Australia, Belgium, Canada, Switzerland, Germany, Spain, UK, Japan, Netherlands, and groups of countries in both East Asia and South America. Rick outlined the instructions to the head executives in those countries, and used global executive support whenever resistance was encountered to following them. In three weeks, each finance department was instructed to provide the following data files from their systems for the current and two prior years:
+<ol class="ol">
+	<li class="li">General ledger balances or the journal entries, specifically identifying any manual adjustments</li>
+	<li class="li">All the client billing detailed records from the billing systems</li>
+	<li class="li">All the timesheet entries for billable staff.</li>
+</ol>
+</div>
+<p class="p">Others began to work with the Global PwC Finance team. They learned that every month each country submitted a spreadsheet, called the MOR for Monthly Operating Report, of the financial results. These were consolidated into the global financial statements using a tool called TM1. Business team members obtained copies of these.</p>
+<p class="p">Note the pattern here: Find known numbers. Find the event file from the existing ledger. Establish the ability to recreate the numbers from the journals, and then drive to lower levels of detail in the transaction system files.</p>
+<p class="p">Build reference data was next. The reference data was listings of client code, with industry codes on them, billing rates, etc. They found, with time, that they needed to make these date effective, to account for changes in the reference data over time. So a small program was written to compare changed reference data. The team refined the reference data over time by producing many reports.</p>
+<p class="p">The firm had an existing data warehouse system that in summary showed the revenues by industry, be it consumer products, financial services, transportation and utilities, high tech, etc. However, there was a critical flaw in the data. The numbers were accumulated from the core financial system, the industry field representing the industry the consultant was assigned to, not the industry of the client. Each staff was assigned to an industry, say financial services, but if that staff worked on a consumer products client, the revenue showed up as financial services. There was tremendous sharing of resources, and so the numbers weren't accurate at all.</p>
+<p class="p">Rick knew that the financial numbers were the accumulation of the business events. In a consulting company the business events are timesheet entries of staff working on client engagements. Timesheets accumulate costs to projects. Costs are marked up, and turned into billing records to clients. So on the time and billing records the client would be identified in every case, and that client could be associated with an industry.</p>
+<p class="p">The files began to show up. The Global Financial Data Warehouse or GFDW architecture was very simple. The team guessed at a simple data model the records from all 12 countries would fit into. Because every country had different systems, SAFR views were created to transform in an ETL like manner the country source system specific formats into the standard layout. There were really three standard layouts, one for each of the file types.</p>
+<p class="p">The data volumes were not huge; there were a few hundred thousand employees worldwide, and they submitted timesheets weekly or so. There were fewer clients. However, the PwC mainframe was one of the smallest made. If we had to purchase and install hardware we never would have been able to meet the deadlines. As it was, because of the efficiency of SAFR we could make the system work within existing hardware.</p>
+<p class="p">Sequential generation data group or GDGs were used to partition the data by year and month for the larger countries. Using sequential files added efficiency by eliminating CPU cycles putting data into the database and pulling it out of the database. We also did not have to perform extensive data cleansing to prepare the data to load the database. If an extracted field was not used contained garbage, it was ignored through our entire process but not dropped. At times, as we did more data discovery, we found instances where fields we hadn't understood became useful. There was no additional work to use them since they were retained in the repository.</p>
+<p class="p">From Rick's phone call on February 20th, people were deployed to many of the countries starting February 25th. By the middle of March, data files from many of them were received, and the ETL views constructed to put them into the standard format. The MOR reports had been gathered, and control numbers identified. A simple set of balancing views against the standard files had been constructed.</p>
+
+<div class="p">
+
+I began to help out the second week of April or so as the team began to work to reconcile the data. By the 26th of April - 2 months and 6 days after that phone call - the following reconciliation summary was produced.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1221" src="/wp-content/uploads/2018/10/revenuebalancingspreadsheet.jpg" alt="RevenueBalancingSpreadsheet" width="1724" height="1121" /> <span class="figcap">Figure 141. Revenue Balancing Spreadsheet</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">The team had recreated from the detailed billing files (column D) and adjustments (column E) nearly 99% of the revenue numbers for three years of history to the globally reported financial statements (column C).<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a> The team had also reconciled hours billed by staff to within 2.5% for the same 3 years.</p>
+<p class="p">Many of the regional finance people told Rick they had never reconciled the detail to their ledger numbers and they weren't sure it could be done. Rick asked if they were suggesting they wouldn't balance which would be a real audit issue. Immediately they all would say that it could be balanced, they just had never done it. When the auditors did arrive to test the S-1 schedule they signed off very quickly with no issues. They could easily test where the business events had come from, and recreate the summary numbers we had accumulated.</p>
+<p class="p">The first S-1 industry segmentation report was produced on April 17th, I believe. The schedule was a summary of the billing detail file joined to the client reference data, summarized by industry codes and countries. The outputs all fit in Excel, and Rick learned how to use pivot tables to change the dimensions easily. We would run the views to produce the S-1 data at the same time we balanced the files.</p>
+<p class="p">Rick had Mukesh Patel start a one man project completed in a few weeks. He used SAFR to allocate employee cost for the year to the projects the employee had worked on by hours worked. Mukesh did this with two or three passes of SAFR, and a handful of views. The outputs from the process then could be accumulated by project, to show the cost of the project, the revenue, and the gross profit.</p>
+
+<div class="p">
+
+Other team members enhanced the reference data, by creating mapping from local company IDs to global companies. In this way, the global project for General Motors or Nestle could be shown. Rick found that people inside the firm had never known the things he was discovering in the data. Because the event level data was gathered and accessible, it was an incredibly flexible reporting system. The following is the June 27th report ahead of the updated S-1 filing date. It is still incredible to me what the team could do, when using the right approach, with a system architecture that focused on capturing and reporting from business events.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1218" src="/wp-content/uploads/2018/10/industrysegmentationreport.jpg" alt="IndustrySegmentationReport" width="1848" height="1281" /> <span class="figcap">Figure 142. Industry Segmentation Report</span>
+
+<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a>
+
+</div>
+</div>
+<p class="p">I had a family vacation the middle of July and was pretty much completely cut off from the news media and the project. When I returned to work the following Monday, Lynn Groves Zuccala, the project manager, asked what I thought of the announcement. I asked what announcement. She couldn't believe I had not heard; IBM had announced they would buy the consulting division for $4 billion. What a radical change in plans.</p>
+<p class="p">Beginning in May and June the team turned the system into an operational system. Each country on a monthly basis would extract that month's data and send it over to the team to add to the warehouse. IBM used the results of the system to understand the business. Portions of it were used to convert the legacy data over to IBM's systems when the merger took effect on October 1st, 2002 and systems were converted in January.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+About the middle of August I called Doug one night to talk about prospects and all the changes. In the course of the conversation he confided that he was being forced to retire prior to the merger with IBM. He asked me to keep the knowledge to myself. It concerned me. Over the next few days I vacillated between being worried and then at times I would feel that things would work out. I surely didn't know how, though.
+
+</div>
+&nbsp;
+<p class="p">About two weeks later we were together in the PwC office in Rosemont, Illinois. I suspect he could tell I was having one of the more worrisome days, and I think he changed his flight plans to spend a bit more time with me. It was a very kind thing of him to worry about and serve me at such a time, but very consistent with his nature.</p>
+&nbsp;
+<p class="p">He pulled me into an office and told me that we were still very good friends, and that would not change. He said he was very confident we would continue to have contact with each other. I knew that he was only a few months from when he would qualify for retirement, but he said he wasn't bitter, or really upset. He said that his ego was a bit bruised because he wasn't chosen to go forward into the new organization, but he wasn't really upset. He expressed faith that the right things would happen in the end.</p>
+&nbsp;
+<p class="p">I expressed affection for him, and I said that I wasn't really worried. Rather I felt comfortable with where things were going, but also felt bruised when he felt bruised. I did feel lightened after the discussion. We met for a few minutes multiple times throughout the day to coordinate how to handle his departure. He gave me approval to start telling selected individuals.</p>
+&nbsp;
+<div class="p">
+<pre class="pre"></pre>
+He left for the airport to fly home late in the afternoon. I walked to a conference room where Randall, Monica, Chris and Jim were talking. I said I had some bad news, that Doug was being forced to retire. I then said, "But there isn't any other group of people I would want to face this challenge with than this team."
+
+</div>
+<div></div>
+</div>
+<div>
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/">Part 6. The Platform</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-53-spin-offs/">Chapter 53. Spin-offs</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+<div></div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> The US was the most complex, because it also had the highest volume. In the next few weeks and months additional adjustments were identified for all the countries, which improved the reconciliation. Also additional countries were added, taking the system up to something above 90% of revenues, which were balanced to within about .2% of the total.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> The MOR numbers cannot be broken out by industry because the attributes of the legacy financial system did not accumulate that attribute. Reporting from the event level data enabled viewing the data by the last two columns.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-53-spin-offs/" class="prev"><span class="label">&larr; Previous</span>Chapter 53. Spin-offs</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/" class="next"><span class="label">Next &rarr;</span>Part 6. The Platform</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

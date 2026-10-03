@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Mainframe, Open Source And Renewal of Financial Systems — LedgerLearning</title>
+  <meta name="description" content="This week's episode of Conversations with Kip goes more to a question of platform than I have ever discussed in my series before.  This is brought on with recen">
+  <link rel="canonical" href="https://ledgerlearning.com/2020/09/16/the-mainframe-open-source-and-renewal-of-financial-systems/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">The Mainframe, Open Source And Renewal of Financial Systems</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">September 16, 2020</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:paragraph -->
+<p>This week's episode of Conversations with Kip goes more to a question of platform than I have ever discussed in my series before.  This is brought on with recent experiences with the <a href="https://www.openmainframeproject.org">Linux Foundation's Open Mainframe Project</a>, and it's first annual <a href="https://events.linuxfoundation.org/open-mainframe-summit/">Summit</a> which I am attending today and tomorrow.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I have been asked to be the chair of the <a href="https://www.openmainframeproject.org/projects/genevaers">GenevaERS.org project</a>.  The work of starting up the project has caused me to do some deep reflection on the mainframe, and where I think it is going.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In summary, this week's <a href="https://youtu.be/_qQg4EWE4cQ">video</a> discusses why hardware failure redundancy is not an adequate approach to platform migration for financial systems, how open source is changing the platform, what the impact of the Linux Foundation's Open Mainframe Project might be, and what vendor, mainframers and customers can do to move the transformation of these systems forward towards a better future with broader societal benefits. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Following my speaking portion of the video, I have included a <a href="https://www.youtube.com/watch?v=_qQg4EWE4cQ&amp;t=1520s">section</a> walking through the same ideas in a slide format.  Let's use those slides to cover the topics today.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>What's A Mainframe</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"id":3074,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/09/slide2.jpeg?w=1024" alt="" class="wp-image-3074" /></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>For purposes of my discussion, I'm focusing on the <a href="https://developer.ibm.com/components/ibmz/articles/what-is-ibm-z/">IBM System Z</a> mainframe. There are historical systems which are more powerful than PCs, at the time called "mini-computers" because they were smaller than mainframes, but today called "midrange" because they sit between cloud and mainframe. These systems are sometimes called AS/400 but officially named <a href="https://www.helpsystems.com/blog/as400-dead">IBM System i</a> and have many similarities to the mainframe.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Many operating systems can work on IBM System Z; my discussion will focus on two of them; Linux on Z, and the flagship operating system, <a href="https://www.ibm.com/it-infrastructure/z/zos">z/OS</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>The Death of the Mainframe</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Stewart Alsop is someone who, unfortunately is known on his <a href="https://en.wikipedia.org/wiki/Stewart_Alsop_II">Wikipedia</a> page for his very pointed prediction of the death of the mainframe.  No matter how many great predictions he made over the course of his career, this is the one that is remembered.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":3075,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/09/slide3.jpeg?w=1024" alt="" class="wp-image-3075" /></figure>
+<!-- /wp:image -->
+
+<!-- wp:quote {"className":"is-style-large"} -->
+<blockquote class="wp-block-quote is-style-large"><p>"The panel gave a lively discussion about the role of the mainframe in future information systems.  I predicted that the last mainframe will be unplugged on March 15, 1996."</p><cite>InfoWorld Magazine, February 22, 1993, <a href="https://books.google.ca/books?id=vjsEAAAAMBAJ&amp;q=mainframe#v=onepage&amp;q=mainframe&amp;f=true">page 4</a> as found on Google Books</cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:paragraph -->
+<p>If anyone could put me in touch with Mr. Alsop, I'd love to interview him for a Conversation with Kip. I am certain he would acknowledge the error in his prediction, as shown in some manner by the "Arcati Mainframe Yearbook 2019: <a href="http://www.arcati.com/newyearbook19/19part2.pdf">The 2019 Mainframe User Survey</a>" by Trevor Eddolls and Mark Lillycrop which for these surveyed users, shows 84% growing mainframe usages.  (I would also give him equal time to recount his best prediction, on record.)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2020/02/03/our-need-for-new-financial-systems/">Our Inadequate Financial System</a>s &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Open Source Wins</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I found this quote by Holger Mueller telling about the issues involved in the death of the mainframe.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><p><strong>Why Open Source has won and will keep... winning</strong></p></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><p>Yes, Open Source has won for platform software and possibly even more. Time to look how it all happened, and what the trends going forward are going to be.</p></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><p><strong>My 2 eyeopeners...</strong></p></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><p>Somewhere in the early 2000, Oracle dropped its multi-year, 1000+ FTE effort of an application server to use  <a href="http://www.apache.org/">Apache</a> going forward. That was my first eyeopener, and I was a product developer. The next one came in 2013, in my analyst role, when IBM 'sDanny Sabbah shared that IBM was basing its next generation PaaS   BlueMix, on  <a href="https://www.cloudfoundry.org/">CloudFoundry</a>. <em>When enterprise software giants cannot afford to out-innovate opensource platforms, it was clear that open source was winning</em>. As of today, there is no 1000+ people engineering effort for platform software that has started (and made public), built inhouse and proprietary, by any vendor.</p><cite>Blog post by <a href="http://enswmu.blogspot.com/2019/01/musings-why-open-source-has-won-and.html&nbsp;">Holger Mueller</a> posted 14th January </cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:paragraph -->
+<p>Mainframes have been, by and large, proprietary systems; this trend does portend the death of the mainframe, unless the mainframe transforms.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Limitations to Open Source</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>But the news for Open Source is not all good; and the reliability, availability, and serviceability (<a href="https://www.ibm.com/support/knowledgecenter/zosbasics/com.ibm.zos.zmainframe/zconc_RAS.htm">RAS</a>) aspects of the mainframe make a difference to customers  It is evident in this survey by <a href="https://thenewstack.io/theres-one-thing-stopping-developers-from-using-open-source-even-more/">Tidelift and The New Stack</a> about open source.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"right","id":3077,"width":675,"height":676,"sizeSlug":"large"} -->
+<div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="/wp-content/uploads/2020/09/slide5-e1600230640286.jpeg?w=1022" alt="" class="wp-image-3077" width="675" height="676" /><figcaption><a href="https://thenewstack.io/theres-one-thing-stopping-developers-from-using-open-source-even-more/">Tidelift and The New Stack sponsored survey</a></figcaption></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Reliable support and consulting services--elements that might have an aspect of RAS associated with them--are still stronger on proprietary solutions.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(Note that this represents a significant opening for services organizations that are willing to step into these needs.  If companies were willing to port open source applications to more reliable hardware platforms--like the mainframe--support for open source packages might become economically possible)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>ERP System Migration</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Frank Scavo, in a blog post commenting on Mueller's observations noted:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:quote {"className":"is-style-large"} -->
+<blockquote class="wp-block-quote is-style-large"><p>"Open source needs a large set of potential users. But enterprise applications do not have as broad a potential user base as infrastructure software. Although the ERP market is huge, when you break it down by specific industries, it is small compared to the market for, say, Linux."</p><cite>Frank Scavo, <a href="https://fscavo.blogspot.com/2019/01/why-is-open-source-not-more-successful.html">blog post</a> January 16, 2019</cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:paragraph -->
+<p>This makes the point as to why the mainframe has not died--the specialized needs of these business applications has meant the Open Source impacts so far have been much smaller than they might have been.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>What's Yet to Come</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>So if we put together a number of the prior points, we end up with this sort of analysis.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":3078,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/09/slide6.jpeg?w=1024" alt="" class="wp-image-3078" /></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The right left hand side gives a sense of thinking about what has been impacted by open source, and what has to a lesser extent.  Infrastructure, which has a large potential user base, is widely affected.  The impact is starting to be felt more in utilities and common applications.  It is yet to be felt in the core business systems space.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In the center, consider IBM's CEO Ginni Rometty's keynote address at IBM Think 2019: </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:quote {"className":"is-style-large"} -->
+<blockquote class="wp-block-quote is-style-large"><p>"Chapter one of the cloud represented about 20 percent of the workload opportunity. It was largely about moving a lot of new and customer-facing applications to the cloud. Chapter two is about the hard stuff." </p><cite>Ginni Rometty, <a href="https://wire19.com/chapter-2-of-digital-transformation">IBM Think 2019</a></cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:paragraph -->
+<p>The summary is on the right hand side: if infrastructure and utilities are all part of chapter 1, chapter 2 is indeed very long, as it is perhaps 80% of the workloads.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>How Will They Move</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>So numbers of community members is one answer the question why have these applications not moved off the mainframe.  But I think the real answer is somethign deeper.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>As I have noted in a <a href="/whitepapers/minimum-costs-for-financial-system-data-maintenance/">white paper on this blog</a>, this chart expresses much about the systems of focus.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":1164,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2018/10/computing-costs-using-transactions-and-balances-over-time.jpg?w=1024" alt="" class="wp-image-1164" /></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>This chart shows changes in the cost of computing and the amount of computing since the IBM 360 was released in 1964. The cost of data, at nearly $10 million per gigabyte in 1964 meant the amount of data kept and used was tiny. Most mainframe application data structures today we designed with this cost of compute in mind.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"right","id":3079,"width":431,"height":524,"sizeSlug":"large"} -->
+<div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="/wp-content/uploads/2020/09/slide7-e1600232292478.jpeg?w=842" alt="" class="wp-image-3079" width="431" height="524" /></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Applications automated&nbsp; early were very expensive to do manually. The functional requirements were higher than many more recently automated systems, which were able to use lower cost environments. The lower cost environments use redundancy to compensate for potential errors in the underlying platform.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But redundancy adds to the overall system complexity. This added complexity inhibits movement of applications to lower cost environment, as they become unmaintainable if they can even be built</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The fact that error rates in the mainframe have been driven near zero, over the years of improvements to the systems, caused in part because of the complexity and sensitivity of the applications deployed there, has keep the applications there.  Other environments are not capable of this level of performance.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2020/04/20/sharealedger-org-my-report-to-dr-bill-mccarthy-on-rea-progress/">Why Financial Systems Are They Way The Are</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Open Source Moves to z/OS</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The Linux Foundation's Open Mainframe Project started with a focus on Linux on Z.  But with the growth of the project, more and more work is occurring on the the older operating system, z/OS.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":3081,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/09/slide9.jpeg?w=1024" alt="" class="wp-image-3081" /></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Why is this happening?  Well, let's go back to our definition of what a mainframe looks like.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The z/VM and the Linux on Z environments are easily connected to the entire open source initiative.  This is the 20% of the business work load that has moved off of the mainframe.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":3080,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/09/slide8.jpeg?w=1024" alt="" class="wp-image-3080" /></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Yet 80% of the business applications still reside there, attached very clearly to z/OS.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The interesting piece to this puzzle is the more than 20 year old component in the middle, called UNIX System Services or OMVS.  This is not Linux, but a POSIX Compliant UNIX environment, which is more closely aligned to the Linux capabilities of the platform.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Besides Java which has been enabled there for decades, over time, one can see more and more open source components coming to this part of the system, including Apache Spark, now Python, Docker and Jupyter Notebooks.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This route is the most likely route through the transformation of the mainframe.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2020/03/26/scala-on-z/">Scala on Z</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Everyone Must Eat</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Some mistakenly believe Open Source means free, but that's not necessarily true.  Everyone needs to eat, every day.  Open Source as an ecosystem drives much greater innovation than proprietary approaches can.  Our needs for serious application software and support cannot be satisfied with advertising dollars, the economic force behind much of the social media open source world.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Here's how I see open source economic cycle working for these serious applications:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>The most aggressive software innovations happen when there are financial incentives for them.&nbsp; Thus in many cases new ground is plowed by proprietary providers, seeing market needs and providing solutions.</li><li>Kevin Rollins once explained that new PC 'sare like groceries: the older they get, the less valuable they are. Features added by vendors have diminishing value over time. Open Source Platforms tend to incorporate these functions natively in new releases.</li><li>In any market, if a vendor stops innovating, others get ahead of them and they lose a competitive advantage.&nbsp; An Open Source community may make certain vendor offerings irrelevant. While other vendors build upon the capabilities for new features and functions.</li><li>This then is the process:<ol><li>Vendors building on top of open source, and </li><li>In many cases advancing new features </li><li>Which attract customers wanting to solve the latest problems </li><li>Building a larger and larger base upon which more and more innovation is possible </li><li>At lower and lower costs</li></ol></li></ul>
+<!-- /wp:list -->
+
+<!-- wp:image {"id":3082,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/09/slide10.jpeg?w=1024" alt="" class="wp-image-3082" /></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading -->
+<h2>Summary</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Open source will certainly have larger and larger impacts upon our core financial systems.  But it will not be through the use of redundancy to compensate for error prone platforms.   Winning platforms will drive down error rates, even if though doing so costs more than more simple solutions.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The mainframe may have a role to play in this--if it seriously adopts open source as a way of working.  If it adopts it in name only, keeping significant portions of the systems back to preserve high margins from legacy contracts, its advantage will continue to erode.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>z/OS and the Mainframe is the next battle ground in the fight to improve our financial systems, make them do more, at lower costs, or more people, and improving the world as it does so.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Link: <a href="https://www.youtube.com/playlist?list=PL2UrMfZzcfvEi6WX5WvsfKhH_ZBMSrjSs">A Vision for Financial Systems</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is&nbsp;<a href="https://youtu.be/_qQg4EWE4cQ">Episode 227 of Conversations with Kip</a>, the best financial system vlog there is. Literally learn more about ledgers and financial systems at&nbsp;<a href="http://www.LedgerLearning.com/">LedgerLearning.com</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:embed {"url":"https:\/\/youtu.be\/_qQg4EWE4cQ","type":"rich","providerNameSlug":"youtube","responsive":true,"className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed is-type-rich is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/_qQg4EWE4cQ
+</div></figure>
+<!-- /wp:embed -->
+
+<!-- wp:paragraph -->
+<p>Watch all episodes in order at the&nbsp;<a href="https://www.youtube.com/playlist?list=PL2UrMfZzcfvFB_tskAKbyMTeSPNklOa7N">Conversations with Kip Playlist</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The outline of the video is shown here, and in the YouTube description, where you can click on time to jump to the spot in the video.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Introduction: 00:00:00 <br>Bank Account Reconciliation: 00:01:11 <br>Cloud Based Systems Comparison: 00:01:38 <br>Projected Death of the Mainframe: 00:02:31 <br>Fundamental Data Structures: 00:03:53 <br>Complexity of Financial Systems: 00:05:33 <br>Error Rates in Financial Systems: 00:07:32<br>Redundancy to Overcome Errors: 00:09:27 <br>Vendor Response: 00:12:25 <br>Potential Vision for Renewal: 00:14:34 <br>Open Source Impact: 00:17:33 <br>Need for Mainframer Leadership: 00:19:07 <br>Customer Contributions: 00:20:31 <br>Need Public Systems, Open Source Virtual Machines: 00:22:24 <br>Open Mainframe Project and Financial System Renewal: 00:23:35 </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Summary in Slides: 00:26:26 </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>What's a Mainframe: 00:26:31<br>Stewart Alsop Mainframe Death Prediction: 00:28:17 <br>Holger Mueller Insights on Winning of Open Source: 00:29:06 <br>Frank Scavo on Open Source ERP Systems: 00:30:02 <br>"Chapter 2" of Cloud Migration or System Renewal: 00:31:516 <br>Functional Requirements and Complexity: 00:32:57 <br>UNIX Systems Services and Impact on z/OS: 00:35:07 <br>Linux Foundation's Open Mainframe Project: 00:36:32 <br>Open Source Economy: 00:37:05</p>
+<!-- /wp:paragraph -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

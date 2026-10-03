@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Discovery in Tabulating Systems — LedgerLearning</title>
+  <meta name="description" content="Yesterday I came upon an article about some guys saving an IBM 360 Model 20 mainframe from the 1960's.   It seems appropriate to think about the system architec">
+  <link rel="canonical" href="https://ledgerlearning.com/2019/05/21/data-discovery-in-tabulating-systems/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Data Discovery in Tabulating Systems</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">May 21, 2019</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+Yesterday I came upon an article about some guys <a href="https://ibms360.co.uk/?page_id=22">saving an IBM 360 Model 20 mainframe from the 1960's</a>.   It seems appropriate to think about the system architecture which would have worked on that machine at the time, and it's origins.   The system would be been based upon tabulating systems.
+
+If today's financial systems, and the tabulating System principles upon which they are based, were simple, no one would call them spaghetti code. But because the principles have been forgotten by many, they appear more complex.
+
+How to come to understand them?
+
+One approach that has been successfully used numerous times is called "<a href="/2019/02/11/show-me-the-money-with-jim-hladyshewsky/">show me the money.</a>" It focuses on the data used, as inputs, and outputs, to discover the tabulating System patterns in the systems.
+
+From two weeks ago, remember that the <a href="/2019/05/06/posting-processes-in-tabulating-systems/">posting process</a> is a major pillar in financial and tabulating systems. It has three primary files:
+<ul>
+	<li>Input transactions</li>
+	<li>Input master file updated in last process execution</li>
+	<li>Output master file</li>
+</ul>
+Data discovery is the process of looking at the data in the files and trying to detect:
+<ul>
+	<li><span style="color:var(--color-neutral-600);">Sort Order</span></li>
+	<li><span style="color:var(--color-neutral-600);">Common keys</span></li>
+	<li><span style="color:var(--color-neutral-600);">Monetary value fields</span></li>
+	<li><span style="color:var(--color-neutral-600);">Accumulated balances</span></li>
+</ul>
+If one can find a sample case of a few transactions which accumulate to a single balance, which has been updated between the input and the out balances, then code has been cracked. So many other functions will hang off this basic process.
+
+This is <a href="https://youtu.be/fyyqUAkJIfo">Episode 161 of Conversations with Kip</a>, the best financial system vlog there is. Literally learn more--about ledgers and financial systems--at <a href="http://www.LedgerLearning.com">LedgerLearning.com.</a>
+
+Next Up: <a href="/2019/05/28/tabulating-system-metadata/">Metadata in Tabulating Systems</a>
+
+Previous: <a href="/2019/05/13/complexity-in-tabulating-systems/">Complexity in Mainline Routine</a>
+
+https://youtu.be/fyyqUAkJIfo
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

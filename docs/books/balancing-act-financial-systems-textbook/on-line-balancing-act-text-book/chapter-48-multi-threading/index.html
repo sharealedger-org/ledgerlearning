@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 48. Multi-Threading — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-48-multi-threading/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 48. Multi-Threading</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<p class="title topictitle1">I have heard Rick advocate using all available means to solve it. He meant we should not rule any approach out. Certain computing problems require the same approach. High system performance means being able to apply all available computing resources. One of the most perishable computing resources is a CPU cycle. Unused CPU cycles perish with the passing of each nanosecond.</p>
+
+<div class="body conbody">
+<p class="p">Almost all modern computers have multiple CPUs in them, including many PCs. Such computers are capable of parallel processing. To utilize a box with 10 CPUs at 90% requires that 9 of those processors all be used at the same time. Although I don't believe the terminology is precise and is somewhat platform and language dependent, for purposes of our discussion we'll say parallel processing can be either multi-process parallelism or multi-thread parallelism. SAFR used both approaches.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Multi-process Parallelism</h2>
+<div class="p">
+
+The format engine, GVBMR88 and associated programs are executed in a parallel process mode; in other words multiple "meetings" are started and held in separate "rooms." In mainframe terms, we simply submit separate jobs; and they don't share memory in any way. The extract engine, GVBMR95 is a multi-threaded parallel processing engine. A thread might be thought of as one of our sub-meeting with its own agenda meeting in the same room as all the other sub-meetings but sharing the white board and binders. One particular "meeting agenda" is being worked by each CPU while the main or initially started program (what Doug calls the Mother Task) waits and watches. The following diagram shows both types of processes.
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1188" src="/wp-content/uploads/2018/10/extractprocessparallelism.jpg" alt="ExtractProcessParallelism" width="562" height="519" /> <span class="figcap">Figure 129. SAFR Parallelism</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">The first three steps of the Scan Engine are executed essentially once in serial mode. They produce three outputs, the VDP, Logic Table, and Core Image Reference Data files.</p>
+<p class="p">The extract engine takes in these three files. Thus far in describing GVBMR95, we have only executed a single SAFR thread. Thus the view processing has primarily demonstrated the ability to minimize IO; the data was read once to produce all the outputs. CPU use has also been minimized by generating efficient machine code, optimizing lookups.</p>
+<p class="p">We also executed only a single Format Phase job, which sorted the extract file containing all the data extracted for all the views which required the format phase. Each row was prefixed by the view ID, so when the sort was complete, all rows for that view were in sorted order together.</p>
+<p class="p">However, GVBMR95 can write output to multiple files. In the early days of the system, typically a standard set of extract files were established for a SAFR run and views were assigned to use an extract file in a round robin fashion by the select phase. Thus view 1, 7, 13 would be assigned to extract file one, and 2, 8, 14 to extract file two and so on. The format phase is now used much less frequently because of extract only views, etc., so Format Phase configuration tends to be much more customized.</p>
+
+<div class="p">
+
+We could cause each view to write to a different extract file, and multiple Format Phase processes could then be executed: If the views running in the extract phase shown on <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-44-sort/">Figure 118 in Chapter 44</a> were modified so each would write to its own extract file, then the control report would look like the following:
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1187" src="/wp-content/uploads/2018/10/parallelformatphasegvbmr95ctlrpt.jpg" alt="ParallelFormatPhaseGVBMR95CtlRpt" width="1455" height="698" /> <span class="figcap">Figure 130. Parallel Format Phase GVBMR95 Control Report</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">Note that the DD Name on the end of each view is different. After the extract phase, four format phases would be executed, one to process each extract file.</p>
+<p class="p">Multi-process parallelism is not very unusual. Similar to running many meetings simultaneously in separate conference rooms, it is used quite frequently with fairly unsophisticated tools to solve particular problems more quickly.</p>
+<p class="p">The down side with multi-process parallelism is that memory cannot be shared between processes. Data must go through the operating system or much more frequently written to disk, to be shared among processes. Thus even within SAFR, the core image reference data used in creating sort titles in GVBMR88 must be loaded into each Format Phase. Thus multi-process parallelism allows application of more CPU resources to a problem, but isn't the ultimate in efficiency.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Partitioned Event Files</h2>
+<p class="p">Suppose we make one change to the last set of views we ran in our example, and we split the input journal entries into two files instead of one file. We place all the journal entries for one legal entity (family) in one file and the others in another file. Thus the data in both files has not changed, and if we concatenated the files together (in other words, told the operating system to present both files, one right after the other, to the program as if they were one file) the views would process without any other adjustments.</p>
+<p class="p">No change is required to the views to cause GVBMR95 to perform multi-threaded parallel processing. Views read Logical Record/Logical File combinations. The only change required is to define another Physical File under the existing Logical File in the SAFR metadata.</p>
+
+<div class="p">
+
+If this is done, GVBMR95 generates machine code for each file. After generating the machine code, GVBMR95, the mother task, instructs the operating system to execute these two programs and tell it when they have finished. The GVBMR95 control report for this execution is shown below.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1186" src="/wp-content/uploads/2018/10/parallelprocessinggvbmr95ctlrpt.jpg" alt="ParallelProcessingGVBMR95CtlRpt" width="1622" height="1235" /> <span class="figcap">Figure 131. Parallel Processing GVBMR95 Control Report</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">The first line shows how many threads have been executed in parallel. Note now that the results of each view are shown by physical event file, including lookups found, not found, records written (including a header record for each physical file read per view) and which extract file the data was written to.</p>
+<p class="p">Making this one change means we may allow the operating system to process our data twice as fast, if it assigns our threads to different CPUs at the same time, and both CPU's perform the same amount of work. This one change might cut the time of the process in half.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+
+<div class="p">
+<pre class="pre"></pre>
+&nbsp;
+
+</div>
+&nbsp;
+<p class="p">The two files above both have the same kinds of records in them; the resulting generated programs to read each of the files would be nearly byte for byte the same. This is because we simply defined a new physical file under the logical file. The views are exactly the same. But multi-threading isn't limited to reading multiple files containing record described by the same LR. In <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-27-find-more-detailed-events/">Find More Detailed Events</a>, when discussing sort/merge processes, we described a multiple source view. A multiple source view can read different logical files, defined by different LRs, and combine the data into a single output, particularly when the two LRs include a common set of fields for sorting and summarizing. The two files may be read in parallel in GVBMR95.</p>
+&nbsp;
+<p class="p">Thus partitions can be assigned for various reasons. They may have no meaning, and are simply to increase parallelism like the example above. The partitions might have meaning as well, such as containing event data from history or containing a different record type. The generated code in each thread may be unique, because some views might read two different logical files, while other views in a thread do not. Each thread is effectively a custom developed program for extracting data from that event file.</p>
+&nbsp;
+
+</div>
+&nbsp;
+<div class="section">
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">Parallelism can get out of hand though, as shown in the next chapter. Next let's turn to understanding how to control performance, and really get the most out of parallelism when needed.</p>
+
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>   <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-49-control-and-contention/">Chapter 49. Control and Contention</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-47-look-at-it-go/">Chapter 47. "Look At It Go"</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a>
+
+&nbsp;
+
+</div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Note that in the example given, the time would be nowhere near half because the thread processing is almost instantaneous due to the small size of the event files. The start up time for reading the logic table, VDP and reference data files, code generation, and the shut down time of closing extract files and printing the control report is always single threaded.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-47-look-at-it-go/" class="prev"><span class="label">&larr; Previous</span>Chapter 47. "Look At It Go"</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-49-control-and-contention/" class="next"><span class="label">Next &rarr;</span>Chapter 49. Control and Contention</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

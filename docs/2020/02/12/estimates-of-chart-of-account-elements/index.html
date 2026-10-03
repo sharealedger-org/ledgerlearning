@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estimates of Chart of Account Elements — LedgerLearning</title>
+  <meta name="description" content="Dr. William McCarthy recently asked me, "Can you guess for me: What is the average G/L code block size in small, medium, and large enterprises? And what is the ">
+  <link rel="canonical" href="https://ledgerlearning.com/2020/02/12/estimates-of-chart-of-account-elements/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Estimates of Chart of Account Elements</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">February 12, 2020</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:paragraph -->
+<p><a href="/2016/04/23/the-big-idea-eliminate-posting/">Dr. William McCarthy</a> recently asked me, "Can you guess for me: What is the average G/L code block size in small, medium, and large enterprises? And what is the average number of G/L accounts in small, medium, and large enterprises (thousands, millions)?" Below is my answer to this thoughtful question.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Typical General Ledger Chart of Accounts</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The following table gives my best guess at what counts would be for the chart of account elements for various size firms.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:table -->
+<figure class="wp-block-table"><table><tbody><tr><td class="has-text-align-center" data-align="center"><strong>Enterprise Size</strong></td><td class="has-text-align-center" data-align="center"><strong>Nominal Account Only</strong></td><td class="has-text-align-center" data-align="center"><strong>Fully Qualified COA Field Values</strong></td><td class="has-text-align-center" data-align="center"><strong>Actually Occurring Combinations</strong></td><td class="has-text-align-center" data-align="center"><strong>Elements of Block</strong></td></tr><tr><td class="has-text-align-center" data-align="center"><strong>Small</strong></td><td class="has-text-align-center" data-align="center">Dozens&nbsp;</td><td class="has-text-align-center" data-align="center">Scores to low Hundreds</td><td class="has-text-align-center" data-align="center">Hundred to low Thousands</td><td class="has-text-align-center" data-align="center">1 - 3</td></tr><tr><td class="has-text-align-center" data-align="center"><strong>Medium</strong></td><td class="has-text-align-center" data-align="center">Hundreds</td><td class="has-text-align-center" data-align="center">Hundreds to low thousands&nbsp;</td><td class="has-text-align-center" data-align="center">Thousands to Tens of Thousands</td><td class="has-text-align-center" data-align="center">3 - 6</td></tr><tr><td class="has-text-align-center" data-align="center"><strong>Large</strong></td><td class="has-text-align-center" data-align="center">Hundreds to&nbsp; Thousands</td><td class="has-text-align-center" data-align="center">Thousands to&nbsp; Tens of Thousands</td><td class="has-text-align-center" data-align="center">Hundreds of Thousands to Millions</td><td class="has-text-align-center" data-align="center">5 - 15</td></tr></tbody></table><figcaption>Estimated Elements of Enterprise Accounting Code Block</figcaption></figure>
+<!-- /wp:table -->
+
+<!-- wp:paragraph -->
+<p>I don't have extensive experience in small or medium sized firms, but these counts are what I would expect.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The first two columns are individual values for fields in the Chart.  The Nominal Account is the most important element of the chart, as it uniquely identifies what type of balance is being maintained.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The Fully Qualified Chart of Account (COA) is a combination of fields.  For example, a partnership might require two fields, one for the nominal account, and another for the partner identifier, more generally called the Legal Entity.  This is usually a grouping of accounts for a particularly taxable entity, a partner, a company, etc.  In the smallest companies there is only one legal entity.  In large organizations there are hundreds of them, and if one goes globally even thousands of them.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Another example field would be cost center, typically a grouping of accounts that are managed for budget or forecasting purposes.  In large organizations there can be thousands of these as well.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2016/07/11/new-video-metric-engine-and-normalization/">Metric Engine and Data Normalizatio</a>n &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The third column is an estimate of the combinations of these fields that are actually assigned to data in what is typically the General Ledger.  Although the theoretical possible values will be factorial of the possible values in each of the fields in the chart of account, not all combinations actually occur.  For example, certain departments do not manage certain products, so accounts for those products never show up in combination with that department or cost center value.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>When the possible value counts become thousands of rows, many of them are set in automated ways through the Accounting Rules Engines.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2017/03/13/new-video-interface-layer-of-a-consolidated-data-supply-chain-architecture/">Reference Architecture Interface Layer </a>&lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Exceptional Examples</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>On the Large enterprise side, one of the most extensive coding structures I've seen is the coding structures mandated by regulatory compliance in financial services in Brazil, where the regulatory chart of accounts is over 100,000 categories and the resulting rows are, if I remember correctly, in the millions for their large banks.   They are things like types of loans, with particular maturity dates, collateral, interest rates, customer types, geographies, etc.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Why a Chart of Accounts</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The definition of the Chart is critical in establishing any financial reporting system.  It is like a combination table of contents and index to a book; the ledger created will only be able to answer questions that are listed by specific combinations of values in the predefined chart of accounts.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>And simply defining a potential value is not helpful if no transaction is ever mapped to that value.  As <a href="/2016/09/19/new-video-a-conversation-with-richard-k-roth/">Rick Roth</a> told me once, defining the column headings to a spreadsheet (the field names in the chart of account) takes a little bit of time, and defining the potential values in each one of those columns (domain values) takes longer still.  But the real time is consumed in defining the actual combinations of values that are in each row of the spreadsheet.  The amount of time spent on this last step dwarfs the other two steps. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2016/06/06/new-video-metric-engine-and-the-chart-of-accounts/">Metric Engine and the Chart of Accounts </a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The Chart of Account effectively codifies every financial transaction in an enterprise into one consistent structure.  I think this fact has been overlooked as we have built sub-ledgers to manage increasing levels of detail in transaction systems, and the needs for reporting on them, but not increased our ability to combine and analyze these transactions in relationship to the larger enterprise or other types of activity.  Reversing this trend would require us to build what I term a Metric Engine.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Consolidated General and Subledgers</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>One of the key ideas behind a Metric Engine--something which calculates a metric, rather than just a Search Engine--would be to add one more chart of account element, with far-reaching impacts upon the entire reporting structure of the organization.  It would be to add a customer/contract identifier (on the revenue accounts), or vendor/contract identifier (on expenses accounts.  Note that in banking customers provide deposits and take out loans, so it's the same identifier on each side).  This new chart of account element increases substantially the number of values in a historical General Ledger chart of accounts.  But it does not increase the overall number of balances maintained in all ledgers because these elements are maintained in subledgers today.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; See the my monograph for an overview of what a Metric Engine is and why it is important:  <a href="/books/metric-engine/">Metric Engine: Reinventing Data Supply Chains for Business</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Instrument Ledger Element</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>My paper, <a href="/whitepapers/minimum-costs-for-financial-system-data-maintenance/">A Proposed Approach to Minimum Costs for Financial System Data Maintenance</a>, notes that the elements by which balances are maintained in the organization (the actual enterprise "chart of accounts") includes subledger balances.  I have built systems for very large organizations which included this customer/contract identifier, effectively adding millions of chart of account element values.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>When this is done, effectively the General Ledger, renamed an Instrument Ledger to reflect it very different nature, contains individual customer or vendor Balances Sheets and P&amp;L's; these can contain enterprise owned balances (like loan loss reserves or other things not shared with the customer).  It transforms the way we think about the financial system, while at the same time moving towards a lower overall cost of maintaining financial data.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But in the end, this is a very different chart of account element.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2016/07/18/new-video-metric-engine-and-a-detailed-identifier/">Metric Engine and a Detailed Identifier</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The following video was released early in the blog series.  Many of the above items are touched upon in it.  It's worth a review if you haven't watched it recently.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/4YUHJSISVuo","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/4YUHJSISVuo
+</div></figure>
+<!-- /wp:core-embed/youtube -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 45. Sort User Exits — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-45-sort-user-exits/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 45. Sort User Exits</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">While in Sacramento I started working on the mainframe before I had been on the Internet, and before I had my own e-mail account. I vaguely remember one day when Randall showed that it was possible to send a message to another user on the mainframe with the TSO "Send" command. You could only type 115 characters, and the message was only displayed on the screen when the message recipient hit enter. We used this simple way of communicating when working on projects from hotel rooms. We had to dial into the network on the hotel phone, and cell phones were very uncommon.</p>
+<p class="p">I mention this because I remember thinking when I saw instant and text messaging and twittering that they really aren't any different than the TSO send command. There really are very, very few innovations in computing, because the machines do basically the same things today that they did when they were invented. I have often said, "There are no new verbs in COBOL."</p>
+<p class="p">A similar concept is the idea of an application programming interface or API. An API is the ability to call an external program to do functions. On the mainframe, applications had defined points when they could call "user exits". An exit would be a program written to do a function which an application, like sort, could not do itself.</p>
+<p class="p">Sort has a number of possible points when it can be instructed to call a custom program, but for our purposes we will focus on only two: feeding data to sort, and reading data from sort. We'll deal with the second of these first.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Write Exits</h2>
+<div class="p">
+
+During the period when we had huge extract files, before extract phase summarization, SAFR would typically perform significant IO to:
+<ol class="ol">
+	<li class="li">Read the event file and</li>
+	<li class="li">Write the extract file in the Extract Phase,</li>
+	<li class="li">Read the unsorted extract file and</li>
+	<li class="li">Write the sorted extract file in the Sort phase, and then</li>
+	<li class="li">Read the sorted extract file to produce the summary report in the Format phase.</li>
+</ol>
+</div>
+<p class="p">Doug recognized that using the sort user exit concept we could eliminate an entire write and read of these files by having the format program, GVBMR88, called by sort as a user exit. In this way, as the sort utility prepared to write the data to the output file, it would call and pass this record to GVBMR88. GVBMR88 would then process this record as if it had read it from disk. When GVBMR88 completed, it would instruct the sort utility to delete the record rather than write it. The Sort utility didn't need to know that the record had already been used for its intended purpose; it would simply continue on to the next record. In this way IO steps 4 and 5 of the process were completely eliminated.</p>
+<p class="p">This became the standard configuration for running GVBMR88, even after the advent of extract phase summarization, even though the extract files now tend to be significantly smaller. GVBMR88 is run as a "write exit" to Sort, since it is called by sort just before it writes a record to disk.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Read Exits</h2>
+<p class="p">The other applicable exit is a read exit, which effectively passes data to the sort utility to sort. In early 2000, I think it was, at about the same time Doug and I were trying to finish the logic table optimizer, we did an experiment one evening. We wanted to see if we could eliminate the 2nd and 3rd types of IO.</p>
+<p class="p">I had learned about the sort parameters to control the amount of memory it tried to use, the names for its sort work or temporary files, and to allow it to be run in parallel with other instances of sort running at the same time in the same task. Doug then created a process to call sort in the midst of extract processing instead of writing the records to the extract file. Sort would then be keeping all these records in memory if it could, (and if not writing them to temporary files on disk), until GVBMR95 said it was done handing its records. Sort would sort the records and then call GVBMR88 when it wanted to start writing records to disk.</p>
+<p class="p">To our surprise, after a couple of hours we made the process work. Without writing any data to disk, we went from the event data to the final output. I don't remember if we tried calling sort from multiple views (for example, view 3264 and 3265), which would have required having multiple copies of sort and GVBMR88 running simultaneously under GVBMR95 (one sorting the records for view 3264, independently from the other sorting the records for 3265). I suspect we didn't get that far, but we thought it was possible to do but likely would have required changes to the way GVBMR88 performed its file allocations.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+<p class="p">In the end, because of extract phase summarization, this feature didn't become a standard configuration and has never been used in a production SAFR process. The extract files became small enough that the time to write and read them between GVBMR95 and Sort became trivial. On the other hand, the added complexity of making multiple sort processes run in parallel, with multiple GVBMR88 executions as well, in a chain of programs calling each other as exits, and contending for memory and file names, and everything else, provided little benefit. The simplicity of the process made the cost of the IO worth while. If needed for a particular instance, a SAFR Extract phase write exit, described in a later chapter, could be written to call sort (which is actually how Doug accomplished the work that night in the first place).</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Sort Permutations</h2>
+<p class="p">SAFR has the ability to generate summary files from event files. We've noted over the years that many of the views have the same selection criteria, because the outputs are simply different cuts or dimensions in data warehousing terms, of the same event data. We also found that many of these cuts of data are in a similar "family" in a sense; they are permutations of the same set of keys. For example, some need access to a financial summary by the account number (123) while others would prefer to access the data by the account title (home).</p>
+<p class="p">This grouping of data has generated a class of tools that create "cubes", groups of these cuts of data all stored and grouped together. We'll deal more with this concept in the next chapter on SAFR cubes. At this point though, I should explain about a special sort read exit call GVBSR01 written by Jerry Canterbury in 2003 as part of a project that created a reporting dashboard for IBM. The goal was not only efficiency, but also maintenance. Using this feature, the development team had to develop many fewer views. The additional cuts of data provided by other views were generated in the batch process. Efficiency came by eliminating the 2nd and 3rd IO types above for these sets of views.</p>
+<p class="p">First, parameters which are input to the Logic Table process tell that program to generate a number of additional views, similar to the process it undertakes when it creates the JLT for the reference file phase. The parameters point to a view that has all the sort keys of interest. It then tells the program to create copies of that view, but with only specified sort keys, and in particular order. The Logic Table program puts these additional views in the VDP, but not in the logic table. Thus only the data needed for the first view is extracted from the event file by the Extract program.</p>
+<p class="p">The next step in the process was to invoke GVBSR02 (Sort-exit/Read program number 2) as a read exit to sort. Sort actually read the file, but before doing anything, it would give the record to GVBSR02. GVBSR02 would look at the VDP and detect which views needed generated extract records from the base view. It would then generate new records for these new views by simply changing the control area view ID to match the view in the VDP, and then giving the additional records to sort to include. It appears to sort, and to GVBMR88, as if these records were in the extract file, but the 2nd and 3rd IO types above are eliminated.</p>
+<p class="p">This process moves the potential explosion of event records needed for each view from MR95 back to sort input. GVBSR02 creates the additional records needed for each view, rather than GVBMR95. These records only exist in memory, and are never written to disk as sort passes them to GVBMR88 which produces the final output. Thus in one execution of SAFR entire cubes can be created very, very efficiently.</p>
+
+</div>
+<div class="section">
+<div class="p">
+<pre class="pre"></pre>
+SAFR has multiple exit points as well, as discussed in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-15-exits/">Exits</a>. But first let's actually talk about the Format program.
+
+</div>
+<div></div>
+<div>
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:  </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-46-format-phase/">Chapter 46. Format Phase</a></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-44-sort/">Chapter 44. Sort</a></div>
+<div></div>
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a>
+
+</div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+</div>
+</div>
+<div></div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> GVBMR88 used a fix set of DD Names to its outputs to different file types. Multiple instances of it would attempt to open the same files at the same time, which isn't allowed by the operating system. Parameters can be passed now to GVBMR88 which tell it which files names to use, so this configuration is now possible, although not tested.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-44-sort/" class="prev"><span class="label">&larr; Previous</span>Chapter 44. Sort</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-46-format-phase/" class="next"><span class="label">Next &rarr;</span>Chapter 46. Format Phase</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

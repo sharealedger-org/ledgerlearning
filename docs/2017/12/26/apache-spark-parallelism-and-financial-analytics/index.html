@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apache Spark Parallelism and Financial Analytics — LedgerLearning</title>
+  <meta name="description" content="This week we continue the Apache Spark usefulness and limitations for financial analytics. Last week we discussed input data formats. This week we focus on cons">
+  <link rel="canonical" href="https://ledgerlearning.com/2017/12/26/apache-spark-parallelism-and-financial-analytics/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Apache Spark Parallelism and Financial Analytics</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">December 26, 2017</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:paragraph -->
+<p>This week we continue the Apache Spark usefulness and limitations for financial analytics. <a href="https://youtu.be/st4iJhY-H2A" target="_blank" rel="noopener">Last week we discussed input data formats.</a> This week we focus on consolidation of financial data.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Indexed access typically helps when searching for single answer to a question, be it a search engine query URL, or an individual financial transaction or balance. This compute pattern utilizes parallelism very effectively. But many types of financial analytics are not searching for a single record, but rather creating accumulations of many transactions.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Posting processes by their nature aggregate transactions to make balances. The answer to many of our queries may be satisfied by an existing posting engine. But if not, we have to create that position, which will require bringing together the results of aggregations from potentially many transactions into a single result.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This process sits between the indexed access of creating or updating transactional data, and finding the final aggregated position in a balance. Spark is effective at scanning larges amounts of data looking for the "needle in the haystack", but if not used correctly it can be applied poorly to this compute pattern of creating balances through a posting process.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Watch <a href="https://youtu.be/cdyZQkKVFdQ" target="_blank" rel="noopener">episode 96 of Conversations with Kip here</a>, the best financial system vlog there is.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/cdyZQkKVFdQ","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/cdyZQkKVFdQ
+</div></figure>
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:paragraph -->
+<p>Next Up: <a href="/2018/01/03/apache-spark-transaction-generation-and-balance-posting/">Apache Spark Transaction Generation and Balance Posting</a></p>
+<!-- /wp:paragraph -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 16. Data Warehousing — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-16-data-warehousing/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 16. Data Warehousing</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">In June of 1996 a few years after my training I was asked to staff a Price Waterhouse (PW) booth at a data warehousing conference. There I think I met Mike Schroeck, a PW partner, for the first time. Mike was head of PW's Data Warehousing (DW) practice, a mentor and respected expert on reporting. Over a number of years Rick and I worked closely with Mike as the firm attacked reporting problems. Let's set aside the operational aspects of the system, and focus on report production assuming all the data we need to produce the reports has been created, focusing on how data warehousing architecture attacks these problems.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">ETL, Databases, and Report Package</h2>
+<div class="p">
+
+Perhaps the simplest architecture layout of a data warehouse would be this:
+<div class="fig fignone">
+
+<img class=" size-full wp-image-1295 aligncenter" src="/wp-content/uploads/2018/10/simplifieddatawarehousearchitecture.jpg" alt="SimplifiedDataWarehouseArchitecture" width="1671" height="405" /> <span class="figcap">Figure 33. Simplified Data Warehouse Architecture</span>
+<p class="image">The Extract Transform and Load process (ETL) accesses either the detailed data or the master file in the operational system, and loads it into the data warehouse database. The users interact with the reporting tool to request a report. The reporting tool accesses the data warehouse to retrieve and create the report.</p>
+<p class="image">The ETL tool tends to be more closely associated with the business event capture and operational system posting process. In other words, it most often is a batch process that occurs at a scheduled time after the business events have been captured and recorded in the operational system. The reporting package tends to be more closely associated with the user report demands; its work is performed as users request reports. The database works in both worlds, accepting, loading, reorganizing data as it is presented by the ETL tool, and responding to requests for reports from the reporting tool.</p>
+<p class="image">We'll discuss these components more in later chapters.</p>
+
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Report Inventory</h2>
+<p class="p">Let's get back to the question of where in this architecture to perform summarization.</p>
+<p class="p">In the DW model, summarization occurs any number of places. For example, if the master file is used in the source system, then the posting process in the operational system is still doing the summarization. The ETL process may either summarize the master data file further, or using the detailed transactional files may load the data warehouse with summaries, detailed data or both. All modern databases have the ability to summarize data, either as requested by the reporting package (a sum function in SQL for example), or internally through other means.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+<p class="p">Each of these approaches, though, really relies on the principles of the subsystem architecture to facilitate reporting processes. Each step of the process summarizes data for specific database target tables ultimately attempting to provide what may be single records in an efficient manner for the end users reporting needs.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></p>
+<p class="p">Perhaps a useful way of thinking about this problem is to liken it to the traditional approach to inventory management in the PC business compared to Dell's just-in-time manufacturing process which was developing in the 1990's.</p>
+<p class="p">The traditional manufacturing process was to guess what type and how many items the buyers might demand, produce that many items, store them until needed, and then ship them to the user when ordered. What Dell realized was that assembled PCs are a lot like groceries; the longer they sit on the shelf the less valuable they become. Instead of making machines and then hoping to sell them, Dell changed the manufacturing process to assemble the machines quickly, in some cases in just four hours after a customer orders the machine. To do this, Dell worked to organize the factory floor to keep all the materials in the most efficient manner for manufacturing.<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a></p>
+<p class="p">Instead of a PC, let's think of the answer a user wants as the thing the system needs to produce. The traditional reporting architecture demanded that answers be defined up front, and thus create a master file or database table to answer that question. These master files, whether in the operational system or later in the data warehouse, are updated so answers are always ready when the user asks the question.</p>
+<p class="p">Dell realized that giving customers tremendous choices in their PC configurations would drive greater sales. In the world of reporting, consider what proliferates faster, the number of source systems or the number of reports? The answer is always the number of reports. The business events are relatively stable, and thus the source systems are too. But the number and types and permutations of those attributes gathered in each of those systems in reporting processes are almost limitless. The demand for reports will always exceed the capacity to produce them if we continue to demand that all questions be anticipated.</p>
+<p class="p">Another problem is that the demand for non-financial summaries gets the short shrift. The traditional accounting answers tend to take precedence over other views of the data; this is similar to allowing the assembly line to be set up to favor word processing configurations precluding gaming, multimedia, laptop and other possible needs. The accounting answer manufacturing process destroys the data it should be providing.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Supply and Demand</h2>
+<div class="p">
+
+And it isn't simply demand for reports exceeding capacity: ultimately using summarization as a means to overcome volume results in overwhelming the system with the number of summaries that must be maintained. This is because as the number of summaries that must be maintained grows, the overall workload of the system experiences diseconomies of scale, as shown here:
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1292" src="/wp-content/uploads/2018/10/postingprocessdiseconomiesofscale.jpg" alt="PostingProcessDiseconomiesofScale" width="331" height="249" /> <span class="figcap">Figure 34. Posting Process Diseconomies of Scale</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">This shows that each summary structure updated to answer a specific question reduces the response time of the entire system to provide that answer, because the single record to provide the answer is readily available from the database to be displayed to the user. This reduction in user response time continues as more and more summaries are created to answer more and more questions.</p>
+<p class="p">Correspondingly, the system has to perform a posting process for each transaction received against each of these summary structures. As volumes increase, this is normally done as part of transaction processing, not at report time. At some point, the reduction in response time for a user is less than the additional update time for posting. Not all answers in the summaries are used; people don't need answers to some questions. However, having established the summaries, the update cycle is constant for each transaction record received.</p>
+<p class="p">Thus there is a computer cost to maintaining the reporting inventory, and at a certain scale the computer cannot support all possible predefined answers. And because the summarization process, whether in the operational system, the ETL layer, or the database is tied more closely to the daily end of business event processing, the problem shows up in elongated batch processing times.</p>
+<p class="p">Working within the constraints of the traditional report inventory system, the IT community only supplies a limited set of summaries to answer a limited set of questions that can be updated by the batch processing time and still provide end users with an adequate response time. In other words the users can choose from the configurations the manufacturing line can produce when the line was established.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">The Alternative</h2>
+<p class="p">The alternative is to organize the manufacturing of answers such that the answer needed is produced as close to the time the question is asked as possible. Certainly people ask questions that need to be answered by reports much more often than they buy PCs; thus four hours for each report would not be acceptable for most reporting problems. But if it were possible to reduce it to four seconds instead of a usual on-line response time for a limited set of report inventory of two seconds, people might be willing to buy that solution.</p>
+<p class="p">Manufacturing PCs to custom specifications for each individual user requires organizing the buyer's configurable components in the proper order so they can be assembled rapidly. What would a just-in-time manufacturing line for reports look like? The answer from McCarthy is quite clear: all reports are made from detailed business events. The record of business events is the stuff of which reports are made.</p>
+<p class="p">Dell used suppliers for many of its components; it did not try to start with silicone and make the actual CPU processor in its assembly line. That would have taken too long to do. In the same way, as we'll see later, it would take too long to accumulate raw detailed business events for the prior 2 years into a common format and then summarize them to produce a financial statement in any time acceptable for a user.</p>
+<p class="p">But every time we build a component part, we build inventory we must manage. If at every choice we come to, we compare the cost of maintaining the inventory to the cost of engineering the fabrication process we can continually drive down cost of inventory, and increase the flexibility of the reporting environment.</p>
+<p class="p">There is another reason why the detail in reporting processes is needed. Dell would like the PCs' design to be consistent to drive down maintenance cost when they have to repair them. Similarly, report answers have a relationship to each other. Reconciliation is the maintenance process of proving the relationship between each answer is correct. Reconciliation, a common finance function, requires finding a common set of attributes between two summaries and showing that the accumulated amounts in both summaries are the same. Any difference is an indication one or the other summary and the corresponding answers are wrong.</p>
+<p class="p">This process of reconciliation, the process of finding a common set of attributes between different summaries, is facilitated by having ready access to the detail transactions - the business events - that were used to make the summaries. The shorter the distance between the business events and the answers, the easier the reconciliation and subsequent correction is if problems are identified. Reconciliation in finance is so pervasive in some cases, elimination of the cost of reconciliation in the finance process alone can pay for the construction of the new system.</p>
+<p class="p">Thus, if we are to attempt to streamline the answer production process, it will require nearly manic focus on a single goal: efficiency of report production. The assembly line must be as efficient as possible in delivering the answers.</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-17-programming-tools/">Chapter 17. Programming Tools</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-15-operational-versus-informational/">Chapter 15. Operational Versus Informational</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/">Part 3. The Partner</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<p class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Materialized views would be an example where the database creates and stores summaries.</p>
+<p class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> "Once the data ages , it passes from current detail to older detail. As the data is summarized, it passes from current detail to lightly summarized data, then from lightly summarized data to highly summarized data." Inmon, p. 37.</p>
+<p class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> "Dell is able to achieve a four-hour production cycle time using an Internet-based supply-chain management system, Figueroa says. After getting an order, Dell notifies its suppliers about what components are needed, and they're delivered within an hour and a half.</p>
+<p class="fn">"With our pull-to-order system, we've been able to eliminate warehouses in our factories and have improved factory output by double by adding production lines where warehouses used to be; says Figueroa....</p>
+<p class="fn">"The just-in-time method demands a very disciplined assembly-line process, says David Dobrin, an analyst at Surgency Inc. in Cambridge, Mass." Marc L. Songini, "Just-in-Time Manufacturing" <cite class="cite">Computerworld</cite>, November 20, 2000, or at <a href="https://www.computerworld.com/article/2589691/vertical-it/just-in-time-manufacturing.html" target="_blank" rel="noopener">ComputerWorld Article</a>, Accessed October 2018.</p>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-15-operational-versus-informational/" class="prev"><span class="label">&larr; Previous</span>Chapter 15. Operational Versus Informational</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-17-programming-tools/" class="next"><span class="label">Next &rarr;</span>Chapter 17. Programming Tools</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

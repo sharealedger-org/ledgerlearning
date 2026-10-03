@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to FPEM: Financial Period End Management — LedgerLearning</title>
+  <meta name="description" content="Over the last six months I've worked with a new vendor in the financial system space, Svayam Infoware, headed by Rakesh Kant.  His platform has many of the char">
+  <link rel="canonical" href="https://ledgerlearning.com/2020/04/30/introduction-to-fpem-financial-period-end-management/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Introduction to FPEM: Financial Period End Management</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">April 30, 2020</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:paragraph -->
+<p>Over the last six months I've worked with a new vendor in the financial system space, <a href="http://www.svayamtech.com/#/home">Svayam Infoware</a>, headed by <a href="https://www.linkedin.com/in/kant/">Rakesh Kant</a>.  His platform has many of the characteristics I've talked about in my vlog, including:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>A Metric Engine</li><li>Universal Ledger, and </li><li>Integrated General and Sub-ledger environment.</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>The following video gives a sense of the system in action.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/3Aq0dfdbH_g","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/3Aq0dfdbH_g
+</div><figcaption>FPEM Overview.  Copyrighted by IBM Corporation, 2020.</figcaption></figure>
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:heading -->
+<h2>Context</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Let's put this system into context.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2714,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/04/slide5.jpeg?w=1024" alt="" class="wp-image-2714" /><figcaption>System Context for FPEM</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>This is a simple view of the typical General or Enterprise Ledger context in most organizations.  The key feature of this diagram is the summarization or aggregation of data from the transaction systems or subledgers before use in the General Ledger.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This was done because in decades past compute costs were so high, and system availability to meet the daily financial cycle meant aggregation had to be used to produce the enterprise view. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The problem this creates is it limits the types of analysis that are possible from the most trusted ledger in the organization with the only enterprise perspective, the General Ledger.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2715,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/04/slide6.jpeg?w=1024" alt="" class="wp-image-2715" /><figcaption>Business Problem</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>In extreme cases if the enterprise view cannot explain some critical piece of the business, it can be very costly.  In a sense, because Lehman Brothers could not explain adequately their exposure to subprime mortgages to their trading partners, they went out of business.  Cost of not knowing that answer?  $638 billion.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Traditionally we have built all sort of systems which work around the Enterprise or General Ledger to provide some level of answer to these questions.  But they typically don't reconcile adequately, are costly because of the duplication of data, and create confusion among those seeking answers with confidence.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2016/05/17/new-video-data-warehouse-vs-finance-system/">The Data Warehouse vs. the Finance System</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>An alternative, given today's available computing capacities, would be to eliminate the aggregation of data.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2716,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/04/slide7.jpeg?w=1024" alt="" class="wp-image-2716" /><figcaption>Proposed Solution</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>If a more detailed enterprise ledger were possible, it could support a wide variety of answers to our questions.  This is a fundamental change in how we think of enterprise business ledgers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Technology Characteristics </h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The following are the characteristics of the platform as described by Svayam:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Cloud   Deployable to private, hybrid, or public cloud environments </li><li>Big Data   Scale achieved through potential massive parallelization when required </li><li>Digital   Fully automated, no manual processes </li><li>Metrics Engine   Calculation of myriad of critical business metrics through flexible reporting </li><li>Instrument Ledger   Integrated General and Subledger Functionality </li><li>Daily Close   Period tracking made simple </li><li>Rule Based Accounting   Integration with existing ledgers possible to get started </li><li>Real Time   Streaming posting processes supported </li><li>Straight Through Processing   End-to-end platform from data ingestion to report delivery </li><li>Event Driven   Organization using business events enhances enterprise understanding of data</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>FPEM is built upon <a href="https://spark.apache.org">Apache Spark</a> and <a href="https://drools.org">Drools</a> business rules engines.  This means it is highly scalable.  It uses the ledger processing techniques pioneered and proven in global use by the <a href="http://www.redbooks.ibm.com/redpapers/pdfs/redp4599.pdf">IBM Scalable Architecture for Financial Reporting (SAFR)</a>. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Architectural Fit</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I use the following reference architecture for financial systems to evaluate various platforms.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2017/03/06/new-video-consolidated-data-supply-chain-architecture-overview/">Financial System Overview</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2718,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/04/slide9.jpeg?w=1024" alt="" class="wp-image-2718" /><figcaption>The IBM Integrated Risk and Financial Management Reference Architecture</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The following slides give a sense of the functionality as demonstrated by the system interfaces in FPEM to see how they fit in the reference architecture.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Platform Administration, Reference Data and Process Control</h4>
+<!-- /wp:heading -->
+
+<!-- wp:image {"id":2719,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/04/slide10.jpeg?w=1024" alt="" class="wp-image-2719" /><figcaption>Platform Administration, Reference Data and Process Control</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2017/04/15/new-video-support-functions-in-the-consolidated-data-supply-chain-architecture/">Support Functions Architecture</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In the Platform Administration, Reference Data and Process Control sections, FPEM provides:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Platform dashboards</li><li>Control over accounting and platform processing dates</li><li>Chart of account and reference data maintenance facilities</li><li>Hierarchy maintenance facilities</li><li>Security, Roles and Privilege maintenance</li><li>Activity and Process dashboards</li><li>Balance Reconciliation</li><li>Adjustment facilities</li><li>File upload and manual process facilities</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>This is an extensive set of facilities, often neglected in new platforms.  They communicate quite well the ambition and scope of Svayam's platform.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Interfaces and Accounting Rules Engines</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The following are platform aspects of the Interfaces and Accounting Rules Engines areas.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2720,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/04/slide11.jpeg?w=1024" alt="" class="wp-image-2720" /><figcaption>Interfaces and Accounting Rules Engines</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:<a href="/2017/03/13/new-video-interface-layer-of-a-consolidated-data-supply-chain-architecture/"> Interface Layer Architecture</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>FPEM is data structure independent.  One begins to populate FPEM with data by defining </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Source Fields</li><li>Registered Sources</li><li>Source Events</li><li>Rule Lists, and </li><li>Accounting Rules</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Source fields are independent of each source, and can be reused.  For example if many of your systems provide a field called org unit to the General Ledger, this field can be defined once.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Source events are the basis for creating transactions and associated reference data (like involved parties, contracts, etc.) on the platform.  A source event may turn into a double sided journal entry if one wishes to use FPEM for fully balanced accounting processes.  These entries may contain one, or multiple entry lines generated from the individual business events.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>For example, in the demo system we constructed in FPEM, I defined the following accounting schematics to reflect the business data I had available to me for demonstration purposes.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2722,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/04/screen-shot-2020-04-30-at-5.51.38-pm.png?w=1024" alt="" class="wp-image-2722" /><figcaption>Demo System Accounting Schematic</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>We were able to construct all the rules needed to produce all these journal entries from the originating transactions using the FPEM facilities.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Financial Applications</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The following are the applicable user interfaces in the Financial Application area of the reference architecture.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2723,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/04/slide12.jpeg?w=1024" alt="" class="wp-image-2723" /><figcaption>Financial Applications</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Posts: <a href="/2017/03/20/expense-sub-ledger-architecture-and-a-consolidated-data-supply-chain/">Sub-ledger Architecture</a> and <a href="/2017/03/27/new-video-the-gl-in-the-consolidated-data-supply-chain-architecture/">The General Ledger</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>FPEM is a full fledge ledger.  <strong>Ledgers</strong> create balances in order to increase efficiencies in processing, and as such, FPEM allows definition of Ledger Layouts, so users can chose from the transactions/journal entries (if they choose to use double entry accounting) which balances to consistently maintain.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The <strong>Business Term</strong> area allows customization of FPEM data structures, for your own terms for accounts, products, channels, customer types or other elements of the financial system.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The <strong>Journal Process Definition</strong> recognizes that not all the required business events are fed from external systems.  In true financial systems, some times ledgers generate new business events.  These might be what I term <em><a href="/2016/07/25/new-video-metric-engine-interim-reporting-and-temporal-events/">Temporal Events</a></em>, which are the result of the passage of time.  Currency Revaluation is an example.  Or they may be <em><a href="/2019/10/08/introduction-to-the-allocation-series/">Analytical Events</a></em> which are created for analytical purposes, but then often replaced when the analysis is performed the next time.  Funds Transfer Pricing or Allocations are examples here.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The journal process definition can generate new business events off of either transactions or balances.  For example, interest is calculated from a balance, where as typically inter-unit elimination processes are often triggered by transactions.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This interplay between transactions and balances goes on in all our financial systems, but often requires separate processes for each step:  Transactions are applied to balances; then another step generates a new transaction from these balances; then these new transactions have to be posted to other balances; which then generate new transactions.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>FPEM can perform these functions in rapid succession, without having to pause between each one, or even separate systems for each function as is sometimes the case.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Reporting and Analytics</h4>
+<!-- /wp:heading -->
+
+<!-- wp:image {"id":2727,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/04/slide13.jpeg?w=1024" alt="" class="wp-image-2727" /><figcaption>Reporting and Analytics</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post: <a href="/2017/04/10/new-video-reporting-layer-of-the-consolidated-data-supply-chain-architecture/">Report Layer Architecture</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In the Reporting and Analytics space, FPEM proves</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Saved Reports</li><li>Pivot Tables</li><li>Report Formatting</li><li>Filtering and Hierarchies</li><li>Drill Down Capabilities</li><li>Download Functionality</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>This is where the rubber meets the road; being able to use the very rich data environment FPEM makes possible is very powerful.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The ability to calculate any metric of interest is what makes FPEM a "Metric Engine," as opposed to a "Search Engine."  There should be many more of these kinds of applications in the world.  With renewed, vigorous innovation in financial systems, I think there will be.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2016/05/31/new-video-introduction-to-a-metric-engine/">Introduction to Metric Engine</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Integrated General and Sub-Ledger: The Universal Ledger</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The General Ledger, should by definition, holds the impact of every financial transaction in the organization, at least upon the few elements in its defined chart of account.  Typically, though, those transactions are highly aggregated (the problem of the daily financial cycle).  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If we were to simply put those few attributes on the subledger business events (in addition to the required subledger attributes), we could begin to have consistency of our data across the enterprise.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This then becomes a Universal Ledger.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>A powerful aspect of a Universal Ledger is that it allows cross business function analysis not possible with the siloed subledger architectures of our historical systems.  One can analyze relationships between vendors and customers, shipments and manufacture of goods, can receipts and payments.  Cross subledger analysis will become critical for greater efficiencies in the future.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>As shown in the video demo, FPEM not only produces the enterprise General Ledger view, but also the customer or vendor analytics typically reserved for the subledgers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">&gt;&gt;&gt; Related Post:  <a href="/2018/08/20/finance-costs-data-fragmentation/">Why Sub-ledgers Were Created</a> &lt;&lt;&lt;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Implementation Approach</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I think the most likely approach to implementing FPEM could be described as "Adjunct Reporting Ledger, to Parallel Ledger, to Book of Record System."</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2731,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/04/slide14.jpeg?w=1024" alt="" class="wp-image-2731" /><figcaption>Implementation Approach</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Using this approach means exploring those critical feeds to the existing General Ledger, in the Accounting Rules Engines.  Duplicating these rules in FPEM, but retaining visibility to the customer contract level of detail is the key to enabling the FPEM ledger to produce reconciled, auditable results in aggregate and at the sub-ledger level.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But that detailed work can be done over time.  Start with a simple feed from the GL to FPEM, to create a more flexible reporting environment using your existing trusted ledger. Then determine high value source systems and sub-ledgers where additional details would pay back the effort to find the accounting rules.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>You can leave these feeds posting to both ledgers simultaneously if you wish.  Or eliminate the legacy GL feed and start to move FPEM to a book of record system.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Here is a sample project timeline to get started with the initial set up of FPEM and a proof of value.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2732,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/04/slide15.jpeg?w=1024" alt="" class="wp-image-2732" /><figcaption>Possible Initial Project Timeline</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>A segment of video below talks through many of the aspects of the system I have described here.  Listen to the full video to get a sense of why this technology and architectural approach to financial systems is significant.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/www.youtube.com\/watch?v=HGIuR2LKME8\u0026amp;t=2405s","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://www.youtube.com/watch?v=HGIuR2LKME8&amp;t=2405s
+</div><figcaption>FPEM Overview</figcaption></figure>
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:heading -->
+<h2>Conclusion</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I was impressed with FPEM.  Rakesh and his team have built a system of substantial functionality, great flexibility, and scalable performance.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If you're interested in learning more, please contact me through the <a href="/contact/">contact page</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is another episode of Coding with Kip, the technical sub-series of Conversations with Kip, the best financial system vlog there is. Literally learn more--about ledgers and financial systems--at <a href="http://www.LedgerLearning.com">LedgerLearning.com</a>. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Watch the series in order at the <a href="https://www.youtube.com/playlist?list=PL2UrMfZzcfvFjnCfOBYqksqzuFbaqUupT">Coding with Kip Playlist </a></p>
+<!-- /wp:paragraph -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

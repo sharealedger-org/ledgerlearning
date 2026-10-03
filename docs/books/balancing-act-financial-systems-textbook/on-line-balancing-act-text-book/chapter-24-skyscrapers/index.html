@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 24. Skyscrapers — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-24-skyscrapers/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 24. Skyscrapers</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">One day in May 2006 I worked at the IBM office in downtown Chicago. As I left the building that day, I stopped and watched construction workers preparing the foundation for the new 92-story Trump Tower Chicago. After a few mesmerizing minutes of watching all the complexity and activity, and pondering upon the investment taking place in that new building, I thought of the similarities between building a skyscraper and my experience in constructing new systems over the years.</p>
+<p class="p">Because software systems are for the most part virtual and not tangible, they can veer off course and move from reality to fantasy much too easily. But there is a way of keeping reporting systems grounded in reality. Understanding this analogy can help.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Data Sources</h2>
+<p class="p">That afternoon I surveyed the foundations of surrounding buildings, roads, and bridges, which were exposed for the first time in years. The messiness of it all struck me, a mismatch of walls made of differing materials from bricks to concrete at varying angles misaligned in some cases with overhanging structures above. The brick portions by the bridge buttresses appeared more than 75 years old. As I left and walked to my car, I marveled at the thought that all that messiness must undergird all major cities, years and years of accumulated, layered building in the same location.</p>
+<p class="p">The same is true of large business systems. As we have noted, the operational systems, the front end of the subsystem architecture, have existed for years. They are misaligned, constructed on various platforms using various technologies of various ages. They have been constructed the same as any major city, piecemeal, over years, with varying degrees of overlap and integration. There are huge investments in these systems, in people, processes, and technologies that support them.</p>
+<p class="p">The finance systems have grown up in like manner, adding layer and layer of processing on top of each other, after each acquisition or as each reporting problem was tackled. The mass of code and data flows is almost overwhelming to anyone trying to understand it all.</p>
+<p class="p">If our system is a building, how could we build it on such a foundation? Alternatively, do we really need to rip everything out and start over again? A few people, including enterprise data stewards, may dream of doing just that. Like their counterparts in the public works departments, they may wish they could clean it all up, start with a fresh set of plans, straighten out the inconsistencies and permanently fix the problem-prone locations. Yet even they recognize the impracticability of doing so. The cost of replacing this foundation likely outweighs the potential benefits, even if the capital could be found to do so.</p>
+<p class="p">The operational systems are the "factory" that produces the materials from which the finance system is constructed. The material produced is data. The data has varying degrees of quality and suitability for use in finance. The reporting data needs are different from the transaction processing systems data requirements. For example, completing the transaction in the operation system may not require all the fields captured as input. Some fields are captured for analysis after the transactions are complete, sometimes long after the transactions are complete. Thus, the focus of operational system maintenance, including on-line edits and validations on these reporting fields, is often low. Operational systems can tolerate inconsistent data that reporting systems cannot.</p>
+<p class="p">Skyscrapers - multi-purpose skyscrapers - are built within the existing city infrastructure, within all the messiness. And the existing finance systems accept and tolerate the data imperfection of the operational systems. The data produced by the operational systems may have problems, but it is certainly not worthless. Yet understanding the messiness is a critical guide to the development of a new finance system.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Plans</h2>
+<p class="p">While watching the construction, I spotted a few engineers, building plans in-hand, marking points and inspecting progress. Developing the building plans is certainly a critical step in the process. However, it is not done in isolation I am sure. It includes inspecting the existing site, investigating below the street surface and taking core samples. That day I envisioned engineers crawling through manhole covers and touring basements with flashlights before the land purchase even occurred.</p>
+<p class="p">This interaction between creating plans and inspecting the real world is sometimes lost in IT projects. Inspecting the data is a critical, often ignored step in building the finance systems. It is important not just to inspect the data but also understand its potential uses. When the need for inspections is ignored, many projects shift focus completely to developing plans.</p>
+<p class="p">This approach often centers on creating a cosmic global data model, the plan of all plans. Such a plan would solve all the data problems because then all data would be neatly categorized and filed. And the approach seems reasonable. If we are going to construct an enterprise financial system, then obviously we need some portion of an enterprise data model. Yet to focus exclusively on the data model is approaching the problem as if we are constructing a new city out of farm land in the middle of the prairie. It is no more practical than tearing down an entire city to start over again.</p>
+<p class="p">Don't get me wrong; data models are important, and an enterprise data model can be a good idea. But the enterprise data models and similar types of documents should be thought of more like a zoning plan. Zoning plans develop over time with the city. They change. They have limited details about each building and simply give an overall perspective. Build an enterprise data model to determine the kinds of data the organization has, where it is located and how it is organized. But don't confuse the plan for the data. The plan is not the building. The data model is not the data.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Structure</h2>
+<p class="p">Using our understanding of the basic structure of the building can balance the need for planning at too low level of detail. If all the subdivisions of each floor had to be worked out prior to making progress on the skyscraper, again the planning cycle would be interminable. When building the basic structure, it isn't necessary to know what rooms will be the copy rooms, or the conference rooms, or the offices. Much of that can be decided later.</p>
+<p class="p">Skyscrapers are composed of basic components. The building that will rise will have a foundation, lobby, shops, and elevators on the main floors, and then general office areas above. Similarly, most reporting environments contain certain standardized components. In buildings, the concept of open floors that are configured later provides the flexibility to make progress without knowing all the details.</p>
+<p class="p">The finance system, as the original enterprise data warehouse, also has a basic structure to it, with ETL, repository, and reports. Yet at times it feels as if to configure any one of those things, all the details about what reports are needed must be known. This drives projects to plans at inappropriate levels. We need some grounding principles upon which to start, that guide us away from wanting all the details defined up front.</p>
+<p class="p">Alternatively, understanding the business events provides a structure for us to begin. Looking back at the operational systems can help. Data in the operational systems are normally organized into business events. These are the individual transactions so familiar to business people. These transactions provide the basis for an enormous amount of reporting within an organization. They are counted, added, sorted, summarized, selected, and categorized. Focusing on these business events - thinking of them as the basic building block for any reporting system - can help guide both the mock-up phase of the project, and the proper repository structure later on. Focusing on business events from the source systems eliminates some of the variability that can side track progress.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Data Tests</h2>
+<p class="p">Inspecting the site and suitability of the materials should involve much more than it does in most reporting projects. Certainly all good data modelers obtain samples of data from the various systems to develop an accurate data model. But the inspections I am talking about take this idea much further.</p>
+<p class="p">Consider for a moment that, although a skyscraper is enormous, most people only interact with a small piece of the building at any one time: they experience the entrance, the elevator, the office, and the conference room. Few people interact with it in much more holistic ways, such as the window washers and HVAC maintenance workers.</p>
+<p class="p">Most people only interact with small parts of the finance systems at any time as well. When it comes to data analysis, people interact with a report or a few lines of a report at a time. The mind can only comprehend a few data points at any one moment. Admittedly, the number of interactions can be significant; as data is absorbed, new points of investigation emerge. Sometimes these points are near the previous points and are contained within the same report. Often they are lower levels of detail.</p>
+<p class="p">It is possible to take data samples and allow some level of interaction for people. In most cases, the data provided from the operational systems can be used to produce reports or cubes. People can react to these, similar to walking into an office mock-up. There are key attributes contained in the source systems that can be of enormous interest to the business, that are used in reports they already know, and can give a sense of the immediate value of the data. Yes, these "mock-ups" have limitations; for the skyscrapers, they do not have the real window views; for the reports, they may not have the time dimensions, and some operational systems attributes may be inconsistent or completely unusable.</p>
+<p class="p">Yet exposing limitations early is critical to accurately determining what type of system can be built. These "core samples" if you will, are at the heart of inspecting the site, testing the materials, and stepping into mock-ups of the completed structure.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Tools</h2>
+<p class="p">Some aspects of the standard technology stack used in reporting processes present impediments to taking core data samples. The nature of most reporting tools does not allow turning real data into some useful reports without going through many layers of development.</p>
+<p class="p">ETL tools can read data from the operational systems, but they focus on obtaining data, not delivering reports. They contain limited reporting capabilities. Most repositories have the database at the middle of them. By and large, databases have very low tolerance for the messiness of operational data. They can enforce data types and relationships that the operational system built on different technology may violate. Data typing, saying whether the value in a field is numeric or character as a simple example, is effective when data is being created. But in reporting systems, the data has already been created; it is too late to enforce rules that data already breaks. Reporting tools, by and large, leave most of the work of generating the reports up to the database. They also expect the rows to be in nearly displayable format in some cases. Thus the data sample reports have to be defined in the database and populated by the ETL tools.</p>
+<p class="p">What is needed for this mock-up stage of the project is the ability to combine the ETL and reporting layers; data needs to be read, perhaps even directly from the operational systems, and turned into reports, without worrying about laying it down in the ultimately structured repository. A tool with this capability would significantly enhance the ability to guide construction of the finance system. If this tool also focused on reporting on business events, so much the better.</p>
+
+<div class="p">
+
+Keep this analogy in mind as we explore how SAFR has been implemented through the years. Theses steps have developed into something that might be called The SAFR Method. The steps are:
+<ol class="ol">
+	<li class="li">Find the Event File</li>
+	<li class="li">Balance the Event File</li>
+	<li class="li">Find More Detailed Events</li>
+	<li class="li">Define Reference Data</li>
+	<li class="li">Iteratively View Results</li>
+	<li class="li">Assess Reporting Needs</li>
+	<li class="li">Estimate the Data Basis</li>
+	<li class="li">Define Summary Structures</li>
+	<li class="li">Define Processes</li>
+	<li class="li">Consider Complex Joins</li>
+	<li class="li">Model the Repository</li>
+	<li class="li">Optimize for Performance</li>
+</ol>
+</div>
+<p class="p">We'll examine each of these steps in the following chapters.</p>
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-25-find-the-event-file/">Chapter 25. Find the Event File</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-23-development/">Chapter 23. Development</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-23-development/" class="prev"><span class="label">&larr; Previous</span>Chapter 23. Development</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-25-find-the-event-file/" class="next"><span class="label">Next &rarr;</span>Chapter 25. Find the Event File</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

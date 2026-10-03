@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 32. Define Summary Structures — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-32-define-summary-structures/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 32. Define Summary Structures</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">The results of the above analysis led Rick to the conclusion in the white paper that "approximately 65 hours per week of continuous processing" would be needed " just to complete the initial extract" with no table joins. Adding table joins took the processing time to "about 260 hours of continuous single-threaded processing." Thinking about summarizing the required 210 million extracted records for the 23 reports meant, "...something on the order of 2,000 processing hours per week would be a reasonable estimate ...of the end-to-end processing load, given the  environment."<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a> Remember, there are only 168 hours in a week. Two thousand hours is a lot of parallel processing.</p>
+<p class="p">Even with the SAFR software, the processing requirements were formidable. Thus after review of the detail file findings from our first calculations and comparison of the findings against the processing performance standards of the hardware and software environment, we found we needed summary file structures to reduce the reporting load.</p>
+<p class="p">And thus we have a balancing act to perform. The event based principles say that the most flexible environment is to work from the business events, and yet we find that the needed reports cannot be reasonably processed with the given resources. Creating summary files means we will be adding processing layers between the business events and the reports, but it is necessary. The approach we have taken with the method, though, has been to estimate based upon no summarization, and then add only those summaries necessary to support specific reporting requirements. We still maintain access to the details in order to regenerate summaries, or to use with reports requiring that detail.</p>
+<p class="p">We must estimate the impact of adding a summary file, then reassess if the processing requirements can be met within the project hardware and software constraints. More summary files are designed until the processing requirements can be met.</p>
+<p class="p">The process of defining summary structures includes determining criteria fields, locality, and time impact.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Criteria Fields</h2>
+<p class="p">In determining how to create summary files, first determine which fields to summarize. Any criteria fields used in the report, fields used to select which events to include, must be included in the summarization. If multiple reports use the same criteria fields, a summary file collapsing to these criteria fields may reduce the amount of data processed.</p>
+<p class="p">If possible, perform a test summarization to verify the expected collapse using different combinations of criteria fields.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Locality</h2>
+<p class="p">Next determine the locality. "Locality means that a large number of transactions create a much smaller set of combinations when summarized by a set of cross-structural dimensions"<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a> e.g. customer / product / organization. For example, assume that the company has two customers and three products. The summary file could theoretically contain six records (2 x 3). However, assume that Company 2 for some reason will never purchase Product Y, and Company 1 will never purchase Product Z. The number of summary records now is four (2 x 3 - 2). Locality can occur because of the definition of data elements. For example, a hierarchical structure will result in very high locality. If there are 25 sales districts contained within 3 sales regions, the theoretical limit is 75 (3 x 25). However, if all sales districts are unique across regions, the limit is 25.</p>
+<p class="p">Modeling the degree of locality can be done fairly easily by using data from existing systems or from prior steps in the SAFR method to calculate the collapse rate across structures. Simply sorting and summarizing the transaction files and calculating the average number of unique cross-structural key combinations by week, month and quarter will give a reasonably good picture of what kinds of collapse rates can be expected. It's usually sufficient to work with three-to-six months of the two-to-four highest volume transaction types related to the structures in question.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Time Impact</h2>
+<p class="p">We need to understand the reporting periods of time to appropriately incorporate the effects on the expected collapse of number of records.</p>
+<p class="p">The greater the number of records due to passage of time, the greater the potential collapse when summarizing. For example, assume that within a single day a customer will probably not buy the same product twice. Thus summarizing the day's transactions to the customer product level will result in very little collapse. However, assume that over the course of a year the customer purchases the same product at least once a month. The estimated collapse will then be 12 times higher for a yearly file.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Using the Sizing Spreadsheet</h2>
+<p class="p"><strong class="ph b">Step 7 - Complete the Summary Temp Worksheet</strong></p>
+
+<div>
+
+<img class="alignnone  wp-image-1229" src="/wp-content/uploads/2018/10/summarytempworksheet.jpg" alt="SummaryTempWorksheet" width="443" height="494" /> <span class="figcap">Figure 80. Summa</span><span class="figcap">ry Temp Worksheet</span>
+
+</div>
+<div></div>
+<div class="p">
+
+Once I had determined that the reports could not be produced from the detail transactions, I copied the Detailed Template and made a new summary spreadsheet. In this I named the summary file, and guessed at what fields might summarize it, I estimated the number of occurrences/locality of those fields, and then estimated by report the number of records which would be used from it.
+
+&nbsp;
+
+</div>
+<p class="p"><strong class="ph b">Step 7.1. Determine Criteria Fields (Summarizing Field Name)</strong></p>
+
+<div class="p">
+
+Summary files are created by summarizing criteria fields and accumulating the value fields. Consider the following example:
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1227" src="/wp-content/uploads/2018/10/detailfileexample.jpg" alt="DetailFileExample" width="307" height="140" /> <span class="figcap">Figure 81. Detail File Example</span>
+
+<div class="image"></div>
+</div>
+</div>
+<div class="p">
+
+If the above table were summarized by Customer, the following summary file would result:
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1225" src="/wp-content/uploads/2018/10/summaryfileexample.jpg" alt="SummaryFileExample" width="303" height="85" /> <span class="figcap">Figure 82. Summary File Example</span>
+
+</div>
+</div>
+<p class="p">Because the table was summarized at a level greater than Product, the product field is no longer meaningful. It could be removed from the file, because we no longer know how much was paid for each product. This file would not be useful to produce a product report.</p>
+<p class="p">At the Cookie Manufacturer, I first tried to create a single summary structure collapsing on all three hierarchies, the Material, Sales, and Customers. I found that even summarizing these, because customer is such a low level of detail, the resulting files were still very large. I then noted from analyzing the detailed reports that a lot of the reports used the Material, and the Sales hierarchies, but not the Customer hierarchy. When I tested the summarization, I found the records reduce to about 5% of the original records but this file could be used in 60% of the reports.</p>
+<p class="p"><strong class="ph b">Step 7.2. Determine Locality</strong></p>
+<p class="p">In the Sum Temp worksheet, enter the number of unique occurrences adjusted for locality in the Number of Occurrences cells. Locality makes the summary structures smaller.</p>
+<p class="p">In my spreadsheet I multiplied the possible combinations of values in each field to guess at what the summary structure might be. When I actually ran tests, I found that the files were much smaller because some combinations never happen. Analyzing the results of my tests I found that all but one combination of customers and salespersons were not valid because customers were only assigned to one salesperson.</p>
+<p class="p"><strong class="ph b">Step 7.3. Determine Time Impact</strong></p>
+<p class="p">In the Sum Temp worksheet, adjust the Number of Occurrences for the effect of time.</p>
+<p class="p">I noted that the number of reports that needed only daily and weekly values was relatively low. Most of the reports, although run on a daily basis, showed month-to-date numbers. Also, in analyzing the data I determined that there was almost no collapse on daily files, and very little on weekly. I determined that I needed to only make summary files for the monthly records.</p>
+<p class="p"><strong class="ph b">Step 8   Create New "Reports"</strong></p>
+<p class="p">After creating summary files, I updated the report page to reflect what source should be used for which report using the summary structures whenever possible. I also added a new row to the report page to reflect the need to create each one of the summary files. To SAFR, production of a file or production of a report requires the same steps. These rows read the detail files on the periodic basis.</p>
+<p class="p">I then analyzed the pivot table based upon this new information and determined if processing could be completed cost effectively.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Balancing Summary Structures</h2>
+<p class="p">One significant difference between this approach and the standard summary file creation approach is that in the SAFR approach the summary files are recreated from the detail periodically. On a daily basis the new transactions are added to the file. But when the hierarchies change, which affects the rows in the summary files, the files would be rebuilt from scratch.</p>
+<p class="p">This means the summaries are temporary files, not posted permanent files. This approach allows us to maintain as much of the flexibility the business event based reporting approach allows while accommodating processing and cost constraints.</p>
+
+</div>
+<div id="bibledefinesummarystructures__projectCookieManufacturer2" class="section">
+<h2 class="title sectiontitle">Cookie Manufacturer Project Results</h2>
+<p class="p">A few years after the project, I wrote the following description of its results:</p>
+<p class="p"><em class="ph i">The Problem</em>
+In 1996 a major US cookie manufacturer installed an ERP to manage all aspects of the manufacturing, HR and financial operations. The system captured data and provided adequate information for managing most operational aspects of the business. But the ERP could not deliver the detailed sales analysis necessary to support the highly detailed, store-specific sales process. They chose SAFR to solve the problem in an integrated ERP environment.</p>
+<p class="p">The reporting requirements were substantial. The company required detailed information at the customer/line item level over various time slices from daily to year-to-date, for over 60,000 customer stores and 2,000 items, selecting and summarizing by over 100 fields. The company sells over a million items per week, and they needed comparative information for each time period for at least the last two years. They also needed comparative data be reorganized to reflect changes in organizational structure over time!</p>
+<p class="p"><em class="ph i">The Solution</em>
+A SAFR application was developed to deliver the full benefit of the ERP implementation, without burdening users with another tool. The ERP's profitability analysis module was configured to capture the required data. Programs were written to extract the sales items from the ERP on a nightly basis. A series of SAFR processes were developed to manage the data warehouse, including creation of various summary file structures. The completed data warehouse contains over 250 gigabytes of data in 15 entities, containing over 300 million records.</p>
+<p class="p">SAFR was configured to produce executive information files, commonly called "information cubes." The company defined SAFR "Views" to create over 150 cubes, and 75 interface files. SAFR's effective date lookup processing allowed for recasting the historical detail to reflect the current management structures.</p>
+<p class="p">The ERP Executive Report Viewer was also developed. Constructed within the ERP environment and fully integrated with the profitability analysis reporting environment, this analysis tool gives users a single source of information. Through this tool, users are able to select a time period, and then the respective cube. Users can specify selection criteria, drill down into reports to lower and lower levels of detail. They can export to Excel, view the data in a graphical format, format the report, and save a profile of the report.</p>
+<p class="p"><em class="ph i">The Results</em>
+Users have commented that the sales reporting system has been one of the most successful components of the ERP implementation. It has allowed the company to capitalize on its national sales force that makes personal contact with stores nearly 3 times each week. The sales representatives are armed with needed information. They can analyze customer and product information for daily, weekly, monthly, year to date, and spot trends from over 3 years of data. The system has helped fuel their growth in net income nearly 10 times from 1996 to 1999, and has scaled as the company has purchased and integrated three additional companies.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+&nbsp;
+
+</div>
+&nbsp;
+<div class="p">
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1259" src="/wp-content/uploads/2018/10/cookiemfrsolutionsystarch.jpg" alt="CookieMfrSolutionSystArch" width="454" height="276" /> <span class="figcap">Figure 83. Cookie Manufacturer Solution System Architecture</span>
+
+Indeed, the system scaled so effectively it was selected as the surviving application when the Cookie Manufacturer was purchased by a much larger company. The following is the architecture diagram depicting the implementation.</div>
+&nbsp;
+
+</div>
+&nbsp;
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">Our steps to this point have assumed all business events are presented to the system. For the Cookie Manufacturer this was true, and based upon these steps Monica Logan helped me build the SAFR processes necessary to produce the required outputs. Additional steps are necessary if not all the business events are presented to the reporting environment.</p>
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-33-define-processes/">Chapter 33. Define Processes</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-31-estimate-the-data-basis/">Chapter 31. Estimate the Data Basis</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+<hr />
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Richard K. Roth, <cite class="cite"> High-volume Operational Reporting/Data Warehousing Summary of Sizing Concepts and Architectural Alternatives</cite> Price Waterhouse White Paper, September, 1996, 1, 4, 5. Copyright IBM Corporation. Used by permission.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> Ibid., 7.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-31-estimate-the-data-basis/" class="prev"><span class="label">&larr; Previous</span>Chapter 31. Estimate the Data Basis</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-33-define-processes/" class="next"><span class="label">Next &rarr;</span>Chapter 33. Define Processes</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

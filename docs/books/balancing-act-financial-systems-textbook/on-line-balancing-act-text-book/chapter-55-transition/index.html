@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 55. Transition — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-55-transition/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 55. Transition</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">The feelings of panic, followed closely by the feelings of euphoria, continued for a couple of years. Notwithstanding what happened to Doug, the prospect of being acquired by a technology company opened the possibility that SAFR might be more fully exploited as a software product. Even though IBM had taken a pass on purchasing SAFR by itself, they had now acquired it as part of a larger asset: all of PwC consulting.</p>
+<p class="p">Not long after the merger, we were introduced to people in the software group who were asked to determine if SAFR should be a "program product." There are many kinds of software products within IBM, but I take it program products are perhaps the highest designation with the highest requirements as well. There was a series of meetings with technical architects and business people. I remember getting the feeling that the business owner had been burned trying to turn a services developed asset into a product, and that the mainframe was being viewed as a non strategic platform.</p>
+<p class="p">The result of the reviews was that, yes, SAFR certainly had all the scale, weight, complexity, and feature set of a true product. However, there wasn't an easy way to integrate it with other products; for example, it doesn't use SQL, a common platform independent language that allows for different pieces to fit together. The second conclusion was that it didn't have the track record of sales to conclude that it could be supported financially on license revenue alone. This resulted in feelings of panic.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">A/R Conversion and GSD</h2>
+<p class="p">The reviews and other meetings opened up a lot of discussion with people inside of IBM, either in consulting or in the software area, that touched upon the problem SAFR solved. With the size and breadth of IBM, it seemed we could continually be introduced to new people to discuss the possibilities. So although by early 2003 prospects of being a program product dimmed, the opportunities for new uses of SAFR seemed very real. We were even able to start some internal IBM projects using SAFR.</p>
+<p class="p">Continuing the GFDW project, SAFR was used for conversion activities. Chris Stallman somehow was tasked with converting all of PwC's receivables into the IBM systems. Late in the project new requirements started to show up. Jim Hladyshewsky had been helping part time, and over night became more than double time.</p>
+<p class="p">Randall showed up and applied his ability to turn everything into a parallel process, and handle differences in processing for the numerous countries involved, simply by configuring his script generator. In the end he generated perhaps a million lines of code to make the system work. Chris and I thought an exit was needed, so one evening I took that assignment on as we sat around the conference table working. After a number of hours, I still couldn't get the very simple thing to work, perhaps not even compile. Chris then said something like, "You know Kip, if we did this in the view, we wouldn't need that exit." We all thought about it and agreed. I made a joke about feeling fairly useless.</p>
+<p class="p">Chris's success led to other internal projects. Another significant, if nearly unheralded application, was the Global Services Delivery project whereby SAFR was used to read IBM services ticket transaction repository and generate SAFR cubes. During this project Jerry Canterbury wrote the GVBSR01 and 02 Sort Exits to generate multiple permutations of a view. The actual constructed views covered 14 different dimension, for weekly, monthly, and quarterly views of the data; the generated views numbered around 1,000 views. The permutations would have been many times beyond that.</p>
+<p class="p">Rakesh Kant was key to the US data extracts on the GFDW project, the most complex country with the largest data. He and I had begun to talk about how to connect SAFR better to the downstream information delivery tools and he took the initiative to create a proposal about how he thought we might enhance SAFR to work with databases more effectively. He also took on a rewrite of the SAFR Insight Viewer, and created a very nice JAVA application.</p>
+<p class="p">Rakesh expanded this for the GSD project. He converted the SAFR Insight Viewer to work as a web service, wherein the custom browser interface built for users to select which cuts of data they wanted would request those cuts from the cubes. The SAFR Insight Viewer web service would perform the access to the correct cubes to satisfy the requests. Below shows the resulting web interface, fed with data from SAFR Scan Engine and the SAFR web service. This started Rakesh down the road of creating the SAFR Managed Insights and the Indexed Engine.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1210" src="/wp-content/uploads/2018/10/gsdsystemsampleoutput.jpg" alt="GSDSystemSampleOutput" width="1449" height="1087" /> <span class="figcap">Figure 143. GSD System Sample Output</span>
+
+<div class="image"></div>
+</div>
+<p class="p">With this project, the difficulty in marketing seemed to ease dramatically: euphoria.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Version 4 Development</h2>
+<p class="p">These projects were completed with either the CICS SAFR front end, termed Geneva Version 3.3 Viewbuilder, (initially developed in 1993), or used a limited set of the scan engine functionality and the new user interface, called the Workbench. The Workbench did not work completely with the mainframe versions of the Scan Engine, GVBMR95 and GVBMR88. There were two dependencies to finishing SAFR version 4 to hope to survive as a product: money, and people - specifically Doug: panic.</p>
+<p class="p">In the middle of January, Randall and I put together estimates of what it would cost to do various things with the software. On one extreme was the cost of just shutting the business down, which raised potential client relationship issues. At the other end was turning it into a full fledged product. In between were a couple of other options. I felt we really had a good story to tell about what could be done with the software. We reviewed it with Rick, and he agreed. He took it up the chain, and actually received approval to do one of the middle options. We had funding: euphor - OK, you get the picture.</p>
+<p class="p">The next part of the problem depended upon Doug. Similar to perhaps millions who have undergone the transition of a major corporate purchase, I could sympathize, undergoing feelings of frustration, anger, disappointment and fear myself. Fortunately, Doug had agreed to continue to work with us as a contractor.</p>
+
+<div class="p">
+
+The insurance company needed additional help with SAFR; they also wanted to use the new front end. With the funding provided by IBM, Doug and I started using their SAFR environment as a test bed to prove that the version 4 features worked the same. We had been working towards this goal for a while, but the need became more urgent. To set a measurable goal, I sent the IBM team the following e-mail on May 8, 2003:
+<ul class="sl simple">
+	<li class="sli">...I propose that we identify a set of selected passes that we will convert to V4 in the next 3 weeks by May 30th and produce output files that we can compare byte for byte....</li>
+	<li class="sli">A few years ago Blue Diamond Almonds ran a commercial with the tag line, "A can a week, that is all we ask." Well, perhaps we could name this our Operation Blue Diamond, and use as our motto, "A pass a week, that is all we ask."...</li>
+</ul>
+</div>
+<p class="p">In the prior year we had become conversant with some debugging tools that actually were capable of managing the complexities of the parallel processing code generation environment. Most tools could not provide the insights needed. I had learned to do this with Randall's help.</p>
+<p class="p">Greg Forsythe and Michael Shapiro worked with the client team to identify areas we needed to focus, and to debug problems that were outside of the scan engine that could be handled by others. They would feed me the defects with the conditions that created them. I would then recreate them in the debugger, setting appropriate break points and doing the level of debugging I could do. I would call Doug over when I got to a particular point and he would analyze the problem. He might have me go on to other places, or go back and code a fix while I set up the next problem.</p>
+<p class="p">We worked very late most evenings. There was nowhere to get food inside the building, and once we left we couldn't get back in. The overhead lights would go off, and we would often sit with just our cubicle lights on as we worked for hours. By the time we left, there would often be only the local 24 hour diner open to feed us. I seem to remember earlier in the year taking Doug out to eat after 11:00 PM or so to the diner. It was his sixtieth birthday. What a celebration.</p>
+<p class="p">At the end of May, I was quite surprised when we could actually claim victory in our goal towards having three passes converted. That wasn't the end of the work; we continued working through the defect counts that summer and into the fall. But we had gotten over the hurdle; we had created version four of the software.</p>
+<p class="p">In February we held a second retirement dinner for Doug so the people at the insurance company projects could attend. After dinner he told me he spent a number of months feeling angry about how he had been treated. Yet one day he realized that he was getting to do the things he wanted to do, with the people he wanted to do them, and decided the anger wasn't what he wanted to feel on a daily basis. I found my own frustration subsiding that summer as well.</p>
+
+<div class="body conbody">
+<div></div>
+</div>
+<div>
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/chapter-56-walkabout/">Chapter 56. Walkabout</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/">Part 6. The Platform</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/">Part 6. The Platform</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+</div>
+</div>
+<div class="related-links">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> The story of this development is, in and of itself, likely worthy of an entire new part to this book.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/" class="prev"><span class="label">&larr; Previous</span>Part 6. The Platform</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-56-walkabout/" class="next"><span class="label">Next &rarr;</span>Chapter 56. Walkabout</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

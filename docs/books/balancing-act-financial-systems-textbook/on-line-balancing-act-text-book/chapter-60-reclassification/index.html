@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 60. Reclassification — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-60-reclassification/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 60. Reclassification</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">Creation of a General or an Arrangement Ledger fed by transactions from source or product systems means we now have two master files; the master file in the product system and a representation of those balances in the ledger. Care must be taken in creating the linkage between these two systems, similar in some ways to the care taken when connecting a trailer to a semi. If the connection is not strong enough, the trailer may become disconnected while in transit; the semi and trailer then having nothing in common. If connected too securely, the whole may not have the flexibility required to turn or handle rough roads.</p>
+<p class="p">Starting in August 2005 for an entire year, the size of the endeavor slowly dawned upon the team, with deadlines for interim deliverables starting to loom large. The "days of obscurity" were now past. The result of multiple proofs of concepts showed deeper analysis was required, particularly around the arrangement ledger. It became clear we needed to spend some significant time considering this connection, particularly because it would not be the same as a general ledger connection. I remember a brainstorming session with Sandy Peresie and Tata Rao to lay down the framework with which to comprehend the less intuitive nature of these behaviors.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Definition</h2>
+<p class="p">Let's begin by defining reclassification. Finance processes typically include reclassification adjustments. These are usually fairly simple. For example, for most purposes a particular account might be classified as a "contra" account, like loan loss reserves, reducing the total asset value of the loans. It typically is a "negative" amount relative to the asset shown in the asset section of the balance sheet. However, being a negative amount, it could also be classified as a liability, which typically has a "negative" balance. Thus for some reports, finance might make journal entries to "move" an amount from one reporting category to another.</p>
+<p class="p">The problem with making this adjustment permanently is that the accounting rules for new transactions posting into this balance won't be affected by simply making the reclassification adjustment; they will continue to post to the "asset" account unless the system is changed in some way. Supposing this is not done, this reclassified balance becomes a "stranded" balance. It will neither increase nor decrease in an automated way. It will remain on the books until someone manually moves it back to the "asset" side, or changes the accounting process to post new entries to this balance.</p>
+<p class="p">This then is a different sort of business event. The act of commerce here may be as simple as adjusting the presentation of a report. This might be done because regulations require a certain presentation. Or it may be done simply for internal reasons. Nevertheless, these are valid business events.</p>
+<p class="p">However, if we construct an arrangement ledger, the need for manual journal entries to adjust millions of small ledgers might become overwhelming. It is probable that the work effort involved in maintaining, controlling, and adjusting millions of arrangements to reflect the change from "asset" to "liability" is simply too large for a finance function. A host of employees are involved in ensuring that balances in the source systems, the loan or deposit systems, for individual customers, are maintained correctly. To replicate that army in the finance area would be simply too costly. The reclassification processes must then be automated.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Reference Data Reclass</h2>
+<p class="p">Suppose, for a moment, we performed no data design of any kind, as Steve Mongulla suggested was possible<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a>, and we simply placed on the front of the amount every attribute that would be used to classify that amount for any report. If we employed this type of architecture, and we had a change in any attribute, say state of residence for a customer, and wanted to see the entire customer balance at that time reported under the new state, we would have to create a transaction which reversed the old state and the entire balance, and an offsetting transaction which posts the entire balance to the new state.</p>
+<p class="p">If we created these types of records, it may have no impact on some reports. For example, a report which shows the balance as of today would show the entire balance under the new state, and the negating transaction would net the historical balances to zero - effectively it would be invisible in the report. This report is no different than a Recast view of the data, as discussed in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-34-consider-complex-joins/">Consider Complex Joins</a>.</p>
+<p class="p">However, if instead the report needs to show activity over time, then these new set of transactions should show the customer balance under the old state while it was there, then the negating record zeroing the balance out, and the entire existing balance posting to the new state. This is slightly different than a Switch view, which would never show the entire balance under the new state. A Switch report would show those transactions from the old state there, and the new ones under the new state.</p>
+<p class="p">Rather, this is a Reclass view of the data. This view requires the generation of reclassification journals for changes in any reference data attributes. Creating a system capable of performing this work can substantially increase the data volumes involved. Any change in a reference data attribute creates new business events or balance records. When to employ this view of the data must be carefully considered.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Anchor</h2>
+<p class="p">The cause of reclassification, then, is the need to change attributes associated with balances. The assignment of attributes happens all along the data flow or data "supply chain" from source system to report. Any changes in rules or programs that assign attributes can cause a reclassification. Detecting in an automated way that a reclassification is necessary requires comparing the values assigned previously to the values to be assigned currently. Doing this requires a master key that does not change.</p>
+<p class="p">It is not typical to compare summarized journal entries output from a system one day to those output the next and determine if a reclassification occurred. The journal entries typically do not have any "anchor" or key by which to associate specific entries with other entries. Thus for a typical general ledger implementation reclassification detection must happen in the source system, where the program can see if the attributes assigned to a specific product system account number are different than those previously assigned using the product system master file. If they are different, then the product system program which generates accounting entries must create a reclassification entry to move the historical balance from one set of attributes to the new set.</p>
+<p class="p">An arrangement ledger, however, has a permanent key, an arrangement ID. Because of this, the reclassification processing can be moved from the product system to the finance system. This is the key to creating a stable yet flexible linkage between the product and the financial system.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Triggers</h2>
+<p class="p">A "trigger" is required to allow the AL processes to detect when a reclassification is necessary. One trigger can simply be new transactions which have been turned into journal entries. As the AL attempts to post these journal entries to existing balances, it can compare if the attributes assigned in the new journal entries are consistent with the attributes assigned to the historical balances. If they are not, it can generate a new journal entry to move the balances to new attributes.</p>
+<p class="p">Using new source system transactions (formed into journal entries through the accounting rules engine) means that any accounting rules embedded in the source system posting process will be captured in the finance system. However, parameter or rule changes in the accounting rules engine may not be. If no transaction is presented to the system which uses the changed rule, the balance in the finance system may never change.</p>
+<p class="p">An approach to overcoming this limit is to broaden the set of possible triggers, by processing the end of day balances from the source system. These balances can be run through the accounting rules as if they were transactions. The resulting records, with finance system attributes rather than source system attributes, can be compared to the balances maintained in the arrangement ledger. Difference in attributes can be used by the arrangement ledger to trigger creation of reclassification entries to move the historical balances to the appropriate position.</p>
+<p class="p">This creates a flexible yet secure connection between the source system and the finance systems.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Backdating</h2>
+<p class="p">If we are really serious about solving the finance system problem, though, we must not be simplistic about the required views of data that must be supported. One of the most important views is the ability to recreate historical views, how the balance sheet or other financial reports looked at some period of time. The problem with this requirement is that not all activity is recorded the day it happens. Business events, or acts of commerce, are discovered after the fact, and must be reflected through adjustments to the system. Product source systems miss cut-offs and provide automated feeds the day after the events took place.</p>
+<p class="p">If it were possible to simply summarize all transactions to produce reporting results as of a point in time, plainly including or excluding these late records can provide the desired perspective. But with high volume finance systems, this is not possible; balances must be created to reduce the input data volumes. This need complicates the posting processes. The posting processes must be able to update not only the back-dated period, but also walk forward the impact of those updates to subsequent periods. This also requires determining precedence for different types of back-dated updates. Again, using movements simplifies this problem.</p>
+<p class="p">Keeping these needs in mind while analyzing the requirements to perform reclassification processes can be very difficult. Having reconciled these needs, and created a system capable of performing these tasks, is a testament to the diligence of the team who created the first version of this system.</p>
+
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/chapter-61-support-processes/">Chapter 61. Support Processes</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/chapter-59-accounting-rules/">Chapter 59. Accounting Rules</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-6-the-platform/">Part 6. The Platform</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> See <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-18-input-output/">Database Size</a>.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-59-accounting-rules/" class="prev"><span class="label">&larr; Previous</span>Chapter 59. Accounting Rules</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-61-support-processes/" class="next"><span class="label">Next &rarr;</span>Chapter 61. Support Processes</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

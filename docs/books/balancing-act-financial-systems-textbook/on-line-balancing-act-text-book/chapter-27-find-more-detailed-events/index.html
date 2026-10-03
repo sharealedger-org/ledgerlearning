@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 27. Find More Detailed Events — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-27-find-more-detailed-events/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 27. Find More Detailed Events</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<div id="biblefindmoredetailedevents__projectUSInsurerStatisticalWarehouse" class="section">
+<p class="p">Starting work at the insurance company had happened a year earlier than the financial warehouse effort. Rick received an e-mail from Mike Schroeck about an opportunity at this insurance company. Rick never liked to commit his people full-time to other partners for projects; he was very careful about that. I don't know why I responded the way I did when he told me about the e-mail. I said, "Rick I want to go do this." Little did I know what a journey I had started. It lasted on and off for nearly seven years.</p>
+<p class="p">I was met on the project by Lynn Groves Zuccala and Anthony Boles, and later by Peter Corbett. They had worked with the insurance company for a number of months helping them craft a vision for the reporting environment. The company had concluded "...to build a single, consistent source of financially balanced data to be used by multiple business users for decision support, data mining, and internal/external reporting."<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a> They determined that keeping event level data would provide the most flexible reporting framework possible.</p>
+<p class="p">The project needed to find an event file, at the policy and loss level, for statistical (rather than financial) reporting. Mark Kimmell, another project team member, worked on this with Doug Kunkel. They were both guided by Vanessa Menke from the client who really understood the data. Mark had started looking for the detailed events in this same Fire Divisional Processing system that Jim ended up using later for the financial warehouse "Show me the money" effort. The file they had to work with was anything but typical.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Lower Level Detail</h2>
+<p class="p">The file at the heart of their home grown "ERP" system had the flavor of a home grown database system. The data was stored in a unique format in the file called Stacked Data Elements (SDE), and a set of utilities created by the company had to be used to interpret the file. This required Doug to write a program, called a user or a read exit, that SAFR Scan Engine called to read the file before the data was presented to the views. This program exposed the richness of the information contained in this file.</p>
+<p class="p">Mark and Doug found that this file had the policy and loss level transactions in it. It recorded changes to policies, the structure and parameters of the policy and each individual loss, policy renewals and payments, loss estimates and payments - all the business events at the core of the fire and casualty insurance business. This work required a number of months because of its more detailed nature and expansive scope. But the results were remarkable.</p>
+<p class="p">Jim later took this same file and found the additional records which were summary journal entries for the financial warehouse project. Whereas on Jim's report the entries were summarized to something like the business unit, cost center, account level, Mark's set of views could add policy number as well, where applicable.</p>
+<p class="p">Through this means, the company could produce policy level trial balances. The attributes on these trial balances weren't limited to the small set of items on the journal entries; they could be by term, or risk, or policy, any of the elements that were captured by the policy and loss admin systems.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Insurance Statistical Warehouse Project Results</h2>
+<p class="p">The insurance company created detailed Operations Data Stores (ODSs) which maintained significant descriptions of the property and casualty policies along with their premium and loss transactions and balances for 7 years of data. It isn't just the ability to put the data into these systems that is significant, but the ability to also get it out, nightly for a variety of reporting purposes including regulatory reporting. The environment also balances and feeds the financial reporting environment; thus regulatory reporting at the most detailed levels is consistent and balanced with all financial reporting.</p>
+<p class="p">The following are statistics complied by Kevin Bly, the system architect for the Fire ODS, and Lyn Kilhoffer, the system architect for the Auto ODSs, on August 8th, 2001, about five years after having started the project on the first Fire system.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></p>
+
+<div class="tablenoborder">
+<table class="table" border="1" summary="" rules="all" cellspacing="0" cellpadding="4">
+<thead class="thead" align="left">
+<tr class="row" valign="bottom">
+<th id="d8925e99" class="entry thleft thbot" valign="bottom" width="50%">Fire</th>
+<th id="d8925e101" class="entry thleft thbot" valign="bottom" width="50%">Auto</th>
+</tr>
+</thead>
+<tbody class="tbody">
+<tr class="row">
+<td class="entry nocellborder" headers="d8925e99 " valign="top" width="50%">Scenario:</td>
+<td class="entry" headers="d8925e101 " valign="top" width="50%"></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d8925e99 " valign="top" width="50%">The Daily process on 10 CPU machine capable of 1,934 MIPS but limited to 80% of capacity by workload governor
+<p class="p">Extract started at 03:15 AM</p>
+<p class="p">Extract completed at 03:45 AM</p>
+<p class="p">30 minutes of elapsed time</p>
+<p class="p">21 parallel threads were processed</p>
+</td>
+<td class="entry" headers="d8925e101 " valign="top" width="50%">The Daily process on 10 CPU machine capable of 1,934 MIPS but limited to 80% of capacity by workload governor
+<p class="p">Extract started at 02:08 AM</p>
+<p class="p">Extract completed at 02:37 AM</p>
+<p class="p">Approximately 30 minutes of elapsed time</p>
+<p class="p">38 parallel threads were processed at any given time (169 total threads processed)</p>
+</td>
+</tr>
+<tr class="row">
+<td class="entry nocellborder" headers="d8925e99 " valign="top" width="50%">CPU Time:</td>
+<td class="entry" headers="d8925e101 " valign="top" width="50%"></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d8925e99 " valign="top" width="50%">00:28:54 minutes of clock time elapsed
+<p class="p">02:55:02 hours of CPU time elapsed</p>
+</td>
+<td class="entry" headers="d8925e101 " valign="top" width="50%">00:29:15 minutes of clock time elapsed
+<p class="p">01:11:08 hours of CPU time elapsed</p>
+</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d8925e99 " valign="top" width="50%">Equates to 6.05 CPU engines running at full capacity during those 30 minutes of elapsed time.</td>
+<td class="entry" headers="d8925e101 " valign="top" width="50%">Equates to 2.43 CPU engines running at full capacity during those 30 minutes of elapsed time.</td>
+</tr>
+<tr class="row">
+<td class="entry nocellborder" headers="d8925e99 " valign="top" width="50%">Records Processed:</td>
+<td class="entry" headers="d8925e101 " valign="top" width="50%"></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d8925e99 " valign="top" width="50%">906 input files were allocated
+<p class="p">493 output files were allocated</p>
+<p class="p">Totaling 1,399 files allocated for I/O</p>
+</td>
+<td class="entry" headers="d8925e101 " valign="top" width="50%">1,029 input files were allocated
+<p class="p">529 output files were allocated</p>
+<p class="p">Totaling 1,558 files allocated for I/O</p>
+</td>
+</tr>
+<tr class="row">
+<td class="entry nocellborder" headers="d8925e99 " valign="top" width="50%">Bytes Processed:</td>
+<td class="entry" headers="d8925e101 " valign="top" width="50%"></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d8925e99 " valign="top" width="50%">2.4 billion records read (190 Gigabytes)
+<p class="p">72 million records written (10 Gigabytes)</p>
+<p class="p">Totaling 1.4 million records (118.35 Megabytes) processed</p>
+</td>
+<td class="entry" headers="d8925e101 " valign="top" width="50%">258 million records read (67 Gigabytes)
+<p class="p">264 million records written (72 Gigabytes)</p>
+<p class="p">Totaling 297,333 records (81.21 Megabytes) processed</p>
+</td>
+</tr>
+<tr class="row">
+<td class="entry nocellborder" headers="d8925e99 " valign="top" width="50%">Joins:</td>
+<td class="entry" headers="d8925e101 " valign="top" width="50%"></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d8925e99 " valign="top" width="50%">873 million ODS Joins were performed
+<p class="p">105 million non-ODS Joins were performed</p>
+<p class="p">Totaling 978 million joins (563,624 joins per second)</p>
+</td>
+<td class="entry" headers="d8925e101 " valign="top" width="50%">293 million ODS Joins were performed
+<p class="p">310 million non-ODS Joins were performed</p>
+<p class="p">Totaling 603 million joins (343,255 joins per second)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="p">I am not aware of any batch process performing a larger workload in a shorter amount of time anywhere.<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a></p>
+
+<div class="p">
+
+The following diagram depicts the architecture components of the financial and statistical ODSs.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1263" src="/wp-content/uploads/2018/10/insurancecofinstatarchitecture.jpg" alt="InsuranceCoFinStatArchitecture" width="1687" height="1023" /> <span class="figcap">Figure 57. Insurance Company Financial &amp; Statistical Architecture Diagram</span>
+
+</div>
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Sort/Merge</h2>
+<p class="p">Efficiently comparing values from two different events files - the summary and the detailed event file - requires slightly different views than Jim's sub-totaled values from one file. Jim had to swap between two different reports and see if the subtotals match. A more efficient approach is to have a column in the report show any difference. To do this requires building something that looks like two different views reading the two different LRs, the summary and detailed LRs, but the results get combined into one output.</p>
+
+<div class="p">
+
+This is called a multiple source view, but we'll describe it as if it were two views. Here are the common elements of both of them:
+<ul class="ul">
+	<li class="li"><strong class="ph b">Specify view format and level:</strong> Summary hardcopy (printable) report.</li>
+	<li class="li"><strong class="ph b">Select the event logical record:</strong> Source 1: Summary event file and Source 2: Detailed event file.</li>
+	<li class="li"><strong class="ph b">Select output fields:</strong> Select the common fields, such as business unit or ledger account and the amount from each logical record.</li>
+	<li class="li"><strong class="ph b">Specify sort order:</strong> Select business unit, cost center, account.</li>
+	<li class="li"><strong class="ph b">Filter business event</strong> to include or exclude. None if all the records were included in the report.</li>
+</ul>
+</div>
+<div class="p">
+
+To build this view, it is important to understand the difference between two key phases of the Scan Engine: the Extract and the Format phases.
+<div class="fig fignone">
+
+<img class="alignnone  wp-image-1270" src="/wp-content/uploads/2018/10/safrscanengineoverview-e1540940182192.jpg" alt="SAFRScanEngineOverview" width="398" height="79" /> <span class="figcap">Figure 58. Performance Engine Phases</span>
+
+<div class="image"></div>
+</div>
+</div>
+<div class="p">The following table summarizes some of the key differences between the extract phase processes and the format phase.</div>
+<div></div>
+<div>
+<table class="table" border="1" summary="" rules="all" cellspacing="0" cellpadding="4">
+<thead class="thead" align="left">
+<tr class="row" valign="bottom">
+<th id="d8925e99" class="entry thleft thbot" valign="bottom" width="33%">Function</th>
+<th id="d8925e101" class="entry thleft thbot" valign="bottom" width="33%">Extract Phase</th>
+<th id="d8925e103" class="entry thleft thbot" valign="bottom" width="33%">Format Phase</th>
+</tr>
+</thead>
+<tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="d8925e99 " valign="top" width="33%">In general output record count with no filtering:</td>
+<td class="entry" headers="d8925e101 " valign="top" width="33%"></td>
+<td class="entry" headers="d8925e103 " valign="top" width="33%"></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d8925e99 " valign="top" width="33%">
+<ul>
+	<li class="p">Summary Views</li>
+</ul>
+</td>
+<td class="entry" headers="d8925e101 " valign="top" width="33%">
+<p class="p">One event record out for every record read</p>
+</td>
+<td class="entry" headers="d8925e103 " valign="top" width="33%">
+<p class="p">One record out for every sort key combination</p>
+</td>
+</tr>
+<tr class="row">
+<td class="entry nocellborder" headers="d8925e99 " valign="top" width="33%">
+<ul>
+	<li>Detail Views</li>
+</ul>
+</td>
+<td class="entry" headers="d8925e101 " valign="top" width="33%">One event record out for every record read</td>
+<td class="entry" headers="d8925e103 " valign="top" width="33%">One event record out for every record read</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d8925e99 " valign="top" width="33%">
+<p class="p">Filter Logic</p>
+</td>
+<td class="entry" headers="d8925e101 " valign="top" width="33%">
+<p class="p">Against input event file fields</p>
+</td>
+<td class="entry" headers="d8925e103 " valign="top" width="33%">
+<p class="p">Against view columns</p>
+</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d8925e99 " valign="top" width="33%">Calculating and Subtotaling:</td>
+<td class="entry" headers="d8925e101 " valign="top" width="33%"></td>
+<td class="entry" headers="d8925e103 " valign="top" width="33%"></td>
+</tr>
+<tr class="row">
+<td class="entry nocellborder" headers="d8925e99 " valign="top" width="33%">
+<ul>
+	<li>Logic</li>
+</ul>
+</td>
+<td class="entry" headers="d8925e101 " valign="top" width="33%">Against input event file fields</td>
+<td class="entry" headers="d8925e103 " valign="top" width="33%">Against view columns</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d8925e99 " valign="top" width="33%">
+<ul>
+	<li>Level</li>
+</ul>
+</td>
+<td class="entry" headers="d8925e101 " valign="top" width="33%">Detailed event file record level</td>
+<td class="entry" headers="d8925e103 " valign="top" width="33%">Detail or summary level</td>
+</tr>
+<tr class="row">
+<td class="entry nocellborder" headers="d8925e99 " valign="top" width="33%">Record order</td>
+<td class="entry" headers="d8925e101 " valign="top" width="33%">Random as sequenced in event files and through parallelism</td>
+<td class="entry" headers="d8925e103 " valign="top" width="33%">In sorted order by view sort fields</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="d8925e99 " valign="top" width="33%">
+<p class="p">Joins</p>
+</td>
+<td class="entry" headers="d8925e101 " valign="top" width="33%">
+<p class="p">Detailed, multi level joins, used in filter and calculation logic and column assignment</p>
+</td>
+<td class="entry" headers="d8925e103 " valign="top" width="33%">
+<p class="p">Only at summary level for sort titles on limited view output types.
+Not used in filtering or calculations</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p">
+<div>Table 59. Extract and Format Phase Differences</div>
+<div id="biblefindmoredetailedevents__figextractandformatphasedifferences" class="fig fignone">
+<div class="image"></div>
+</div>
+</div>
+<p class="p">So the extract phase works on event file records, and the format phase works on extracted records. Because the Format phase works on extracted outputs, common fields in different files can be combined into a single output. This is a different kind of "join" processing that is very efficient called a sort/merge.</p>
+
+<div class="p">
+
+The following figures show the view definitions and results of processing from the Extract and Format phases.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1252" src="/wp-content/uploads/2018/10/extractphaseoutputfromsummary.jpg" alt="ExtractPhaseoutputfromSummary" width="1673" height="562" /> <span class="figcap">Figure 60. View Definition and Extract Phase output from Summary file</span>
+
+</div>
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1251" src="/wp-content/uploads/2018/10/extractphaseoutputfromdetail.jpg" alt="ExtractPhaseoutputfromDetail" width="1653" height="625" /> <span class="figcap">Figure 61. View Definition and Extract Phase output from Detail file</span>
+
+</div>
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1249" src="/wp-content/uploads/2018/10/formatphaseoutputaftersummcalc.jpg" alt="FormatPhaseoutputaftersummcalc" width="1661" height="254" /> <span class="figcap">Figure 62. Format Phase output after summarization and calculation</span>
+
+</div>
+</div>
+<p class="p">This approach to processing isn't strange to anyone who has written many batch programs. In fact, the type of program described in the <a class="xref" href="http://biblereporting.html#biblereporting__BasicBatchProgram">Figure 32</a> figure performed this same function. It read two different types of records, and combined them into a single output based upon common keys and summarization.</p>
+<p class="p">These same approaches, using multi-sourced SAFR views, can be used to do union, full outer, and right outer joins in many cases.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Tranching</h2>
+<div class="p">
+
+At a later client, the team working with the client developed a formal method for transitioning from higher level summaries to lower level sources. This process was called tranching, since subsets of the full set of lower level sources, or feeds, can be brought in in "tranches" or groups (there is no need to convert all the sources at once, nor do they each need to be done individually one at a time). The process was really fairly simple in concept, but very powerful. It was used not just in the analysis phase of the project, but actually in production to change the level of detail available within the financial reporting environment - effectively a new GL but at a very detailed level. It looked something like the following:
+<ol class="ol">
+	<li class="li">Identify the more detailed source to substitute for a source already provided to a legacy general ledger environment.</li>
+	<li class="li">Turn the detailed source into journal entries at the detailed level, with effectively the same information as the summary level but more attributes. Test if the detail has the same results as the summaries did.</li>
+	<li class="li">Capture the summary balances in the General Ledger for the source on a specified day and create reversal entries of all the balances, with the offset going to a due to/from account.</li>
+	<li class="li">Capture the balances from the source system on the same specified day, and create opening entries for all the balances with the offset going to the opposite side of the due to/from account.</li>
+	<li class="li">Load both sets of journal entries created from point in time balances onto the reporting environment, effectively removing the summary balances, and initializing the detailed balances.</li>
+	<li class="li">Stop the daily summary level feed to the legacy general ledger.</li>
+	<li class="li">Start the daily feed of the detailed data into the new reporting environment.</li>
+</ol>
+In this way, more detailed feeds can be substituted for existing summary feeds, without disrupting the reporting environment. These more detailed feeds can then be used to provide a richer reporting environment. Because this is a controlled process, it can go on, tranche by tranche, for years, as the organization tackles improving their financial reporting environment. In this way ultimately all summary feeds can be replaced with more detailed equivalents.
+
+</div>
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">So after finding the event file, then balancing that file to a known source, we expanded the elements available to report on by searching for more detailed files and repeating the balancing process. The next step is to begin to define reference data to describe and classify those business events.</p>
+
+<div class="body conbody"></div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-28-define-reference-data/">Chapter 28. Define Reference Data</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-26-balance-the-event-file/">Chapter 26. Balance the Event File</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+
+<hr />
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Client data warehouse strategy, 1997.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> Statistics from presentation by Kevin Bly to Decision Support and Technical Leadership Group, Oct. 1, 2001.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> The company found that the one pass architecture of SAFR meant that actually making the back-up copies during the daily process was more efficient than having a separate process read and write the data again through a backup utility at a different time of the day. So the daily critical path process includes the back-up process as well.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-26-balance-the-event-file/" class="prev"><span class="label">&larr; Previous</span>Chapter 26. Balance the Event File</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-28-define-reference-data/" class="next"><span class="label">Next &rarr;</span>Chapter 28. Define Reference Data</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

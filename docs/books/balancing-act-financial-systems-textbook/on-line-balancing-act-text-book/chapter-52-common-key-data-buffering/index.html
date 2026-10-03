@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 52. Common Key Data Buffering — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-52-common-key-data-buffering/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 52. Common Key Data Buffering</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">In <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-27-find-more-detailed-events/">Find More Detailed Events</a>, I described Doug creating the read exit for SAFR to read the Stacked Data Element file. The Stacked Data Element or SDE file contained many records of many different record types. In other words, one file needed multiple LRs to describe its records. Some of these records were "P" elements, for Policy level business events, like the ones Mark Kimmell used. Others were "L" elements for Ledger level business events. These are the ones Jim used in "show me the money." Other record structures were reference data, describing either the policy or company or ledger account attributes. The reason Doug had to write the exit was because the file didn't follow typical file structure rules. Doug's read exit made each element its own logical record; thus SAFR views could decode them.</p>
+
+<div class="section">
+<h2 class="title sectiontitle">Multiple Record Type Files</h2>
+<p class="p">Thus far in our discussion, we have painted the picture that a single file can be described by a single LR. With the SDEs, though, this wasn't the case. Each SDE had a field in it that described the record type for that record, whether a P110 or something for the policy level transactions, or L103 for the ledger reference record. To read this file, each view had to have a record filter - the first record filter - which selected only records of a particular type which that view wanted to use as its event file.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+<p class="p">Thus in one SAFR thread, reading one SDE file, there could be different views each selecting a different type of SDE as its event file, and producing outputs from selected records of that file.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Paired Look-up Exit</h2>
+<p class="p">None of this was all that new to the tool. The break through that started the feature now known as Common Key Data Buffering was that Doug recognized, and there was a business need, to join from the business event SDE to the other reference data elements in the same SDE. A two-pass architecture could have been used, whereby views in the first pass would simply select and dump the desired reference data elements. These could then be put into the RED in the second pass and looked up as the SDE event elements were processed.</p>
+<p class="p">This approach was a loser when it came to performance. The volume of these reference elements was very high, because they could be on each policy transaction. This meant the IO was substantial for the first pass to just get the records out. They would take a lot of memory when loaded as reference files, and the search of them would waste CPU time in searching large tables unnecessarily.</p>
+<p class="p">Instead, Doug knew that the P element reference data would be in memory - in the read exit input buffer - at the same time the P business event came in, so Doug had an idea. He created a lookup exit that would be able to find the input buffer from the read exit, find any record in it of a particular type, and return that record as if it were the result of a lookup.</p>
+<p class="p">This approach worked because the elements in the SDE file that were related came at the same point in the file, so they would be in the read exit buffer at the same time. Doug recognized that this approach could be used to solve other problems.</p>
+<p class="p">For example, on the high tech chip manufacturer, we had to create views which joined from the event file to a reference file that was very large; larger than would fit in memory. The event file and the reference file were both in sorted order by the key that would be used to do the join. Doug had created a lookup exit which would read the reference file one record at a time as the event file was processed. This accomplished the join without loading everything into memory.</p>
+<p class="p">Then another problem came up which showed the limitations of this approach. A view needed to read the reference data file as an event file, to count records or something. It had to be read again just to produce this view. Again, this meant another pass of the data just to use some portion of it as a reference file.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Normalization</h2>
+<p class="p">In <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-35-model-the-repository/">Model the Repository</a>, we talked about modeling the data repository. It may be very useful to review the data structure example and description in that chapter. A common trade off in designing reporting applications is what level of normalization of the data is appropriate. For on-line systems, the process of storing a piece of information in only one place is important, so that update processes are efficient. Don't store the customer's name on every business event because if it changes you'll have a lot of records to update. Normalization also saves storage space because data is only stored once.</p>
+<p class="p">The problem with normalization is it requires joining data back together to make sense of it. If we want to report on many business events and summarize by single customer name, we have to put the data back together again. Thus I have heard Rick talk about "scatter and gather" whereby we spread everything out but then have to gather it all back together again for reporting. Joining takes CPU time.</p>
+<p class="p">As I said, for on-line systems, normalization is important. But once we have "cool data" as Rick calls it, records that aren't going to be updated any longer, we can "denormalize" it, putting certain well used fields on the business events that we would often need in reporting. Repeat the field on each record, so we don't have to do the join to report. This uses storage space to save CPU time.</p>
+<p class="p">Alternatively, dynamic denormalization is what is possible because of the exit Doug wrote. Instead of storing all the data in one denormalized file, as Greg and Doug worked together. Greg normalized all the tables; he stored each field only once. Then Doug made sure that the tables or files were in the form of a hierarchy, where the key to the top table, like Policy, was the high order key on all the other tables. The key for the next table down, Term, was repeated as the second key on all lower tables. Then Doug specified that the files be kept in sorted order by these keys.</p>
+<p class="p">Doug created a read exit to open all these files at once, the Policy, Term, Transactions, and read the first record from each file. It would continue reading records from these files until the Policy key changed. The data for one policy exists in memory at any one point in time, as shown in the Sample Insurance Input Buffer <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-35-model-the-repository/">Figure 86</a>. This data looked just like the results of reading the Stacked Data Element file with many related records in memory at the same time. He then created a companion lookup exit to be used to search these records in the same way.</p>
+<p class="p">Now the data can be stored in a normalized manner, saving IO when reading it because there are fewer bytes (values aren't repeated on each transaction if they describe the same policy, for example), but the joins are very efficient because all the data needed for the joins exists in memory at one time. There is no additional IO to go find a reference data record and memory is not used for unrelated reference data.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Master File Update</h2>
+<p class="p">What the project team did next was to turn SAFR from being a reporting system into a master file update process as described in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-33-define-processes/">Define Processes</a>. The team created views, one for each record type read by the exit, to write out a new updated version of that specific record type file. It contained a general select statement selecting only the appropriate entity records.</p>
+<p class="p">Because the data was presented by the read exit to the view, it appeared all records for that entity came from one specific file. But in addition to merging data from multiple entities, the read exit also merged data from multiple time partitions of the same entity.</p>
+<p class="p">For example, suppose we have a file that contains all the policy records the repository has ever seen. On a daily basis, we might receive a few updates to these policies from the source system. These come to the repository in their own file. The read exit can be configured to open both the history, and this new daily file, at the same time. It can merge records from these two entities into the same common key buffer, so that the policy record from yesterday (from the history file) and the updated policy record (from the daily file) for the same policy end up in memory at the same time.</p>
+<p class="p">The view which writes the new version of the repository history policy file can select both of these records. Thus at the end of the process, we have not only used the new policy record for any view which required it, we have also performed the update process to the repository by writing out a new history file.</p>
+<p class="p">This same approach was used to roll the daily records into the weekly file on a daily basis, the weekly file into the monthly file on a weekly basis, the monthly file into the annual file monthly, and the annual file into the history partition annually. Doing so meant that on a daily basis we don't have to write the entire history, annual, or monthly files; only the weekly files. This increases processing speed<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a>.</p>
+<p class="p">It is critical that all these files be created, and kept, in sorted order.</p>
+<p class="p">Let me make that point again. It is critical, for performance, that the process be defined to avoid ever sorting the files except perhaps the low volume daily input files. All other files must be written by SAFR in sorted order, preserving merge capabilities for the next execution.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Large Reference Files</h2>
+<p class="p">The heart of the matter is the size of the reference files, and the processes to update them. At times, the reference data to be processed are larger in total than the event file containing the amounts to be summed.</p>
+<p class="p">Another common problem over the years was detecting changes in the reference data. Often systems present snapshots of the reference data; how a policy looks at a specific point in time. It is the responsibility of the repository to detect if any change in that policy has occurred by comparing it to the existing policy record.</p>
+<p class="p">Doug and the team recognized that they could also perform this function in the read exit, because the exit has both records available to it in the merge process. If the exit detected that the record in the daily file was exactly the same as the record in the repository, the exit could throw away the new record with no impact on any report. When a record was received in the new file that was different, the exit would place the processing effective date on the record. Thus the view writing the updated policy entity would write out both records, in sorted order by policy and effective date.</p>
+
+<div class="p">
+<pre class="pre"></pre>
+We found this model of processing so useful Doug was finding himself consistently writing these types of paired exits. He finally decided to generalize them, so they accepted parameters rather than having hard coded structures within them. The parameters specify which files should be opened, the start position and length of the merge keys on each file. This program and its related lookup exit are now part of the standard SAFR suite.
+
+</div>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Paired Write Exit</h2>
+<p class="p">The next development came with the creation of a companion write exit.</p>
+<p class="p">The first step in this development was when a project needed to use logic to generate additional event records. Instead of putting the logic into the SAFR module, Doug created the ability for the read exit to call other exits (programs which would emulate an access method for the read exit), to deliver records to it. These new records were simply inserted into the bottom of the common key input buffer, as if they had been read from disk.</p>
+<p class="p">On a later project, Doug recognized that often data is written by views in multiple pass processes and then needed for other views. Piping can be used for these purposes, but the pipe reader loses visibility and the ability to join to the other records in the read buffer. Rather than writing the data to disk, Doug created a companion write exit that was capable of inserting rows into the common key input buffer. These records looked as if they were read from disk, but they weren't; views downstream from the exit but in the same process created them.</p>
+<p class="p">Thus additional input records for a "virtual entity" could be created either by an exit or a view. An exit could be used if they were too complex for views, or views could do the work if control of the parameters in SAFR was easier for maintenance.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Results</h2>
+This creates a very unique processing paradigm, something that I cannot think of an analogy for. It is almost as if a program is reading a file, and appending records onto the end of the input file; which records the program will see later as it continues processing. The truth of the matter is that the records aren't appended at the end of the input file, but rather in the middle of it, since the input files are sorted by policy, and that specific policy is being processed at the current moment and the records are inserted into the end of the input buffer.
+<p class="p">As I have described this for people, they have wondered about the possibility of an infinite loop. There is a possibility if two views which create virtual output in the buffer are dependent upon each other for their input. The output from one view would create an output from the other view, which would then create output from the first view again. This would likely show up as running out of memory as the input buffer fills up and overflows. Understanding the dependencies between views to avoid creating this situation is important.</p>
+
+</div>
+<div class="section">
+<div class="p">
+<pre class="pre"></pre>
+Most everything we have talked about came together in a most remarkable way in the spring of 2002.
+
+</div>
+<div></div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-53-spin-offs/">Chapter 53. Spin-offs</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-15-exits/">Chapter 51. Exits</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+<div>
+
+<hr />
+
+</div>
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Failure to make these record filters ends in views producing nonsensical outputs or, at worse, data exceptions.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> In fact, the view described in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-27-find-more-detailed-events/">Find More Detailed Events</a> under "sort merge" was a multiple source view, but not in the typical sense we have described so far. Rather, it used this concept of each view selecting a particular type of record as its event file from the input file. Thus both "sources" were from the same file, just different LRs. One source read perhaps the "L110" elements to produce the ledger columns; the other read something like the P110 elements to produce the policy level columns. Both elements had the account key on them so that when the extract records were summarized, the results were collapsed into a single row.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> We used an alternative approach at the cookie manufacture, where we established seven daily files and each week we created empty versions of them. We then replaced an empty file with a real daily file each day. On a weekly basis, we accumulated all the daily files and rewrote monthly files I believe, eliminating the need to maintain weekly files at the cost of rewriting some data.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-15-exits/" class="prev"><span class="label">&larr; Previous</span>Chapter 51. Exits</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-53-spin-offs/" class="next"><span class="label">Next &rarr;</span>Chapter 53. Spin-offs</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

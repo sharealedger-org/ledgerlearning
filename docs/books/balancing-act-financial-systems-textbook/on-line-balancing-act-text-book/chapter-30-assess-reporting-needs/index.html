@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 30. Assess Reporting Needs — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-30-assess-reporting-needs/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 30. Assess Reporting Needs</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">It should be clear that most of the steps of the SAFR method we have discussed are embedded as part of the tool. In other words, the way the tool is constructed enforces them in some measure. The next step in the process uses information gathered through these steps, but requires a level of analysis outside of SAFR itself.</p>
+<p class="p">As mentioned in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-21-erp-reporting/">ERP Reporting</a>, Rick wrote a white paper at the conclusion of the Cookie Manufacturer project summarizing the analysis performed entitled <cite class="cite"> High-Volume Operational Reporting/Data Warehousing: Summary of Sizing Concepts and Architectural Alternatives</cite>. Following the steps Rick outlined is the next step in the process regardless of what the source system is, whether an ERP package or a legacy system of some kind. This chapter summarizes many of the points made in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/">The Partner</a>. Assessing the reporting requirements is important to getting the right set of numbers to estimate the data load, discussed in the next chapter. The following are excerpts from that white paper.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+
+<div class="section">
+<h2 class="title sectiontitle">Reporting Problem in General</h2>
+<p class="p">Reporting problems come in varying sizes depending on the data basis and size of the reports in the mix. The data basis for a report means the number and size of data records that must be manipulated in order to produce the report. Report size means the number and length of the lines that constitute the final report output.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a> By far the largest single factor in determining overall reporting load is data basis.</p>
+<p class="p">The most important aspect of data basis usually relates to the number and size of records that must be extracted then further manipulated to produce the report output. However, in cases where the extract data basis is small, but large sequential table scans must be executed in order to identify the extract records, input table size becomes the relevant data basis for projecting reporting load.<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a></p>
+<p class="p">In general, the size of an overall reporting load can be determined by aggregating the data basis and report sizes across the number of reports and the frequency with which they will be executed in a given period of time. By stratifying reporting requirements in categories of on-demand, daily, weekly, monthly, quarterly, and annual, an accurate picture of report processing load over time can be projected.<a href="#fntarg_4" name="fnsrc_4"><sup>4</sup></a> It generally is a good practice to project detail reporting load separately from the summary reporting load.</p>
+<p class="p">Until an attempt is made to project the reporting load in this way, it almost certainly will be under scoped. Fortunately, most reports (largest number of reports) are low data-basis operational reports that typically are small in terms of data basis and report size. As a class, these reporting requirements do not contribute greatly to overall reporting load and do not need to be evaluated in detail. However, high data-basis reports tend to be comparatively few in number but account for the bulk of the overall reporting load. The under scoping risk primarily comes from high data-basis operational reporting requirements.</p>
+<p class="p">Low data-basis operational reports tend to deal with business problems involving small subsets of data constrained to a limited period of time, like open orders or transactions for individual customers. Very often the indices that support ERP transaction processing also support the access requirements of operational reporting. Consequently, only limited table scans are required to access the few records in the data basis for these kinds of reports. In general, the majority of low data-basis operational reporting requirements can be satisfied with a data basis under a hundred records and most with under a thousand; they are good candidates for on-demand processing. Even a large number of people executing these kinds of reports frequently will not create an unmanageable reporting load. High data-basis operational reports tend to include requirements for retrospective analyses of transaction processing over time.</p>
+<p class="p">High data-basis operational reporting requirements come from all major aspects of a business - marketing, sales, product development, financial, production, human resources, procurement or legal, to name some major constituencies. And all of these constituencies are interested in the basic transactions captured and processed by the ERP modules for analytical purposes.<a href="#fntarg_5" name="fnsrc_5"><sup>5</sup></a></p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Projecting Data Basis</h2>
+<div class="p">
+
+Data basis is a function of:
+<ul class="ul">
+	<li class="li">Transaction volume;</li>
+	<li class="li">Data structure complexity; and</li>
+	<li class="li">Number of reports, level of detail, and content requirements.</li>
+</ul>
+</div>
+<p class="p"><em class="ph i">Transaction volume</em>
+Transaction detail represents the richest source of information about financial and other events captured by a system. As part of transaction processing, information entered about individual events is augmented with data from master tables according to business rules that constitute the accounting model in place at that point in time. Depending on the ERP module and configuration options implemented, detail transaction files are posted in addition to various summary balances in the ERP data model.<a href="#fntarg_6" name="fnsrc_6"><sup>6</sup></a></p>
+<p class="p">In principle, a cumulative inception-to-date transaction file plus the related effective-dated reference tables could be the source data for all types of operational reporting. Projecting data basis for this reporting architecture would be relatively easy: total gigabytes of transaction files that would have to be scanned for each report, taking into account the number of reference table joins that would have to be performed as part of processing, extended by the frequency for reports over a period of time.</p>
+<p class="p">Taking the A-REAL-Co. case as an example [As described in<a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-21-erp-reporting/">ERP Reporting</a>], 120,000 1,608 byte transaction records per day comes out to about 4.5 gigabytes per month or 111 gigabytes for the two years of history. The 45 basic reports actually represent an average of about 5 alternate sequences per report. So taking into account the repetitive aspects of daily, weekly, and monthly cycles, there are about 700 elemental reports that have to be produced to accomplish the basic high data-basis monthly reporting requirement. Producing one set of all reports directly off the detail would mean a data basis of something like 2.8 terabytes; this is clearly an impractical load to process at a rate of several hours per gigabyte, or even at a rate of several gigabytes per hour.</p>
+<p class="p">For audit trail or archive reporting purposes, there is no way to avoid facing up to the volumes associated with cumulative transaction files, unless these requirements simply are ignored.<a href="#fntarg_7" name="fnsrc_7"><sup>7</sup></a>However, for most summary reporting purposes, effectively designed summary files can dramatically reduce the data basis required to accomplish these requirements. The degree to which data basis reductions can be realized through use of summary file schemes depends primarily on data structure complexity.</p>
+<p class="p"><em class="ph i">Data Structure Complexity</em>
+The driver behind development of the manual accounting cycle was the simple physics of routinely reprocessing raw transaction data as the method for producing reports. By determining the important summary totals required in advance, then classifying all transactions as they were journalized, detail could be archived period-by-period, leaving a practical size data basis for report processing over time. In the manual world, this required maintaining a separate set of account structures and subsidiary ledgers for each summarization structure. General ledger accounting, cost accounting, revenue accounting, tax accounting, fixed asset accounting, inventory accounting, regulatory accounting, receivable accounting, payable accounting, and so on, all had needs for different sets of summary totals derived from various subsets and supersets of the same basic transactions. As automation of these reporting processes advanced through the 60's and 70's, the basic subsidiary ledger structure of the manual world was preserved in the subsystem architecture of computer-based applications.</p>
+<p class="p">As computers became faster at re-sequencing the same basic transaction set in different ways, more granular account structures started to emerge in subsystem implementations. Product, organizational, and project dimensions started to be included in general ledger account structures by the early 80s, simply because it became practical to extract, sort, and summarize a few hundred thousand to a million or so fully qualified summary accounts in several different ways; that had been strictly impractical in a manual world. As a result, separate subsystems were no longer needed for each business function that required a different rollup of transaction detail. But, the determination of what could be consolidated and what had to be broken out in a separate subsystem continued to be arbitrated primarily based on the volume of fully qualified accounts implied by the dimensions in the account classification structure.</p>
+<p class="p">The ERP presents a highly integrated profile for transaction processing<a href="#fntarg_8" name="fnsrc_8"><sup>8</sup></a>, leaving the impression that highly integrated cross-dimensional views of the data captured also should be available. However, there are virtually an unlimited number of ways transaction-level data from the ERP could be summarized when taking into account all the possible cross-structural and time-delimited combinations. Fortunately for a given implementation, patterns in the use of cross-structural combinations usually emerge; they permit reporting data basis to be minimized by taking advantage of "locality" in the transactions when maintaining summary files. Locality means that a large number of transactions create a much smaller set of combinations when summarized by a set of cross-structural dimensions, e.g. customer / product / organization. How substantial the locality effect is depends on transaction coding patterns, the cross-structural dimensions that are required given the patterns of report usage, and the number, breadth, and depth of the structures  -  data structure complexity.</p>
+<p class="p">The benefits of locality are usually substantial. But summary files are often assumed to be the "big" answer that makes the high data-basis operational reporting problem go away. The truth is that summary files quickly get larger than the detail files if a new summary file is created for each new use of the data that requires a different slice; the summary files become a significant volume and maintenance problem unto themselves. In practice, summary files should be maintained to the point where the data basis reduction related to report production is greater than the data basis created by the need for summary file maintenance functions. In addition, summary files should be employed as sparingly as possible due to the substantial system administration requirements that attend their maintenance and use. In the A-REAL-Co. case, only three (3) different cross-dimensional summary files maintained in multiple partitions by time-slice were required to satisfy these conditions, which is typical for data models of this type.</p>
+<p class="p">Modeling the degree of locality can be done fairly easily by using data from existing systems to calculate the collapse rate across structures. Simply sorting the transaction files and calculating the average number of unique cross-structural key combinations by week, month and quarter will give a reasonably good picture of what kinds of collapse rates can be expected. It's usually sufficient to work with three-to-six months of the two-to-four highest volume transaction types related to the structures in question. The result usually is far less dramatic than is assumed in the absence of a detailed analysis.</p>
+<p class="p">Frequently, special reporting requirements will emerge that have not been (or cannot be) anticipated and are not supported by summary files. If the requirements relate to summary reports that will be produced with some frequency, the summary files can be modified and regenerated, or new summary files can be created, by reprocessing the detail transaction data. If the requirements relate to special requests with no pattern of usage, or if they are audit trail or archive requirements, or if the summary files need to reflect the current account structure hierarchies, processing the transaction detail will be unavoidable, unless these reporting requirements are ignored. Summary files are not the "big" answer. They are just an important part of the solution.</p>
+<p class="p"><em class="ph i">Number of Reports, Level of Detail, and Content Requirements</em>
+Easily the biggest driver of data basis is the requirement to report at low levels of hierarchies in cross-structural combinations. In subsystem reporting, data typically is summarized one structure at a time. As a result, the number of fully qualified accounts that get created by even large volumes of transactions is limited to the number of accounts in the given structure. By avoiding the need to report by customer / product / organization, vendor / SKU / location, employee ID / general ledger account, and so on, subsystem architectures limit their reporting data basis exposure  -  and consequently their usefulness.</p>
+<p class="p">Reporting at low levels of cross-structural detail usually is important because that is the level at which day-to-day resource allocation decisions are made. Inventory replenishment, sales force management and compensation, promotional campaigns, and crew scheduling are examples of large dollar investments managed in atomized quantities of resources, location-by-location, vendor-by-vendor, days at a time. High-level performance measures, that show out of whack inventory turnover rates or sales per employee, do not help identify the out-of-stock problems that need to be fixed or the particular sales calls not getting made. The thousands of reports in legacy systems got created because figuring out what was going wrong required a specific cross-structural slice of the data to illuminate the drivers about which something could be done.</p>
+<p class="p">It is unlikely that thousands of reports are needed to run any business at a given point in time. But, over time, the number of problems that need to be solved certainly accumulate into the thousands. In the world of subsystem architectures, a new problem meant building a new reporting subsystem (that mostly never gets retired). In the integrated ERP world, the underlying assumption is that any needed slice will be available because the transactions were captured by an integrated process. But, as we have seen, availability of any slice means access to detail or maintenance of every summary total (a clearly impractical alternative).</p>
+
+<div class="p">
+
+Two basic approaches to defining reporting level of detail and content requirements can be taken:
+<ul class="ul">
+	<li class="li">Produce a predefined set of reports in case they are needed;</li>
+	<li class="li">Provide a framework that can generate almost anything, but produce only what people ask for.</li>
+</ul>
+The first approach is easiest to manage from a project standpoint. But, limiting the set of reports to a practical number is difficult. And it results in an enormous amount of processing for generating numbers nobody looks at. Also, it is not what most clients have in mind when they embark on implementing a new integrated information system. The second approach is preferable, but more difficult to achieve. Something that takes both into account is required.
+
+</div>
+<div></div>
+<div>
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-31-estimate-the-data-basis/">Chapter 31. Estimate the Data Basis</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-29-iteratively-view-results/">Chapter 29. Iteratively View Results</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/">Part 4. The Projects</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+<div></div>
+<div>
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> Roth, Richard K., <cite class="cite"> High-volume Operational Reporting</cite>, 2, 3, 5 - 11. Copyright IBM Corporation. Used by permission. Footnotes below, except as noted, are also from the paper.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> For example, a data basis of all invoices for the last year would be a large data basis when compared to only invoices for yesterday, which would constitute a relatively smaller data basis. Last year's invoices or yesterday's invoices could be summarized at a high organizational level such as division, which would result in a small report size, or either data basis could be summarized by customer, item and week, which would result in a relatively larger report size. Footnote in original.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> Detail (audit trail) reporting is a class of analytical reports that fits this profile. The general problem is to enumerate the detail transactions that support summary numbers accumulated as part of transaction processing, or summary numbers generated on other operational and analytical reports. Unless an index is available that permits going directly to the small subset of transactions required, sequential table scans are required to pick out the transactions that qualify for a given set of selection criteria. If the criteria require that table joins be executed as part of the processing, this needs to be accounted for accordingly.
+While the extract data basis and consequent report sizes are small for the bulk of detail reporting requirements, the number of detail report requests can be substantial and the primary selection criteria can be based on any field in the data base, not just those with indices. The more robust the summary analytical reporting framework, the more demand there will be for detail reporting to substantiate the summary numbers. And the more likely it is that the robust summary numbers will be based on dimensions of the data base that do not have indices to facilitate selection processing. Footnote in original.</div>
+<div class="fn"><a href="#fnsrc_4" name="fntarg_4"><sup>4</sup></a> The nature of the processing necessary to produce reports also is an important factor. To the extent that the source data structures for a report are denormalized, or a report requires only a single table for input, data basis and size provide a good surrogate for describing reporting loads. To the extent that normalized structures are involved that force numerous table joins to be performed as part of extraction, calculation and formatting processes, projections of overall reporting load must be adjusted accordingly. Footnote in original.</div>
+<div class="fn"><a href="#fnsrc_5" name="fntarg_5"><sup>5</sup></a> Rick then discussed the specific company problem as discussed in the Cookie Manufacturer section of <a class="xref" href="bibleerpreporting.html#bibleerpreporting">ERP Reporting</a>.</div>
+<div class="fn"><a href="#fnsrc_6" name="fntarg_6"><sup>6</sup></a> In some cases, obtaining detail transaction records from the ERP is difficult for a variety of reasons. Since this is the richest source of information, as well as the basis for auditability of numbers generated by the ERP, it is important that this issue be explicitly addressed in the reporting architecture. Footnote in original.</div>
+<div class="fn"><a href="#fnsrc_7" name="fntarg_7"><sup>7</sup></a> Fortunately, audit trail reporting tends to involve large table scans but small extract sets, which means that processing subsequent to extraction is minimal. Footnote in original.</div>
+<div class="fn"><a href="#fnsrc_8" name="fntarg_8"><sup>8</sup></a> The ERP highly integrates the interrelated aspects of transaction processing that traditionally have been disconnected by subsystem architectures. As transaction detail is captured in the ERP, a very rich set of attributes about each business event is recorded. On a go-forward basis, business rules can be modified to accommodate new requirements or other changes over time. And the ERP provides for posting a wide variety of summary records at transaction processing time to facilitate inquiry and operational reporting requirements.
+But, the determination of what summary totals will be required for each aspect of managing the business remains part of the up front configuration exercise. The ability to adapt to retrospective information requirements that were not foreseen up front, or new requirements that emerge over time, is very limited in the ERP world.
+The ERP will post only those summary totals that it is configured to post at the time a transaction is processed. No systematic facilities are provided for accessing or analyzing the rich detail that gets captured. There is no framework for mass regeneration of summary totals that are posted in error due to configuration problems. There is no general method for reorganizing data to reflect retrospective changes in account hierarchy relationships. The ERP effectively addresses problems with transaction processing integration. But the ERP does not effectively address integration problems related to high data-basis operational reporting. Footnote in original.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-29-iteratively-view-results/" class="prev"><span class="label">&larr; Previous</span>Chapter 29. Iteratively View Results</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-31-estimate-the-data-basis/" class="next"><span class="label">Next &rarr;</span>Chapter 31. Estimate the Data Basis</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

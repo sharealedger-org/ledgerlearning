@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experimenting with a Raspberry Pi — LedgerLearning</title>
+  <meta name="description" content="Security concerns caused my company to disable the ability to write to a USB drive on the machine I use for work. They provide backup and cloud based storage fa">
+  <link rel="canonical" href="https://ledgerlearning.com/2020/05/07/experimenting-with-a-raspberry-pi/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html" class="active">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/../../../../blog.html">Blog</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Experimenting with a Raspberry Pi</h1>
+      <p class="page-subtitle" style="font-size:0.85rem;">May 7, 2020</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+    <div class="prose">
+<!-- wp:paragraph -->
+<p>Security concerns caused my company to disable the ability to write to a USB drive on the machine I use for work. They provide backup and cloud based storage facilities, but my requirements for local storage for my video work have grown, and my internal hard disk capacity has not.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I considered upgrading my machine, and even purchased the new one--at a cost of over $4,000, but didn't open the box when it arrived; I decided with the coming economic changes due to the coronavirus, perhaps I should investigate a less expensive path first.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Raspberry Pi: Less Expensive</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I have thought about testing out a Raspberry Pi for quite a while now. My son's adventurousness in upgrading his 10 year old Mac memory (for $10) helped me finally do it. $64 for a Raspberry 4, with 2 Gig of memory, a storage case and fan, two heat syncs, and a cable to attach an HDMI. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I had a wireless USB keyboard and mouse; found I needed more than my old 1 gig SD Micro card so two days later that was another $8.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>That is certainly less expensive. Like 40 times less expensive. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2771,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/05/screen-shot-2020-05-08-at-4.40.23-pm.png?w=1024" alt="" class="wp-image-2771" /><figcaption>Raspberry Pi Model 4</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Upon opening the package, this I read this:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><p>The Raspberry Pi is a small computer- a very small computer.</p><p>It consists of mostly the same parts as a standard desktop computer or laptop...The Pi may be less powerful than your Windows PC or Macintosh, but it is still impressive that it fits all of this on a board only slightly larger than a credit card.</p><p>The original goal of the UK-based Raspberry Pi Foundation was to create a device that would address their perceptions of failing standards in the teaching of computer science.&nbsp; As computers have evolved, they have become more difficult to write software for at a "low-level"  with close interaction between the hardware and software.&nbsp; And as they have become more integrated in our daily lives, the consequences of breaking your computer by experimenting have become more severe...and expensive.</p><p>So, unlike conventional systems, the Pi is a machine that is designed to be played with and used for experiments.&nbsp; Its diminutive form factor and relatively low cost mean that you can do what you want with it, and this attracts far more diverse groups of users than just students and teachers. </p><cite><em>"Raspberry PI Quick Start Guide" by Vilros</em></cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:paragraph -->
+<p>After two long days, I am impressed by how well the designed system meets that mark.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Here is a video of the results:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https:\/\/youtu.be\/dPgxJtETfwQ","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://youtu.be/dPgxJtETfwQ
+</div><figcaption>Conversation with Kip Video of Raspberry Pi Experiments</figcaption></figure>
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:heading -->
+<h2>Range of Activities</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Because my work computer (a Mac) has the USB port disabled, I couldn't use it to initialize the Micro SD memory card.  Fortunately, my wife's Windows 10 Laptop served the purpose.  I won't go into all the steps I took, but here they are in short.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4>SD Card Configuration</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The Windows application for creating an image on the SD Card was very simple and did everything that was needed.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I found a number of instances on sites that suggested editing files on the SD card before using it to boot up the Raspberry. For example, adding a file called "ssh" in the root directory makes the Raspberry start the ssh service, and editing network configuration parameters can easily be done here (the process of encrypting a wifi password was not clear in a number of early sites I read). </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong><em>I</em></strong><em>mpressions:</em>  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>The SD memory card is a very effective way of preparing a bootstrap system, and gets one very close to what happens when a system starts, without being overwhelming. </li><li>After investing time in setting up a working system, one wants more than one memory card to explore other options without destroying all that work.</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Operating System</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I experimented with 2 different operating systems: Raspbian Pi Desktop (a Debian based Linux), and Ubuntu (another Linux flavor) both Core and Server versions.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I also experimented with headless installation, wherein there is no keyboard or monitor attached. Having become comfortable with ssh and command-line work over the last few years, I enjoyed doing this.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2773,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/05/screen-shot-2020-05-08-at-4.40.59-pm.png?w=1024" alt="" class="wp-image-2773" /><figcaption>Headless ssh Operation</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>It is probably quite natural - as I did - to start with a desktop before trying a headless installation. I didn't realize the differences between the choices in operating systems as I went from Raspbian to Ubuntu, and chose Core, which requires a headless system. I stumbled into a number of issues.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2775,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/05/screen-shot-2020-05-08-at-4.41.16-pm.png?w=1024" alt="" class="wp-image-2775" /><figcaption>Raspbian Desktop</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Having gone there, I switched to Ubuntu desktop before learning my desired disk support configuration couldn't be achieved there. I then went back to Raspbian, opting for headless. Perhaps it was because this was now my fourth time through the steps, I was pleased with how well this set up.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I also had that working quite well when I decided to try to optionally get a desktop working on it. It took a bit to figure out how to accomplish that from within a headless ssh interface, and it forced some of the networking issues discussed below.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><em>Impressions:</em> </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Raspbian is better suited to the Raspberry Pi hardware, but more limited in the applications available</li><li>More investigation of what the differences in the operating systems before stumbling into them might have been helpful, but even now I don't see a good guide for that online. </li><li>But in the spirit of learning, one can see how effective the process of charging ahead and changing all sorts of fundamental things can be. </li></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":4} -->
+<h4>External Hard Drive</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>My objective in using the system was solving a disk storage issue, specifically to write.  Although I didn't purchase the 4 terabyte USB hard drive with the Raspberry, I ended up experimenting a lot with it.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>For the first 12 hours I was able to use the drive without reformatting it, although I had already transferred all files I wanted to save to other devices, knowing I wanted to be able to use it experimentally.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2774,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/05/screen-shot-2020-05-08-at-4.40.44-pm.png?w=1024" alt="" class="wp-image-2774" /><figcaption>Mac AFP via Netatalk Service Access</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p><em>Impressions:</em> </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Although there are interoperable storage formats for Mac, Windows, and zlinux, they all have limits to the best features of the specific operating system storage formats</li><li>Since I was attempting to solve a Mac storage problem, I ended up defaulting to an older Mac format that provided some level of cross platform access.</li><li>Windows Disk utilities are more accessible and seem more powerful than Mac's. I ended up having to turn my Mac into recovery mode in order to access the tool to get back to the original hard disk format I had chosen to stay with. (I'm not sure why I never thought to try a Linux disk utility.)</li><li>If you want to experiment like the Raspberry is intended to enable, plan to have a USB hard drive you can sacrifice to the cause. </li></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Networking</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I fortunately figured that a wired connection to my home router would be the easiest way to use the Raspberry.  I was glad I did, as it reduced for me one level of complexity, where I wasn't really all that interested in experimenting.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>As part of attempting to install a desktop after having booted headless on Raspbian, I followed instructions to install software to get the display working which also installed another version of the networking tools. I then was left trying to debug the new problems it caused, I learned was quite old and not an active project any longer.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I ended up switching to another networking tool, and gave up on wirelessly using ssh to get into the machine.  It costs me a few hours near the end of my desire for more "learning."  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><em>Impressions:</em></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>A wired connection controls one aspect of the system allowing for experimentation in others areas</li><li>Given the nature of distributed software and open source installation, networking is almost more important than storage.</li><li>Given enough time, one will begin to find the limits of the software available for a platform when compared to the richest, most developed platforms. </li></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Applications</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>VNC Viewer by <a href="https://www.realvnc.com/en/">RealVNC</a> provided a nice network desktop view.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":2772,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/uploads/2020/05/screen-shot-2020-05-08-at-4.41.44-pm.png?w=1024" alt="" class="wp-image-2772" /><figcaption>VNC Viewer Configuration</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>For my remote disk configuration, two links provided a great deal of help in creating the system I wanted. <a href="https://www.howtogeek.com/276468/how-to-use-a-raspberry-pi-as-a-networked-time-machine-drive-for-your-mac/">How to Use a Raspberry Pi as a Networked Time Machine Drive For Your Mac</a>, and <a href="https://pimylifeup.com/raspberry-pi-afp/">How to Setup a Raspberry Pi AFP Server</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Another useful tool once I got the storage problem basically working was <a href="https://rclone.org">Rclone</a>, allowing syncing data from cloud services to the hard disk.  A powerful tool, but the documentation is not the strongest part of the system (Note that <a href="https://www.reddit.com/r/Crostini/comments/ak70u4/rclone_can_not_authorize_box_in_crostini/">this little help</a> was important to getting the system working).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><em>Impressions:</em></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In the end, the applications were not all that interesting to me.  And even though at the end of two days I had Mac OS's Time Machine backup utility working, the next morning it stopped.  I considered trying to figure it out, but then determined that relying upon this machine as a back-up device probably was not the best idea.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>For me, given the access to computing resources that I have, the Raspberry PI is best used for experimentation. It will provide a fine approach to external storage, which I can remove and plug it into my Mac for direct access if the configuration becomes unstable.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Given time and the nature of ever changing technology and the pace of development of open source software for the breadth of computing the world, I'm sure I won't keep the Raspberry up to date.  For me, it is probably best used for experimentation, not production.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Objective</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>So what was the objective of those who created the Raspberry PI?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><p><em>As computers have evolved, they have become more difficult to write software for at a "low-level"  with close interaction between the hardware and software.  And as they have become more integrated in our daily lives, the consequences of breaking your computer by experimenting have become more severe...and expensive.</em></p></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:paragraph -->
+<p>The Raspberry Pi allowed me a lot of experimentation (perhaps over 30 hours in two days).  It did so at a very low cost.  And it allowed me to get close to the machine in a number of ways, particularly in configuring the boot SD card.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Conclusion</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>As I wrote in my textbook, <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-17-programming-tools/">Balancing Act, chapter 17</a>, understanding what the machine has to do to answer a question can have very large implications to the usefulness and costs of the result. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I applaud the makers of the Raspberry Pi, and would like to see a similarly successful effort in the space of smart phones, to enable a radically new type of financial system, as described in this blog entry about <a href="/2019/12/13/simple-financial-system-proof-of-concept/">Really Simple Commerce</a>. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I look forward to experimenting with that system at some point. </p>
+<!-- /wp:paragraph -->
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ll-border);">
+      <a href="/../../../../blog.html" class="btn btn-brown btn-sm">&larr; All Posts</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

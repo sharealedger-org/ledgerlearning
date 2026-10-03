@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 51. Exits — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-15-exits/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 51. Exits</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<div class="p">
+
+As we discussed in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-45-sort-user-exits/">Sort User Exits</a>, exits are a common concept that allows software products to call custom coded programs at specific points to perform functions the tool itself does not do<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a>. SAFR has four major points which can invoke a user exit. The first three are Extract Phase exits, and are used much more frequently than the Format Phase exit. They are:
+<ul class="ul">
+	<li class="li">Read Exits, which present event file records to SAFR threads for processing. It is associated with an event LR and the REEX logic table function (Rather than a RENX function), and is called each time the event LR records in the input buffer have been processed.</li>
+	<li class="li">Lookup Exits, which accept join parameters and return looked up records in response to individual joins. These exits can also be used as simple function calls. It is associated with a lookup LR and a LUEX logic table function (rather than a LUSM), and is called each time a join to that LR is required.</li>
+	<li class="li">Write Exits, which accept extract records and can manipulate them before being written to extract files. It is associated with a view, or a write statement within a view, and the WREX logic table function (rather than WRIN, WRDT, or WRSU functions) creates the extract record.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></li>
+	<li class="li">Format Exits, the only GVBMR88 exit, accepts summarized and formatted Format Phase output records prior to being written to files. It is associated with a view that is assigned to the Format Phase. Format exits are very similar to write exits, except that the record being dealt with is the final output record, rather than the extract record. Because of its similarity to write exits and infrequent use, we won't describe this exit in any more detail here.</li>
+</ul>
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Read Exits</h2>
+<p class="p">The first read exit I wrote read the SAFR Field Definition file and calculated the start position of each field based upon the lengths of the prior fields in the file, a field not stored on the file. It would detect a change in the logical record for the fields, and start the running position over at 0. This allowed SAFR to produce reports of its own metadata, including a field position on the input file.</p>
+<p class="p">I wrote this exit because this isn't a function well suited to SAFR. SAFR doesn't do many functions that look back at the prior event record, and none that look forward at the next event record.</p>
+<p class="p">In SAFR I created a logical record which matched the output from the read exit. That output was the 20 fields or so on the Field Definition file, plus my one new field. SAFR knows nothing about the input to the read exit. For all SAFR knew, my exit could have read 10 different files and combined them all together to make an event file, or not read any files and made up data to pass to SAFR.</p>
+<p class="p">The read exit emulates an access method; in other words instead of SAFR calling the system BSAM access method to get data from disk, it calls the exit. This means that the program must return the results that an access method would return.</p>
+<p class="p">Remember that access methods that read from disks don't know about the actual length of the data records processed by the program. Rather their record lengths are blocks.</p>
+<p class="p">My read exit read (using the standard COBOL QSAM access method) manipulated one record at a time. I could have defined my file to SAFR as if the block size was the length of one of my field definition records, perhaps 50 bytes in length. In other words, I could have made the block size equal the Logical Record Length (LRECL). However, this meant that SAFR would be calling my exit each time a new record was needed. The overhead for calling a subprogram is very high. SAFR has to save its register values before calling, and then they have to be restored before going back as well as a host of other functions.<a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a> This CPU time can really add up on a large file.</p>
+<p class="p">A more efficient method is for the read exit to process many records as if they had come from disk as one block, and then returning all of them as one block to SAFR. SAFR will parse the individual records according to the Logical Record Length, and only return to the read exit when a new "block" of data is needed.</p>
+<p class="p">This process can make a read exit more complex but is important for performance.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Look-up Exits</h2>
+<p class="p">Look-up exits are probably the easiest to create. This is because they accept a set of parameters and return a record. The parameters passed to the lookup exit are whatever values are placed in the fields of the join key. These can be constants, fields from the event file, or fields from another lookup, including calls to other exits. The output from the lookup exit is a record that must match the LR for the "reference file" record it is to return. Although it appears to a SAFR developer as if SAFR has taken the keys and performed a search of a reference table to find the appropriate record, the exit may have done no such thing. In fact, it could do something as simple as reordering the fields passed to it and returning the record.</p>
+<p class="p">I think the first lookup exit I wrote kept a copy of the key it had been passed in the last call, and compared the key from the current call with that saved key. If the keys were the same, then it returned a "not found" condition. If they were different, it returned a "found" condition. I then called this exit in multiple views, and coded the selection logic to only include found records. This allowed me to only select the event record once, in the first qualifying view, no matter what views it qualified for.<a href="#fntarg_4" name="fnsrc_4"><sup>4</sup></a></p>
+<p class="p">Lookup exits have been written to perform math calculations that SAFR didn't do natively. In fact, before SAFR had extract time calculations, a generalized user exit allowed passing two numbers and an operator. The resulting record contained the results of the math. Many SAFR functions have first appeared as user exits, and were later folded into the main code base.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Write Exits</h2>
+<div class="p">
+
+Write exits are called whenever a view is to write an extract record. The write exit is passed the extract record, and the event record. It can evaluate these records and can
+<ul class="ul">
+	<li class="li">Tell SAFR to write a record the exit specifies (could be any record) and continue with event file processing.</li>
+	<li class="li">Tell SAFR to skip this extract record and continue event file processing.</li>
+	<li class="li">Tell SAFR to write a record the exit specifies (could be any record) and return to the exit to do more processing.</li>
+</ul>
+The exit can manipulate the extract record; substitute a new record, table the extract record in some way and then dump the table at the end of event file processing, or any other number of things. Note, though, that unlike read exits which do open and actually read files, write exits typically do not. They return records to SAFR to write to the extract file. They could do their own IO, but there is typically no benefit to doing so. SAFR's write routines are very efficient.
+
+</div>
+<p class="p">Write exits are inbetween read and lookup exits for complexity. This is mainly because of the complexity of dealing with extract records. The exit must know what the extract record will look like for a particular view. This might be easiest to determine by actually writing the view, and inspecting the extracted records to find positions and lengths. Any changes in the views can create a need to update to the write exit. Write exits outputs have no interaction or dependencies upon LRs.</p>
+<p class="p">Extract phase summarization made its first appearance as a write exit. The exit was called on each extract record. The exit allocated its own memory space, and built a stack of summarized event records. Only if the extract record caused the exit to overflow the stack did the exit tell SAFR to write a record. When the thread was finished processing, on the last call to the write exit the write exit would loop through the stack and instruct SAFR to write each record in the stack and return to it for additional processing until the end of the stack was reached.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Other Features</h2>
+<p class="p">In addition to the above passed parameters, each exit receives a set of static parameters that do not change throughout event file processing. These can be used to further generalize an exit.</p>
+<p class="p">For example, I created the small lookup exit I described above accepted a set of static parameters that described how long the passed key was from the join. It would use this length to determine what length of data to store and compare. In this way, this same exit could be used on multiple joins with different keys, from 5 bytes to 50 bytes, regardless of whether the key was composed of 1 field or 50. This same approach was used by the calculation exit so that it could work with different sizes of numbers being passed to it.</p>
+<p class="p">Using this generalization approach has allowed the team to create a number of exits that can be used many different times.</p>
+<p class="p">Each exit is called once before event file processing begins so it can initialize memory and set up shop. They are also called one time after event file processing is complete to perform clean up. These calls are indicated to the exit through a status code.</p>
+
+<div class="p">
+
+The following picture shows all the logic table codes, including those for exits, tokens, and extract time calculations.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1179" src="/wp-content/uploads/2018/10/exitandotherlogictablecodes.jpg" alt="ExitandOtherLogicTableCodes" width="1595" height="1093" /> <span class="figcap">Figure 140. Exit and Other Logic Table Codes</span>
+
+<div class="image"></div>
+</div>
+</div>
+</div>
+<div class="section">All of these features bring us I guess to what I would call the <em class="ph i">piÃ¨ce de rÃ©sistance</em> of SAFR configuration. It combines almost all of SAFR's capabilities in GVBMR95 into one process.</div>
+<div></div>
+<div>
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-52-common-key-data-buffering/">Chapter 52. Common Key Data Buffering</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-50-piping-tokens-and-the-write-verb/">Chapter 50. Piping, Tokens, and the Write Verb</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/">Part 5. The Programmer</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+<div></div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<hr />
+
+</div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> See also <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-29-iteratively-view-results/">Extensibility</a>.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> Although technically not a SAFR user exit, one could write a sort read exit to manipulate the sort input file in extract file format, but the same data would be available to the write exit, so I can't conceive of a reason to do so other than the GVBSR01 and 02 sort exits already described.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> I remember Doug noting that when the new version of COBOL was released, COBOL II to COBOL LE, the run times for the SAFR jobs at the insurance company significantly increased. So he created a dummy COBOL read exit that did nothing, and a little assembler program to call the exit one million times. He used the new and the old versions of COBOL and found that with no functional change, the CPU instructions for the new version of the language went up 2 or 3 times, or some large number. Calling programs is expensive in terms of CPU time.</div>
+<div class="fn"><a href="#fnsrc_4" name="fntarg_4"><sup>4</sup></a> Note that this type of exit cannot be optimized in the join optimization process. If the logic table calls to it were optimized, it would only be called once for each event record; every subsequent call would return the same "found" value. The need for a field on the user exit screen that indicated if an exit could be optimized (it is a stateless program, not remembering its prior state) was discovered in testing join optimization development.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-50-piping-tokens-and-the-write-verb/" class="prev"><span class="label">&larr; Previous</span>Chapter 50. Piping, Tokens, and the Write Verb</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-52-common-key-data-buffering/" class="next"><span class="label">Next &rarr;</span>Chapter 52. Common Key Data Buffering</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 13. Business System Architecture — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-13-business-system-architecture/">
+  <link rel="stylesheet" href="/../../../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/../../../../" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../../../../">Home</a></li>
+          <li><a href="../../../../vlog.html">Episodes</a></li>
+          <li><a href="../../../../books.html" class="active">Books</a></li>
+          <li><a href="../../../../whitepapers.html">White Papers</a></li>
+          <li><a href="../../../../courses.html">Courses</a></li>
+          <li><a href="../../../../blog.html">Blog</a></li>
+          <li><a href="../../../../about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Chapter 13. Business System Architecture</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<p class="p">In November 1996, a number of years after my training, I was with Rick at a presentation to an automobile manufacturer. I had worked with Rick for a few years by that time. After explaining the importance of not ignoring batch reporting processes, he went on to explain something I have never heard anyone describe: the subsystem architecture. I remember thinking at the time that the people sitting around the table must be much smarter than I am because I could barely understand what Rick was talking about, and why it was important. But having pondered it now for nearly a decade and a half, I see how critical it is to understand the impediments to wider adoption of the event based reporting theory.<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a></p>
+
+<div class="section">
+<h2 class="title sectiontitle">Subsystem Architecture</h2>
+<div class="p">
+
+Rick began by describing this picture to them:
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1305" src="/wp-content/uploads/2018/10/subsystemarchitecture.jpg" alt="SubsystemArchitecture" width="1612" height="743" /> <span class="figcap">Figure 29. Subsystem Architecture</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">Rick described that this is the basic architecture for almost all business systems. Almost all systems begin with transactions being entered in some way - usually through on-line screens. There is almost always a set of data that describes those transactions called master data. These are things like the values in drop down boxes such as credit cards types or "M/F" for male or female.</p>
+<p class="p">The transactions are taken into a transaction processing program, sometimes called a posting program. This program uses rules of some sort to determine how the transactions should be processed. In earlier days, it was a batch program that worked once a night against all the transactions input during the day. More and more they are on-line programs that operate against one record at a time as the user clicks the mouse.</p>
+<p class="p">The detailed transactions are written to a history file that is only used if there is a problem of some sort. Because of their volume, the detailed records are quickly archived. The records are also used to update the summary table. This summary table is used in either inquiry programs, or reporting programs. Inquiry programs tend to be on-line programs that find a particular record in the summary table to display to a particular user. For example, this program might be used to find someone's checking account balance from the checking account summary table. Report programs tend to be batch programs that read the summary table and produce a report from it, for example perhaps showing the total deposited within the bank branch for that day.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">The Accounting Subsystem</h2>
+<div class="p">
+
+A few years later, I modified Rick's slide again to give an example of a system.
+<div class="fig fignone">
+
+<img class="alignnone size-full wp-image-1302" src="/wp-content/uploads/2018/10/theaccountingsubsystem.jpg" alt="TheAccountingSubsystem" width="1622" height="739" /> <span class="figcap">Figure 30. The Accounting Subsystem</span>
+
+<div class="image"></div>
+</div>
+</div>
+<p class="p">As you can see, the general subsystem architecture Rick described fits the accounting system to a T. Accounting was one of the first business systems to be automated.<a href="#fntarg_2" name="fnsrc_2"><sup>2</sup></a></p>
+<p class="p">I suspect system development in the 1950's and early 1960's was no different than today: when a new system needs to be built, programmers start with a program they have already written. Because the accounting system was one of the first to be automated, other business systems followed a similar pattern.</p>
+<p class="p">Suppose a company in the early days of business computing has automated their basic accounting system by writing custom programs, and now needs a payroll system. The easiest thing to do would be to (1) copy the accounting system programs; (2) change the structure of the journal entry to have the values needed for time cards; (3) change general ledger account to be employee ID, (4) change the chart of accounts to be employee reference data containing items like pay rate, (5) change the ledger to be the payroll master file, with a record summarizing each employee's overtime hours and year to date pay; and (6) write a reporting program that prints payroll statements.</p>
+<p class="p">The same thing likely happened with accounts receivable systems, where the journal entries became billings and cash receipts, GL account becoming customer account, the ledger became the customer master file and customer statements became the report programs. Accounts payable underwent a similar process, where invoice line items replaced journal entries, vendor ID replaced GL account, the vendor master file replaced the ledger and checks where the output of the report programs.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">ERP Systems</h2>
+<p class="p">The large accounting firms were some of the first to help companies automate processes. "<q class="q">The first use of computers in a commercial setting, at GE, was made possible by bringing in Arthur Andersen's technical personnel to assist in designing processes, writing software, and getting them launched."</q><a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a> In the years immediately following my training, Price Waterhouse, another national accounting and consultancy firm, was on the verge of a transformation from a lot of engagements doing large-scale custom software development to implementing package software.</p>
+<p class="p">Package software dealt with configuring and implementing software built by large software vendors like SAP or Oracle. In a couple of years, the majority of the firm's revenues would come from implementing Enterprise Resource Planning or ERP packages. "Planning" is somewhat a misnomer; these systems do much more than "plan." They are operational systems. They integrate all of the above functions and many more. But peel back the covers of all of these packages and functions, and you will find each of the functions more or less uses the subsystem architecture.</p>
+
+</div>
+<div class="section">
+<h2 class="title sectiontitle">Layering</h2>
+<p class="p">As companies grew, or divisions were created, this architecture facilitated the growth. An inventory system in one part of the company could be copied, modified, and implemented in another division. They could have duplicate part numbers for different parts as long as the master files were never shared. They could customize the system to have different functions for different divisions, one for retail bank customer and another for commercial.</p>
+<p class="p">The need for combined summaries for various segments of the business was facilitated by having another system (general ledger or another type of reporting system) accept summary results from these more detailed systems comprising a division for example. Thus an additional program was created that read the lower level master file during every cycle and created a set of journal entries that were sent as input to the general ledger. It was a "reporting" program, except the "report" was a file used to input to the GL. Visibility at higher levels of the organization is accomplished in the same way. Each of these subsystems sent a summary of the activity for the day or month to the higher level reporting system.</p>
+<p class="p">Rick's point was that this process of layering can go on nearly indefinitely - if the objective is to report on higher and higher levels of summaries of the same sets of attributes posted in the first system. It is a bit like using masonry construction. Each of these subsystems can be "picked up" and "put down" by a small team of people focused on a specific problem for a limited set of business events and limited set of reports.</p>
+<p class="p">The fundamental problem with this approach can be understood by anyone who has reconciled a checking account or analyzed a credit card statement. What if the statement came and all it presented was the change in the balance each month? As long as the change in the balance was as expected, for example because one didn't write any checks or make any purchases, there may be no problem. But if the balance at the end of the month is not what was expected, then the first thing that is needed is the detailed transactions to understand the activity in the month.</p>
+<p class="p">So if the statement doesn't provide the detailed activity, does that negate its need? No, it just means non-automated approaches must be used. Those might be going back to the check register or personal financial system if it was kept up, going to the receipts themselves, or calling the bank or credit card company to ask someone to research and provide the answer.</p>
+<p class="p">Suppose one has all the transactions in an electronic format in a personal financial system like Quicken. Just having the data in an electronic format does not mean these steps are automated. One might need to dump the check registers to a spreadsheet, sort the columns by date, and account, then having selected a set of rows, add formulas to see if the rows selected matched the balance on the report. If the balance can be recreated from the detail, then the analysis of the detail can finally begin.</p>
+<p class="p">Now, imagine the confusion that would come if instead of receiving one bank or credit card statement, two, three or more for the same account came in the mail. The first might be the statement as of the last day of the month; the next might be after the "closing" process has occurred over the first few days of the month; the next could be listing the balance in foreign currency if the bank is not a home town bank. If each had some piece of information that is important, it would be impossible to ignore it completely.</p>
+<p class="p">And yet this is exactly what our reporting systems do. The need to understand what happened and why it happened drives people in every organization to go back to the details - the same business events - in non-automated ways.</p>
+
+</div>
+<div class="section">
+<div class="p">
+<pre class="pre"></pre>
+</div>
+<p class="p">This need, similar to the business needs that demanded creation of skyscrapers, demands new approaches for reporting problems.</p>
+<p class="p">In the late 1800's business leaders needed better access to lawyers, bankers and other downtown services. Soaring land prices created the need for taller buildings. The weight of the masonry prevented architects from constructing taller buildings; as they added stories to a building, the lower level walls had to become thicker and thicker and rooms became darker and darker. Skyscraper can't be built using bricks. Thus metal framing was invented, and the skyscraper was born.<a href="#fntarg_4" name="fnsrc_4"><sup>4</sup></a></p>
+<p class="p">The cost of maintaining all these subsystems - all having similar architectures but each one being slightly different and thus requiring individual attention and supporting IT people - and the need for better, more accurate, more timely information is driving organizations to build modern reporting skyscrapers. The subsystem approach is reaching its practical limits.</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+
+<strong>Next:   </strong><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-14-reporting/">Chapter 14. Reporting</a>
+
+<strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/chapter-12-types-of-computers-and-processes/">Chapter 12. Types of Computers and Processes</a>
+
+<strong>Parent Topic:</strong>    <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-partner/">Part 3. The Partner</a>
+
+<a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a>
+
+</div>
+</div>
+</div>
+
+<hr />
+
+</div>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"></div>
+</div>
+</div>
+<div class="fn"><a href="#fnsrc_1" name="fntarg_1"><sup>1</sup></a> These concepts are stated in Roth, Richard K., Denna, Eric L., Ph.D., <cite class="cite">A Summary of Event-Driven Systems Concepts</cite>, Price Waterhouse White Paper, undated.</div>
+<div class="fn"><a href="#fnsrc_2" name="fntarg_2"><sup>2</sup></a> "At the risk of over-generalizing, it is useful to understand some patterns of adoption and, equally, broad types of applications. At the birth of the computer in the 1940's, there were two types of applications: military and scientific... A second category of users, which appeared in the early 1950's, has come to be referred to as business applications... At first - in the 1950's and early 1960's - pre-existing accounting practices were automated, often being moved from tabulating and billing equipment to computers because they could be performed quicker and with less human labor, thereby lowering operating costs. If one were to write a history of accounting applications, the story would be about the ever-increasing migration of accounting to computers, the speeding up their turnaround of reports from quarterly to monthly to weekly or daily and from only large companies to the private individuals, sitting at the PC. As with computers in scientific research, by the 1970's one could see the technology beginning to affect accounting practices, initially providing increasing amounts of and variety of data more and more frequently and putting stress on long-established accounting practices." James W. Cortada, <cite class="cite">The Digital Hand: How Computers Changed the Work of American Manufacturing, Transportation, and Retail Industries</cite> (Oxford University Press:  © 2004) 49.</div>
+<div class="fn"><a href="#fnsrc_3" name="fntarg_3"><sup>3</sup></a> Cortada, 47.</div>
+<div class="fn"><a href="#fnsrc_4" name="fntarg_4"><sup>4</sup></a> Alice Sinkevitch, Editor, American Institute of Architects, <cite class="cite">AIA Guide to Chicago: Second Edition</cite> (Harcourt, Inc.  © 2004) 8  10.</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-12-types-of-computers-and-processes/" class="prev"><span class="label">&larr; Previous</span>Chapter 12. Types of Computers and Processes</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/chapter-14-reporting/" class="next"><span class="label">Next &rarr;</span>Chapter 14. Reporting</a>
+    </nav>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/../../../../books.html">Books Overview</a></li>
+            <li><a href="/../../../../books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/../../../../books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/../../../../about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
