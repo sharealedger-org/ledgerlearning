@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appendix 1: Accounting Model — Balancing Act | LedgerLearning</title>
+  <link rel="canonical" href="https://ledgerlearning.com/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/appendices/appendix-1-accounting-model/">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/vlog.html">Episodes</a></li>
+          <li><a href="/books.html" class="active">Books</a></li>
+          <li><a href="/whitepapers.html">White Papers</a></li>
+          <li><a href="/courses.html">Courses</a></li>
+          <li><a href="/blog.html">Blog</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+        <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a> &rsaquo;
+      </p>
+      <h1 class="page-title">Appendix 1: Accounting Model</h1>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="prose">
+<div class="body conbody">
+<div class="section">
+<p class="p">The following outlines how the trial balance can be produced from our 31 rows of Resource Accounting Model data.</p>
+<p class="p">Notice that two different types of rows, Transfers and Events, are shown in column C: To calculate the income statement we use only the events. To calculate Salary Revenue on our income statement for example, we scan column F looking for the Salary Revenue Account, 411. When we locate a matching row, we multiple the amount in column H by -1. Doing this for each income statement account will produce the same number shown on the Sample Trial Balance figure for April 30th.</p>
+<p class="p">Calculating the April 30th balance sheet amount is a bit more complicated because both the Event and Transfer rows must be taken into account, so we have to scan columns D and F. Each time we match a Balance Sheet account in column D, we simply accumulate the amount. If we match on column F, we must multiply the amount by -1 because we are taking the amount "From" this account. Doing this will again produce all the Balance Sheet amounts shown in the <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/the-professor/accounting/">Figure 8</a> for April 30th.</p>
+<p class="p">Suppose we now move into May, and add new rows to those above. We noted earlier that using the journal entries as a way of calculating the financial statements meant we didn't necessarily need to record closing entries. Is that still true of this new system? Can I calculate the trial balances as of May 1st? Yes, it is possible, but the formulas or processes become a bit more complex.</p>
+<p class="p">It requires evaluating the date column as well. The Income Statement by definition has a "from" and a "to" date, the period covered by the Income Statement. As we evaluate each row in performing the same calculations above, we check if the date on the row is greater than the first date, and less than or equal to the end date. If it is, we include it. If not, we skip it.</p>
+<p class="p">Again, calculating the Balance Sheet is similar except the Balance Sheet is as of a particular date, so we only have one date we use in our test. Again, we perform the same calculations as above, but only for rows prior to or equal to the balance sheet date are included.</p>
+<p class="p">The Net Worth account on the Balance Sheet requires additional work. Net Worth reflects the impact of the income statement on the Balance Sheet. To calculate Net Worth we not only follow the same procedure for the Balance Sheet that we have just described, but we also do the same thing for the Income Statement accounts. Whenever we see a Salary Revenue record prior to or equal to our Balance Sheet date, we add that amount to the Net Worth line as well. Thus the Net Worth account reflects the accumulated effect of all Income Sheet accounts over time.</p>
+<p class="p">Note that this simple system does not have the balancing control built into it that the double-entry system provides. If the amounts on the rows I have proposed are summed, they equal 108,899.60 which equals the sum of the corresponding rows from the double-entry system, proving that no recording errors have been made in creating my example. If the Events alone are summed, they equal Net Income as calculated under the double-entry approach; again showing no recording error in the entries I have made. If the Transfer events are summed, they equal 110,790.29. This is composed of the total offsets of 108,899.60 plus net income of 1,890.69. Because the balance sheet is a point in time statement (rather than showing activity over time like the Income Statement) these offsets have a net effect of zero upon the balance sheet. The following shows the detail:</p>
+
+<div class="image"><img class="alignnone size-full wp-image-1209" src="/wp-content/uploads/2018/10/fnunrecordedrows.jpg" alt="FnUnrecordedRows" width="1775" height="698" /></div>
+<p class="p">All this analysis was performed to prove that the system is in balance. In a double-entry system, the sum of all the journal entries is zero. Thus my system does not have this one type of internal check built into it. Again note that this check within a double-entry system does not ensure that completeness or accuracy of the entries, just that no rows have been dropped or amounts transposed. A different reconciliation mechanism would need to be constructed to provide a similar assurance for my proposed system. If that reconciliation method required recording all these additional entries, there would be no reduction in number of entries needed in my system.</p>
+
+<div class="body conbody">
+
+&nbsp;
+
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink">
+<div class="body conbody">
+<div class="section">
+<div class="body conbody"><strong>Next:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/appendices/appendix-2-event-driven-business-modeling/">Appendix 2: Event Driven Business Modeling</a></div>
+<div></div>
+<div></div>
+<div class="body conbody"><strong>Previous:  </strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/appendices/">Part 8. Appendices</a></div>
+<div></div>
+&nbsp;
+
+</div>
+<strong>Parent Topic:</strong>  <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/appendices/">Part 8. Appendices</a>
+
+</div>
+<div></div>
+<div></div>
+<div class="body conbody"><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Table of Contents</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+
+    <nav class="chapter-nav">
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/appendices/" class="prev"><span class="label">&larr; Previous</span>Part 8. Appendices</a>
+      <a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/appendix-2-event-driven-business-modeling/" class="next"><span class="label">Next &rarr;</span>Appendix 2: Event Driven Business Modeling</a>
+    </nav>
+
+    <div class="callout" style="border-left-color: var(--ll-tan); margin-top: 24px;">
+      <p style="margin:0; font-size: 0.875rem;">
+        The accounting model presented here forms the conceptual foundation of the open-source
+        <a href="https://github.com/sharealedger-org/conceptual-model" target="_blank" rel="noopener" style="font-weight:600;">Sharealedger Conceptual Model</a>
+        project. <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join Sharealedger</a> to participate.
+      </p>
+    </div>
+
+    <div class="callout mt-24" style="border-left-color: var(--ll-brown);">
+      <p>
+        <strong>Printable edition:</strong> The full PDF of <em>Balancing Act</em> (v1.5, 2015) is
+        available to <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener"><strong>Sharealedger members</strong></a>
+        (free to join).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Books</h5>
+          <ul>
+            <li><a href="/books.html">Books Overview</a></li>
+            <li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://github.com/sharealedger-org" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+        <div><a href="/about.html">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

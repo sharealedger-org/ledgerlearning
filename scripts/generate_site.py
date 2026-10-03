@@ -79,16 +79,15 @@ def write_html(path, content):
 # ── shared nav / footer ──────────────────────────────────────────────────────
 
 def nav_html(depth=0, active='books'):
-    """depth = how many ../ needed to reach docs/ root."""
-    root = '../' * depth if depth > 0 else ''
+    """All nav links use absolute paths — depth param kept for signature compat."""
     def link(href, label, key):
         cls = ' class="active"' if active == key else ''
-        return f'<li><a href="{root}{href}"{cls}>{label}</a></li>'
+        return f'<li><a href="/{href}"{cls}>{label}</a></li>'
 
     return f"""  <header class="site-header">
     <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
     <div class="container nav-container">
-      <a href="/{root}" class="brand">
+      <a href="/" class="brand">
         <div class="brand-text">
           <span class="brand-title">LedgerLearning</span>
           <span class="brand-subtitle">by Kip Twitchell</span>
@@ -114,7 +113,7 @@ def nav_html(depth=0, active='books'):
   </header>"""
 
 def footer_html(depth=0):
-    root = '../' * depth if depth > 0 else ''
+    # depth param kept for signature compat — all links are absolute
     return f"""  <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
@@ -127,9 +126,9 @@ def footer_html(depth=0):
         <div class="footer-col">
           <h5>Books</h5>
           <ul>
-            <li><a href="/{root}books.html">Books Overview</a></li>
-            <li><a href="/{root}books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
-            <li><a href="/{root}books/metric-engine/">Metric Engine</a></li>
+            <li><a href="/books.html">Books Overview</a></li>
+            <li><a href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/">Balancing Act</a></li>
+            <li><a href="/books/metric-engine/">Metric Engine</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -143,14 +142,14 @@ def footer_html(depth=0):
       </div>
       <div class="footer-bottom">
         <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
-        <div><a href="/{root}about.html">About</a></div>
+        <div><a href="/about.html">About</a></div>
       </div>
     </div>
   </footer>"""
 
 def css_link(depth=0):
-    root = '../' * depth
-    return f'  <link rel="stylesheet" href="/{root}assets/css/style.css">'
+    # depth param kept for signature compat — always use absolute path
+    return '  <link rel="stylesheet" href="/assets/css/style.css">'
 
 # ── Book page builder ─────────────────────────────────────────────────────────
 
@@ -262,16 +261,25 @@ BOOK_ORDER = [
 
 TOC_BASE = 'books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book'
 
+# Slugs that live inside the appendices/ subdirectory
+APPENDICES_SLUGS = {'appendix-1-accounting-model', 'appendix-2-event-driven-business-modeling', 'appendices'}
+
 def slug_to_url(slug):
     """Return the URL path (relative to docs/) for a book page slug."""
     if slug == 'on-line-balancing-act-text-book':
         return f'{TOC_BASE}/'
+    if slug in APPENDICES_SLUGS:
+        return f'{TOC_BASE}/appendices/{slug}/' if slug != 'appendices' else f'{TOC_BASE}/appendices/'
     return f'{TOC_BASE}/{slug}/'
 
 def slug_to_file(slug):
     """Return the file path (relative to docs/) for a book page."""
     if slug == 'on-line-balancing-act-text-book':
         return os.path.join(DOCS_DIR, TOC_BASE, 'index.html')
+    if slug in APPENDICES_SLUGS:
+        if slug == 'appendices':
+            return os.path.join(DOCS_DIR, TOC_BASE, 'appendices', 'index.html')
+        return os.path.join(DOCS_DIR, TOC_BASE, 'appendices', slug, 'index.html')
     return os.path.join(DOCS_DIR, TOC_BASE, slug, 'index.html')
 
 def toc_depth(slug):
