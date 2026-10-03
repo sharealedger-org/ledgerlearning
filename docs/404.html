@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found — LedgerLearning</title>
+  <meta name="description" content="LedgerLearning.com — the page you're looking for has moved or hasn't been generated yet.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <script>
+    // Attempt to intelligently redirect based on the requested path
+    (function() {
+      var path = window.location.pathname;
+      // WordPress post permalink pattern: /yyyy/mm/dd/slug/ → episodes index
+      if (/^\/20\d\d\/\d\d\/\d\d\//.test(path)) {
+        window.location.replace('/episodes.html');
+        return;
+      }
+      // Balancing Act chapter pages
+      if (path.indexOf('/balancing-act-financial-systems-textbook/') !== -1 ||
+          path.indexOf('/on-line-balancing-act-text-book/') !== -1) {
+        window.location.replace('/books.html');
+        return;
+      }
+      // Metric engine
+      if (path.indexOf('/metric-engine/') !== -1) {
+        window.location.replace('/books/metric-engine/index.html');
+        return;
+      }
+      // Whitepapers
+      if (path.indexOf('/whitepapers/') !== -1 ||
+          path.indexOf('/minimum-costs') !== -1) {
+        window.location.replace('/whitepapers.html');
+        return;
+      }
+      // Topical videos / blog / series list
+      if (path.indexOf('/topical-videos') !== -1 ||
+          path.indexOf('/topical-blog') !== -1 ||
+          path.indexOf('/series-list') !== -1) {
+        window.location.replace('/vlog.html');
+        return;
+      }
+      // Courses / resources
+      if (path.indexOf('/courses') !== -1 ||
+          path.indexOf('/other-resources') !== -1 ||
+          path.indexOf('/individual-slides') !== -1) {
+        window.location.replace('/courses.html');
+        return;
+      }
+      // About
+      if (path.indexOf('/about') !== -1) {
+        window.location.replace('/about.html');
+        return;
+      }
+      // Blog
+      if (path.indexOf('/blog') !== -1) {
+        window.location.replace('/blog.html');
+        return;
+      }
+      // Books landing
+      if (path.indexOf('/books') !== -1) {
+        window.location.replace('/books.html');
+        return;
+      }
+      // Entry/experienced/expert level pages
+      if (path.indexOf('entry-level') !== -1) {
+        window.location.replace('/episodes.html?level=entry');
+        return;
+      }
+      if (path.indexOf('experienced') !== -1 || path.indexOf('3630-2') !== -1) {
+        window.location.replace('/episodes.html?level=experienced');
+        return;
+      }
+      if (path.indexOf('expert') !== -1) {
+        window.location.replace('/episodes.html?level=expert');
+        return;
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/vlog.html">Topics</a></li>
+          <li><a href="/episodes.html">All Episodes</a></li>
+          <li><a href="/books.html">Books</a></li>
+          <li><a href="/whitepapers.html">White Papers</a></li>
+          <li><a href="/courses.html">Courses</a></li>
+          <li><a href="/blog.html">Blog</a></li>
+          <li><a href="/about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-header cream">
+    <div class="container">
+      <h1 class="page-title" style="color: var(--ll-dark);">Page Not Found</h1>
+      <p class="page-subtitle">This page has moved or is being rebuilt. Use the links below to find what you need.</p>
+    </div>
+  </header>
+
+  <main class="content-body">
+    <div class="container" style="max-width: 680px;">
+
+      <div class="callout" style="border-left-color: var(--ll-tan);">
+        <p>
+          LedgerLearning.com was recently migrated from WordPress to a new static site.
+          Individual episode and chapter pages are being rebuilt — in the meantime, everything
+          is accessible through the index pages below.
+        </p>
+      </div>
+
+      <div class="cards-grid mt-32">
+        <div class="card">
+          <h3 class="card-title">Looking for an episode?</h3>
+          <p class="card-body">Browse all 271 episodes by series, experience level, or Best-of designation.</p>
+          <div style="margin-top: 12px;">
+            <a href="/episodes.html" class="btn btn-brown btn-sm">Episode Index &rarr;</a>
+          </div>
+        </div>
+
+        <div class="card" style="border-top-color: var(--ll-brown);">
+          <h3 class="card-title">Looking for a topic?</h3>
+          <p class="card-body">Browse 22 curated series — from Historical Bookkeeping to Blockchain Gaps to ERP Selection.</p>
+          <div style="margin-top: 12px;">
+            <a href="/vlog.html" class="btn btn-brown btn-sm">Topics &rarr;</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Balancing Act textbook?</h3>
+          <p class="card-body">The online textbook and Metric Engine monograph are available on the Books page.</p>
+          <div style="margin-top: 12px;">
+            <a href="/books.html" class="btn btn-brown btn-sm">Books &rarr;</a>
+          </div>
+        </div>
+
+        <div class="card" style="border-top-color: var(--ll-brown);">
+          <h3 class="card-title">Courses &amp; resources?</h3>
+          <p class="card-body">Free courses on reclassification, the accounting cycle, and estimating reporting processes.</p>
+          <div style="margin-top: 12px;">
+            <a href="/courses.html" class="btn btn-brown btn-sm">Courses &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="/" class="btn btn-brown">&larr; Back to Home</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Content</h5>
+          <ul>
+            <li><a href="/vlog.html">Topics</a></li>
+            <li><a href="/episodes.html">Episode Index</a></li>
+            <li><a href="/books.html">Books</a></li>
+            <li><a href="/whitepapers.html">White Papers</a></li>
+            <li><a href="/courses.html">Courses</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+            <li><a href="https://www.youtube.com/kiptwitchellvlog" target="_blank" rel="noopener">YouTube Channel</a></li>
+            <li><a href="/about.html">About Kip</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
