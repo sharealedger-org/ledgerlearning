@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimum Costs for Financial System Data Maintenance — LedgerLearning</title>
+  <meta name="description" content="A Proposed Approach to Minimum Costs for Financial System Data Maintenance — white paper by Kip M. Twitchell, 2018. REA framework, minimum cost curve, SAFR/GenevaERS evidence.">
+  <link rel="canonical" href="https://ledgerlearning.com/whitepapers/minimum-costs-for-financial-system-data-maintenance/">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <style>
+    .paper-body h2 {
+      font-size: 1.3rem;
+      color: var(--ll-brown);
+      border-bottom: 1px solid var(--ll-border);
+      padding-bottom: 6px;
+      margin: 36px 0 14px;
+    }
+    .paper-body h3 {
+      font-size: 1.05rem;
+      color: var(--ll-dark);
+      margin: 24px 0 10px;
+    }
+    .paper-body p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 1em;
+      color: var(--text);
+    }
+    .paper-body ul, .paper-body ol {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      padding-left: 24px;
+      margin-bottom: 1em;
+    }
+    .paper-body ul li, .paper-body ol li { margin-bottom: 4px; }
+    .paper-body sup { font-size: 0.72em; color: var(--ll-tan); }
+    .paper-body a { color: var(--ll-brown); }
+    .paper-body a:hover { color: var(--ll-tan); }
+    .paper-body table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.875rem; margin: 16px 0 24px;
+    }
+    .paper-body td, .paper-body th {
+      border: 1px solid var(--ll-border);
+      padding: 7px 12px;
+    }
+    .paper-body th { background: var(--ll-cream); font-weight: 700; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="container nav-container">
+      <a href="/" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">LedgerLearning</span>
+          <span class="brand-subtitle">by Kip Twitchell</span>
+        </div>
+      </a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        <span class="icon-open">&#9776;</span>
+        <span class="icon-close">&times;</span>
+      </label>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/vlog.html">Topics</a></li>
+          <li><a href="/books.html">Books</a></li>
+          <li><a href="/whitepapers.html" class="active">White Papers</a></li>
+          <li><a href="/courses.html">Courses</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="nav-btn-highlight">Join Sharealedger</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <header class="page-header cream">
+    <div class="container">
+      <div class="hero-badge" style="background: var(--ll-brown); color: #fff; margin-bottom: 12px;">White Paper &middot; 2018</div>
+      <h1 class="page-title" style="color: var(--ll-dark); font-size: 1.9rem;">A Proposed Approach to Minimum Costs for Financial System Data Maintenance</h1>
+      <p class="page-subtitle">By Kip M. Twitchell &middot; IBM Associate Partner, CPA &middot; Copyright &copy; 2018 Kip M. Twitchell. All rights reserved.</p>
+    </div>
+  </header>
+
+  <main class="container content-single">
+
+    <div class="callout" style="border-left-color: var(--ll-tan); margin-bottom: 40px;">
+      <p style="margin: 0; font-size: 0.9rem;">
+        &#128196; A full PDF edition is available to
+        <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" style="font-weight:600;">Sharealedger members</a>
+        (free). &nbsp;|&nbsp;
+        <a href="/whitepapers.html" style="color: var(--ll-brown);">&larr; All White Papers</a>
+      </p>
+    </div>
+
+    <div class="paper-body">
+<p>By Kip M. Twitchell</p>
+
+<p>IBM Associate Partner, CPA.  Copyright Kip Twitchell, 2018.  All rights reserved.</p>
+
+<h2><span id="_Toc523492983"></span>Table of Contents</h2>
+
+<ul><li><a href="#_Toc523492984">Abstract</a></li><li><a href="#_Toc523492985">Introduction</a></li><li><a href="#_Toc523492986">Balances and Transactions</a></li><li><a href="#_Toc523492987">Historical Ledger Development</a></li><li><a href="#_Toc523492988">Interior Minimum Cost Curve</a>
+<ul>
+<li><a href="#_Toc523492989">Trends in Data Growth Over Time</a></li>
+<li><a href="#_Toc523492990">Accessed Data verses Total Data</a></li>
+<li><a href="#_Toc523492991">Computing Costs Using Transactions and Balances</a></li>
+<li><a href="#_Toc523492992">Balances and Reconciliations</a></li>
+<li><a href="#_Toc523492993">Transaction and Balance Trade-off</a></li>
+</ul>
+</li><li><a href="#_Toc523492994">Data Volume Basis</a>
+<ul>
+<li><a href="#_Toc523492995">GL Balances are Inadequate</a></li>
+<li><a href="#_Toc523492996">Enhanced Low-Level Balances</a></li>
+<li><a href="#_Toc523492997">Master File Reduction</a></li>
+</ul>
+</li><li><a href="#_Toc523492998">Practical Implementations</a></li><li><a href="#_Toc523492999">Key SAFR Features</a></li><li><a href="#_Toc523493000">Conclusion</a></li></ul>
+
+<h2><span id="_Toc523492984"></span>Abstract</h2>
+
+<p>McCarthy 's1982 REA framework proposed a radical simplification of financial data.  This paper explains that balances have consistently been used in financial reporting processes because they lower computing costs.  But an environment that uses detailed balances for most reports, and a limited set of transactions for all others would produce an even lower cost of computing and related financial processes.  The traditional approach of maintaining duplicative balances for customer, vendor, inventory, employees, etc. and enterprise balances (typically in the General Ledger) does not meet this test.  The IBM Asset Scalable Architecture for Financial Reporting (SAFR) experiences give evidence this approach is possible, even for the largest organizations in the world.</p>
+
+<h2><span id="_Toc523492985"></span>Introduction</h2>
+
+<p>The year 2018 marks 30 years since my introduction to the ideas of William McCarthy 'sREA framework considering the structure and relationships of financial data.<sup>[1]</sup>  I have worked with this theory consistently since then in my professional life as a consultant implementing and building financial systems for some of the world 'slargest organizations, using an IBM SAFR Asset, the Scalable Architecture for Financial Reporting.  Through this process, I have developed an empirical model attempting to prove a more cost-effective approach to maintenance of financial data is possible.  This model suggests a significant revision of traditional ledger approaches to maintaining financial data.</p>
+
+<h2><span id="_Toc523492986"></span>Balances and Transactions</h2>
+
+<p>McCarthy 'soriginal REA paper makes the case that the primary data for all financial or analytical reporting is transactional data.  Transactional data contains all attributes collected at the time of the business event, allows for any combination of these attributes to be produced, and eliminates redundant data and reconciliation processes by use of a single book of record source.</p>
+
+<p>Yet traditional financial ledgers are balanced based systems.  Transactions are "posted" to balances, to maintain a running position.  Why do our ledgers create and maintain so many balances?</p>
+
+<ul><li>Balances give a point in time answer to any question. Almost all analytical processes begin by analyzing a balance: What is the current position?  How much is on hand?  How many transactions occurred?  Or even simply what is the balance?</li><li>Balances are efficient for computer processes. They eliminate the need of dealing with historical transactions to state current positions.</li></ul>
+
+<p>However, balances also have downsides:</p>
+
+<ul><li>A balance is effectively a duplication of selected attributes and accumulated amounts of the transaction data. As such it often requires reconciliation to validate that it is correct.</li><li>Balances do not contain all transactional detail, and thus cannot answer all information needs transactions can. Creating a balance requires dropping one or more attributes from transactions.  For example, most often because timestamps are unique, they do not accumulate into balances and are dropped when creating a balance.  Usually additional attributes are dropped as well.</li><li>Creating or updating balances requires some level of processing beyond transaction capture.</li></ul>
+
+<p>Understanding why our ledgers developed the way they have will help in understanding the minimal cost curve for maintaining financial data.</p>
+
+<h2><span id="_Toc523492987"></span>Historical Ledger Development</h2>
+
+<p>Today 'sfinancial ledgers are based upon the original bookkeeping model documented in 1594 by Luca Pacioli.<sup>[2]</sup>  In that day, the high cost resource was clerks to record and perform the math required to keep the books.  In the early days of computing, it was computing resources.  These high cost resources determined the nature and structure of the data maintained in ledgers both before and after automation.</p>
+
+<p>To make clear the purposes of ledgers and the interaction with high cost resources, we'll focus our analysis on modern computing, choosing to survey ledger development from 1964, the year of the development of the IBM System 360, the first general purpose business computing system.<sup>[3]</sup></p>
+
+<figure class="wp-block-image alignnone"><a href="https://ledgerlearning.com/wp-content/uploads/2018/10/computing-costs-using-transactions-and-balances-over-time.jpg"><img src="https://ledgerlearning.com/wp-content/uploads/2018/10/computing-costs-using-transactions-and-balances-over-time.jpg" alt="Computing Costs Using Transactions and Balances Over Time" class="wp-image-1164" /></a><figcaption>Compute Costs vs Tech Spending over 50 years</figcaption></figure>
+
+<p>This chart shows the well-known trends of increasing computing<sup>[4]</sup> and declining computing costs<sup>[5]</sup> from 1964 to 2014.  In today 'sworld of ubiquitous computing capacity, we might productively consider how it is possible to organize data such that in 1964 a 10-million-dollar computer can be used when compared to today/s system it would cost less than 1/10<sup>th</sup> of a penny.</p>
+
+<p>The answer is to use ledgers<sup>[6]</sup>, with the associated balances.  Computing resources are highly sensitive to transaction volumes in processing.  Balances eliminate the need to reprocess historical transactions to get to current positions.  Each posting cycle is limited to the transactions since the last update plus the current balances, producing a new set of balances reflecting the updated position.</p>
+
+<p>In the early days of computing, costs were such that companies by and large could afford to maintain two types of balances: (1) detailed balances, such as customer, vendor, employee, inventory, and (2) summary or enterprise balances, typically the General Ledger.<sup>[7]</sup>  Even with the growth of computing over the last half-century, these two basic ledger structures remain; the first often referred to as source or operational systems, and the later in many respects unchanged from the original structures.</p>
+
+<p>A historical term that defines a store of balances is a Master File.  Posting processes typically update master files.  And Master Files are defined to support specific reporting processes; the attributes chosen as the "posting key" - those attributes that define a unique balance - are chosen for use in any reports produced from or business processes supported by the master file.  For example, systems which are used to track customer balances must include a customer key as an element in the master file.  Reconciliation costs (and business system environment complexity) are driven by the number of master files that are maintained.  Additional master files increase reconciliations. Reducing the number of master files will reduce system complexity and cost.</p>
+
+<p>Master files are well known in today 'sbusiness processes; they undergird most every major business process:  Accounts Payable, Accounts Receivable, Inventories including Material Master, Finished Goods Master, Payroll, Checking Account, Loan, Securities Master, and of course the General Ledger.</p>
+
+<p>Certainly all the detailed balances, if added up, should produce the same numbers contained in the aggregated G/L balances.  And all of the balances should be reproducible from the originating transactions.  Thus our systems have effectively at least three copies of the same data, all which should reconcile.</p>
+
+<p>The slope of these two trend lines are echoed in the nature of financial and analytical applications, and which will point to a minimum cost curve for maintenance of ledger data.</p>
+
+<h2><span id="_Toc523492988"></span>Interior Minimum Cost Curve</h2>
+
+<p>This section presents a number of abstracted costs curves using transaction and balance data.  These curves are combined in the final cost curve as an isoquant analysis of ledger data.</p>
+
+<h3><span id="_Toc523492989"></span>Trends in Data Growth Over Time</h3>
+
+<div class="wp-block-image"><figure class="alignleft"><a href="https://ledgerlearning.com/wp-content/uploads/2018/10/trends-in-data-growth-over-time.png"><img src="https://ledgerlearning.com/wp-content/uploads/2018/10/trends-in-data-growth-over-time.png" alt="Trends in Data Growth over Time" class="wp-image-940" /></a></figure></div>
+
+<p>The growth in computing curve is similar to the growth of ledger data over time. It is a generally upward sloping curve.  Transaction volumes have grown as more business applications have been automated.</p>
+
+<p>The use of ledgers, and their associated balances means that in addition to the transaction data, balances have also been maintained.  However, because balances are created by selecting a set of transaction attributes as the "posting key," the volume of balances relative to the originating transactions are much lower.  This means that balances answer only a limited set of queries, because not all attributes captured on the transactions are preserved.  Thus, balances typically add to the total data required to solve all queries, but only marginally.</p>
+
+<h3><span id="_Toc523492990"></span>Accessed Data verses Total Data</h3>
+
+<div class="wp-block-image"><figure class="alignleft"><a href="https://ledgerlearning.com/wp-content/uploads/2018/10/accessed-data-vs-total-data.png"><img src="https://ledgerlearning.com/wp-content/uploads/2018/10/accessed-data-vs-total-data.png" alt="Accessed Data vs Total Data" class="wp-image-939" /></a></figure></div>
+
+<p>Consider, though, the difference between data that exists, and data that is accessed. Although slightly adding to costs of total data, the creation of balances significantly reduced the data typically accessed to answer any analytical question; if balances had not been created, much more transactional data would have been needed to continually produce needed positions over time.</p>
+
+<p>If, for example, a customer deposited the following amounts on each day of a week, $1.00, $3.00, $2.50, $4.00, and $1.50, they would represent 5 different transactions.  But the accumulated balance of $12.00 could be accessed via a single balance at the end of the week, rather than re-adding up the five transactions, if a ledger is in place to produce the customer balance.</p>
+
+<p>Although balances reduce the total accessed data needed for producing reports, there has certainly been growth in the types of balances created and used, perhaps in proportion to transactional data created.</p>
+
+<h3><span id="_Toc523492991"></span>Computing Costs Using Transactions and Balances</h3>
+
+<div class="wp-block-image"><figure class="alignleft"><a href="https://ledgerlearning.com/wp-content/uploads/2018/10/computing-costs-using-transactions-and-balances-over-time.png"><img src="https://ledgerlearning.com/wp-content/uploads/2018/10/computing-costs-using-transactions-and-balances-over-time.png" alt="Computing Costs Using Transactions and Balances Over Time" class="wp-image-938" /></a></figure></div>
+
+<p>The cost of computing curve is also well known, a generally downward sloping line. If we hold constant the set of analytical outputs to be produced from a set of transactions, the reduction in computing costs would therefore also be a downward sloping curve.</p>
+
+<p>Consider, though, that if our systems did not produce balances, the increasing number of transactions required over time to produce the same analytical outputs would have flattened the decreasing cost curve.  Because balances - as produced and maintained in ledgers - were used to make computing cost effective from the very earliest business application days, the savings they afford is already built into today 'scomputing environment, and has been continually reflected in some sense in the declining costs of computing over the decades.</p>
+
+<h3><span id="_Toc523492992"></span>Balances and Reconciliations</h3>
+
+<div class="wp-block-image"><figure class="alignleft"><a href="https://ledgerlearning.com/wp-content/uploads/2018/10/balances-and-reconciliations.png"><img src="https://ledgerlearning.com/wp-content/uploads/2018/10/balances-and-reconciliations.png" alt="Balances and Reconciliations" class="wp-image-937" /></a></figure></div>
+
+<p>Reconciliation costs increase with each balance produced, to ensure that the balance produced is accurate and remains so over time. Thus, although balances reduce the production of analytical outputs, there is a cost for doing so, and the more balances that are produced, the more reconciliation that is required, meaning the declining cost of balances is offset by the increasing cost of reconciliation.</p>
+
+<h3><span id="_Toc523492993"></span>Transaction and Balance Trade-off</h3>
+
+<div class="wp-block-image"><figure class="alignleft"><a href="https://ledgerlearning.com/wp-content/uploads/2018/10/transactions-balance-trade-off.png"><img src="https://ledgerlearning.com/wp-content/uploads/2018/10/transactions-balance-trade-off.png" alt="Transactions Balance Trade-off" class="wp-image-936" /></a></figure></div>
+
+<p>The above costs curves can be combined, to provide a view of how balances can decrease computing costs, but with diminishing returns.</p>
+
+<p>Total cost on the X axis represents cost to:</p>
+
+<p>(1) aggregate transactions to create positions,</p>
+
+<p>(2) whether done when required for a query or as part of the transaction capture/posting process</p>
+
+<p>(3) and cost to present the position to the user.</p>
+
+<p>The Y axis is an isoquant analysis of the costs to produce the reporting result set using the combined data; on the Y axis far left, the set of queries are produced only using transaction data. The next position on the graph slightly to the right is using mostly transaction data, but also utilizing a small number of balances.</p>
+
+<p>The point where balances cross transactions points to the minimum costs of maintaining financial data for the given set of reports, queries or business processes.  This point uses a set of balances to answer those queries which they can, but also uses transactions to answer those which balances do not satisfy.</p>
+
+<p>The far right of the graph is a possible system condition because balances can be created which do not reduce the total cost of answering questions. This can occur because:</p>
+
+<p>(1) The number of possible balances (permutations) can exceed the number of transactions involved. Even if balances are simple aggregations of quantities (as opposed to other possible metrics like averages), the factorial of number of possible attribute values in each field determines the possible balance permutations.</p>
+
+<p>(2) Balances can be produced by systems which are never requested by end users. If a question is asked only once, it would be less expensive to create these needed positions from transactions when requested than incurring the fixed cost of producing these balances systematically in the posting process.</p>
+
+<p>(3) The increasing reconciliation costs accelerates the costs of balance production.</p>
+
+<p>Since the interior minimum cost point is the intersection of the transaction and balance curves, the next question is how to specifically define this point?</p>
+
+<h2><span id="_Toc523492994"></span>Data Volume Basis</h2>
+
+<p>Because compute costs for analytical processes are highly dependent upon volumes of data, it is likely the lowest cost point also happens to be the point of the lowest volume of accessed data needed to answer the given set of queries, with the fewest number of balances which will require the lowest total reconciliations.<sup>[8]</sup></p>
+
+<p>The desired point is not likely arrived at by keeping the same set of balances developed through the decades of system development, namely, (1) the customer / vendor / employee account balances kept in the product, source or sub ledgers, and (2) the enterprise balances, usually termed the General Ledger balances.</p>
+
+<h3><span id="_Toc523492995"></span>GL Balances are Inadequate</h3>
+
+<figure class="wp-block-image"><img src="https://ledgerlearning.com/wp-content/uploads/2020/01/financial-data-minimum-cost-paper-v0.2-graph-1-e1579040760599.jpg" alt="" class="wp-image-2511" /></figure>
+
+<p>In the typical periodic (daily in most cases) financial cycle, the transactions are first posted to the more granular source systems, and then transformed into a highly aggregated but very limited set of enterprise attributes, the General Ledger posting key or enterprise code block.</p>
+
+<p>It is these second set of balances - the General Ledger balances - that, although historically produced very early in business computing history, are likely not included in the minimum set of balances at the minimum cost point.     </p>
+
+<figure class="wp-block-image size-large"><img src="https://ledgerlearning.com/wp-content/uploads/2020/01/financial-data-minimum-cost-paper-v0.2-graph-2-e1579040776709.jpg?w=1024" alt="" class="wp-image-2512" /></figure>
+
+<p>All balances contain duplicative data to the originating transactions. </p>
+
+<p>And the GL balances are duplicative of the customer/vendor balances in many ways; reconciliation of the low-level balances to these balances consumes an inordinate amount of effort to comply with regulatory, audit and financial control processes.</p>
+
+<p>It has been proven from the SAFR implementations that aggregating in a timely manner detailed or sub ledger balances to answer the higher-level queries is possible and practical.</p>
+
+<h3><span id="_Toc523492996"></span>Enhanced Low-Level Balances</h3>
+
+<figure class="wp-block-image size-large"><img src="https://ledgerlearning.com/wp-content/uploads/2020/01/financial-data-minimum-cost-paper-v0.2-graph-3-e1579040791288.jpg?w=1024" alt="" class="wp-image-2513" /></figure>
+
+<p>The lower level balances are useful for greater purposes - they approach transactional record reporting flexibility.  Broad based usage of the maintained balances is a likely criterion of the balances to be maintained.  Through the maintenance of customer / vendor and employee keys on these balances, data normalization rules are more readily applied, thus increasing the attributes available for answering reports from these balances.</p>
+
+<p>Yet the detailed balances must be enhanced to truly be useful.  The problem with the traditional detailed balances is that the coding structures for them vary widely, by products, geographies, segments, etc.  Enterprise data is critical.  The enterprise view has been encoded historically only in the GL balances.</p>
+
+<p>The process of translating from these detailed balanced to the enterprise balances is too complex to be performed at report time.  Standardizing these lower level structures according to an enterprise view of common attributes, would allow them to fulfill the data needs both for the detailed views, and for the enterprise view.</p>
+
+<figure class="wp-block-image size-large"><img src="https://ledgerlearning.com/wp-content/uploads/2020/01/financial-data-minimum-cost-paper-v0.2-graph-4-e1579040807650.jpg?w=1024" alt="" class="wp-image-2514" /></figure>
+
+<p>The likely cost point for almost every organization today is much, much higher than the possible minimum cost point proposed by this paper.</p>
+
+<h3><span id="_Toc523492997"></span>Master File Reduction</h3>
+
+<p>The same principles can apply for other aggregated reporting environments which have developed to try to solve the reporting problems of organizations.  These can include data warehouses, risk systems, management reporting, marketing, and others.</p>
+
+<p>The change proposed would reduce the master files maintained.  Accuracy and reconciliation of master files is a major driver of costs in financial organizations.  This simple metric of reduction in master files alone would measure progress towards lower costs.</p>
+
+<p>Experience has shown that with the increased analytical balances required today, from the ever-increasing transactional data, that more detailed balances which use the concepts of data normalization that can be combined efficiently to the produce the required higher-level, enterprise or other analytical positions needed.  This will result in fewer master files and achieve the minimum cost of financial data systems and maintenance.</p>
+
+<h2><span id="_Toc523492998"></span>Practical Implementations</h2>
+
+<p>The framework presented above is not just a theoretical work; although not measured in a quantifiable way, the possibility of satisfying very large organizational financial reporting requirements and reducing the needed master files, including significantly enhancing the level of detail maintained in the General Ledger has been proven in numerous implementations over 25 plus years through use of the IBM asset, The Scalable Architecture for Financial Reporting, or SAFR.</p>
+
+<p>SAFR was originally was developed within Price Waterhouse, for high volume financial reporting for large organizations.  Called Geneva at the time, its origins were enterprise-wide projects (in a day of very few enterprise-wide systems) for State Governments (where federal mandates required enterprise-wide views) in the late 1980s.</p>
+
+<p>It became a commercially available product in 1993, and over 25 years has been used in over 20 projects or licensed for customer systems, including well-known companies<sup>[9]</sup>  SAFR has implemented many aspects of the model described above for these large organizations.  It has been focused on turning transactions into balances, and transactions and balances into reports.  This process requires turning over large amounts of data in limited processing windows because some aspects of financial reporting have to be completed daily.</p>
+
+<p>The greater the level of detail that can be maintained in the master file, the greater the number of reports that can be generated off of what can be called a "Data Supply Chain."<sup>[10]</sup>  Customer systems typically support some aspect of regulatory demands, as well as critical internal financial and other types of quantitative reporting.</p>
+
+<h2><span id="_Toc523492999"></span>Key SAFR Features</h2>
+
+<p>Because of its unique background coming from a consulting organization focused on very high volumes of data for very large organizations, it developed unique features, very different than most commercially developed financial packages.  A list of feature sets typically combined in multiple tools in most financial system implementations but which are all contained within SAFR includes:</p>
+
+<ul><li>High Performance Development Tool: Code converted to very efficient machine code at run time</li><li>ETL Tool: Transforms inputs from various formats and prepares load-ready outputs</li><li>Extracts for Reporting: Summary files, formatting flexibility</li><li>In-Memory Processing: Windowed joins of large files, and read-once process-many flow with multiple views and feedback of spawned records into same flow</li><li>Streaming Batch Processor: Processes pre-sorted batch sequential files in a continuous stream</li><li>DBMS-like Functionality: Views / Lookups / Select / Join / Group-By</li><li>Customizable Service: Customer-directed vendor enhancements</li><li>Rules Engine: Consumes business rules via XML, and metadata driven layouts, conditions and flows</li></ul>
+
+<p>SAFR performance is possible because it was developed to (1) generate very efficient machine code for (2) a very focused set of features, (3) perform parallel processing to reduce elapsed time, (4) focused on exploiting IBM z hardware, including its tremendous I/O throughput and reliability (5) developed a single pass architecture where all data is only read once no matter how many reports are generated.</p>
+
+<p>The following extract from the SAFR textbook entitled "Balancing Act" gives a sense of the uniqueness of these sets of features in a single tool:</p>
+
+<div class="wp-block-image"><figure class="alignright"><img src="https://ledgerlearning.com/wp-content/uploads/2018/10/alternative-architecture-slide-25.jpg" alt="Alternative Architecture slide 25" class="wp-image-941" /></figure></div>
+
+<p>"[SAFR's] heritage...was based upon consulting work. The way the problem was solved cut across traditional lines of the reporting architecture and the standard commercial software products that had grown up to support it. It was an incredibly ambitious scope.</p>
+
+<p>"Because of its development in the consulting world, it didn't have to appeal to a large number of potential buyers to be commercially viable. By focusing on solving problems for the largest organizations, performance was always kept top of mind. It also had the freedom to pursue whatever technology or processing options needed to solve the problems....</p>
+
+<p>"Effectively, the result is a highly tuned compiler, processing language and flow that automates report production processes from the detail, minimizing the intermediate [reporting data structure] inventories that must be developed."<sup>[11]</sup></p>
+
+<h2><span id="_Toc523493000"></span>Conclusion</h2>
+
+<p>Aggregation is the computing technique in analytical processes which has the greatest elasticity of control.  It allows for the smallest and the largest organizations both to create statements that summarize all activity as is done in financial reporting.</p>
+
+<p>Ledger based processes, long neglected by the IT industry, are ripe for innovation.  This paper explains how the SAFR experience points to a possible empirical model which could lead to those innovations, significantly reducing the costs of financial data processing, by eliminating duplication and redundancy, but also enhance the usefulness of that data.</p>
+
+<p>SAFR has traditionally been applied to enterprise level problems, but managed data which is at the transactional and customer/contract levels.  The results of this analysis suggest that additional savings for financial services firms are likely possible if SAFR concepts were extended from the enterprise level to greater details including customer contract ledgers, consolidating and simplifying significantly financial services IT infrastructure and data.<sup>[12]</sup></p>
+
+<h3>Footnotes</h3>
+
+<p><a href="#_ftnref1" name="_ftn1">[1]</a> William E. McCarthy. "The REA Accounting Model: A Generalized Framework for Accounting Systems in a Shared Data Environment," The Accounting Review (July 1982) pp. 554-78.  Accessible, along with a large amount of subsequent papers and commentary at <a href="https://msu.edu/~mccarth4/">https://msu.edu/~mccarth4/</a> (accessed July, 2018).  The implications of this paper are discussed in my 360-page textbook, <a href="https://ledgerlearning.com/balancing-act-financial-systems-textbook/">"Balancing Act"</a>)</p>
+
+<p><a href="#_ftnref2" name="_ftn2">[2]</a> See <a href="https://www.youtube.com/playlist?list=PL2UrMfZzcfvFOaHVIooIWR7RW0DsbltjQ">"Conversations with Kip" Vlog episodes 113 to 127, available via this playlist</a>.  (accessed July 2018)</p>
+
+<p><a href="#_ftnref3" name="_ftn3">[3]</a> See <a href="https://www-03.ibm.com/ibm/history/exhibits/mainframe/mainframe_PR360.html">"System/360 Announcement" IBM Archives Exhibit</a> (accessed July 2018).  "System/360 represents a sharp departure from concepts of the past in designing and building computers. It is the product of an international effort in IBM's laboratories and plants and is the first time IBM has redesigned the basic internal architecture of its computers in a decade. The result will be more computer productivity at lower cost than ever before. This is the beginning of a new generation - - not only of computers - - but of their application in business, science and government."</p>
+
+<p><a href="#_ftnref4" name="_ftn4">[4]</a> GDP Technology Spending has been used to measure increased computing resources.  With assistance from Edward T. Morgan, Chief, Industry Sector Division, Bureau of Economic Analysis, U.S. Department of Commerce, from US Federal Bureau of Economic Analysis GDP <a href="https://www.bea.gov/industry/gdpbyind-data">"Value Added by Industry"</a> Release Date: April 19, 2018, specifically the Addenda Row for the years 1997 - 2017  "Information-communications-technology-producing industries:  Consists of computer and electronic product manufacturing (excluding navigational, measuring, electromedical, and control instruments manufacturing); software publishers; broadcasting and telecommunications; data processing, hosting and related services; internet publishing and broadcasting and web search portals; and computer systems design and related services.  Accessed May 22, 2018.</p>
+
+<p>The Technology Addenda data is not calculated before 1997;  to estimate data prior to 1997 the chart includes the same combination of rows used to calculate the addenda data post 1997, based upon row titles value and addenda description, from the GDP series data <a href="https://www.bea.gov/sites/default/files/2018-04/GDPbyInd_VA_1947-2017.xlsx">https://www.bea.gov/industry/xls/io-annual/GDPbyInd_VA_1947-2017.xlsx</a>.  These values were tested against IBM total revenue numbers from IBM annual reports for each year, provided by IBM Archivist.  The values for "Publishing industries, except internet (includes software)" were excluded for years before 1990 based upon the IBM revenue numbers which were likely much less electronic in nature..</p>
+
+<p><a href="#_ftnref5" name="_ftn5">[5]</a> Computing Costs Data uses hard disk storage costs analysis as a surrogate for total computing costs.  Data was obtained from Matthew Komorowski's website: "A history of storage cost article updated September 8, 2009 (2014 update)"Accessed May 22, 2018:  <a href="http://www.mkomo.com/cost-per-gigabyte">http://www.mkomo.com/cost-per-gigabyte</a>  Komoroswki 'ssources are not public, but this series of data is used in many such analyses.  His sample of disk costs from 1980 to 2014 shows that costs decline based upon this algorithm:  =POWER(10,-0.2502*(year-1980)+6.304) with an r squared correlation of 0.9916.   The graph includes the cost for the first entry in his table for each year (rather than an average).  To extend this data to 1964, the graph includes IBM press releases from the IBM Archivist from 1964, 1966, 1969, not adjusted for inflation.  Additional years were reviewed for 1968, 1972, and 1976, but the cost seemed unusually high, and likely included CPU and other system costs which could not be eliminated from the available sources.  Reviewing Komoroski 's1980 and 1987 numbers, one notes that the IBM documents disk cost for 1980 at $173,626 per gigabyte of storage, and average for 1987 of $106,135, compared to Komoroski 'scost of $193,000 and $90,000 respectively.  These comparisons give some sense of validity to his underlying data, and a reasonableness for the trend.  Note that years before 1980 are not predicted by Komoroski 'salgorithm which estimated a costs of $20 million in 1964 rather than $6.6 million.  Although Moore 'slaw was proposed in 1965, the impact upon disk costs may have been slower in starting.</p>
+
+<p><a href="#_ftnref6" name="_ftn6">[6]</a> Although Blockchain is often called a distributed ledger, the current technologies are not really ledgers, because they include very limited posting - the creation of balances.  In effect they are much more distributed transaction systems--journal systems at best, although even few of them represent the flow through accounts needed for true journals.  They do not approach a ledger, which not only captures the flow, but shows the current state of that flow at any point in time.</p>
+
+<p><a href="#_ftnref7" name="_ftn7">[7]</a> See for example, Contact James W. Cortada, The Digital Hand: How Computers Changed the Work of American Financial, Telecommunications, Media, and Entertainment Industries.  Volume 2 (Oxford University Press:  © 2006) pages 49   79 focused on banking systems specifically.</p>
+
+<p><a href="#_ftnref8" name="_ftn8">[8]</a> Roth, Richard K., <em>[ERP] High-volume Operational Reporting/Data Warehousing Summary of Sizing Concepts and Architectural Alternatives</em>, Price Waterhouse White Paper, September, 1996 p. 1, 4, 5. Copyright IBM Corporation.  Data modeling algebra may be helpful here, because it allows definition of the lowest data storage costs for a given set of data, by applying rules of normalization. Without putting too fine a point on the specificity of this position, let us simply assume something at perhaps 3rd normal form defines this point.  However, data modeling theory has not typically contemplated the relationship between transactions and balances as described in this paper. It may be possible to extend data modeling theory using perhaps category theory to express the relationship between balances and transactions and empirically prove this point.</p>
+
+<p><a href="#_ftnref9" name="_ftn9">[9]</a> For a detailed review of significant project, and personnel involved in the development of SAFR, see the 360 page textbook, <a href="https://ledgerlearning.com/balancing-act-financial-systems-textbook/">"Balancing Act: A Practical Approach to Business Event Based Insights"</a> second edition,  © 2015 by Kip M. Twitchell.  (Available for purchase on Amazon).</p>
+
+<p><a href="#_ftnref10" name="_ftn10">[10]</a> <a href="https://ledgerlearning.com/balancing-act-financial-systems-textbook/">Balancing Act: A Practical Approach to Business Event Based Insights" </a>second edition,  © 2015 by Kip M. Twitchell page 8.</p>
+
+<p><a href="#_ftnref11" name="_ftn11">[11]</a> <a href="https://ledgerlearning.com/balancing-act-financial-systems-textbook/">"Balancing Act"</a> page 107.</p>
+
+<p><a href="#_ftnref12" name="_ftn12">[12]</a> See <a href="https://ledgerlearning.com/balancing-act-financial-systems-textbook/">"Balancing Act"</a> Chapter 67. Beyond Finance and Risk Pages 325   327 for additional discussion.  See also Kip M. Twitchell, "Metric Engine: Reinventing Data Supply Chains for Business" (CreateSpace: 2015) for a description of how these financial systems might favorable compare to the concept of an internet search engine.</p>    </div><!-- .paper-body -->
+
+    <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--ll-border); display: flex; gap: 12px; flex-wrap: wrap;">
+      <a href="/whitepapers.html" class="btn btn-brown btn-sm">&larr; All White Papers</a>
+      <a href="/books/metric-engine/" class="btn btn-brown btn-sm">Metric Engine Monograph &rarr;</a>
+      <a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener" class="btn btn-brown btn-sm">Get PDF (Members) &rarr;</a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>LedgerLearning</h4>
+          <p>Educational gateway for financial systems, accounting history, and ledger innovation.</p>
+          <p style="margin-top: 8px;">A project of <a href="https://sharealedger.org" style="color: rgba(255,255,255,0.7);">Sharealedger, NFP</a></p>
+          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 8px;">&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h5>White Papers</h5>
+          <ul>
+            <li><a href="/whitepapers.html">All White Papers</a></li>
+            <li><a href="/whitepapers/minimum-costs-for-financial-system-data-maintenance/">Minimum Cost Curve</a></li>
+            <li><a href="/books/metric-engine/">Metric Engine</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Sharealedger</h5>
+          <ul>
+            <li><a href="https://sharealedger.org" target="_blank" rel="noopener">Sharealedger.org</a></li>
+            <li><a href="https://sharealedger.org/membership.html" target="_blank" rel="noopener">Join (Free)</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2016&ndash;2026 Kip M. Twitchell. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
