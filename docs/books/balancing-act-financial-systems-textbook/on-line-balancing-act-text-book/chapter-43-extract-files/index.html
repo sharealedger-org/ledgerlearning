@@ -63,7 +63,7 @@
 
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1212" src="/wp-content/uploads/2018/10/extractrecordstructure.jpg" alt="ExtractRecordStructure" width="1687" height="155" /> <span class="figcap">Figure 110. Extract Record Structure</span>
+<img class="alignnone size-full wp-image-1212" src="/assets/images/2018/10/extractrecordstructure.jpg" alt="ExtractRecordStructure" width="1687" height="155" /> <span class="figcap">Figure 110. Extract Record Structure</span>
 
 </div>
 <ul class="ul">
@@ -80,7 +80,7 @@
 <div class="p">
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1206" src="/wp-content/uploads/2018/10/formatphaseviewlogictable.jpg" alt="FormatPhaseViewLogicTable" width="1687" height="906" /> <span class="figcap">Figure 111. Format Phase View Logic Table</span>
+<img class="alignnone size-full wp-image-1206" src="/assets/images/2018/10/formatphaseviewlogictable.jpg" alt="FormatPhaseViewLogicTable" width="1687" height="906" /> <span class="figcap">Figure 111. Format Phase View Logic Table</span>
 
 <div class="image">This logic table has an SKL function, a build sort key from looked-up values. It also has a SKC, build sort key from constant in case the lookup fails. It also has a CTE, a calculated transform from an event file field. It also has a WRXT, a write the extract record, rather than the WRIN for the input record, or WRDT for just the DT section of the extract record.</div>
 </div>
@@ -89,7 +89,7 @@
 
 <div class="fig fignone">
 
-<img class="alignnone  wp-image-1204" src="/wp-content/uploads/2018/10/formatphaselogictablefunctions.jpg" alt="FormatPhaseLogicTableFunctions" width="532" height="309" /> <span class="figcap">Figure 112. Format Phase Logic Table Functions</span>
+<img class="alignnone  wp-image-1204" src="/assets/images/2018/10/formatphaselogictablefunctions.jpg" alt="FormatPhaseLogicTableFunctions" width="532" height="309" /> <span class="figcap">Figure 112. Format Phase Logic Table Functions</span>
 
 </div>
 </div>
@@ -99,7 +99,7 @@
 
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1203" src="/wp-content/uploads/2018/10/formatphaseviewlogictabletrace.jpg" alt="FormatPhaseViewLogicTableTrace" width="1415" height="601" /> <span class="figcap">Figure 113. Format Phase View Logic Table Trace</span>
+<img class="alignnone size-full wp-image-1203" src="/assets/images/2018/10/formatphaseviewlogictabletrace.jpg" alt="FormatPhaseViewLogicTableTrace" width="1415" height="601" /> <span class="figcap">Figure 113. Format Phase View Logic Table Trace</span>
 
 <div class="image">CT data in the extract file are stored in packed format in order to save CPU cycles converting the data into and out of other formats. z/OS, the mainframe operating system, performs numeric calculations most efficiently on data in packed formats. Since all CT data is used in a calculation of some kind, it is converted into packed format as soon as possible. To see the CT values in the trace, you must display the output in hex mode to read the packed numbers.</div>
 </div>
@@ -107,13 +107,13 @@
 
 <div class="fig fignone">
 
-<img class=" size-full wp-image-1202 aligncenter" src="/wp-content/uploads/2018/10/sampleextractrecord.jpg" alt="SampleExtractRecord" width="1586" height="734" /> <span class="figcap">Figure 114. Sample Extract Record</span>
+<img class=" size-full wp-image-1202 aligncenter" src="/assets/images/2018/10/sampleextractrecord.jpg" alt="SampleExtractRecord" width="1586" height="734" /> <span class="figcap">Figure 114. Sample Extract Record</span>
 
 <div class="image">The following is the GVBMR95 control report for all the views we have constructed so far, run in one pass.</div>
 </div>
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1187" src="/wp-content/uploads/2018/10/parallelformatphasegvbmr95ctlrpt.jpg" alt="ParallelFormatPhaseGVBMR95CtlRpt" width="1455" height="698" /> <span class="figcap">Figure 115. Extract Record Example GVBMR95 Control Report</span>
+<img class="alignnone size-full wp-image-1187" src="/assets/images/2018/10/parallelformatphasegvbmr95ctlrpt.jpg" alt="ParallelFormatPhaseGVBMR95CtlRpt" width="1455" height="698" /> <span class="figcap">Figure 115. Extract Record Example GVBMR95 Control Report</span>
 
 <div class="image">View 3264 extracted 13 of the 18 event records read. But any view sent to the Format phase also receives a Header Record for each thread (each input file) processed, with control information about that view. Thus the total record count of 14 records, written to EXTR001 DD Name includes one header record from reading a single input file.</div>
 </div>
@@ -126,13 +126,13 @@
 
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1201" src="/wp-content/uploads/2018/10/sampleextractfile.jpg" alt="SampleExtractFile" width="1687" height="930" /> <span class="figcap">Figure 116. Sample Extract File</span>
+<img class="alignnone size-full wp-image-1201" src="/assets/images/2018/10/sampleextractfile.jpg" alt="SampleExtractFile" width="1687" height="930" /> <span class="figcap">Figure 116. Sample Extract File</span>
 
 <div class="image">Note that these extracted records are in random order. All are for K &amp; N jones family, because our view only selected those records. But the account name, the second sort key is not in alphabetical order, and the rows with the same sort keys have not been collapsed, as shown in what will be the output from the format phase below.</div>
 </div>
 <div class="fig fignone">
 
-<img class="alignnone  wp-image-1199" src="/wp-content/uploads/2018/10/sampleformatphaseoutput.jpg" alt="SampleFormatPhaseOutput" width="561" height="149" /> <span class="figcap">Figure 117. Sample Format Phase Output</span>
+<img class="alignnone  wp-image-1199" src="/assets/images/2018/10/sampleformatphaseoutput.jpg" alt="SampleFormatPhaseOutput" width="561" height="149" /> <span class="figcap">Figure 117. Sample Format Phase Output</span>
 
 <div class="image"></div>
 </div>

@@ -69,7 +69,7 @@ The only change we have to make to the select phase is to ask it to execute two 
 The following is the logic table created from the VDP which contains both these views.
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1238" src="/wp-content/uploads/2018/10/extractonlyviewlogictable.jpg" alt="ExtractOnlyViewLogicTable" width="1687" height="1554" /> <span class="figcap">Figure 97. Extract Only View Logic Table</span>
+<img class="alignnone size-full wp-image-1238" src="/assets/images/2018/10/extractonlyviewlogictable.jpg" alt="ExtractOnlyViewLogicTable" width="1687" height="1554" /> <span class="figcap">Figure 97. Extract Only View Logic Table</span>
 
 </div>
 </div>
@@ -107,7 +107,7 @@ The CNE is a Class test, Numeric against Event file field. The value in the even
 The following table shows how the different areas in memory in GVBMR95 are used by the different function codes.
 <div class="fig fignone">
 
-<img class="alignnone  wp-image-1230" src="/wp-content/uploads/2018/10/logictablefunctionsandfilebuffers-jpg.jpeg" alt="LogicTableFunctionsandFileBuffers.JPG" width="367" height="343" /> <span class="figcap">Figure 98. Logic Table Functions and File Buffers</span>
+<img class="alignnone  wp-image-1230" src="/assets/images/2018/10/logictablefunctionsandfilebuffers-jpg.jpeg" alt="LogicTableFunctionsandFileBuffers.JPG" width="367" height="343" /> <span class="figcap">Figure 98. Logic Table Functions and File Buffers</span>
 
 <div class="image">The Logic Table is used to generate the machine code. The RENX brings a record from the event file into the input data buffer. CFEE, Compare Field Event File Field to Event File Field and CNE, Class Numeric Event functions work against only the input record. The DTE Data Transform Event file field moves data from the input buffer to the output record buffer. The constants, in either the CFEC or DTC are in the logic table and in the generated machine code. What record is written to the output file is determined by the Write Functions, either WRIN or WRDT.</div>
 </div>
@@ -120,7 +120,7 @@ The following table shows how the different areas in memory in GVBMR95 are used 
 The trace from running the same event used in the last chapter is as follows:
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1236" src="/wp-content/uploads/2018/10/extractonlylogictabletrace.jpg" alt="ExtractOnlyLogicTableTrace" width="1316" height="1663" /> <span class="figcap">Figure 99. Extract Only Logic Table Trace</span>
+<img class="alignnone size-full wp-image-1236" src="/assets/images/2018/10/extractonlylogictabletrace.jpg" alt="ExtractOnlyLogicTableTrace" width="1316" height="1663" /> <span class="figcap">Figure 99. Extract Only Logic Table Trace</span>
 
 <div class="image">Note that event file record 1 is first processed by view 3261, and then serially (not in parallel) processed by view 3262. View 3261 has two WRIN functions, against event record 1 and event record 2. But three records are written for view 3262 by the WRDT function. Here are the records output for view 3262, in hex mode: The record copied by 3261 had the value "alpha" in it, but note that the second record no longer has a value of "alpha" where the number should be because of the numeric test in the view 3262. Instead, logic table row 20 was executed, a DTC function, which placed instead a set of zero's in that location.</div>
 </div>
@@ -128,7 +128,7 @@ The trace from running the same event used in the last chapter is as follows:
 <div class="p">
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1234" src="/wp-content/uploads/2018/10/extractonlyviewsampleoutput.jpg" alt="ExtractOnlyViewSampleOutput" width="1487" height="517" /> <span class="figcap">Figure 100. Extract Only View Sample Output</span>
+<img class="alignnone size-full wp-image-1234" src="/assets/images/2018/10/extractonlyviewsampleoutput.jpg" alt="ExtractOnlyViewSampleOutput" width="1487" height="517" /> <span class="figcap">Figure 100. Extract Only View Sample Output</span>
 
 </div>
 </div>
@@ -140,7 +140,7 @@ The trace from running the same event used in the last chapter is as follows:
 A key control report in the process is the Extract Engine report, shown below:
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1232" src="/wp-content/uploads/2018/10/extract-only-mr95-report.jpeg" alt="extract only mr95 report" width="1482" height="578" /> <span class="figcap">Figure 101. GVBMR95 Control Report</span>
+<img class="alignnone size-full wp-image-1232" src="/assets/images/2018/10/extract-only-mr95-report.jpeg" alt="extract only mr95 report" width="1482" height="578" /> <span class="figcap">Figure 101. GVBMR95 Control Report</span>
 
 </div>
 </div>

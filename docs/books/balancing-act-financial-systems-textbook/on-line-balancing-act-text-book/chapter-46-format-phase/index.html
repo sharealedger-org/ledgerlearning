@@ -91,7 +91,7 @@ It tests column 5 (amount) and if it is greater than 200, it makes the column eq
 The following is a sample of a SAFR hardcopy report still produced by GVBMR88.
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1192" src="/wp-content/uploads/2018/10/sampleformatphasehardcopyoutput.jpg" alt="SampleFormatPhaseHardcopyOutput" width="1522" height="1389" /> <span class="figcap">Figure 124. Sample Format Phase Hardcopy Output</span>
+<img class="alignnone size-full wp-image-1192" src="/assets/images/2018/10/sampleformatphasehardcopyoutput.jpg" alt="SampleFormatPhaseHardcopyOutput" width="1522" height="1389" /> <span class="figcap">Figure 124. Sample Format Phase Hardcopy Output</span>
 
 </div>
 </div>
@@ -107,7 +107,7 @@ The following is a sample of a SAFR hardcopy report still produced by GVBMR88.
 The following is the logic table for this view:
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1190" src="/wp-content/uploads/2018/10/sorttitlekeyslogictable.jpg" alt="SortTitleKeysLogicTable" width="1616" height="801" /> <span class="figcap">Figure 125. Sort Title Keys Logic Table</span>
+<img class="alignnone size-full wp-image-1190" src="/assets/images/2018/10/sorttitlekeyslogictable.jpg" alt="SortTitleKeysLogicTable" width="1616" height="801" /> <span class="figcap">Figure 125. Sort Title Keys Logic Table</span>
 
 <div class="image">This view has three sort keys, the SKE functions above. It also has two columns of data, the CTEs. We know the output is sent to the Format phase because of the write extract record, WRXT function at the bottom.</div>
 <div></div>
@@ -128,7 +128,7 @@ Also, while developing version 4, I suggested to Doug we should create an option
 <div class="fig fignone">
 <div class="image">
 
-<img class=" size-full wp-image-1191 aligncenter" src="/wp-content/uploads/2018/10/samplehardcopywsortfieldsascol.jpg" alt="SampleHardcopywSortFieldsasCol" width="1687" height="1237" /> <span class="figcap">Figure 126. Sample Hardcopy Output with Sort Fields as Columns</span>
+<img class=" size-full wp-image-1191 aligncenter" src="/assets/images/2018/10/samplehardcopywsortfieldsascol.jpg" alt="SampleHardcopywSortFieldsasCol" width="1687" height="1237" /> <span class="figcap">Figure 126. Sample Hardcopy Output with Sort Fields as Columns</span>
 
 Although I was more successful in arguing this feature, Doug protested mildly saying that the indented format was much more elegant. It caused me to pause for a moment. I hadn't recognized the function the indenting did in the report until then. But the indenting was a form of indexing, indexing for human eyes to find the appropriate row on the report. One can scan the report quickly to find changes in Legal Entity, whereas in this second report one has to look for repeating lines or subtotals.
 
@@ -165,7 +165,7 @@ Although I was more successful in arguing this feature, Doug protested mildly sa
 We introduced the SAFR Executive Information File output or XIF in <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-4-the-projects/chapter-29-iteratively-view-results/">Iteratively View Results</a>. Each XIF file is like one cut of a reporting cube. It contains all the data for one hardcopy report in it; in other words, subtotals for multiple levels of sort breaks are contained in the file. The first records in the file contain information that allows a program to interpret the rest of the file, including the view title (record type 0), the sort/subtotal fields (record type 1), descriptions of each column (record type 2), and an index as to where in the file the different subtotal breaks start (record type 3). The following is a representation of the version 1 XIF file, modified in some ways to make it more readable.<a href="#fntarg_7" name="fnsrc_7"><sup>7</sup></a>
 <div class="fig fignone">
 
-<img class=" size-full wp-image-1189 aligncenter" src="/wp-content/uploads/2018/10/sampleexecutiveinformationfilelayout.jpg" alt="SampleExecutiveInformationFileLayout" width="1581" height="1700" /> <span class="figcap">Figure 127. Sample Executive Information File (XIF) Layout</span>
+<img class=" size-full wp-image-1189 aligncenter" src="/assets/images/2018/10/sampleexecutiveinformationfilelayout.jpg" alt="SampleExecutiveInformationFileLayout" width="1581" height="1700" /> <span class="figcap">Figure 127. Sample Executive Information File (XIF) Layout</span>
 
 <div class="image">Although the file contains all the rows of the hardcopy report shown above, they are upside down order, in that the grand total record is at the top of the file. After the grand total are the other subtotals. The next section of the file contains the lowest level of detail in the file, the type 5 records. These have the same type 4 subtotal records interspersed within them. Thus a hardcopy report could be produced just by reading the type 5 and 6 records. The last records, the type 7 and 8 records, are used if a file contains more than one view's output. The type 7 record, always the last record in the file, says where the type 8 records start, and the type 8 records point to the various type 0 records for the views which might be contained in the file.</div>
 <div></div>

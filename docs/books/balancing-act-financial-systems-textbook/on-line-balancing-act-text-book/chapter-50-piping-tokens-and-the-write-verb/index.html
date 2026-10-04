@@ -76,7 +76,7 @@
 The following is a sample GVBMR95 control report showing view 3459 writing to a pipe, and view 3458 reading from the pipe. This is done by looking for linkages between DD Names and numbers of records written and read for threads. View 3459 writes to the DD Name F0003459. This is the file handle for the output side. At the bottom of the control report, we can see that the total records written to this DD Name, 18, are written to a pipe. The total records written are the same as the total records read in the top of the report from the pipe DD Name, EVNTPIPE, the file handle of the reading thread. In the middle of the report, View 3458 is shown reading from EVNTPIPE DD Name.
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1184" src="/wp-content/uploads/2018/10/gvbmr95pipingcontrolreport.jpg" alt="GVBMR95PipingControlReport" width="1452" height="1412" /> <span class="figcap">Figure 135. GVBMR95 Piping Control Report</span>
+<img class="alignnone size-full wp-image-1184" src="/assets/images/2018/10/gvbmr95pipingcontrolreport.jpg" alt="GVBMR95PipingControlReport" width="1452" height="1412" /> <span class="figcap">Figure 135. GVBMR95 Piping Control Report</span>
 
 <div class="image"></div>
 </div>
@@ -86,7 +86,7 @@ The following is a sample GVBMR95 control report showing view 3459 writing to a 
 The following is a portion of the trace output showing the end of the pipe writer thread, which contained view 3459, and the beginning of the pipe reader view 3458. Note the WRDT function in view 3459, an extract only view, writing records to the pipe.
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1183" src="/wp-content/uploads/2018/10/samplepipetraceoutput.jpg" alt="SamplePipeTraceOutput" width="1418" height="834" /> <span class="figcap">Figure 135. Sample Pipe Trace Output</span>
+<img class="alignnone size-full wp-image-1183" src="/assets/images/2018/10/samplepipetraceoutput.jpg" alt="SamplePipeTraceOutput" width="1418" height="834" /> <span class="figcap">Figure 135. Sample Pipe Trace Output</span>
 
 <div class="image"></div>
 </div>
@@ -107,7 +107,7 @@ The following is a portion of the trace output showing the end of the pipe write
 In the following example, view 3460 is in the pipe reader thread. It performs a number of look-ups to create a single record that is pre-joined by the pipe writer view. This might be done because it is expected that doing all the joins up front in the thread will make the logic in the using views easier to understand. View 3461 looks up to the token, and view 3462 reads the token, both in the same pipe reader thread.
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1182" src="/wp-content/uploads/2018/10/gvbmr95tokencontrolreport.jpg" alt="GVBMR95TokenControlReport" width="1458" height="1620" /> <span class="figcap">Figure 137. GVBMR95 Token Control Report</span>
+<img class="alignnone size-full wp-image-1182" src="/assets/images/2018/10/gvbmr95tokencontrolreport.jpg" alt="GVBMR95TokenControlReport" width="1458" height="1620" /> <span class="figcap">Figure 137. GVBMR95 Token Control Report</span>
 
 <div class="image"></div>
 </div>
@@ -117,7 +117,7 @@ In the following example, view 3460 is in the pipe reader thread. It performs a 
 The following is a sample of the trace for these two views, with descriptions of the functions in the logic table for each.
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1181" src="/wp-content/uploads/2018/10/tokentraceoutput.jpg" alt="TokenTraceOutput" width="1687" height="853" /> <span class="figcap">Figure 138. Token Trace Output</span>
+<img class="alignnone size-full wp-image-1181" src="/assets/images/2018/10/tokentraceoutput.jpg" alt="TokenTraceOutput" width="1687" height="853" /> <span class="figcap">Figure 138. Token Trace Output</span>
 
 <div class="image"></div>
 </div>
@@ -148,7 +148,7 @@ EndIf</code></pre>
 The control report shows the results of using the write verb in view 3463.
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1180" src="/wp-content/uploads/2018/10/gvbmr95writeverbcontrolreport.jpg" alt="GVBMR95WriteVerbControlReport" width="1462" height="964" /> <span class="figcap">Figure 139. GVBMR95 Write Verb Control Report</span>
+<img class="alignnone size-full wp-image-1180" src="/assets/images/2018/10/gvbmr95writeverbcontrolreport.jpg" alt="GVBMR95WriteVerbControlReport" width="1462" height="964" /> <span class="figcap">Figure 139. GVBMR95 Write Verb Control Report</span>
 
 <div class="image"></div>
 </div>

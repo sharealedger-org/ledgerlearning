@@ -91,7 +91,7 @@ If the logic table contains views which are reading more event files than the th
 Over the years, I have seen Doug explain the details of parallel processing with the following chart.
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1208" src="/wp-content/uploads/2018/10/ibmmainframearchitecture.jpg" alt="IBMMainframeArchitecture" width="1687" height="1277" /> <span class="figcap">Figure 132. IBM Mainframe Architecture</span>
+<img class="alignnone size-full wp-image-1208" src="/assets/images/2018/10/ibmmainframearchitecture.jpg" alt="IBMMainframeArchitecture" width="1687" height="1277" /> <span class="figcap">Figure 132. IBM Mainframe Architecture</span>
 
 <a href="#fntarg_3" name="fnsrc_3"><sup>3</sup></a>
 
@@ -108,7 +108,7 @@ Over the years, I have seen Doug explain the details of parallel processing with
 Again, perhaps we have no parallel processing when the last block of the last running thread is transferred into memory, and the thread has read all event records in the input buffer and created all the extract records in the output buffers, the threads can then shut down. GVBMR95 writes a message to the JES Message Log when each thread finishes processing, as shown below:<a href="#fntarg_4" name="fnsrc_4"><sup>4</sup></a>
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1185" src="/wp-content/uploads/2018/10/jesmessagelogthreadmessages.jpg" alt="JESMessageLogThreadMessages" width="1543" height="597" /> <span class="figcap">Figure 133. JES Message Log Thread Messages</span>
+<img class="alignnone size-full wp-image-1185" src="/assets/images/2018/10/jesmessagelogthreadmessages.jpg" alt="JESMessageLogThreadMessages" width="1543" height="597" /> <span class="figcap">Figure 133. JES Message Log Thread Messages</span>
 
 </div>
 </div>
@@ -119,7 +119,7 @@ Again, perhaps we have no parallel processing when the last block of the last ru
 It is difficult to represent parallel processing in a book, but we can see the results of it in the extract program trace. Parallel processing means the extract file record write-order becomes completely random. The records written to the trace output are equally random. Now, looking at the event file DD name in trace becomes important. Note that below, record 5 is being processed in one thread, Event1, and then record two begins being processed in the Event2 thread. Reading the trace requires looking at the thread in addition to the record number and view ID.<a href="#fntarg_5" name="fnsrc_5"><sup>5</sup></a>
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1177" src="/wp-content/uploads/2018/10/parallelprocessingtrace.jpg" alt="ParallelProcessingTrace" width="1420" height="827" /> <span class="figcap">Figure 134. Parallel Processing Trace</span>
+<img class="alignnone size-full wp-image-1177" src="/assets/images/2018/10/parallelprocessingtrace.jpg" alt="ParallelProcessingTrace" width="1420" height="827" /> <span class="figcap">Figure 134. Parallel Processing Trace</span>
 
 </div>
 </div>

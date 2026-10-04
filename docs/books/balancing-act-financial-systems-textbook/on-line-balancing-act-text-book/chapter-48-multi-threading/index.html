@@ -61,7 +61,7 @@
 The format engine, GVBMR88 and associated programs are executed in a parallel process mode; in other words multiple "meetings" are started and held in separate "rooms." In mainframe terms, we simply submit separate jobs; and they don't share memory in any way. The extract engine, GVBMR95 is a multi-threaded parallel processing engine. A thread might be thought of as one of our sub-meeting with its own agenda meeting in the same room as all the other sub-meetings but sharing the white board and binders. One particular "meeting agenda" is being worked by each CPU while the main or initially started program (what Doug calls the Mother Task) waits and watches. The following diagram shows both types of processes.
 <div class="fig fignone">
 
-<img class="alignnone  wp-image-1188" src="/wp-content/uploads/2018/10/extractprocessparallelism.jpg" alt="ExtractProcessParallelism" width="562" height="519" /> <span class="figcap">Figure 129. SAFR Parallelism</span>
+<img class="alignnone  wp-image-1188" src="/assets/images/2018/10/extractprocessparallelism.jpg" alt="ExtractProcessParallelism" width="562" height="519" /> <span class="figcap">Figure 129. SAFR Parallelism</span>
 
 <div class="image"></div>
 </div>
@@ -76,7 +76,7 @@ The format engine, GVBMR88 and associated programs are executed in a parallel pr
 We could cause each view to write to a different extract file, and multiple Format Phase processes could then be executed: If the views running in the extract phase shown on <a class="xref" href="/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/part-5-the-programmer/chapter-44-sort/">Figure 118 in Chapter 44</a> were modified so each would write to its own extract file, then the control report would look like the following:
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1187" src="/wp-content/uploads/2018/10/parallelformatphasegvbmr95ctlrpt.jpg" alt="ParallelFormatPhaseGVBMR95CtlRpt" width="1455" height="698" /> <span class="figcap">Figure 130. Parallel Format Phase GVBMR95 Control Report</span>
+<img class="alignnone size-full wp-image-1187" src="/assets/images/2018/10/parallelformatphasegvbmr95ctlrpt.jpg" alt="ParallelFormatPhaseGVBMR95CtlRpt" width="1455" height="698" /> <span class="figcap">Figure 130. Parallel Format Phase GVBMR95 Control Report</span>
 
 <div class="image"></div>
 </div>
@@ -96,7 +96,7 @@ We could cause each view to write to a different extract file, and multiple Form
 If this is done, GVBMR95 generates machine code for each file. After generating the machine code, GVBMR95, the mother task, instructs the operating system to execute these two programs and tell it when they have finished. The GVBMR95 control report for this execution is shown below.
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1186" src="/wp-content/uploads/2018/10/parallelprocessinggvbmr95ctlrpt.jpg" alt="ParallelProcessingGVBMR95CtlRpt" width="1622" height="1235" /> <span class="figcap">Figure 131. Parallel Processing GVBMR95 Control Report</span>
+<img class="alignnone size-full wp-image-1186" src="/assets/images/2018/10/parallelprocessinggvbmr95ctlrpt.jpg" alt="ParallelProcessingGVBMR95CtlRpt" width="1622" height="1235" /> <span class="figcap">Figure 131. Parallel Processing GVBMR95 Control Report</span>
 
 <div class="image"></div>
 </div>

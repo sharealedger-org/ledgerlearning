@@ -68,7 +68,7 @@
 The need for extreme care is even more acute when attempting to implement a business event based reporting architecture. Consider why by examining the views we have built and run thus far. Suppose all of the views we have constructed were Format Phase views, they all had no general selection criteria, so every event record read is written to the extract file<a href="#fntarg_1" name="fnsrc_1"><sup>1</sup></a>, and they all wrote to EXTR001. If that were the case, then the GVBMR95 control report would look like this.
 <div id="biblesort__MultiViewImpactonSortPhaseCtlRpt" class="fig fignone">
 
-<img class="alignnone size-full wp-image-1198" src="/wp-content/uploads/2018/10/multiviewimpactonsortphasectlrpt.jpg" alt="MultiViewImpactonSortPhaseCtlRpt" width="1461" height="602" /> <span class="figcap">Figure 118. Multiple View Impact on Sort Phase GVBMF95 Control Report</span>
+<img class="alignnone size-full wp-image-1198" src="/assets/images/2018/10/multiviewimpactonsortphasectlrpt.jpg" alt="MultiViewImpactonSortPhaseCtlRpt" width="1461" height="602" /> <span class="figcap">Figure 118. Multiple View Impact on Sort Phase GVBMF95 Control Report</span>
 
 <div class="image">Note that from reading an event file with only 18 records in it, we have created the need to sort 77 records (18 x 4 views, + 4 header records, + 1 control record). It becomes clear how reports which perform a significant summarization of business events can have performance issues.</div>
 </div>
@@ -103,7 +103,7 @@ EndIf</code></pre>
 The view generated the following logic table.
 <div class="fig fignone">
 
-<img class=" size-full wp-image-1197 aligncenter" src="/wp-content/uploads/2018/10/extracttimesummlogictable.jpg" alt="ExtractTimeSummLogicTable" width="1628" height="765" /> <span class="figcap">Figure 120. Extract Phase Summarization Logic Table</span>
+<img class=" size-full wp-image-1197 aligncenter" src="/assets/images/2018/10/extracttimesummlogictable.jpg" alt="ExtractTimeSummLogicTable" width="1628" height="765" /> <span class="figcap">Figure 120. Extract Phase Summarization Logic Table</span>
 
 <div class="image">Note that his logic table contains a WRSU function, a write summarized extract record. When turning this feature on, knowing the event data as I did, I told SAFR to make a stack of four extract records; I knew there would be no more than four records in the final output, so no memory would be wasted, but the sorted file would be as small as possible.</div>
 <div></div>
@@ -114,13 +114,13 @@ The view generated the following logic table.
 The following is the Logic Table trace for records 1 and 2. Note that the comparison on record two failed the "IF" selection criteria above, so the "else" condition was executed. After these two rows, there were two records in the stack, both for the "K &amp; N jones" family, one "Working Capital" and one "Other".
 <div class="fig fignone">
 
-<img class=" size-full wp-image-1196 aligncenter" src="/wp-content/uploads/2018/10/extracttimesummlogictabletrace.jpg" alt="ExtractTimeSummLogicTableTrace" width="1483" height="832" /> <span class="figcap">Figure 120. Extract Phase Summarization Logic Table Trace</span>
+<img class=" size-full wp-image-1196 aligncenter" src="/assets/images/2018/10/extracttimesummlogictabletrace.jpg" alt="ExtractTimeSummLogicTableTrace" width="1483" height="832" /> <span class="figcap">Figure 120. Extract Phase Summarization Logic Table Trace</span>
 
 <div class="image">The following is the extract file.</div>
 </div>
 <div class="fig fignone">
 
-<img class=" size-full wp-image-1195 aligncenter" src="/wp-content/uploads/2018/10/extracttimesummextractfile.jpg" alt="ExtractTimeSummExtractFile" width="1574" height="582" /> <span class="figcap">Figure 121. Extract Phase Summarization Extract File</span>
+<img class=" size-full wp-image-1195 aligncenter" src="/assets/images/2018/10/extracttimesummextractfile.jpg" alt="ExtractTimeSummExtractFile" width="1574" height="582" /> <span class="figcap">Figure 121. Extract Phase Summarization Extract File</span>
 
 <div class="image">I have made the second sort key, the "Working Capital" and "Other" values, descending. The extract program has therefore translated these values into two's complement; thus the values are not readable in the extract file. But it is clear there are only four records in the extract file, and there are two sets of the same unreadable characters, "other" and "working capital". The numbers in the CT area for column 3 (the two byte binary value on the front of the CT column) match the final output after sorting and running the Format phase (remember they have 8 decimals places). Note that the records aren't yet in sorted order; they appear in the extract file in the order they first appeared in the event file.</div>
 </div>
@@ -131,7 +131,7 @@ The following is the Logic Table trace for records 1 and 2. Note that the compar
 Here is the final output from the Format phase.
 <div class="fig fignone">
 
-<img class="  wp-image-1194 alignright" src="/wp-content/uploads/2018/10/extracttimesummoutput.jpg" alt="ExtractTimeSummOutput" width="540" height="120" /> <span class="figcap">Figure 122. Extract Phase Summarization Output</span>
+<img class="  wp-image-1194 alignright" src="/assets/images/2018/10/extracttimesummoutput.jpg" alt="ExtractTimeSummOutput" width="540" height="120" /> <span class="figcap">Figure 122. Extract Phase Summarization Output</span>
 
 <div class="image">Now, if I changed the stack count so that the extract program only keeps 3 records, I know that the stack will overflow; there won't be enough records in the stack to summarize all the event records. Here is the extract file having done so (and making the sort key ascending so it is now readable).</div>
 <div></div>
@@ -140,7 +140,7 @@ Here is the final output from the Format phase.
 <div class="p">
 <div class="fig fignone">
 
-<img class=" size-full wp-image-1193 aligncenter" src="/wp-content/uploads/2018/10/extracttimesummwsmallerstack.jpg" alt="ExtractTimeSummwSmallerStack" width="1544" height="752" /> <span class="figcap">Figure 123. Extract Phase Summarization with Smaller Stack</span>
+<img class=" size-full wp-image-1193 aligncenter" src="/assets/images/2018/10/extracttimesummwsmallerstack.jpg" alt="ExtractTimeSummwSmallerStack" width="1544" height="752" /> <span class="figcap">Figure 123. Extract Phase Summarization with Smaller Stack</span>
 
 <div class="image">See that there are two "c wheeler/Working Capital" rows in the file that will be collapsed by the Format engine. The first record was the least used set of keys, and so when the fourth record showed up, this one was dumped to the extract file. Later on, another record with this key showed up again, and so the next lowest record, likely the "K &amp; N jones family/Working Capital" record was dumped to the file, leaving the last three records in the stack until the end of the event file was reached and they were written to the extract file as well.</div>
 <div></div>

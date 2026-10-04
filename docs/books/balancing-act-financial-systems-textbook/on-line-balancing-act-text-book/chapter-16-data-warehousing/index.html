@@ -59,7 +59,7 @@
 Perhaps the simplest architecture layout of a data warehouse would be this:
 <div class="fig fignone">
 
-<img class=" size-full wp-image-1295 aligncenter" src="/wp-content/uploads/2018/10/simplifieddatawarehousearchitecture.jpg" alt="SimplifiedDataWarehouseArchitecture" width="1671" height="405" /> <span class="figcap">Figure 33. Simplified Data Warehouse Architecture</span>
+<img class=" size-full wp-image-1295 aligncenter" src="/assets/images/2018/10/simplifieddatawarehousearchitecture.jpg" alt="SimplifiedDataWarehouseArchitecture" width="1671" height="405" /> <span class="figcap">Figure 33. Simplified Data Warehouse Architecture</span>
 <p class="image">The Extract Transform and Load process (ETL) accesses either the detailed data or the master file in the operational system, and loads it into the data warehouse database. The users interact with the reporting tool to request a report. The reporting tool accesses the data warehouse to retrieve and create the report.</p>
 <p class="image">The ETL tool tends to be more closely associated with the business event capture and operational system posting process. In other words, it most often is a batch process that occurs at a scheduled time after the business events have been captured and recorded in the operational system. The reporting package tends to be more closely associated with the user report demands; its work is performed as users request reports. The database works in both worlds, accepting, loading, reorganizing data as it is presented by the ETL tool, and responding to requests for reports from the reporting tool.</p>
 <p class="image">We'll discuss these components more in later chapters.</p>
@@ -86,7 +86,7 @@ Perhaps the simplest architecture layout of a data warehouse would be this:
 And it isn't simply demand for reports exceeding capacity: ultimately using summarization as a means to overcome volume results in overwhelming the system with the number of summaries that must be maintained. This is because as the number of summaries that must be maintained grows, the overall workload of the system experiences diseconomies of scale, as shown here:
 <div class="fig fignone">
 
-<img class="alignnone  wp-image-1292" src="/wp-content/uploads/2018/10/postingprocessdiseconomiesofscale.jpg" alt="PostingProcessDiseconomiesofScale" width="331" height="249" /> <span class="figcap">Figure 34. Posting Process Diseconomies of Scale</span>
+<img class="alignnone  wp-image-1292" src="/assets/images/2018/10/postingprocessdiseconomiesofscale.jpg" alt="PostingProcessDiseconomiesofScale" width="331" height="249" /> <span class="figcap">Figure 34. Posting Process Diseconomies of Scale</span>
 
 <div class="image"></div>
 </div>
