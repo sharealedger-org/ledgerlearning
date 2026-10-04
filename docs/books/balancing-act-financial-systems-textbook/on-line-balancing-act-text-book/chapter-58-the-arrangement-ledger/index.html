@@ -25,7 +25,8 @@
       <nav>
         <ul class="nav-links">
           <li><a href="/">Home</a></li>
-          <li><a href="/vlog.html">Episodes</a></li>
+          <li><a href="/vlog.html">Topics</a></li>
+          <li><a href="/episodes.html">All Episodes</a></li>
           <li><a href="/books.html" class="active">Books</a></li>
           <li><a href="/whitepapers.html">White Papers</a></li>
           <li><a href="/courses.html">Courses</a></li>
@@ -84,7 +85,7 @@
 For example, if the following were the balances for a simple General Ledger:
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1216" src="/assets/images/2018/10/glexample.jpg" alt="GLexample" width="2768" height="140" /> <span class="figcap">Figure 145. General Ledger Summary Record</span>
+<img class="alignnone size-full wp-image-1216" src="/wp-content/uploads/2018/10/glexample.jpg" alt="GLexample" width="2768" height="140" /> <span class="figcap">Figure 145. General Ledger Summary Record</span>
 
 </div>
 </div>
@@ -96,7 +97,7 @@ The arrangement balances that make up this single summary balance might be the f
 <div class="fig fignone">
 <div class="image">
 
-<img class="alignnone size-full wp-image-1215" src="/assets/images/2018/10/alexample.jpg" alt="ALexample" width="2863" height="236" /> <span class="figcap">Figure 146. Arrangement Ledger Detail Balances</span>
+<img class="alignnone size-full wp-image-1215" src="/wp-content/uploads/2018/10/alexample.jpg" alt="ALexample" width="2863" height="236" /> <span class="figcap">Figure 146. Arrangement Ledger Detail Balances</span>
 
 By just adding an Arrangement ID to the record, additional attributes can be stored in the arrangement ledger, without causing the balance to be shifted each time one of these other attributes changes. Because Arrangement ID must be unique, they can be used to link to additional information as is shown below on the Standard Arrangement Layout, or SAL records.
 
@@ -106,7 +107,7 @@ By just adding an Arrangement ID to the record, additional attributes can be sto
 <div class="p">
 <div class="fig fignone">
 
-<img class="alignnone  wp-image-1213" src="/assets/images/2018/10/salrecords-e1543302266824.jpg" alt="SALrecords" width="491" height="117" /> <span class="figcap">Figure 147. Sample Standard Arrangement Layout (SAL) records</span>
+<img class="alignnone  wp-image-1213" src="/wp-content/uploads/2018/10/salrecords-e1543302266824.jpg" alt="SALrecords" width="491" height="117" /> <span class="figcap">Figure 147. Sample Standard Arrangement Layout (SAL) records</span>
 
 <div class="image">In this case, each arrangement has four additional attributes associated with it. The SAL can contain as many attributes as necessary to produce needed reports. Anything that describes either the customer or the contract can be stored on these records. As long as the attributes can be linked to the arrangement ID, such as customer information, they can be used in reports at a summary or detailed level. As these attributes change, new SAL records are created with effective dates on each. Thus at report time it can be decided which version of SALs should be used for the report.</div>
 </div>
@@ -116,7 +117,7 @@ By just adding an Arrangement ID to the record, additional attributes can be sto
 Then it would be possible to combine the amounts in the arrangement ledger, and the SAL, and produce a view of the arrangement balances such as this:
 <div class="fig fignone">
 
-<img class="alignnone  wp-image-1211" src="/assets/images/2018/10/salsummaryexample.jpg" alt="SALsummaryexample" width="410" height="185" /> <span class="figcap">Figure 148. Summaries by SAL attributes</span>
+<img class="alignnone  wp-image-1211" src="/wp-content/uploads/2018/10/salsummaryexample.jpg" alt="SALsummaryexample" width="410" height="185" /> <span class="figcap">Figure 148. Summaries by SAL attributes</span>
 
 <div class="image">The three arrangement records were summarized based on the values of the four attributes in the SAL giving a total of eight different summaries. We have just simply "pivoted" the core financial data by any of the SAL attributes. Because these reports are produced from the same base set of data, they can always be reconciled and are consistent. We have just added an incredible level of flexibility to the core financial system.</div>
 </div>

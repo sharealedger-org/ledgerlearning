@@ -100,7 +100,8 @@ def nav_html(depth=0, active='books'):
       <nav>
         <ul class="nav-links">
           {link('', 'Home', 'home')}
-          {link('vlog.html', 'Episodes', 'episodes')}
+          {link('vlog.html', 'Topics', 'vlog')}
+          {link('episodes.html', 'All Episodes', 'episodes')}
           {link('books.html', 'Books', 'books')}
           {link('whitepapers.html', 'White Papers', 'whitepapers')}
           {link('courses.html', 'Courses', 'courses')}

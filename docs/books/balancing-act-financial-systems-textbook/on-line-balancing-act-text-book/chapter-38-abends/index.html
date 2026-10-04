@@ -25,7 +25,8 @@
       <nav>
         <ul class="nav-links">
           <li><a href="/">Home</a></li>
-          <li><a href="/vlog.html">Episodes</a></li>
+          <li><a href="/vlog.html">Topics</a></li>
+          <li><a href="/episodes.html">All Episodes</a></li>
           <li><a href="/books.html" class="active">Books</a></li>
           <li><a href="/whitepapers.html">White Papers</a></li>
           <li><a href="/courses.html">Courses</a></li>
@@ -77,7 +78,7 @@ Over the course of those few years I got so I could follow the pattern in Doug's
 <div class="p">
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1253" src="/assets/images/2018/10/oc7snapsystemdump.jpg" alt="OC7SnapSystemDump" width="1687" height="950" /> <span class="figcap">Figure 89. OC7 Snap System Dump</span>
+<img class="alignnone size-full wp-image-1253" src="/wp-content/uploads/2018/10/oc7snapsystemdump.jpg" alt="OC7SnapSystemDump" width="1687" height="950" /> <span class="figcap">Figure 89. OC7 Snap System Dump</span>
 
 <div class="image">The printout is chronological, in that new rows show up as the batch process is executed. The first four lines are the results of preprocessing steps. Then there are two rows of messages printed by GVBMR95, the Extract Engine that Doug wrote. The first message says that the program started parallel processing. The next says it detected there was a data exception. GVBMR95 turns the problem back over to the operating system. The IEC223I message comes from the operating system and says which file the offending record came from. The operating system then prints a snap dump. Doug would begin his analysis here.</div>
 &nbsp;
@@ -143,7 +144,7 @@ Often based upon what Doug saw in the machine code above he would have me take t
 <div></div>
 <div class="fig fignone">
 
-<img class="alignnone size-full wp-image-1250" src="/assets/images/2018/10/memorydumpforaddrinregister6.jpg" alt="MemoryDumpforAddrinRegister6" width="1495" height="978" /> <span class="figcap">Figure 90. Memory Dump for Address in Register 6</span>
+<img class="alignnone size-full wp-image-1250" src="/wp-content/uploads/2018/10/memorydumpforaddrinregister6.jpg" alt="MemoryDumpforAddrinRegister6" width="1495" height="978" /> <span class="figcap">Figure 90. Memory Dump for Address in Register 6</span>
 
 <div class="image">The first column gives the address in memory of the data shown immediately to its right<a href="#fntarg_6" name="fnsrc_6"><sup>6</sup></a>. Doug would have me round down the address in register 6 to the nearest hex 20 to search the dump; not every memory address is labeled in the dump or the dump would be very, very large. So I would search not for 11FA8073 but for 11FA8060. After finding the address at the nearest hex 20, it is necessary to count across the columns to find that address. The second column is exactly the address to its left. Column 2 adds hex 4 to the address, so 11FA8064. The third column is at hex 8, 11FA8068. The fourth column is at hex C, or 11FA806C. The right half columns begin 11FA80570.</div>
 </div>
