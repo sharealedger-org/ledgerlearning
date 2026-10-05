@@ -8,3 +8,11 @@ __pycache__/
 node_modules/
 backups/
 docs/assets/images/
+videowork/
+*.mov
+*.MOV
+*.mp4
+*.MP4
+*.avi
+*.mpg
+*.mpeg
