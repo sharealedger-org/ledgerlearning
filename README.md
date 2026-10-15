@@ -1,8 +1,8 @@
 # LedgerLearning.com — Static Site
 
-**Live site:** [ledgerlearning.com](https://ledgerlearning.com)  
-**GitHub Pages source:** `docs/` branch served at the apex domain via DNS  
-**Author & Copyright:** Kip M. Twitchell © 2016–2026. All rights reserved.  
+**Live site:** [ledgerlearning.com](https://ledgerlearning.com)
+**GitHub Pages source:** `docs/` branch served at the apex domain via DNS
+**Author & Copyright:** Kip M. Twitchell © 2016–2026. All rights reserved.
 **Organization:** [Sharealedger, NFP](https://sharealedger.org)
 
 ---
@@ -13,12 +13,39 @@ This repository hosts the static HTML source for **LedgerLearning.com**, migrate
 WordPress (Bluehost) to zero-cost GitHub Pages in October 2026.
 
 LedgerLearning is the educational and media gateway for Sharealedger — home to:
-- **Conversations with Kip** — 250+ video episodes on financial systems, accounting history,
-  data supply chains, REA modeling, and ledger innovation
+- **Conversations with Kip** — 330+ video episodes on financial systems, accounting history,
+  data supply chains, REA modeling, reclassification, GenevaERS, shared ledgers, and ledger
+  innovation
 - **Balancing Act** — a full online textbook (68 chapters + appendices)
 - **Metric Engine Monograph** — a technical white paper on high-performance reporting engines
 - **Courses** — free self-paced courses on reclassification, the accounting cycle, and more
 - **Blog** — written commentary on financial systems, AI, and open-source innovation
+
+---
+
+## Conversations with Kip — Full Transcript Corpus
+
+Full transcripts for all *Conversations with Kip* episodes are maintained separately from
+this public site repository. They are available to **Sharealedger members** in the private
+[`sharealedger-org/members`](https://github.com/sharealedger-org/members) repository under:
+
+```
+content/conversations-with-kip/Transcripts/
+```
+
+A thematic index and corpus navigation guide are provided at:
+
+```
+content/conversations-with-kip/Conversations_With_Kip_Corpus_Guide.md
+```
+
+**Access:** Membership in Sharealedger, NFP grants access to the members repository and
+its contents, including the full transcript corpus, the monograph papers in draft, and
+other member research materials. Membership is free and open.
+[Join at sharealedger.org/membership.html](https://sharealedger.org/membership.html)
+
+The transcripts are shared with Sharealedger members for research and educational use.
+© Kip M. Twitchell. All rights reserved. Do not reproduce or redistribute without permission.
 
 ---
 
