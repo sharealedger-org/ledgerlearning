@@ -27,7 +27,7 @@ LedgerLearning is the educational and media gateway for Sharealedger — home to
 
 Full transcripts for all *Conversations with Kip* episodes are maintained separately from
 this public site repository. They are available to **Sharealedger members** in the private
-[`sharealedger-org/members`](https://github.com/sharealedger-org/members) repository under:
+[`sharealedger-org/org-members`](https://github.com/sharealedger-org/org-members) repository under:
 
 ```
 content/conversations-with-kip/Transcripts/
