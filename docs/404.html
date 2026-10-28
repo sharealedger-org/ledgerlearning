@@ -15,10 +15,103 @@
         window.location.replace('/episodes.html');
         return;
       }
-      // Balancing Act chapter pages
-      if (path.indexOf('/balancing-act-financial-systems-textbook/') !== -1 ||
-          path.indexOf('/on-line-balancing-act-text-book/') !== -1) {
-        window.location.replace('/books.html');
+      // Balancing Act book and chapter pages
+      var bookSlugs = {
+        'dedication': 'dedication/',
+        'preface': 'preface/',
+        'part-1-the-pearl': 'part-1-the-pearl/',
+        'introduction': 'introduction/',
+        'the-problem': 'the-problem/',
+        'the-solution': 'the-solution/',
+        'the-professor': 'the-professor/',
+        'computers': 'computers/',
+        'accounting': 'accounting/',
+        'business-events': 'business-events/',
+        'resources-and-agents': 'resources-and-agents/',
+        'real-analysis-method': 'real-analysis-method/',
+        'the-ivory-tower': 'the-ivory-tower/',
+        'the-partner': 'the-partner/',
+        'chapter-10-reality': 'chapter-10-reality/',
+        'chapter-11-consulting': 'chapter-11-consulting/',
+        'chapter-12-types-of-computers-and-processes': 'chapter-12-types-of-computers-and-processes/',
+        'chapter-13-business-system-architecture': 'chapter-13-business-system-architecture/',
+        'chapter-14-reporting': 'chapter-14-reporting/',
+        'chapter-15-operational-versus-informational': 'chapter-15-operational-versus-informational/',
+        'chapter-16-data-warehousing': 'chapter-16-data-warehousing/',
+        'chapter-17-programming-tools': 'chapter-17-programming-tools/',
+        'chapter-18-input-output': 'chapter-18-input-output/',
+        'chapter-19-select-sort-summarize': 'chapter-19-select-sort-summarize/',
+        'chapter-20-parallelism-and-platform': 'chapter-20-parallelism-and-platform/',
+        'chapter-21-erp-reporting': 'chapter-21-erp-reporting/',
+        'chapter-22-order-of-operations': 'chapter-22-order-of-operations/',
+        'part-4-the-projects': 'part-4-the-projects/',
+        'chapter-23-development': 'chapter-23-development/',
+        'chapter-24-skyscrapers': 'chapter-24-skyscrapers/',
+        'chapter-25-find-the-event-file': 'chapter-25-find-the-event-file/',
+        'chapter-26-balance-the-event-file': 'chapter-26-balance-the-event-file/',
+        'chapter-27-find-more-detailed-events': 'chapter-27-find-more-detailed-events/',
+        'chapter-28-define-reference-data': 'chapter-28-define-reference-data/',
+        'chapter-29-iteratively-view-results': 'chapter-29-iteratively-view-results/',
+        'chapter-30-assess-reporting-needs': 'chapter-30-assess-reporting-needs/',
+        'chapter-31-estimate-the-data-basis': 'chapter-31-estimate-the-data-basis/',
+        'chapter-32-define-summary-structures': 'chapter-32-define-summary-structures/',
+        'chapter-33-define-processes': 'chapter-33-define-processes/',
+        'chapter-34-consider-complex-joins': 'chapter-34-consider-complex-joins/',
+        'chapter-35-model-the-repository': 'chapter-35-model-the-repository/',
+        'chapter-36-optimize-for-performance': 'chapter-36-optimize-for-performance/',
+        'chapter-37-maintain-focus': 'chapter-37-maintain-focus/',
+        'part-5-the-programmer': 'part-5-the-programmer/',
+        'chapter-38-abends': 'chapter-38-abends/',
+        'chapter-39-the-copy-only-view': 'chapter-39-the-copy-only-view/',
+        'chapter-40-extract-only-view': 'chapter-40-extract-only-view/',
+        'chapter-41-look-ups': 'chapter-41-look-ups/',
+        'chapter-42-reference-file-phase': 'chapter-42-reference-file-phase/',
+        'chapter-43-extract-files': 'chapter-43-extract-files/',
+        'chapter-44-sort': 'chapter-44-sort/',
+        'chapter-45-sort-user-exits': 'chapter-45-sort-user-exits/',
+        'chapter-46-format-phase': 'chapter-46-format-phase/',
+        'chapter-47-look-at-it-go': 'chapter-47-look-at-it-go/',
+        'chapter-48-multi-threading': 'chapter-48-multi-threading/',
+        'chapter-49-control-and-contention': 'chapter-49-control-and-contention/',
+        'chapter-50-piping-tokens-and-the-write-verb': 'chapter-50-piping-tokens-and-the-write-verb/',
+        'chapter-15-exits': 'chapter-15-exits/',
+        'chapter-52-common-key-data-buffering': 'chapter-52-common-key-data-buffering/',
+        'chapter-53-spin-offs': 'chapter-53-spin-offs/',
+        'chapter-54-crisis': 'chapter-54-crisis/',
+        'part-6-the-platform': 'part-6-the-platform/',
+        'chapter-55-transition': 'chapter-55-transition/',
+        'chapter-56-walkabout': 'chapter-56-walkabout/',
+        'chapter-57-the-general-ledger': 'chapter-57-the-general-ledger/',
+        'chapter-58-the-arrangement-ledger': 'chapter-58-the-arrangement-ledger/',
+        'chapter-59-accounting-rules': 'chapter-59-accounting-rules/',
+        'chapter-60-reclassification': 'chapter-60-reclassification/',
+        'chapter-61-support-processes': 'chapter-61-support-processes/',
+        'chapter-62-calculation-engines-and-reporting': 'chapter-62-calculation-engines-and-reporting/',
+        'chapter-63-go-live': 'chapter-63-go-live/',
+        'part7-the-plan': 'part7-the-plan/',
+        'chapter-64-promotion': 'chapter-64-promotion/',
+        'chapter-65-start-with-finance': 'chapter-65-start-with-finance/',
+        'chapter-66-expand-to-risk': 'chapter-66-expand-to-risk/',
+        'chapter-67-beyond-finance-and-risk': 'chapter-67-beyond-finance-and-risk/',
+        'chapter-68-partnership': 'chapter-68-partnership/',
+        'appendices': 'appendices/',
+        'appendix-1-accounting-model': 'appendices/appendix-1-accounting-model/',
+        'appendix-2-event-driven-business-modeling': 'appendices/appendix-2-event-driven-business-modeling/',
+        'acknowledgements': 'acknowledgements/',
+        'selected-bibliography': 'selected-bibliography/',
+        'about-the-mentors': 'about-the-mentors/',
+        'about-the-author': 'about-the-author/'
+      };
+
+      var tocBase = '/books/balancing-act-financial-systems-textbook/on-line-balancing-act-text-book/';
+      if (path.indexOf('/balancing-act') !== -1 || path.indexOf('/on-line-balancing-act') !== -1) {
+        var cleanSegments = path.replace(/\/+$/, '').split('/');
+        var lastSeg = cleanSegments[cleanSegments.length - 1];
+        if (bookSlugs[lastSeg]) {
+          window.location.replace(tocBase + bookSlugs[lastSeg]);
+          return;
+        }
+        window.location.replace(tocBase);
         return;
       }
       // Metric engine

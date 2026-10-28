@@ -354,6 +354,202 @@ nav ul.nav-links li a.active {
 .toc a { color: var(--ll-brown); }
 .toc a:hover { color: var(--ll-tan); }
 
+/* ---- Book Layout & Side Panel TOC ---- */
+.book-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 36px 24px 64px;
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+}
+
+.book-sidebar {
+  width: 290px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 76px;
+  max-height: calc(100vh - 96px);
+  overflow-y: auto;
+  background: var(--ll-cream);
+  border: 1px solid var(--ll-border);
+  border-radius: var(--radius);
+  padding: 16px 14px;
+  font-size: 0.85rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ll-border) transparent;
+}
+.book-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.book-sidebar::-webkit-scrollbar-thumb {
+  background: var(--ll-border);
+  border-radius: 3px;
+}
+
+.book-sidebar-header {
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--ll-border);
+}
+
+.book-sidebar-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--ll-dark);
+  text-decoration: none;
+}
+.book-sidebar-title:hover {
+  text-decoration: none;
+}
+.book-sidebar-title strong {
+  font-size: 1.05rem;
+  color: var(--ll-brown);
+}
+.book-sidebar-title .book-sidebar-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.book-sidebar-group {
+  margin-bottom: 14px;
+}
+.book-sidebar-group-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--ll-brown);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 5px;
+  padding: 0 4px;
+}
+.book-sidebar-group-title a {
+  color: var(--ll-brown);
+  text-decoration: none;
+}
+.book-sidebar-group-title a:hover {
+  color: var(--ll-tan);
+  text-decoration: underline;
+}
+.book-sidebar-group-title a.active {
+  color: var(--ll-dark);
+  font-weight: 800;
+}
+
+.book-sidebar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.book-sidebar-list li {
+  margin-bottom: 2px;
+  line-height: 1.35;
+}
+.book-sidebar-list li a {
+  display: block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: background 0.12s, color 0.12s;
+}
+.book-sidebar-list li a:hover {
+  background: rgba(108, 63, 38, 0.08);
+  color: var(--ll-brown);
+  text-decoration: none;
+}
+.book-sidebar-list li a.active {
+  background: var(--ll-brown);
+  color: #fff !important;
+  font-weight: 600;
+}
+
+.book-main {
+  flex: 1;
+  min-width: 0;
+  max-width: 820px;
+}
+
+/* Mobile TOC dropdown */
+.book-toc-toggle {
+  display: none;
+  margin-bottom: 24px;
+  background: var(--ll-cream);
+  border: 1px solid var(--ll-border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+}
+.book-toc-toggle summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--ll-brown);
+  font-size: 0.92rem;
+}
+.book-toc-mobile-nav {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--ll-border);
+  max-height: 380px;
+  overflow-y: auto;
+}
+.book-toc-mobile-group {
+  margin-bottom: 12px;
+}
+.book-toc-mobile-group strong {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ll-brown);
+  margin-bottom: 4px;
+}
+.book-toc-mobile-group strong a {
+  color: var(--ll-brown);
+}
+.book-toc-mobile-group strong a.active {
+  color: var(--ll-dark);
+  font-weight: 800;
+}
+.book-toc-mobile-group ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 8px;
+}
+.book-toc-mobile-group li {
+  margin-bottom: 3px;
+}
+.book-toc-mobile-group li a {
+  font-size: 0.85rem;
+  color: var(--text);
+  display: inline-block;
+  padding: 2px 4px;
+}
+.book-toc-mobile-group li a.active {
+  font-weight: 700;
+  color: var(--ll-brown);
+}
+
+@media (max-width: 900px) {
+  .book-container {
+    flex-direction: column;
+    padding: 24px 16px 48px;
+    gap: 0;
+  }
+  .book-sidebar {
+    display: none;
+  }
+  .book-toc-toggle {
+    display: block;
+  }
+  .book-main {
+    max-width: 100%;
+  }
+}
+
 /* ---- Category filter bar ---- */
 .filter-bar {
   display: flex;
