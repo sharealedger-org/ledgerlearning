@@ -7,7 +7,14 @@ __pycache__/
 .venv/
 node_modules/
 backups/
-docs/assets/images/
+docs/assets/images/ao_ccss/
+docs/assets/images/fusion-icons/
+docs/assets/images/fusion-scripts/
+docs/assets/images/fusion-styles/
+docs/assets/images/fusion_slider/
+docs/assets/images/fusionredux/
+docs/assets/images/uag-plugin/
+docs/assets/images/wp-sheet-editor-universal-sheet/
 videowork/
 *.mov
 *.MOV
